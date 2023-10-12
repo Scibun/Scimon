@@ -1,31 +1,35 @@
-mod download;
+mod cmd;  // Ensure the cmd folder exists and contains the validation and download modules.
 
 use std::env;
 use std::fs::File;
-use std::path::Path;
 use std::io::{self, BufRead, BufReader};
+
+// Imports of the functions.
+use crate::cmd::download::download::{download_and_detect_name};
+
+use crate::cmd::validation::validation::{
+    validate_url, 
+    get_first_arg, 
+    validate_file 
+};
 
 #[tokio::main]
 async fn main() -> io::Result<()> {
+    // Check the args passed via cli
+    get_first_arg().unwrap_or_else(|e| {
+        eprintln!("Error: {}", e); // Return the error message
+        "".to_string() // Return a empty string or a default value.
+    });
+
     // Get the command line arguments.
     let args: Vec<String> = env::args().collect();
 
-    if args.len() < 2 {
-        println!("Please pass the file name as an argument.");
-        return Ok(());
-    }
-
+    // Get first arg
     let file = &args[1];
 
-    // Check if file exists
-    if !Path::new(file).exists() {
-        println!("The file {} not exists.", file);
-        return Ok(());
-    }
-
-    // Check if the file has a .txt extension.
-    if !file.ends_with(".txt") {
-        println!("The file {} is not a .txt", file);
+    // Validate file
+    if let Err(e) = validate_file(file) {
+        eprintln!("{}", e); // Return the error message
         return Ok(());
     }
 
@@ -37,20 +41,29 @@ async fn main() -> io::Result<()> {
         let line = match line_result {
             Ok(l) => l,
 
+            // Print the error message
             Err(e) => {
-                eprintln!("Error reading line: {}", e);
+                eprintln!("Error: reading line: {}", e); // Return the error message
                 continue; // jump to the next line
             }
         };
 
-        let result = download::pdf::download_and_detect_name(&line).await;
+        // Check if current line is a url
+        if let Err(e) = validate_url(&line) {
+            eprintln!("{}", e); // Return the error message
+            return Ok(());
+        }
+
+        // Run download file
+        let result = download_and_detect_name(&line).await;
         
         match result {
-            Ok(name_string) => {
-                println!("Downloaded file name: {}", name_string);
+            Ok(file_name) => {
+                println!("Downloaded file name: {}", file_name); // Show the success message
             },
+
             Err(e) => {
-                eprintln!("Error downloading or detecting the name: {}", e);
+                eprintln!("Error downloading or detecting the name: {}", e); // Return the error message
             }
         }
     }

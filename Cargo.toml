@@ -9,3 +9,4 @@ edition = "2021"
 reqwest = "0.11"
 tokio = { version = "1", features = ["full"] }
 url = "2.4.1"
+is-url = "1.0.4"
