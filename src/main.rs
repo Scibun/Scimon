@@ -1,70 +1,34 @@
-mod cmd;  // Ensure the cmd folder exists and contains the validation and download modules.
+mod cmd;
 
+use std::io;
 use std::env;
-use std::fs::File;
-use std::io::{self, BufRead, BufReader};
+use is_url::is_url;
 
-// Imports of the functions.
-use crate::cmd::download::download::{download_and_detect_name};
+use crate::cmd::validation::data::get_first_arg;
 
-use crate::cmd::validation::validation::{
-    validate_url, 
-    get_first_arg, 
-    validate_file 
+use crate::cmd::bootstrap::file_handler::{
+    read_local_file,
+    read_remote_file
 };
 
 #[tokio::main]
 async fn main() -> io::Result<()> {
-    // Check the args passed via cli
     get_first_arg().unwrap_or_else(|e| {
-        eprintln!("Error: {}", e); // Return the error message
-        "".to_string() // Return a empty string or a default value.
+        eprintln!("Error: {}", e);
+        "".to_string()
     });
 
-    // Get the command line arguments.
     let args: Vec<String> = env::args().collect();
 
-    // Get first arg
-    let file = &args[1];
+    let start = &args[1];
 
-    // Validate file
-    if let Err(e) = validate_file(file) {
-        eprintln!("{}", e); // Return the error message
-        return Ok(());
-    }
-
-    // Open and read the file line by line.
-    let file = File::open(file)?;
-    let reader = BufReader::new(file);
-
-    for line_result in reader.lines() {
-        let line = match line_result {
-            Ok(l) => l,
-
-            // Print the error message
-            Err(e) => {
-                eprintln!("Error: reading line: {}", e); // Return the error message
-                continue; // jump to the next line
-            }
-        };
-
-        // Check if current line is a url
-        if let Err(e) = validate_url(&line) {
-            eprintln!("{}", e); // Return the error message
-            return Ok(());
+    if !is_url(start) {
+        if let Err(e) = read_local_file(&start).await {
+            eprintln!("Error processing the file: {}", e);
         }
-
-        // Run download file
-        let result = download_and_detect_name(&line).await;
-        
-        match result {
-            Ok(file_name) => {
-                println!("Downloaded file name: {}", file_name); // Show the success message
-            },
-
-            Err(e) => {
-                eprintln!("Error downloading or detecting the name: {}", e); // Return the error message
-            }
+    } else {
+        if let Err(e) = read_remote_file(start).await {
+            eprintln!("Error: {}", e);
         }
     }
 
