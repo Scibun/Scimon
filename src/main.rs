@@ -23,9 +23,7 @@ async fn main() -> io::Result<()> {
     let start = &args[1];
 
     if !is_url(start) {
-        if let Err(e) = read_local_file(&start).await {
-            eprintln!("Error processing the file: {}", e);
-        }
+        if let Err(_) = read_local_file(&start).await {}
     } else {
         if let Err(e) = read_remote_file(start).await {
             eprintln!("Error: {}", e);

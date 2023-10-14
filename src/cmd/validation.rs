@@ -12,7 +12,7 @@ pub mod data {
             return Err(
                 io::Error::new(
                     io::ErrorKind::InvalidInput, format!(
-                        "Error: The url {} is not a valid", url_line
+                        "The url {} is not a valid", url_line
                     )
                 )
             );
@@ -26,7 +26,7 @@ pub mod data {
             return Err(
                 io::Error::new(
                     io::ErrorKind::NotFound, format!(
-                        "Error: The file {} does not exist.", file
+                        "The file {} does not exist.", file
                     )
                 )
             );
@@ -36,7 +36,7 @@ pub mod data {
             return Err(
                 io::Error::new(
                     io::ErrorKind::InvalidData, format!(
-                        "Error: The file {} is not a .txt", file
+                        "The file {} is not a .txt", file
                     )
                 )
             );
@@ -50,7 +50,7 @@ pub mod data {
             return Err(
                 io::Error::new(
                     io::ErrorKind::InvalidData, format!(
-                        "Error: The file {} is not a {}", file, file_type
+                        "The file {} is not a {}", file, file_type
                     )
                 )
             );
