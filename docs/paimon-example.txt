@@ -1,5 +1,6 @@
 https://olacesar.com/e-books/rituais.pdf
 https://olacesar.com/e-books/biblia.pdf !ignore
 
-!comment -> This is a comment that is displayed with the show_comment !show_comment
-// -> This is a common comment
+lorem ipsum dolor sit name -> This is a common comment without displayed (use macro debug to show the line)
+
+This is a comment that is displayed with the debug !debug

@@ -7,8 +7,8 @@ use is_url::is_url;
 use crate::cmd::validation::data::get_first_arg;
 
 use crate::cmd::bootstrap::file_handler::{
-    read_local_file,
-    read_remote_file
+    read_paimon_local_file,
+    read_paimon_remote_file
 };
 
 #[tokio::main]
@@ -22,10 +22,15 @@ async fn main() -> io::Result<()> {
 
     let start = &args[1];
 
+    let second_arg = match args.get(2) {
+        Some(arg) => arg,
+        None => ""
+    };
+
     if !is_url(start) {
-        if let Err(_) = read_local_file(&start).await {}
+        if let Err(_) = read_paimon_local_file(start, second_arg).await {}
     } else {
-        if let Err(e) = read_remote_file(start).await {
+        if let Err(e) = read_paimon_remote_file(start, second_arg).await {
             eprintln!("Error: {}", e);
         }
     }
