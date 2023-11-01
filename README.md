@@ -4,23 +4,57 @@ Tool to download pdfs in batches written in Rust
 
 > **Under in development**
 
+To build, run
+
+```shell
+cargo build
+```
+
+> The directory of output is `target/release`
+
 To download files with local list
 
 ```shell
-cargo run docs/paimon-example.txt
+paimon -r docs/paimon-example.txt
 ```
 
 To download files with remote list
 
 ```shell
-cargo run https://raw.githubusercontent.com/kremilly/Paimon/main/docs/paimon-example.txt
+paimon -r https://raw.githubusercontent.com/kremilly/Paimon/main/docs/paimon-example.txt
 ```
 
 To download files without skipping any, simply use the `--noignore` flag
 
 ```shell
-cargo run docs/paimon-example.txt --noignore
+paimon -r docs/paimon-example.txt --noignore
 ```
+
+To send e-book to Kindle, simply use the `--kindle` flag
+
+```shell
+paimon -r docs/paimon-example.txt --kindle <YOUR_KINDLE_EMAIL>
+```
+
+> *P.S.: A maximum file size limit for sending to Kindle is 25 MB.*
+
+> *[Check out](https://www.lifewire.com/find-kindle-email-address-5271915) this tutorial to learn how to find your Kindle email address.*
+
+## Configuration for send to Kindle
+
+| System  | Location                                                           |
+| ------- | ------------------------------------------------------------------ |
+| Linux   | `home/<YOUR_USERNAME>/.config/Paimon/.env`                       |
+| MacOS   | `/Users/<YOUR_USERNAME>/Library/Application Support/Paimon/.env` |
+| Windows | `C:\Users\<YOUR_USERNAME>\AppData\Roaming\Paimon\.env`           |
+
+Environments of system
+
+| Name          | Description                  |
+| ------------- | ---------------------------- |
+| SMTP_SERVER   | Your SMTP server address     |
+| SMTP_USERNAME | Your username of SMTP server |
+| SMTP_PASSWORD | Your password of SMTP server |
 
 ## Macros and Comments
 
@@ -28,12 +62,12 @@ Macros, in a computing context, are predefined sequences of commands or instruct
 
 Paimon supports the following macros:
 
-* Ignore: When utilizing the !ignore macro, a user can specify certain URLs that they wish to bypass during the operation. For instance, if a software tool is tasked with scanning a list of URLs for updates or changes, by adding a specific URL next to the `!ignore` directive, that URL will be omitted from the scanning process.
+* *ignore*: When utilizing the !ignore macro, a user can specify certain URLs that they wish to bypass during the operation. For instance, if a software tool is tasked with scanning a list of URLs for updates or changes, by adding a specific URL next to the `!ignore` directive, that URL will be omitted from the scanning process.
 
   ```shell
   https://example.com/file.pdf !ignore
   ```
-* debug:  The `!debug` macro displays specific information to the user, making it invaluable when you need to relay details to the tool's user.
+* *debug*:  The `!debug` macro displays specific information to the user, making it invaluable when you need to relay details to the tool's user.
 
   ```shell
   This is a comment that is displayed with the debug !debug

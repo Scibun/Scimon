@@ -2,10 +2,21 @@ pub mod data {
 
     use std::io;
     use reqwest;
-    use std::env;
+    use regex::Regex;
     use is_url::is_url;
     use std::path::Path;
     use std::error::Error;
+
+    pub fn validate_email(email: &str) -> Result<(), String> {
+        // Regular expression to check if the email is valid
+        let re = Regex::new(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$").unwrap();
+    
+        if re.is_match(email) {
+            Ok(())
+        } else {
+            Err("Invalid email address.".to_string())
+        }
+    }
 
     pub fn validate_url(url_line: &str) -> io::Result<()> {
         if !is_url(url_line) {
@@ -70,20 +81,6 @@ pub mod data {
                     "Received a non-200 status: {}", 
                     response.status()
                 ).into()
-            )
-        }
-    }
-
-    pub fn get_first_arg() -> Result<String, Box<dyn Error>> {
-        let args: Vec<String> = env::args().collect();
-        
-        if args.len() < 2 {
-            Err(
-                "No arguments provided".into()
-            )
-        } else {
-            Ok(
-                args[1].clone()
             )
         }
     }

@@ -26,3 +26,9 @@ Cargo.lock
 
 # Ignore all files downloaded
 *.pdf
+
+# Ignore .env file
+.env
+
+# Ignore the zip files
+*.zip
