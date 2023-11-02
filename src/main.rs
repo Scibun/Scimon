@@ -1,4 +1,6 @@
 mod cmd;
+mod utils;
+mod configs;
 
 extern crate colored;
 extern crate figlet_rs;
@@ -9,15 +11,15 @@ use clap::Parser;
 use colored::*;
 use figlet_rs::FIGfont;
 
-use crate::cmd::configs::global::{
+use crate::configs::global::{
     APP_NAME,
     APP_AUTHOR,
     APP_VERSION,
     APP_HOMEPAGE
 };
 
-use crate::cmd::env::configs::download_env_file;
-use crate::cmd::bootstrap::file_handler::read_paimon_file;
+use crate::configs::env::download_env_file;
+use crate::cmd::bootstrap::read_paimon_file;
 
 #[derive(Parser)]
 struct Args{
