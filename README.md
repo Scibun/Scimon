@@ -30,6 +30,12 @@ To download files without skipping any, simply use the `--noignore` flag
 paimon -r docs/paimon-example.txt --noignore
 ```
 
+To skipping all comments, simply use `--no-comments` flag
+
+```shell
+paimon -r docs/paimon-example.txt --no-comments
+```
+
 To send e-book to Kindle, simply use the `--kindle` flag
 
 ```shell
@@ -39,6 +45,19 @@ paimon -r docs/paimon-example.txt --kindle <YOUR_KINDLE_EMAIL>
 > *P.S.: A maximum file size limit for sending to Kindle is 25 MB.*
 
 > *[Check out](https://www.lifewire.com/find-kindle-email-address-5271915) this tutorial to learn how to find your Kindle email address.*
+
+Use `--options` flag for manage your settings
+
+* *api_listsopen-env*: Use `open-env` for open the .env file
+
+  ```shell
+  paimon --options open-env
+  ```
+* *force-download-env*: Use `force-download-env` for reset your  .env file
+
+  ```shell
+  paimon --options force-download-env
+  ```
 
 ## Configuration for send to Kindle
 
@@ -50,11 +69,12 @@ paimon -r docs/paimon-example.txt --kindle <YOUR_KINDLE_EMAIL>
 
 Environments of system
 
-| Name          | Description                  |
-| ------------- | ---------------------------- |
-| SMTP_SERVER   | Your SMTP server address     |
-| SMTP_USERNAME | Your username of SMTP server |
-| SMTP_PASSWORD | Your password of SMTP server |
+| Name           | Description                                                    |
+| -------------- | -------------------------------------------------------------- |
+| SMTP_SERVER    | Your SMTP server address                                       |
+| SMTP_USERNAME  | Your username of SMTP server                                   |
+| SMTP_PASSWORD  | Your password of SMTP server                                   |
+| MONLIB_API_KEY | Your API key for access Monlib (*`Under in development`*) |
 
 ## Macros and Comments
 
@@ -62,7 +82,7 @@ Macros, in a computing context, are predefined sequences of commands or instruct
 
 Paimon supports the following macros:
 
-* *ignore*: When utilizing the !ignore macro, a user can specify certain URLs that they wish to bypass during the operation. For instance, if a software tool is tasked with scanning a list of URLs for updates or changes, by adding a specific URL next to the `!ignore` directive, that URL will be omitted from the scanning process.
+* *ignore*: When utilizing the `!ignore` macro, a user can specify certain URLs that they wish to bypass during the operation. For instance, if a software tool is tasked with scanning a list of URLs for updates or changes, by adding a specific URL next to the `!ignore` directive, that URL will be omitted from the scanning process.
 
   ```shell
   https://example.com/file.pdf !ignore

@@ -1,3 +1,4 @@
+mod api;
 mod cmd;
 mod utils;
 mod configs;
@@ -5,8 +6,8 @@ mod configs;
 extern crate colored;
 extern crate figlet_rs;
 
-use std::io;
 use clap::Parser;
+use std::error::Error;
 
 use colored::*;
 use figlet_rs::FIGfont;
@@ -18,19 +19,35 @@ use crate::configs::global::{
     APP_HOMEPAGE
 };
 
-use crate::configs::env::download_env_file;
+use crate::utils::misc::{
+    date_time,
+    check_format
+};
+
+use crate::configs::env::{
+    options_parser,
+    download_env_file
+};
+
+use crate::api::api_get_list::api_get_list;
 use crate::cmd::bootstrap::read_paimon_file;
 
 #[derive(Parser)]
 struct Args{
     #[arg(short, long)]
-    run: String,
+    run: Option<String>,
 
     #[arg(long)]
     noignore: bool,
 
     #[arg(long)]
+    no_comments: bool,
+
+    #[arg(long)]
     kindle: Option<String>,
+
+    #[arg(long)]
+    options: Option<String>,
 
     #[arg(long)]
     inspect: bool,
@@ -40,25 +57,40 @@ struct Args{
 }
 
 #[tokio::main]
-async fn main() -> io::Result<()> {
-    if let Err(err) = download_env_file().await {
+async fn main() -> Result<(), Box<dyn Error>> {
+    if let Err(err) = download_env_file(false).await {
         eprintln!("Error: {}", err);
     }
 
     let args_parser : Args = Args::parse();
 
-    let run = args_parser.run;
-    let standard_font = FIGfont::standard().unwrap();
-    
-    if let Some(title) = standard_font.convert(APP_NAME) {
-        println!("{}", title.to_string().blue());
-        println!("-------------------------------------------------------------------");
-        println!("📜 Version: {}", APP_VERSION.yellow());
-        println!("🏠 Homepage: {} | {}", APP_HOMEPAGE.blue(), APP_AUTHOR.green());
-        println!("-------------------------------------------------------------------");
-    }
+    let run = args_parser.run.as_deref().unwrap_or_default();
 
-    read_paimon_file(&run, args_parser.noignore, args_parser.kindle).await;
+    if !run.is_empty() {
+        let standard_font = FIGfont::standard().unwrap();
+        
+        if let Some(title) = standard_font.convert(APP_NAME) {
+            println!("{}", title.to_string().blue());
+            println!("-------------------------------------------------------------------");
+            println!("📜 Version: {}", APP_VERSION.yellow());
+            println!("🏠 Homepage: {} | {}", APP_HOMEPAGE.blue(), APP_AUTHOR.green());
+            println!("⏰ Started in: {}", date_time().blue());
+            println!("-------------------------------------------------------------------");
+        }
+        
+        if !check_format(run) {
+            read_paimon_file(
+                run, args_parser.noignore, args_parser.no_comments, args_parser.kindle
+            ).await;
+        } else {
+            api_get_list(
+                run, args_parser.noignore, args_parser.no_comments, args_parser.kindle
+            ).await?;
+        }
+    }
+    
+    let options = &args_parser.options.as_deref().unwrap_or_default();
+    options_parser(options).await?;
 
     Ok(())
 }

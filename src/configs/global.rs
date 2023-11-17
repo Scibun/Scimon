@@ -1,6 +1,21 @@
+use std::path::PathBuf;
+use once_cell::sync::Lazy;
+use dirs_next::config_dir;
+
 pub static APP_NAME: &str = "Paimon";
-pub static APP_VERSION: &str = "1.0.0";
+pub static APP_VERSION: &str = "0.0.1";
 pub static APP_AUTHOR: &str = "@Kremilly";
 pub static APP_HOMEPAGE: &str = "https://github.com/kremilly/Paimon";
 
-pub static ENV_URL: &str = "https://gist.githubusercontent.com/kremilly/758ad3b3a9409d02f58b5e75a63e897d/raw/a3fb2b8ea4463473af90e5f60a0b938afa2a3be6/.env";
+pub static MONLIB_API_REQUEST: &str = "http://localhost/Monlib/api/";
+
+// pub static API_USER_ENDPOINT: &str = "user";
+pub static API_LISTS_ENDPOINT: &str = "lists";
+
+pub static APP_FOLDER: Lazy<PathBuf> = Lazy::new(|| {
+    let mut path = config_dir().expect("No config directory");
+    path.push(APP_NAME);
+    path
+});
+
+pub static ENV_URL: &str = "https://pastebin.com/raw/wZGaNtsL";

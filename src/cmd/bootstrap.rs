@@ -11,7 +11,7 @@ use crate::utils::validation::{
 
 use crate::cmd::download::run_download_current_line;
 
-pub async fn read_paimon_local_file(file_path: &str, no_ignore: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
+pub async fn read_paimon_local_file(file_path: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
     if let Err(e) = validate_file(file_path) {
         eprintln!("{}", e);
         return Err(Box::new(e));
@@ -22,13 +22,13 @@ pub async fn read_paimon_local_file(file_path: &str, no_ignore: bool, kindle: Op
 
     for line_result in reader.lines() {
         let line = line_result?;
-        let _ = run_download_current_line(&line, no_ignore, kindle.clone()).await?;
+        let _ = run_download_current_line(&line, no_ignore, no_comments, kindle.clone()).await?;
     }
 
     Ok(())
 }
 
-pub async fn read_paimon_remote_file(url: &str, no_ignore: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
+pub async fn read_paimon_remote_file(url: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
     validate_file_type(url, ".txt")?;
 
     let response = reqwest::get(url).await?;
@@ -38,20 +38,20 @@ pub async fn read_paimon_remote_file(url: &str, no_ignore: bool, kindle: Option<
 
     for line_result in reader.lines() {
         let line = line_result?;
-        let _ = run_download_current_line(&line, no_ignore, kindle.clone()).await?;
+        let _ = run_download_current_line(&line, no_ignore, no_comments, kindle.clone()).await?;
     }
 
     Ok(())
 }
 
-pub async fn read_paimon_file(run: &str, no_ignore: bool, kindle: Option<String>) {
+pub async fn read_paimon_file(run: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) {
     if !is_url(run) {
         if let Err(_) = read_paimon_local_file(
-            run, no_ignore, kindle
+            run, no_ignore, no_comments, kindle
         ).await {}
     } else {
         if let Err(e) = read_paimon_remote_file(
-            &run, no_ignore, kindle
+            &run, no_ignore, no_comments, kindle
         ).await {
             eprintln!("Error: {}", e);
         }

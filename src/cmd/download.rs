@@ -24,6 +24,7 @@ use crate::cmd::syntax::{
     handle_ignore_macro_flag
 };
 
+use crate::utils::misc::date_time;
 use crate::cmd::kindle::send_kindle;
 
 async fn download_and_detect_name(url: &str, kindle: Option<String>) -> Result<String, Box<dyn std::error::Error>> {
@@ -86,12 +87,12 @@ async fn download_and_detect_name(url: &str, kindle: Option<String>) -> Result<S
     Ok(filename)
 }
 
-pub async fn run_download_current_line(line: &str, no_ignore: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
+pub async fn run_download_current_line(line: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
     let mut processed_line: Cow<str> = Cow::Borrowed(
         line.trim()
     );
 
-    let _ = handle_comments(&processed_line);
+    let _ = handle_comments(&processed_line, no_comments);
     if !is_url(&processed_line) { return Ok(()); }
 
     let result_ignore_macro_flag = handle_ignore_macro_flag(&processed_line, no_ignore);
@@ -112,12 +113,12 @@ pub async fn run_download_current_line(line: &str, no_ignore: bool, kindle: Opti
 
     match result {
         Ok(file_name) => {
-            println!("-> Downloaded file name: {}", file_name.green());
+            println!("[{}] -> Downloaded file name: {}", date_time().blue(), file_name.green());
             return Ok(())
         },
 
         Err(e) => {
-            eprintln!("-> Error downloading or detecting the name: {}", e);
+            eprintln!("[{}] -> Error downloading or detecting the name: {}", date_time(), e);
             return Err(e);
         }
     }
