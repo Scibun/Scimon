@@ -1,7 +1,12 @@
 extern crate reqwest;
+extern crate colored;
 
+use colored::*;
+
+use std::fmt;
 use std::error::Error;
 use serde_json::Value;
+use serde::Deserialize;
 use std::io::{self, BufRead};
 use reqwest::{Client, header};
 
@@ -11,9 +16,31 @@ use crate::configs::global::{
 };
 
 use crate::configs::env::env_var;
+use crate::utils::misc::date_time;
 use crate::utils::misc::remove_initial_character;
-
 use crate::cmd::download::run_download_current_line;
+
+#[derive(Debug, Deserialize)]
+struct ErrorResponse {
+    message: String,
+}
+
+#[derive(Debug)]
+enum ApiError {
+    Message(String),
+    Response(ErrorResponse),
+}
+
+impl fmt::Display for ApiError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            ApiError::Message(msg) => write!(f, "{}", msg),
+            ApiError::Response(response) => write!(f, "{}", response.message),
+        }
+    }
+}
+
+impl Error for ApiError {}
 
 pub async fn api_get_list(list_id: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<String, Box<dyn Error>> {
     let list = remove_initial_character(list_id, '@');
@@ -57,10 +84,19 @@ pub async fn api_get_list(list_id: &str, no_ignore: bool, no_comments: bool, kin
 
         Ok(result)
     } else {
-        Err(
-            format!(
-                "Error while making the request: {:?}", response.status()
-            ).into()
-        )
+        let response_text = response.text().await?;
+
+        if let Ok(error_response) = serde_json::from_str::<ErrorResponse>(&response_text) {
+            let message = ApiError::Message(error_response.message);
+            println!("[{}] {}", date_time().blue(), message.to_string().red());
+
+            Ok(message.to_string())
+        } else {
+            Err(
+                ApiError::Message(
+                    format!("Error: internal server error")
+                ).into()
+            )
+        }
     }
 }

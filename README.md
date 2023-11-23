@@ -21,7 +21,13 @@ paimon -r docs/paimon-example.txt
 To download files with remote list
 
 ```shell
-paimon -r https://raw.githubusercontent.com/kremilly/Paimon/main/docs/paimon-example.txt
+paimon -r https://raw.githubusercontent.com/AgiosLux/Paimon/main/docs/paimon-example.txt
+```
+
+To download files at Monlib list
+
+```shell
+paimon -r @kremilly/titulo-de-exemplo
 ```
 
 To download files without skipping any, simply use the `--noignore` flag
@@ -46,6 +52,12 @@ paimon -r docs/paimon-example.txt --kindle <YOUR_KINDLE_EMAIL>
 
 > *[Check out](https://www.lifewire.com/find-kindle-email-address-5271915) this tutorial to learn how to find your Kindle email address.*
 
+To publish new Monlib (*`under in development`*) list
+
+```shell
+paimon --file docs/paimon-example.txt --title "Example list" --privacy public --publish
+```
+
 Use `--options` flag for manage your settings
 
 * *api_listsopen-env*: Use `open-env` for open the .env file
@@ -59,7 +71,7 @@ Use `--options` flag for manage your settings
   paimon --options force-download-env
   ```
 
-## Configuration for send to Kindle
+## Configuration's
 
 | System  | Location                                                           |
 | ------- | ------------------------------------------------------------------ |

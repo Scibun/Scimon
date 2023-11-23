@@ -22,6 +22,15 @@ pub fn is_file_over(path: &str, size: u32) -> bool {
     }
 }
 
+pub fn get_file_name_string(file_path: &str) -> String {
+    let path = Path::new(file_path);
+    
+    path.file_name()
+        .and_then(|name| name.to_str())
+        .map(|s| s.to_owned())
+        .unwrap_or_else(|| "unknown_filename".to_owned())
+}
+
 pub fn get_file_name(path: &str) -> Result<String, &'static str> {
     Path::new(path)
         .file_name()
