@@ -12,26 +12,16 @@ use std::error::Error;
 use colored::*;
 use figlet_rs::FIGfont;
 
-use crate::configs::global::{
-    APP_NAME,
-    APP_AUTHOR,
-    APP_VERSION,
-    APP_HOMEPAGE
-};
+use crate::configs::global::Global;
 
-use crate::utils::misc::{
-    date_time,
-    check_format
-};
+use crate::utils::misc::Misc;
 
-use crate::configs::env::{
-    options_parser,
-    download_env_file
-};
+use crate::configs::env::Env;
 
-use crate::api::api_get_list::*;
+use crate::api::api_get_list::ApiGetList;
 use crate::api::api_publish_list::*;
-use crate::cmd::bootstrap::read_paimon_file;
+
+use crate::cmd::bootstrap::Bootstrap;
 
 #[derive(Parser)]
 #[clap(author, version, about)]
@@ -79,7 +69,7 @@ struct Args{
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
-    if let Err(err) = download_env_file(false).await {
+    if let Err(err) = Env::download_env_file(false).await {
         eprintln!("Error: {}", err);
     }
 
@@ -89,21 +79,21 @@ async fn main() -> Result<(), Box<dyn Error>> {
     if !run.is_empty() {
         let standard_font = FIGfont::standard().unwrap();
         
-        if let Some(title) = standard_font.convert(APP_NAME) {
+        if let Some(title) = standard_font.convert(Global::APP_NAME) {
             println!("{}", title.to_string().blue());
             println!("-------------------------------------------------------------------");
-            println!("📜 Version: {}", APP_VERSION.yellow());
-            println!("🏠 Homepage: {} | {}", APP_HOMEPAGE.blue(), APP_AUTHOR.green());
-            println!("⏰ Started in: {}", date_time().blue());
+            println!("📜 Version: {}", Global::APP_VERSION.yellow());
+            println!("🏠 Homepage: {} | {}", Global::APP_HOMEPAGE.blue(), Global::APP_AUTHOR.green());
+            println!("⏰ Started in: {}", Misc::date_time().blue());
             println!("-------------------------------------------------------------------");
         }
         
-        if !check_format(run) {
-            read_paimon_file(
+        if !Misc::check_format(run) {
+            let _ = Bootstrap::read_paimon_file(
                 run, args_parser.noignore, args_parser.no_comments, args_parser.kindle
             ).await;
         } else {
-            api_get_list(
+            ApiGetList::get(
                 run, args_parser.noignore, args_parser.no_comments, args_parser.kindle
             ).await?;
         }
@@ -122,7 +112,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     }
     
     let options = &args_parser.options.as_deref().unwrap_or_default();
-    options_parser(options).await?;
+    Env::options_parser(options).await?;
 
     Ok(())
 }

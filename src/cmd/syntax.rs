@@ -4,7 +4,7 @@ use colored::*;
 
 use std::error::Error;
 
-use crate::utils::misc::date_time;
+use crate::utils::misc::Misc;
 
 pub fn handle_comments(line: &str, no_comments: bool) -> Result<(), Box<dyn Error>> {
     if !no_comments && line.contains("!debug") {
@@ -12,7 +12,7 @@ pub fn handle_comments(line: &str, no_comments: bool) -> Result<(), Box<dyn Erro
         println!("---------- {} ----------", comment_word.yellow());
 
         eprintln!(
-            "[{}] {}", date_time().blue(), line.replace(
+            "[{}] {}", Misc::date_time().blue(), line.replace(
                 "!debug", ""
             ).yellow()
         );
@@ -28,7 +28,7 @@ pub fn handle_ignore_macro_flag(line: &str, no_ignore: bool) -> Result<String, &
         let url = line.replace(" !ignore", "");
         
         eprintln!(
-            "[{}] -> The url {} was ignored", date_time().green(), url.blue()
+            "[{}] -> The url {} was ignored", Misc::date_time().green(), url.blue()
         );
 
         return Err("Line contains the '!ignore' directive.");

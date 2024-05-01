@@ -8,14 +8,12 @@ use std::error::Error;
 use serde::Deserialize;
 use reqwest::{Client, header, multipart};
 
-use crate::configs::global::{
-    API_LISTS_ENDPOINT,
-    MONLIB_API_REQUEST,
-};
+use crate::configs::global::Global;
 
-use crate::configs::env::env_var;
-use crate::utils::misc::date_time;
-use crate::utils::file::get_file_name_string;
+use crate::configs::env::Env;
+use crate::utils::misc::Misc;
+
+use crate::utils::file::FileUtils;
 
 #[derive(Debug, Deserialize)]
 struct Data {
@@ -51,8 +49,8 @@ impl fmt::Display for ApiError {
 impl Error for ApiError {}
 
 pub async fn api_publish_list(file_path: &str, title: &str, privacy: Option<&str>) -> Result<String, Box<dyn Error>> {
-    let mut url = MONLIB_API_REQUEST.to_owned();
-    url.push_str(API_LISTS_ENDPOINT);
+    let mut url = Global::MONLIB_API_REQUEST.to_owned();
+    url.push_str(Global::API_LISTS_ENDPOINT);
     url.push_str("/create");
 
     let client = Client::builder().danger_accept_invalid_certs(true).build()?;
@@ -66,7 +64,7 @@ pub async fn api_publish_list(file_path: &str, title: &str, privacy: Option<&str
                 file_content
             )
             .file_name(
-                get_file_name_string(file_path)
+                FileUtils::get_file_name_string(file_path)
             )
         )
         .text("title", title.to_owned())
@@ -76,7 +74,7 @@ pub async fn api_publish_list(file_path: &str, title: &str, privacy: Option<&str
         .post(&url)
         .header(
             header::AUTHORIZATION, format!(
-                "Bearer {}", env_var("MONLIB_API_KEY")
+                "Bearer {}", Env::env_var("MONLIB_API_KEY")
             )
         )
         .multipart(form_data)
@@ -88,7 +86,7 @@ pub async fn api_publish_list(file_path: &str, title: &str, privacy: Option<&str
         let result: ApiSuccessResponse = serde_json::from_str(&response_text)?;
         let message = ApiError::Message(result.data.message);
 
-        println!("[{}] {}", date_time().blue(), message.to_string().green());
+        println!("[{}] {}", Misc::date_time().blue(), message.to_string().green());
         webbrowser::open(&result.data.url)?;
 
         Ok(
@@ -99,7 +97,7 @@ pub async fn api_publish_list(file_path: &str, title: &str, privacy: Option<&str
 
         if let Ok(error_response) = serde_json::from_str::<ErrorResponse>(&response_text) {
             let message = ApiError::Message(error_response.message);
-            println!("[{}] {}", date_time().blue(), message.to_string().red());
+            println!("[{}] {}", Misc::date_time().blue(), message.to_string().red());
 
             Ok(
                 message.to_string()

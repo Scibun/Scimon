@@ -2,20 +2,26 @@ use std::path::PathBuf;
 use once_cell::sync::Lazy;
 use dirs_next::config_dir;
 
-pub static APP_NAME: &str = "Paimon";
-pub static APP_VERSION: &str = "0.0.1";
-pub static APP_AUTHOR: &str = "@Kremilly";
-pub static APP_HOMEPAGE: &str = "https://github.com/kremilly/Paimon";
+pub struct Global;
 
-pub static MONLIB_API_REQUEST: &str = "http://localhost/Monlib/api/";
+impl Global {
 
-// pub static API_USER_ENDPOINT: &str = "user";
-pub static API_LISTS_ENDPOINT: &str = "lists";
+    pub const APP_NAME: &'static str = "Paimon";
+    pub const APP_VERSION: &'static str = "0.0.1";
+    pub const APP_AUTHOR: &'static str = "@Ravenlib";
+    pub const APP_HOMEPAGE: &'static str = "https://github.com/Ravenlib/Paimon";
+    
+    pub const MONLIB_API_REQUEST: &'static str = "http://localhost/Monlib/api/";
+    
+    // pub const API_USER_ENDPOINT: &'static str = "user";
+    pub const API_LISTS_ENDPOINT: &'static str = "lists";
+    
+    pub const APP_FOLDER: Lazy<PathBuf> = Lazy::new(|| {
+        let mut path = config_dir().expect("No config directory");
+        path.push(Self::APP_NAME);
+        path
+    });
+    
+    pub const ENV_URL: &'static str = "https://pastebin.com/raw/wZGaNtsL";
 
-pub static APP_FOLDER: Lazy<PathBuf> = Lazy::new(|| {
-    let mut path = config_dir().expect("No config directory");
-    path.push(APP_NAME);
-    path
-});
-
-pub static ENV_URL: &str = "https://pastebin.com/raw/wZGaNtsL";
+}
