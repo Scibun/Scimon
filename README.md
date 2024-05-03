@@ -2,7 +2,9 @@
 
 Tool to download pdfs in batches written in Rust
 
-> **Under in development**
+> [!important]
+>
+> ***Under in development***
 
 To build, run
 
@@ -15,37 +17,37 @@ cargo build
 To download files with local list
 
 ```shell
-paimon -r docs/paimon-example.txt
+paimon -r examples/paimon-example.txt
 ```
 
 To download files with remote list
 
 ```shell
-paimon -r https://raw.githubusercontent.com/AgiosLux/Paimon/main/docs/paimon-example.txt
+paimon -r https://raw.githubusercontent.com/AgiosLux/Paimon/main/examples/paimon-example.txt
 ```
 
 To download files at Monlib list
 
 ```shell
-paimon -r @kremilly/titulo-de-exemplo
+paimon -r @kremilly/title-example
 ```
 
 To download files without skipping any, simply use the `--noignore` flag
 
 ```shell
-paimon -r docs/paimon-example.txt --noignore
+paimon -r examples/paimon-example.txt --noignore
 ```
 
 To skipping all comments, simply use `--no-comments` flag
 
 ```shell
-paimon -r docs/paimon-example.txt --no-comments
+paimon -r examples/paimon-example.txt --no-comments
 ```
 
 To send e-book to Kindle, simply use the `--kindle` flag
 
 ```shell
-paimon -r docs/paimon-example.txt --kindle <YOUR_KINDLE_EMAIL>
+paimon -r examples/paimon-example.txt --kindle <YOUR_KINDLE_EMAIL>
 ```
 
 > *P.S.: A maximum file size limit for sending to Kindle is 25 MB.*
@@ -55,7 +57,7 @@ paimon -r docs/paimon-example.txt --kindle <YOUR_KINDLE_EMAIL>
 To publish new Monlib (*`under in development`*) list
 
 ```shell
-paimon --file docs/paimon-example.txt --title "Example list" --privacy public --publish
+paimon --file examples/paimon-example.txt --title "Example list" --privacy public --publish
 ```
 
 Use `--options` flag for manage your settings
