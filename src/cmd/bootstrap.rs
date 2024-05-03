@@ -4,13 +4,35 @@ use std::io::{BufReader, BufRead};
 
 use reqwest;
 
+extern crate colored;
+extern crate figlet_rs;
+
+use colored::*;
+use figlet_rs::FIGfont;
+
+use crate::utils::misc::Misc;
 use crate::utils::validation::Validate;
 
 use crate::cmd::download::Download;
 
-pub struct Bootstrap;
+use crate::configs::global::Global;
 
-impl Bootstrap {
+pub struct Paimon;
+
+impl Paimon {
+
+    pub fn header() {
+        let standard_font = FIGfont::standard().unwrap();
+
+        if let Some(title) = standard_font.convert(Global::APP_NAME) {
+            println!("{}", title.to_string().blue());
+            println!("-------------------------------------------------------------------");
+            println!("📜 Version: {}", Global::APP_VERSION.yellow());
+            println!("🏠 Homepage: {} | {}", Global::APP_HOMEPAGE.blue(), Global::APP_AUTHOR.green());
+            println!("⏰ Started in: {}", Misc::date_time().blue());
+            println!("-------------------------------------------------------------------");
+        }
+    }
 
     pub async fn read_paimon_local_file(file_path: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
         if let Err(e) = Validate::validate_file(file_path) {

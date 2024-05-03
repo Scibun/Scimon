@@ -48,66 +48,72 @@ impl fmt::Display for ApiError {
 
 impl Error for ApiError {}
 
-pub async fn api_publish_list(file_path: &str, title: &str, privacy: Option<&str>) -> Result<String, Box<dyn Error>> {
-    let mut url = Global::MONLIB_API_REQUEST.to_owned();
-    url.push_str(Global::API_LISTS_ENDPOINT);
-    url.push_str("/create");
+pub struct ApiPublishList;
 
-    let client = Client::builder().danger_accept_invalid_certs(true).build()?;
-
-    let file_content = tokio::fs::read(file_path).await?;
-    let privacy_string: String = privacy.map_or_else(|| String::default(), |s| s.to_string());
-
-    let form_data = multipart::Form::new()
-        .part(
-            "file", reqwest::multipart::Part::stream(
-                file_content
+impl ApiPublishList {
+    
+    pub async fn publish(file_path: &str, title: &str, privacy: Option<&str>) -> Result<String, Box<dyn Error>> {
+        let mut url = Global::MONLIB_API_REQUEST.to_owned();
+        url.push_str(Global::API_LISTS_ENDPOINT);
+        url.push_str("/create");
+    
+        let client = Client::builder().danger_accept_invalid_certs(true).build()?;
+    
+        let file_content = tokio::fs::read(file_path).await?;
+        let privacy_string: String = privacy.map_or_else(|| String::default(), |s| s.to_string());
+    
+        let form_data = multipart::Form::new()
+            .part(
+                "file", reqwest::multipart::Part::stream(
+                    file_content
+                )
+                .file_name(
+                    FileUtils::get_file_name_string(file_path)
+                )
             )
-            .file_name(
-                FileUtils::get_file_name_string(file_path)
+            .text("title", title.to_owned())
+            .text("privacy", privacy_string);
+    
+        let response = client
+            .post(&url)
+            .header(
+                header::AUTHORIZATION, format!(
+                    "Bearer {}", Env::env_var("MONLIB_API_KEY")
+                )
             )
-        )
-        .text("title", title.to_owned())
-        .text("privacy", privacy_string);
-
-    let response = client
-        .post(&url)
-        .header(
-            header::AUTHORIZATION, format!(
-                "Bearer {}", Env::env_var("MONLIB_API_KEY")
-            )
-        )
-        .multipart(form_data)
-        .send()
-        .await?;
-
-    if response.status().is_success() {
-        let response_text = response.text().await?;
-        let result: ApiSuccessResponse = serde_json::from_str(&response_text)?;
-        let message = ApiError::Message(result.data.message);
-
-        println!("[{}] {}", Misc::date_time().blue(), message.to_string().green());
-        webbrowser::open(&result.data.url)?;
-
-        Ok(
-            response_text.to_string()
-        )
-    } else {
-        let response_text = response.text().await?;
-
-        if let Ok(error_response) = serde_json::from_str::<ErrorResponse>(&response_text) {
-            let message = ApiError::Message(error_response.message);
-            println!("[{}] {}", Misc::date_time().blue(), message.to_string().red());
-
+            .multipart(form_data)
+            .send()
+            .await?;
+    
+        if response.status().is_success() {
+            let response_text = response.text().await?;
+            let result: ApiSuccessResponse = serde_json::from_str(&response_text)?;
+            let message = ApiError::Message(result.data.message);
+    
+            println!("[{}] {}", Misc::date_time().blue(), message.to_string().green());
+            webbrowser::open(&result.data.url)?;
+    
             Ok(
-                message.to_string()
+                response_text.to_string()
             )
         } else {
-            Err(
-                ApiError::Message(
-                    format!("Error: internal server error")
-                ).into()
-            )
+            let response_text = response.text().await?;
+    
+            if let Ok(error_response) = serde_json::from_str::<ErrorResponse>(&response_text) {
+                let message = ApiError::Message(error_response.message);
+                println!("[{}] {}", Misc::date_time().blue(), message.to_string().red());
+    
+                Ok(
+                    message.to_string()
+                )
+            } else {
+                Err(
+                    ApiError::Message(
+                        format!("Error: internal server error")
+                    ).into()
+                )
+            }
         }
     }
+
 }
