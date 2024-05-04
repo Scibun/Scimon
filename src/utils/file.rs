@@ -1,11 +1,18 @@
-use std::fs;
-use std::path::Path;
+use std::{
+    fs,
+    fs::File,
+    path::Path,
+    io::{Read, Write},
+    io::Result as IoResult,
+};
 
-use std::fs::File;
-use std::io::{Read, Write};
+use zip::{
+    ZipWriter, 
+    CompressionMethod, 
+    write::FileOptions
+};
+
 use libflate::zlib::Encoder;
-use std::io::Result as IoResult;
-use zip::{ZipWriter, CompressionMethod, write::FileOptions};
 
 pub struct FileUtils;
 

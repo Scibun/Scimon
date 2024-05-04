@@ -1,20 +1,24 @@
 extern crate colored;
 
 use reqwest;
-use std::env;
-use tokio::fs::File;
-use std::sync::Once;
-use std::path::Path;
-use std::path::PathBuf;
-use std::process::Command;
-use tokio::io::AsyncWriteExt;
-
 use colored::*;
+
+use std::{
+    env,
+    sync::Once,
+    process::Command,
+    path::{Path, PathBuf}
+};
+
+use tokio::{
+    fs::File,
+    io::AsyncWriteExt
+};
 
 use crate::utils::misc::Misc;
 use crate::configs::global::Global;
 
-static LOAD_ENV: Once = Once::new();
+static LOAD_ENV:Once = Once::new();
 
 pub struct Env;
 

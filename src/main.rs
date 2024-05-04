@@ -33,7 +33,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         Paimon::header();
         
         if !Misc::check_format(run) {
-            let _ = Paimon::read_paimon_file(
+            let _ = Paimon::run(
                 run, args_parser.noignore, args_parser.no_comments, args_parser.kindle
             ).await;
         } else {

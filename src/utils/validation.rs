@@ -1,17 +1,21 @@
-use std::io;
 use reqwest;
 use regex::Regex;
 use is_url::is_url;
-use std::path::Path;
-use std::error::Error;
+
+use std::{
+    io,
+    path::Path,
+    error::Error
+};
+
+use crate::configs::regex::RegexRules;
 
 pub struct Validate;
 
 impl Validate {
 
     pub fn validate_email(email: &str) -> Result<(), String> {
-        // Regular expression to check if the email is valid
-        let re = Regex::new(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$").unwrap();
+        let re = Regex::new(RegexRules::VALIDATE_EMAIL).unwrap();
     
         if re.is_match(email) {
             Ok(())
@@ -88,4 +92,3 @@ impl Validate {
     }
     
 }
-

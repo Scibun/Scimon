@@ -1,24 +1,30 @@
 extern crate colored;
 
 use lettre_email::Email;
-use lettre::smtp::authentication::Credentials;
-use lettre::{SmtpClient, Transport};
-use mime::APPLICATION_PDF;
+
+use lettre::{
+    SmtpClient, 
+    Transport,
+    smtp::authentication::Credentials
+};
+
 use std::path::Path;
+use mime::APPLICATION_PDF;
 
 use colored::*;
 
-use crate::utils::file::FileUtils;
+use crate::utils::{
+    file::FileUtils,
+    validation::Validate
+};
 
 use crate::configs::env::Env;
-
-use crate::utils::validation::Validate;
 
 pub struct Kindle;
 
 impl Kindle {
 
-    pub fn send_kindle(kindle_email: &str, file: &str) -> Result<(), String> {
+    pub fn send(kindle_email: &str, file: &str) -> Result<(), String> {
         if let Err(err) = Validate::validate_email(kindle_email) {
             println!("Error: {}", err);
         }

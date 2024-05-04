@@ -8,12 +8,15 @@ use std::error::Error;
 use serde::Deserialize;
 use reqwest::{Client, header, multipart};
 
-use crate::configs::global::Global;
+use crate::configs::{
+    env::Env,
+    global::Global,
+};
 
-use crate::configs::env::Env;
-use crate::utils::misc::Misc;
-
-use crate::utils::file::FileUtils;
+use crate::utils::{
+    misc::Misc,
+    file::FileUtils,
+};
 
 #[derive(Debug, Deserialize)]
 struct Data {

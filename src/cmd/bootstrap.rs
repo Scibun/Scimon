@@ -10,8 +10,10 @@ extern crate figlet_rs;
 use colored::*;
 use figlet_rs::FIGfont;
 
-use crate::utils::misc::Misc;
-use crate::utils::validation::Validate;
+use crate::utils::{
+    misc::Misc,
+    validation::Validate
+};
 
 use crate::cmd::download::Download;
 
@@ -69,7 +71,7 @@ impl Paimon {
         Ok(())
     }
     
-    pub async fn read_paimon_file(run: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
+    pub async fn run(run: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
         if !run.starts_with("http") {
             if let Err(_) = Self::read_paimon_local_file(run, no_ignore, no_comments, kindle).await {}
         } else {
@@ -77,6 +79,7 @@ impl Paimon {
                 eprintln!("Error: {}", e);
             }
         }
+
         Ok(())
     }
     

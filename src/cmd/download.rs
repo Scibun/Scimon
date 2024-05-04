@@ -5,23 +5,26 @@ use colored::*;
 use reqwest;
 use uuid::Uuid;
 use is_url::is_url;
-use std::borrow::Cow;
-use std::error::Error;
 
-use reqwest::Url;
-use std::fs::File;
-use std::io::{Read, Write, Cursor};
-use indicatif::{ProgressBar, ProgressStyle};
-
-use crate::utils::validation::Validate;
-
-use crate::cmd::syntax::{
-    handle_comments,
-    handle_ignore_macro_flag
+use std::{
+    fs::File,
+    borrow::Cow,
+    error::Error,
+    io::{Read, Write, Cursor}
 };
 
-use crate::utils::misc::Misc;
-use crate::cmd::kindle::Kindle;
+use reqwest::Url;
+use indicatif::{ProgressBar, ProgressStyle};
+
+use crate::utils::{
+    misc::Misc,
+    validation::Validate
+};
+
+use crate::cmd::{
+    kindle::Kindle,
+    syntax::Lexico,
+};
 
 pub struct Download;
 
@@ -81,7 +84,7 @@ impl Download {
         pb.finish_with_message("Download completed!");
         
         if let Some(kindle_str) = kindle.as_ref() {
-            let _ = Kindle::send_kindle(&kindle_str, &filename);
+            let _ = Kindle::send(&kindle_str, &filename);
         }
     
         Ok(filename)
@@ -92,10 +95,10 @@ impl Download {
             line.trim()
         );
     
-        let _ = handle_comments(&processed_line, no_comments);
+        let _ = Lexico::handle_comments(&processed_line, no_comments);
         if !is_url(&processed_line) { return Ok(()); }
     
-        let result_ignore_macro_flag = handle_ignore_macro_flag(&processed_line, no_ignore);
+        let result_ignore_macro_flag = Lexico::handle_ignore_macro_flag(&processed_line, no_ignore);
         match result_ignore_macro_flag {
             Ok(new_line) => processed_line = Cow::Owned(new_line),
             Err(_) => return Ok(()),
@@ -125,4 +128,3 @@ impl Download {
     }
 
 }
-
