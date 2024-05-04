@@ -10,18 +10,13 @@ use crate::configs::global::Global;
 
 #[derive(Debug, Deserialize)]
 struct Item {
-    encrypted: bool,
-    name: String,
-    pages: u32,
-    size: String,
-    status_code: u16,
     url: String,
+    encrypted: bool,
 }
 
 #[derive(Debug, Deserialize)]
 struct Response {
     list: Vec<Item>,
-    total: u32,
 }
 
 pub struct Scrape;
