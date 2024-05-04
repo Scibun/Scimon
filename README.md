@@ -6,111 +6,24 @@ Tool to download pdfs in batches written in Rust
 >
 > ***Under in development***
 
-To build, run
+## Build
+
+To build, run (`using cargo`)
 
 ```shell
 cargo build
 ```
 
-> The directory of output is `target/release`
-
-To download files with local list
-
-```shell
-paimon -r examples/paimon-example.txt
-```
-
-To download files with remote list
-
-```shell
-paimon -r https://raw.githubusercontent.com/Ravenlib/Paimon/main/examples/paimon-example.txt
-```
-
-To download files at Monlib list
-
-```shell
-paimon -r @kremilly/title-example
-```
-
-To download files without skipping any, simply use the `--noignore` flag
-
-```shell
-paimon -r examples/paimon-example.txt --noignore
-```
-
-To skipping all comments, simply use `--no-comments` flag
-
-```shell
-paimon -r examples/paimon-example.txt --no-comments
-```
-
-To send e-book to Kindle, simply use the `--kindle` flag
-
-```shell
-paimon -r examples/paimon-example.txt --kindle <YOUR_KINDLE_EMAIL>
-```
-
-> [!important]
->
-> *P.S.: A maximum file size limit for sending to Kindle is 25 MB.*
-
 > [!note]
 >
-> *[Check out](https://www.lifewire.com/find-kindle-email-address-5271915) this tutorial to learn how to find your Kindle email address.*
+> *The directory of output is* `target/release`
 
-To publish new Monlib (*`under in development`*) list
+## Wiki
 
-```shell
-paimon --file examples/paimon-example.txt --title "Example list" --privacy public --publish
-```
+For more help and document, see our Wiki pages:
 
-Use `--options` flag for manage your settings
-
-* *api_listsopen-env*: Use `open-env` for open the .env file
-
-  ```shell
-  paimon --options open-env
-  ```
-* *force-download-env*: Use `force-download-env` for reset your  .env file
-
-  ```shell
-  paimon --options force-download-env
-  ```
-
-## Configuration's
-
-| System  | Location                                                           |
-| ------- | ------------------------------------------------------------------ |
-| Linux   | `home/<YOUR_USERNAME>/.config/Paimon/.env`                       |
-| MacOS   | `/Users/<YOUR_USERNAME>/Library/Application Support/Paimon/.env` |
-| Windows | `C:\Users\<YOUR_USERNAME>\AppData\Roaming\Paimon\.env`           |
-
-Environments of system
-
-| Name           | Description                                                    |
-| -------------- | -------------------------------------------------------------- |
-| SMTP_SERVER    | Your SMTP server address                                       |
-| SMTP_USERNAME  | Your username of SMTP server                                   |
-| SMTP_PASSWORD  | Your password of SMTP server                                   |
-| MONLIB_API_KEY | Your API key for access Monlib (*`Under in development`*) |
-
-## Macros and Comments
-
-Macros, in a computing context, are predefined sequences of commands or instructions that are executed when the macro is called. They are used to automate repetitive tasks and simplify complex processes, turning multiple instructions into a single instruction or command.
-
-Paimon supports the following macros:
-
-* *ignore*: When utilizing the `!ignore` macro, a user can specify certain URLs that they wish to bypass during the operation. For instance, if a software tool is tasked with scanning a list of URLs for updates or changes, by adding a specific URL next to the `!ignore` directive, that URL will be omitted from the scanning process.
-
-  ```shell
-  https://example.com/file.pdf !ignore
-  ```
-* *debug*:  The `!debug` macro displays specific information to the user, making it invaluable when you need to relay details to the tool's user.
-
-  ```shell
-  This is a comment that is displayed with the debug !debug
-  ```
-
-**Comments:**
-
-The tool recognizes any non-blank lines without identifiable URLs as comments and, by default, these lines are neither processed nor displayed to the user.
+* [Basic usage](https://github.com/Ravenlib/Paimon/wiki/Basic-usage)
+* [Macros &amp; Comments](https://github.com/Ravenlib/Paimon/wiki/Macros-&-Comments)
+* [Setting&#39;s](https://github.com/Ravenlib/Paimon/wiki/Settings)
+* [Send to Kindle](https://github.com/Ravenlib/Paimon/wiki/Kindle)
+* [Publish at Monlib](https://github.com/Ravenlib/Paimon/wiki/Publish-at-Monlib)
