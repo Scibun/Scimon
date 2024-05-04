@@ -55,7 +55,7 @@ pub struct ApiPublishList;
 
 impl ApiPublishList {
     
-    pub async fn publish(file_path: &str, title: &str, privacy: Option<&str>) -> Result<String, Box<dyn Error>> {
+    async fn publish_list(file_path: &str, title: &str, privacy: Option<&str>) -> Result<String, Box<dyn Error>> {
         let mut url = Global::MONLIB_API_REQUEST.to_owned();
         url.push_str(Global::API_LISTS_ENDPOINT);
         url.push_str("/create");
@@ -115,6 +115,20 @@ impl ApiPublishList {
                         format!("Error: internal server error")
                     ).into()
                 )
+            }
+        }
+    }
+
+    pub async fn publish(publish: bool, file: Option<String>, title: Option<String>, privacy: Option<String>) {
+        if publish {
+            if let (Some(file_path), Some(title)) = (file, title) {
+                let privacy = privacy;
+    
+                let _ = Self::publish_list(
+                    &file_path, &title, privacy.as_deref()
+                ).await;
+            } else {
+                eprintln!("Error: Both 'file' and 'title' are required for publishing a library.");
             }
         }
     }

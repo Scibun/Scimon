@@ -12,6 +12,10 @@ pub struct Flags {
     pub title: Option<String>,
 
     #[arg(long)]
+    /// Select the scrape mode
+    pub scrape: Option<String>,
+
+    #[arg(long)]
     /// Privacy of a new Monlib list
     pub privacy: Option<String>,
 

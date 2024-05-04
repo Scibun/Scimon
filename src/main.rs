@@ -43,17 +43,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
         }
     }
 
-    if args_parser.publish {
-        if let (Some(file_path), Some(title)) = (&args_parser.file, &args_parser.title) {
-            let privacy = args_parser.privacy.clone();
-
-            let _ = ApiPublishList::publish(
-                file_path, title, privacy.as_deref()
-            ).await;
-        } else {
-            eprintln!("Error: Both 'file' and 'title' are required for publishing a library.");
-        }
-    }
+    let _ = ApiPublishList::publish(
+        args_parser.publish, args_parser.file, args_parser.title, args_parser.privacy
+    );
     
     let options = &args_parser.options.as_deref().unwrap_or_default();
     Env::options_parser(options).await?;
