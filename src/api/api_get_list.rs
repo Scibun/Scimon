@@ -28,15 +28,13 @@ struct ErrorResponse {
 
 #[derive(Debug)]
 enum ApiError {
-    Message(String),
-    Response(ErrorResponse),
+    Message(String)
 }
 
 impl fmt::Display for ApiError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             ApiError::Message(msg) => write!(f, "{}", msg),
-            ApiError::Response(response) => write!(f, "{}", response.message),
         }
     }
 }

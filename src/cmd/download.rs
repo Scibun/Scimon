@@ -2,7 +2,6 @@ extern crate colored;
 
 use colored::*;
 
-use reqwest;
 use uuid::Uuid;
 use is_url::is_url;
 
@@ -13,7 +12,8 @@ use std::{
     io::{Read, Write, Cursor}
 };
 
-use reqwest::Url;
+use reqwest::{Url, self};
+
 use indicatif::{ProgressBar, ProgressStyle};
 
 use crate::utils::{

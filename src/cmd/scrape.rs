@@ -16,6 +16,7 @@ struct Item {
 
 #[derive(Debug, Deserialize)]
 struct Response {
+    total: u32,
     list: Vec<Item>,
 }
 
@@ -29,7 +30,6 @@ impl Scrape {
         let body = response.bytes().await?;
         
         let data: Response = serde_json::from_slice(&body)?;
-        
         Ok(data)
     }
 
@@ -37,14 +37,16 @@ impl Scrape {
         if scrape {
             match Self::fetch_items(url).await {
                 Ok(response) => {
-                    for item in response.list {
-                        if item.encrypted == false {
-                            let _ = Download::run_download_current_line(
-                                &item.url, 
-                                no_ignore, 
-                                no_comments, 
-                                kindle.clone()
-                            ).await?;
+                    if response.total > 0 {
+                        for item in response.list {
+                            if item.encrypted == false {
+                                Download::run_download_current_line(
+                                    &item.url, 
+                                    no_ignore, 
+                                    no_comments, 
+                                    kindle.clone()
+                                ).await?;
+                            }
                         }
                     }
                 }

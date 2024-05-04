@@ -1,18 +1,7 @@
 use std::{
     fs,
-    fs::File,
     path::Path,
-    io::{Read, Write},
-    io::Result as IoResult,
 };
-
-use zip::{
-    ZipWriter, 
-    CompressionMethod, 
-    write::FileOptions
-};
-
-use libflate::zlib::Encoder;
 
 pub struct FileUtils;
 
@@ -60,38 +49,6 @@ impl FileUtils {
         } else {
             Err("The specified file does not exist.")
         }
-    }
-    
-    pub fn compress_pdf_to_zip(pdf_file: &str, zip_file_name: &str) -> IoResult<String> {
-        let mut pdf_data = Vec::new();
-        File::open(pdf_file)?.read_to_end(&mut pdf_data)?;
-    
-        let zip_file = File::create(zip_file_name)?;
-        let mut zip = ZipWriter::new(zip_file);
-    
-        let options = FileOptions::default()
-            .compression_method(zip::CompressionMethod::Stored)
-            .unix_permissions(0o755)
-            .compression_method(CompressionMethod::Deflated);
-    
-        let pdf_file_name = Self::get_file_name(pdf_file).unwrap_or_else(|err| {
-            println!("{}", err);
-            "".to_string()
-        });
-    
-        zip.start_file(&pdf_file_name, options)?;
-        let encoder = Encoder::new(Vec::new())?;
-        let mut compressed_pdf = encoder.into_inner();
-        compressed_pdf.write_all(&pdf_data)?;
-        zip.write_all(&compressed_pdf)?;
-        zip.finish()?;
-    
-        let output_file_name = Self::get_file_name(zip_file_name).unwrap_or_else(|err| {
-            println!("{}", err);
-            "".to_string()
-        });
-    
-        Ok(output_file_name)
     }
 
 }
