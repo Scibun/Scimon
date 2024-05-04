@@ -1,6 +1,8 @@
-use std::error::Error;
-use std::fs::File;
-use std::io::{BufReader, BufRead};
+use std::{
+    fs::File,
+    error::Error,
+    io::{BufReader, BufRead}
+};
 
 use reqwest;
 
@@ -48,7 +50,13 @@ impl Paimon {
         for line_result in reader.lines() {
             let line = line_result?;
             let trimmed_line = line.trim();
-            let _ = Download::run_download_current_line(&trimmed_line, no_ignore, no_comments, kindle.clone()).await?;
+
+            let _ = Download::run_download_current_line(
+                &trimmed_line, 
+                no_ignore, 
+                no_comments, 
+                kindle.clone()
+            ).await?;
         }
     
         Ok(())
@@ -65,7 +73,13 @@ impl Paimon {
         for line_result in reader.lines() {
             let line = line_result?;
             let trimmed_line = line.trim();
-            let _ = Download::run_download_current_line(&trimmed_line, no_ignore, no_comments, kindle.clone()).await?;
+
+            let _ = Download::run_download_current_line(
+                &trimmed_line, 
+                no_ignore, 
+                no_comments, 
+                kindle.clone()
+            ).await?;
         }
     
         Ok(())
