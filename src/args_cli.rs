@@ -8,12 +8,16 @@ pub struct Flags {
     pub file: Option<String>,
 
     #[arg(long)]
-    /// Title of a new Monlib list
-    pub title: Option<String>,
+    /// URL for make scraping at page
+    pub url: Option<String>,
 
     #[arg(long)]
     /// Select the scrape mode
-    pub scrape: Option<String>,
+    pub scrape: bool,
+
+    #[arg(long)]
+    /// Title of a new Monlib list
+    pub title: Option<String>,
 
     #[arg(long)]
     /// Privacy of a new Monlib list

@@ -1,30 +1,64 @@
 extern crate reqwest;
-extern crate colored;
 
-use colored::*;
+use std::error::Error;
 
-use std::{
-    fmt,
-    error::Error,
-    io::{self, BufRead}
-};
-
-use serde_json::Value;
 use serde::Deserialize;
-use reqwest::{Client, header};
 
-use crate::configs::{
-    env::Env,
-    global::Global
-};
-
-use crate::utils::misc::Misc;
 use crate::cmd::download::Download;
+
+use crate::configs::global::Global;
+
+#[derive(Debug, Deserialize)]
+struct Item {
+    encrypted: bool,
+    name: String,
+    pages: u32,
+    size: String,
+    status_code: u16,
+    url: String,
+}
+
+#[derive(Debug, Deserialize)]
+struct Response {
+    list: Vec<Item>,
+    total: u32,
+}
 
 pub struct Scrape;
 
 impl Scrape {
 
-    // Coming soon...
+    async fn fetch_items(url: &str) -> Result<Response, Box<dyn std::error::Error>> {
+        let url_with_param = Global::PAIMON_SCRAPE_API_REQUEST.to_string() + url;
+        let response = reqwest::get(&url_with_param).await?;
+        let body = response.bytes().await?;
+        
+        let data: Response = serde_json::from_slice(&body)?;
+        
+        Ok(data)
+    }
+
+    pub async fn get(scrape: bool, url: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
+        if scrape {
+            match Self::fetch_items(url).await {
+                Ok(response) => {
+                    for item in response.list {
+                        if item.encrypted == false {
+                            let _ = Download::run_download_current_line(
+                                &item.url, 
+                                no_ignore, 
+                                no_comments, 
+                                kindle.clone()
+                            ).await?;
+                        }
+                    }
+                }
+                
+                Err(e) => eprintln!("Error: {}", e),
+            }
+        }
+
+        Ok(())
+    }
 
 }

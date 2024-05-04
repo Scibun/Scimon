@@ -12,6 +12,7 @@ impl Global {
     pub const APP_HOMEPAGE: &'static str = "https://github.com/Ravenlib/Paimon";
     
     pub const MONLIB_API_REQUEST: &'static str = "http://localhost/Monlib/api/";
+    pub const PAIMON_SCRAPE_API_REQUEST: &'static str = "http://localhost:5001/api?url=";
     
     // pub const API_USER_ENDPOINT: &'static str = "user";
     pub const API_LISTS_ENDPOINT: &'static str = "lists";
