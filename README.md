@@ -23,7 +23,7 @@ paimon -r examples/paimon-example.txt
 To download files with remote list
 
 ```shell
-paimon -r https://raw.githubusercontent.com/AgiosLux/Paimon/main/examples/paimon-example.txt
+paimon -r https://raw.githubusercontent.com/Ravenlib/Paimon/main/examples/paimon-example.txt
 ```
 
 To download files at Monlib list
@@ -50,8 +50,12 @@ To send e-book to Kindle, simply use the `--kindle` flag
 paimon -r examples/paimon-example.txt --kindle <YOUR_KINDLE_EMAIL>
 ```
 
+> [!important]
+>
 > *P.S.: A maximum file size limit for sending to Kindle is 25 MB.*
 
+> [!note]
+>
 > *[Check out](https://www.lifewire.com/find-kindle-email-address-5271915) this tutorial to learn how to find your Kindle email address.*
 
 To publish new Monlib (*`under in development`*) list
