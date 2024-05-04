@@ -21,7 +21,6 @@ Cargo.lock
 # End of https://www.toptal.com/developers/gitignore/api/rust
 
 # Added by cargo
-
 /target
 
 # Ignore all files downloaded
@@ -32,3 +31,6 @@ Cargo.lock
 
 # Ignore the zip files
 *.zip
+
+# Ignore JetBrains path
+.idea/
