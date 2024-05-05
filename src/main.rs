@@ -1,3 +1,4 @@
+mod ui;
 mod cmd;
 mod utils;
 mod addons;
@@ -18,6 +19,8 @@ use crate::addons::scrape::Scrape;
 
 use crate::cmd::bootstrap::Paimon;
 
+use crate::ui::ui_base::PaimonUIBase;
+
 use crate::monlib::{
     api_get_list::ApiGetList,
     api_publish_list::ApiPublishList
@@ -36,7 +39,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let run = args_parser.run.as_deref().unwrap_or_default();
 
     if !run.is_empty() {
-        Paimon::header();
+        PaimonUIBase::header();
         
         if !Misc::check_format(run) {
             let _ = Paimon::run(
