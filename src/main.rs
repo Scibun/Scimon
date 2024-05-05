@@ -1,6 +1,6 @@
-mod api;
 mod cmd;
 mod utils;
+mod monlib;
 mod configs;
 mod args_cli;
 
@@ -18,7 +18,7 @@ use crate::cmd::{
     bootstrap::Paimon,
 };
 
-use crate::api::{
+use crate::monlib::{
     api_get_list::ApiGetList,
     api_publish_list::ApiPublishList
 };

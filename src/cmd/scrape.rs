@@ -6,7 +6,7 @@ use serde::Deserialize;
 
 use crate::cmd::download::Download;
 
-use crate::configs::global::Global;
+use crate::configs::apis_uri::ApisUri;
 
 #[derive(Debug, Deserialize)]
 struct Item {
@@ -17,7 +17,7 @@ struct Item {
 #[derive(Debug, Deserialize)]
 struct Response {
     total: u32,
-    list: Vec<Item>,
+    list: Vec<Item>
 }
 
 pub struct Scrape;
@@ -25,7 +25,7 @@ pub struct Scrape;
 impl Scrape {
 
     async fn fetch_items(url: &str) -> Result<Response, Box<dyn std::error::Error>> {
-        let url_with_param = Global::PAIMON_SCRAPE_API_REQUEST.to_string() + url;
+        let url_with_param = ApisUri::PAIMON_SCRAPE_API_REQUEST.to_string() + url;
         let response = reqwest::get(&url_with_param).await?;
         let body = response.bytes().await?;
         

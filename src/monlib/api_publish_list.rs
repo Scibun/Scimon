@@ -10,7 +10,7 @@ use reqwest::{Client, header, multipart};
 
 use crate::configs::{
     env::Env,
-    global::Global,
+    apis_uri::ApisUri,
 };
 
 use crate::utils::{
@@ -54,8 +54,8 @@ pub struct ApiPublishList;
 impl ApiPublishList {
     
     async fn publish_list(file_path: &str, title: &str, privacy: Option<&str>) -> Result<String, Box<dyn Error>> {
-        let mut url = Global::MONLIB_API_REQUEST.to_owned();
-        url.push_str(Global::API_LISTS_ENDPOINT);
+        let mut url = ApisUri::MONLIB_API_REQUEST.to_owned();
+        url.push_str(ApisUri::API_LISTS_ENDPOINT);
         url.push_str("/create");
     
         let client = Client::builder().danger_accept_invalid_certs(true).build()?;

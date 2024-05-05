@@ -7,7 +7,7 @@ pub struct Flags {
     /// The paimon file to create a new Monlib list
     pub file: Option<String>,
 
-    #[arg(long)]
+    #[arg(short, long)]
     /// URL for make scraping at page
     pub url: Option<String>,
 

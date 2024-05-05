@@ -15,7 +15,7 @@ use reqwest::{Client, header};
 
 use crate::configs::{
     env::Env,
-    global::Global
+    apis_uri::ApisUri,
 };
 
 use crate::utils::misc::Misc;
@@ -47,9 +47,9 @@ impl ApiGetList {
 
     pub async fn get(list_id: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<String, Box<dyn Error>> {
         let list = Misc::remove_initial_character(list_id, '@');
-        let mut url = Global::MONLIB_API_REQUEST.to_owned();
+        let mut url = ApisUri::MONLIB_API_REQUEST.to_owned();
     
-        url.push_str(Global::API_LISTS_ENDPOINT);
+        url.push_str(ApisUri::API_LISTS_ENDPOINT);
         url.push_str("/");
         url.push_str(&list);
         url.push_str("/raw");
