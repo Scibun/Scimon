@@ -23,7 +23,8 @@ cargo build
 For more help and document, see our Wiki pages:
 
 * [Basic usage](https://github.com/Ravenlib/Paimon/wiki/Basic-usage)
-* [Macros &amp; Comments](https://github.com/Ravenlib/Paimon/wiki/Macros-&-Comments)
-* [Setting&#39;s](https://github.com/Ravenlib/Paimon/wiki/Settings)
+* [Macros & Comments](https://github.com/Ravenlib/Paimon/wiki/Macros-&-Comments)
+* [Setting's](https://github.com/Ravenlib/Paimon/wiki/Settings)
 * [Send to Kindle](https://github.com/Ravenlib/Paimon/wiki/Kindle)
+* [Scrape](https://github.com/Ravenlib/Paimon/wiki/Scrape)
 * [Publish at Monlib](https://github.com/Ravenlib/Paimon/wiki/Publish-at-Monlib)
