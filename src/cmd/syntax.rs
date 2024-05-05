@@ -10,6 +10,14 @@ pub struct Lexico;
 
 impl Lexico {
 
+    pub fn handle_get_path(line: &str) -> String {
+        if line.contains("!path") {
+            line.replace("!path", "").replace("'", "")
+        } else {
+            "".to_string()
+        }
+    }
+
     pub fn handle_comments(line: &str, no_comments: bool) -> Result<(), Box<dyn Error>> {
         if !no_comments && line.contains("!debug") {
             let comment_word: &str = "Comment"; 

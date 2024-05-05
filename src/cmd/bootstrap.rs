@@ -13,13 +13,14 @@ use colored::*;
 use figlet_rs::FIGfont;
 
 use crate::utils::{
-    misc::Misc,
-    validation::Validate
+    file::FileUtils, misc::Misc, validation::Validate
 };
 
 use crate::cmd::download::Download;
 
 use crate::configs::global::Global;
+
+use super::syntax::Lexico;
 
 pub struct Paimon;
 
@@ -43,7 +44,8 @@ impl Paimon {
             eprintln!("{}", e);
             return Err(Box::new(e));
         }
-    
+        
+        let mut path = String::new();
         let file = File::open(file_path)?;
         let reader = BufReader::new(file);
     
@@ -51,8 +53,14 @@ impl Paimon {
             let line = line_result?;
             let trimmed_line = line.trim();
 
+            if path.is_empty() {
+                path = Lexico::handle_get_path(trimmed_line);
+                let _ = FileUtils::new_path(&path);
+            }
+
             Download::download_file(
-                &trimmed_line, 
+                &trimmed_line,
+                &path,
                 no_ignore, 
                 no_comments, 
                 kindle.clone()
@@ -73,9 +81,13 @@ impl Paimon {
         for line_result in reader.lines() {
             let line = line_result?;
             let trimmed_line = line.trim();
+            
+            let path = Lexico::handle_get_path(trimmed_line);
+            let _ = FileUtils::new_path(&path);
 
             Download::download_file(
-                &trimmed_line, 
+                &trimmed_line,
+                &path,
                 no_ignore, 
                 no_comments, 
                 kindle.clone()

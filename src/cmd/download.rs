@@ -9,7 +9,7 @@ use std::{
     fs::File,
     borrow::Cow,
     error::Error,
-    io::{Read, Write, Cursor}
+    io::{Cursor, Read, Write}
 };
 
 use reqwest::{Url, self};
@@ -18,7 +18,8 @@ use indicatif::{ProgressBar, ProgressStyle};
 
 use crate::utils::{
     misc::Misc,
-    validation::Validate
+    file::FileUtils,
+    validation::Validate,
 };
 
 use crate::cmd::{
@@ -30,7 +31,7 @@ pub struct Download;
 
 impl Download {
 
-    async fn download_and_detect_name(url: &str, kindle: Option<String>) -> Result<String, Box<dyn std::error::Error>> {
+    async fn download_and_detect_name(url: &str, path: &str, kindle: Option<String>) -> Result<String, Box<dyn std::error::Error>> {
         Validate::check_url_status(url).await?;
         
         let response = reqwest::get(url).await?;
@@ -52,6 +53,7 @@ impl Download {
         let filename_option = if let Some(value) = content_disposition {
             let cd_string = value.to_str()?;
             let parts: Vec<&str> = cd_string.split("filename=").collect();
+
             if parts.len() > 1 {
                 Some(parts[1].trim_matches('"').to_string())
             } else {
@@ -70,7 +72,10 @@ impl Download {
         
         let _ = Validate::validate_file_type(&filename, ".pdf");
     
-        let mut dest = File::create(&filename)?;
+        let file_path = format!("{}/{}", path, filename);
+        let output_path = FileUtils::clean_path(&file_path);
+
+        let mut dest = File::create(&output_path)?;
         let content = response.bytes().await?;
         let mut reader = Cursor::new(content);
     
@@ -90,11 +95,11 @@ impl Download {
         Ok(filename)
     }
     
-    pub async fn download_file(line: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
+    pub async fn download_file(line: &str, path: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
         let mut processed_line: Cow<str> = Cow::Borrowed(
             line.trim()
         );
-    
+
         let _ = Lexico::handle_comments(&processed_line, no_comments);
         if !is_url(&processed_line) { return Ok(()); }
     
@@ -112,7 +117,7 @@ impl Download {
             )
         }
     
-        let result = Self::download_and_detect_name(&processed_line, kindle).await;
+        let result = Self::download_and_detect_name(&processed_line, path, kindle).await;
     
         match result {
             Ok(file_name) => {

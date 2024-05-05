@@ -1,3 +1,7 @@
+extern crate colored;
+
+use colored::*;
+
 extern crate reqwest;
 
 use std::error::Error;
@@ -37,7 +41,7 @@ impl Scrape {
         let response = reqwest::get(&url_with_param).await?;
         let body = response.bytes().await?;
         
-        let data: Response = serde_json::from_slice(&body)?;
+        let data = serde_json::from_slice(&body)?;
         Ok(data)
     }
 
@@ -47,7 +51,7 @@ impl Scrape {
                 Ok(response) => {
                     if let Some(success) = response.success {
                         if !success {
-                            eprintln!("Error: {}", response.message);
+                            eprintln!("Error: {}", response.message.red());
                             return Ok(())
                         }
                     }
@@ -59,6 +63,7 @@ impl Scrape {
                                     if !item.encrypted {
                                         Download::download_file(
                                             &item.url, 
+                                            "",
                                             no_ignore, 
                                             no_comments, 
                                             kindle.clone()
@@ -67,12 +72,12 @@ impl Scrape {
                                 }
                             }
                         } else {
-                            println!("{}", response.message);
+                            println!("{}", response.message.red());
                         }
                     }
                 }
 
-                Err(e) => eprintln!("Error: {}", e)
+                Err(e) => eprintln!("Error: {}", e.to_string().red())
             }
         }
     

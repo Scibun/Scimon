@@ -1,11 +1,31 @@
 use std::{
+    io,
     fs,
     path::Path,
+    path::PathBuf
 };
 
 pub struct FileUtils;
 
 impl FileUtils {
+
+    pub fn new_path(path: &str) -> io::Result<()> {
+        fs::create_dir(path)
+    }
+
+    pub fn clean_path(path: &str) -> PathBuf {
+        let trimmed_path = path.trim();
+        let cleaned_path = trimmed_path.replace(" ", "");
+    
+        let mut path_buf = PathBuf::new();
+        for component in cleaned_path.split('/') {
+            if !component.is_empty() && component != "." && component != ".." {
+                path_buf.push(component);
+            }
+        }
+    
+        path_buf
+    }
     
     pub fn is_file_over(path: &str, size: u32) -> bool {
         let path = Path::new(path);

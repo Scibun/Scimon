@@ -18,8 +18,15 @@ use crate::configs::{
     apis_uri::ApisUri,
 };
 
-use crate::utils::misc::Misc;
-use crate::cmd::download::Download;
+use crate::utils::{
+    misc::Misc,
+    file::FileUtils,
+};
+
+use crate::cmd::{
+    syntax::Lexico,
+    download::Download
+};
 
 #[derive(Debug, Deserialize)]
 struct ErrorResponse {
@@ -81,7 +88,16 @@ impl ApiGetList {
     
                 for line_result in lines_iter {
                     let line = line_result?;
-                    Download::download_file(&line, no_ignore, no_comments, kindle.clone()).await?;
+                    let path = Lexico::handle_get_path(&line);
+                    let _ = FileUtils::new_path(&path);
+
+                    Download::download_file(
+                        &line, 
+                        &path,
+                        no_ignore, 
+                        no_comments, 
+                        kindle.clone()
+                    ).await?;
                 }
             }
     
