@@ -1,5 +1,6 @@
 mod cmd;
 mod utils;
+mod addons;
 mod monlib;
 mod configs;
 mod args_cli;
@@ -13,10 +14,9 @@ use crate::utils::misc::Misc;
 
 use crate::configs::env::Env;
 
-use crate::cmd::{
-    scrape::Scrape,
-    bootstrap::Paimon,
-};
+use crate::addons::scrape::Scrape;
+
+use crate::cmd::bootstrap::Paimon;
 
 use crate::monlib::{
     api_get_list::ApiGetList,

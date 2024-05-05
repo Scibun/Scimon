@@ -12,9 +12,15 @@ use std::{
     io::{Cursor, Read, Write}
 };
 
-use reqwest::{Url, self};
+use reqwest::{
+    Url, 
+    self
+};
 
-use indicatif::{ProgressBar, ProgressStyle};
+use indicatif::{
+    ProgressBar, 
+    ProgressStyle
+};
 
 use crate::utils::{
     misc::Misc,
@@ -22,10 +28,9 @@ use crate::utils::{
     validation::Validate,
 };
 
-use crate::cmd::{
-    kindle::Kindle,
-    syntax::Lexico,
-};
+use crate::cmd::syntax::Lexico;
+
+use crate::addons::kindle::Kindle;
 
 pub struct Download;
 

@@ -13,14 +13,16 @@ use colored::*;
 use figlet_rs::FIGfont;
 
 use crate::utils::{
-    file::FileUtils, misc::Misc, validation::Validate
+    misc::Misc,
+    file::FileUtils,
+    validation::Validate
 };
+
+use super::syntax::Lexico;
 
 use crate::cmd::download::Download;
 
 use crate::configs::global::Global;
-
-use super::syntax::Lexico;
 
 pub struct Paimon;
 
