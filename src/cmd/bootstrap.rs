@@ -53,18 +53,22 @@ impl Paimon {
             let line = line_result?;
             let trimmed_line = line.trim();
 
-            if path.is_empty() {
-                path = Lexico::handle_get_path(trimmed_line);
-                let _ = FileUtils::new_path(&path);
-            }
+            if !Lexico::handle_check_macro_line(&trimmed_line, "open_link") {
+                if path.is_empty() {
+                    path = Lexico::handle_get_path(trimmed_line);
+                    let _ = FileUtils::new_path(&path);
+                }
 
-            Download::download_file(
-                &trimmed_line,
-                &path,
-                no_ignore, 
-                no_comments, 
-                kindle.clone()
-            ).await?;
+                Download::download_file(
+                    &trimmed_line,
+                    &path,
+                    no_ignore, 
+                    no_comments, 
+                    kindle.clone()
+                ).await?;
+            } else {
+                let _ = Misc::open_url(trimmed_line);
+            }
         }
     
         Ok(())

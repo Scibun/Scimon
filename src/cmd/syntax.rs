@@ -10,6 +10,11 @@ pub struct Lexico;
 
 impl Lexico {
 
+    pub fn handle_check_macro_line(line: &str, word: &str) -> bool {
+        let get_macro = format!("!{}", &word);
+        line.contains(&get_macro.to_string())
+    }
+
     pub fn handle_get_path(line: &str) -> String {
         if line.contains("!path") {
             line.replace("!path", "").replace("'", "")

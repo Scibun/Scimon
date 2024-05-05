@@ -1,5 +1,7 @@
 ./downloads !path
 
+https://github.com/Ravenlib/Paimon !open_link
+
 https://olacesar.com/e-books/rituais.pdf
 https://olacesar.com/e-books/biblia.pdf !ignore
 

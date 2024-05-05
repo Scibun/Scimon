@@ -82,6 +82,7 @@ impl Download {
         let mut buffer = [0; 8192];
         while let Ok(size) = reader.read(&mut buffer) {
             if size == 0 { break; }
+            
             dest.write_all(&buffer[..size])?;
             pb.inc(size as u64);
         }
@@ -101,7 +102,7 @@ impl Download {
         );
 
         let _ = Lexico::handle_comments(&processed_line, no_comments);
-        if !is_url(&processed_line) { return Ok(()); }
+        if !is_url(&processed_line) { return Ok(()) }
     
         let result_ignore_macro_flag = Lexico::handle_ignore_macro_flag(&processed_line, no_ignore);
         match result_ignore_macro_flag {
@@ -110,7 +111,7 @@ impl Download {
         }
     
         if let Err(e) = Validate::validate_url(&processed_line) {
-            eprintln!("{}", e);
+            eprintln!("Error: {}", e.to_string().red());
     
             return Err(
                 Box::new(e)
@@ -126,7 +127,7 @@ impl Download {
             },
     
             Err(e) => {
-                eprintln!("[{}] -> Error downloading or detecting the name: {}", Misc::date_time(), e);
+                eprintln!("[{}] -> Error downloading or detecting the name: {}", Misc::date_time().blue(), e.to_string().red());
                 return Err(e);
             }
         }
