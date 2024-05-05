@@ -81,7 +81,7 @@ impl ApiGetList {
     
                 for line_result in lines_iter {
                     let line = line_result?;
-                    Download::run_download_current_line(&line, no_ignore, no_comments, kindle.clone()).await?;
+                    Download::download_file(&line, no_ignore, no_comments, kindle.clone()).await?;
                 }
             }
     

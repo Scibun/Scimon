@@ -51,7 +51,7 @@ impl Paimon {
             let line = line_result?;
             let trimmed_line = line.trim();
 
-            Download::run_download_current_line(
+            Download::download_file(
                 &trimmed_line, 
                 no_ignore, 
                 no_comments, 
@@ -74,7 +74,7 @@ impl Paimon {
             let line = line_result?;
             let trimmed_line = line.trim();
 
-            Download::run_download_current_line(
+            Download::download_file(
                 &trimmed_line, 
                 no_ignore, 
                 no_comments, 

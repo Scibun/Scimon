@@ -16,8 +16,16 @@ struct Item {
 
 #[derive(Debug, Deserialize)]
 struct Response {
-    total: u32,
-    list: Vec<Item>
+    #[serde(default)]
+    total: Option<u32>,
+
+    #[serde(default)]
+    list: Vec<Item>,
+
+    #[serde(default)]
+    message: String,
+
+    success: Option<bool>
 }
 
 pub struct Scrape;
@@ -37,25 +45,38 @@ impl Scrape {
         if scrape {
             match Self::fetch_items(url).await {
                 Ok(response) => {
-                    if response.total > 0 {
-                        for item in response.list {
-                            if item.encrypted == false {
-                                Download::run_download_current_line(
-                                    &item.url, 
-                                    no_ignore, 
-                                    no_comments, 
-                                    kindle.clone()
-                                ).await?;
+                    if let Some(success) = response.success {
+                        if !success {
+                            eprintln!("Error: {}", response.message);
+                            return Ok(())
+                        }
+                    }
+    
+                    if let Some(total) = response.total {
+                        if total > 0 {
+                            if !response.list.is_empty() {
+                                for item in &response.list {
+                                    if !item.encrypted {
+                                        Download::download_file(
+                                            &item.url, 
+                                            no_ignore, 
+                                            no_comments, 
+                                            kindle.clone()
+                                        ).await?;
+                                    }
+                                }
                             }
+                        } else {
+                            println!("{}", response.message);
                         }
                     }
                 }
-                
-                Err(e) => eprintln!("Error: {}", e),
+
+                Err(e) => eprintln!("Error: {}", e)
             }
         }
-
+    
         Ok(())
     }
-
+    
 }

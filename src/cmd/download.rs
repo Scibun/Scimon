@@ -90,7 +90,7 @@ impl Download {
         Ok(filename)
     }
     
-    pub async fn run_download_current_line(line: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
+    pub async fn download_file(line: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
         let mut processed_line: Cow<str> = Cow::Borrowed(
             line.trim()
         );
