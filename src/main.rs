@@ -4,6 +4,7 @@ mod ui;
 mod cmd;
 mod utils;
 mod addons;
+mod paimon;
 mod configs;
 mod args_cli;
 
@@ -12,9 +13,10 @@ use clap::Parser;
 use std::error::Error;
 
 use crate::{
+    paimon::Paimon,
     args_cli::Flags,
+    
     configs::env::Env,
-    cmd::paimon::Paimon,
     addons::scrape::Scrape
 };
 
@@ -31,7 +33,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let options = flags.options.as_deref().unwrap_or_default();
 
     Paimon::core(run, flags.noignore, flags.no_comments, kindle_email.to_owned()).await;
-    
+
     Scrape::get(flags.scrape, url, flags.noignore, flags.no_comments).await?;
 
     Env::options_parser(options).await?;
