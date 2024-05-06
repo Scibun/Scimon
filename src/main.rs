@@ -15,15 +15,13 @@ use crate::{
     args_cli::Flags,
     configs::env::Env,
     cmd::paimon::Paimon,
-    addons::scrape::Scrape,
-    addons::monlib::Monlib,
+    addons::scrape::Scrape
 };
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
     if let Err(err) = Env::download_env_file(false).await {
-        let error = err.to_string().red();
-        eprintln!("Error: {}", error);
+        eprintln!("Error: {}", err.to_string().red());
     }
 
     let flags = Flags::parse();
@@ -33,12 +31,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let options = flags.options.as_deref().unwrap_or_default();
 
     Paimon::core(run, flags.noignore, flags.no_comments, kindle_email.to_owned()).await;
-
+    
     Scrape::get(flags.scrape, url, flags.noignore, flags.no_comments).await?;
-    
-    let _ = Monlib::publish(flags.publish, flags.file, flags.title, flags.privacy);
-    
-    Env::options_parser(options).await?;
 
+    Env::options_parser(options).await?;
     Ok(())
 }
