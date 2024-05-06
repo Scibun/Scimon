@@ -25,7 +25,6 @@ use indicatif::{
 
 use crate::{
     cmd::syntax::Lexico,
-    addons::kindle::Kindle,
 
     utils::{
         misc::Misc,
@@ -69,7 +68,7 @@ impl Download {
         Ok(final_filename)
     }
 
-    async fn make_download(url: &str, path: &str, kindle: Option<String>) -> Result<String, Box<dyn std::error::Error>> {
+    async fn make_download(url: &str, path: &str) -> Result<String, Box<dyn std::error::Error>> {
         Validate::check_url_status(url).await?;
         
         let response = reqwest::get(url).await?;
@@ -105,15 +104,10 @@ impl Download {
         }
     
         pb.finish_with_message("Download completed!");
-        
-        if let Some(kindle_str) = kindle.as_ref() {
-            let _ = Kindle::send(&kindle_str, &filename);
-        }
-    
         Ok(filename)
     }
     
-    pub async fn download_file(url: &str, path: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
+    pub async fn download_file(url: &str, path: &str, no_ignore: bool, no_comments: bool) -> Result<(), Box<dyn Error>> {
         let mut processed_line: Cow<str> = Cow::Borrowed(
             url.trim()
         );
@@ -136,7 +130,7 @@ impl Download {
         }
 
         if UrlMisc::is_pdf_file(&processed_line).await? {
-            let result = Self::make_download(&processed_line, path, kindle).await;
+            let result = Self::make_download(&processed_line, path).await;
         
             match result {
                 Ok(file_name) => {

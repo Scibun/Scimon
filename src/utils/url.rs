@@ -22,6 +22,25 @@ impl UrlMisc {
         }
     }
     
+    pub fn extract_file_name(url: &str) -> Option<String> {
+        let url_cleaned = url.split(' ').next().unwrap_or_default();
+        let re = Regex::new(RegexRules::EXTRACT_PDF_NAME).expect("Invalid regex pattern");
+
+        if let Some(captures) = re.captures(url_cleaned) {
+            let parser_filename = captures.get(1).unwrap().as_str().to_string();
+
+            let final_name = if !parser_filename.contains(".pdf") {
+                parser_filename.clone() + ".pdf"
+            } else {
+                parser_filename.clone()
+            };
+
+            Some(final_name)
+        } else {
+            None
+        }
+    }
+    
     pub async fn is_pdf_file(url: &str) -> Result<bool, Box<dyn Error>> {
         let client = reqwest::Client::new();
         let response = client.get(url).send().await?;

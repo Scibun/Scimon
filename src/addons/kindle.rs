@@ -17,6 +17,7 @@ use crate::{
     configs::env::Env,
 
     utils::{
+        url::UrlMisc,
         file::FileMisc,
         validation::Validate
     }
@@ -26,7 +27,7 @@ pub struct Kindle;
 
 impl Kindle {
 
-    pub fn send(kindle_email: &str, file: &str) -> Result<(), String> {
+    fn execute(kindle_email: &str, file: &str) -> Result<(), String> {
         if let Err(e) = Validate::validate_email(kindle_email) {
             println!("Error: {}", e.red());
         }
@@ -88,4 +89,19 @@ impl Kindle {
         }
     }
     
+    pub fn send(url: &str, path: &str, kindle_email: &str) -> Result<(), Box<dyn std::error::Error>> {
+        if let Some(filename) = UrlMisc::extract_file_name(&url) {
+            let kindle_filename = FileMisc::get_output_path(&path, &filename);
+
+            if let Some(kindle_filename_str) = kindle_filename.to_str() {
+                self::Kindle::execute(&kindle_email, kindle_filename_str)?; // Prefixo self::
+                Ok(())
+            } else {
+                Err("Failed to convert output path to string".into())
+            }
+        } else {
+            Err("Failed to extract file name from URL".into())
+        }
+    }
+
 }

@@ -3,10 +3,12 @@ use reqwest;
 use std::{
     fs::File,
     error::Error,
-    io::{BufReader, BufRead}
+    io::{BufRead, BufReader}
 };
 
 use crate::{
+    addons::kindle::Kindle,
+
     cmd::{
         syntax::Lexico,
         download::Download,
@@ -23,7 +25,7 @@ pub struct ReadList;
 
 impl ReadList {
 
-    async fn read_lines<R>(reader: R, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> where R: BufRead {
+    async fn read_lines<R>(reader: R, no_ignore: bool, no_comments: bool, send_kindle: Option<String>) -> Result<(), Box<dyn Error>> where R: BufRead {
         let mut path = String::new();
 
         for line_result in reader.lines() {
@@ -46,9 +48,12 @@ impl ReadList {
                     &url,
                     &path,
                     no_ignore,
-                    no_comments,
-                    kindle.clone()
+                    no_comments
                 ).await?;
+
+                if let Some(kindle_email) = send_kindle.as_deref() {
+                    Kindle::send(&url, &path, kindle_email)?;
+                }
             } else {
                 UrlMisc::open_url(trimmed_line);
             }

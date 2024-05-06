@@ -50,7 +50,7 @@ pub struct ApiGetList;
 
 impl ApiGetList {
 
-    pub async fn get(list_id: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<String, Box<dyn Error>> {
+    pub async fn get(list_id: &str, no_ignore: bool, no_comments: bool) -> Result<String, Box<dyn Error>> {
         let list = Misc::remove_initial_character(list_id, '@');
         let mut url = ApisUri::MONLIB_API_REQUEST.to_owned();
     
@@ -92,8 +92,7 @@ impl ApiGetList {
                         &line, 
                         &path,
                         no_ignore, 
-                        no_comments, 
-                        kindle.clone()
+                        no_comments
                     ).await?;
                 }
             }

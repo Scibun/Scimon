@@ -35,7 +35,7 @@ impl Paimon {
                 ).await;
             } else {
                 let _ = ApiGetList::get(
-                    run, no_ignore, no_comments, kindle
+                    run, no_ignore, no_comments
                 ).await;
             }
         }
