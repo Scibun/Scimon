@@ -15,7 +15,7 @@ use std::error::Error;
 use crate::{
     args_cli::Flags,
     configs::env::Env,
-    cmd::bootstrap::Paimon,
+    cmd::paimon::Paimon,
     addons::scrape::Scrape,
     monlib::api_publish_list::ApiPublishList,
 };
@@ -33,7 +33,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let run = flags.run.as_deref().unwrap_or_default();
     let options = flags.options.as_deref().unwrap_or_default();
 
-    Paimon::basic(run, flags.noignore, flags.no_comments, kindle_email.to_owned()).await;
+    Paimon::core(run, flags.noignore, flags.no_comments, kindle_email.to_owned()).await;
 
     Scrape::get(flags.scrape, url, flags.noignore, flags.no_comments, kindle_email).await?;
     

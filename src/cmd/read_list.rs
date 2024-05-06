@@ -7,25 +7,21 @@ use std::{
 };
 
 use crate::{
-    ui::ui_base::PaimonUI,
-    monlib::api_get_list::ApiGetList,
-
     cmd::{
         syntax::Lexico,
         download::Download,
     },
 
     utils::{
-        misc::Misc,
         url::UrlMisc,
         file::FileMisc,
         validation::Validate
     }
 };
 
-pub struct Paimon;
+pub struct ReadList;
 
-impl Paimon {
+impl ReadList {
 
     async fn read_lines<R>(reader: R, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> where R: BufRead {
         let mut path = String::new();
@@ -84,36 +80,6 @@ impl Paimon {
 
         Self::read_lines(reader, no_ignore, no_comments, kindle).await?;
         Ok(())
-    }
-    
-    pub async fn run(run: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
-        if !run.starts_with("http") {
-            Self::read_local_file(
-                run, no_ignore, no_comments, kindle
-            ).await?;
-        } else {
-            Self::read_remote_file(
-                run, no_ignore, no_comments, kindle
-            ).await?;
-        }
-
-        Ok(())
-    }
-
-    pub async fn basic(run: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) {
-        if !run.is_empty() {
-            PaimonUI::header();
-            
-            if !Misc::check_is_user(run) {
-                let _ = Paimon::run(
-                    run, no_ignore, no_comments, kindle
-                ).await;
-            } else {
-                let _ = ApiGetList::get(
-                    run, no_ignore, no_comments, kindle
-                ).await;
-            }
-        }
     }
 
 }
