@@ -11,7 +11,7 @@ pub struct Paimon;
 
 impl Paimon {
 
-    pub async fn get(run: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
+    async fn get(run: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
         if !run.starts_with("http") {
             ReadList::read_local_file(
                 run, no_ignore, no_comments, kindle
