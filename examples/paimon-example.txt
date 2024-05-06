@@ -5,6 +5,7 @@ https://github.com/Ravenlib/Paimon
 https://arxiv.org/pdf/2405.01513
 https://olacesar.com/e-books/rituais.pdf
 https://olacesar.com/e-books/biblia.pdf !ignore
+https://www.scielo.br/j/rdbci/a/fwDKj9FMX7YTRDgkJGG4gnR?format=pdf&lang=pt
 
 lorem ipsum dolor sit name -> This is a common comment without displayed (use macro debug to show the line)
 

@@ -14,7 +14,8 @@ use std::{
 
 use reqwest::{
     Url,
-    self
+    self,
+    header::HeaderValue
 };
 
 use indicatif::{
@@ -38,7 +39,37 @@ pub struct Download;
 
 impl Download {
 
-    pub async fn download_and_detect_name(url: &str, path: &str, kindle: Option<String>) -> Result<String, Box<dyn std::error::Error>> {
+    async fn detect_name(url: &str, content_disposition: Option<&HeaderValue>) -> Result<String, Box<dyn std::error::Error>> {
+        let filename_option = if let Some(value) = content_disposition {
+            let cd_string = value.to_str()?;
+            let parts: Vec<&str> = cd_string.split("filename=").collect();
+    
+            if parts.len() > 1 {
+                Some(parts[1].trim_matches('"').to_string())
+            } else {
+                None
+            }
+        } else {
+            let parsed_url = Url::parse(url)?;
+            parsed_url.path_segments()
+                .and_then(|segments| segments.last())
+                .map(|name| name.to_string())
+        };
+    
+        let final_filename = if let Some(ref filename) = filename_option {
+            if !filename.contains(".pdf") {
+                filename.clone() + ".pdf"
+            } else {
+                filename.clone()
+            }
+        } else {
+            format!("{}.pdf", Uuid::new_v4().to_string())
+        };
+        
+        Ok(final_filename)
+    }
+
+    async fn make_download(url: &str, path: &str, kindle: Option<String>) -> Result<String, Box<dyn std::error::Error>> {
         Validate::check_url_status(url).await?;
         
         let response = reqwest::get(url).await?;
@@ -56,27 +87,8 @@ impl Download {
             .progress_chars("#>-"));
     
         let content_disposition = response.headers().get("content-disposition");
-        
-        let filename_option = if let Some(value) = content_disposition {
-            let cd_string = value.to_str()?;
-            let parts: Vec<&str> = cd_string.split("filename=").collect();
 
-            if parts.len() > 1 {
-                Some(parts[1].trim_matches('"').to_string())
-            } else {
-                None
-            }
-        } else {
-            let parsed_url = Url::parse(url)?;
-            parsed_url.path_segments()
-                .and_then(|segments| segments.last())
-                .map(|name| name.to_string())
-        };
-        
-        let filename = filename_option.unwrap_or_else(|| {
-            format!("{}.pdf", Uuid::new_v4().to_string())
-        });
-        
+        let filename = Self::detect_name(url, content_disposition).await?;
         let _ = Validate::validate_file_type(&filename, ".pdf");
 
         let output_path = FileMisc::get_output_path(path, &filename);
@@ -124,7 +136,7 @@ impl Download {
         }
 
         if UrlMisc::is_pdf_file(&processed_line).await? {
-            let result = Self::download_and_detect_name(&processed_line, path, kindle).await;
+            let result = Self::make_download(&processed_line, path, kindle).await;
         
             match result {
                 Ok(file_name) => {
