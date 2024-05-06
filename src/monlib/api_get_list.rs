@@ -13,19 +13,17 @@ use serde_json::Value;
 use serde::Deserialize;
 use reqwest::{Client, header};
 
-use crate::configs::{
-    env::Env,
-    apis_uri::ApisUri,
-};
-
-use crate::utils::{
-    misc::Misc,
-    file::FileUtils,
-};
-
-use crate::cmd::{
-    syntax::Lexico,
-    download::Download
+use crate::{
+    configs::{
+        env::Env,
+        apis_uri::ApisUri,
+    }, utils::{
+        misc::Misc,
+        file::FileMisc,
+    }, cmd::{
+        syntax::Lexico,
+        download::Download,
+    }
 };
 
 #[derive(Debug, Deserialize)]
@@ -70,7 +68,6 @@ impl ApiGetList {
         if response.status().is_success() {
             let result = String::new();
             let mut is_json = true;
-    
             let data = response.text().await?;
     
             if let Ok(json_data) = serde_json::from_str::<Value>(&data) {
@@ -89,7 +86,7 @@ impl ApiGetList {
                 for line_result in lines_iter {
                     let line = line_result?;
                     let path = Lexico::handle_get_path(&line);
-                    let _ = FileUtils::new_path(&path);
+                    let _ = FileMisc::new_path(&path);
 
                     Download::download_file(
                         &line, 

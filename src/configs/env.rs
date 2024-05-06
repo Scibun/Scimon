@@ -15,8 +15,10 @@ use tokio::{
     io::AsyncWriteExt
 };
 
-use crate::utils::misc::Misc;
-use crate::configs::global::Global;
+use crate::{
+    utils::misc::Misc,
+    configs::global::Global
+};
 
 static LOAD_ENV:Once = Once::new();
 
@@ -59,7 +61,6 @@ impl Env {
     pub async fn force_download_env_file() -> Result<(), Box<dyn std::error::Error>> {
         let url = Global::ENV_URL;
         let output_directory = &*Global::APP_FOLDER;
-    
         let cloned_output_directory = output_directory.clone();
     
         tokio::fs::create_dir_all(cloned_output_directory).await?;
@@ -74,7 +75,8 @@ impl Env {
             file.write_all(&content).await?;
             println!("[{}] Downloaded env file", Misc::date_time().blue());
         } else {
-            eprintln!("Failed to download the file: {:?}", response.status());
+            let status_code = response.status().to_string();
+            eprintln!("Failed to download the file: {:?}", status_code.red());
         }
     
         Ok(())
@@ -103,7 +105,8 @@ impl Env {
                 println!("[{}] Downloaded env file", Misc::date_time().blue());
             }
         } else {
-            eprintln!("Failed to download the file: {:?}", response.status());
+            let status_code = response.status().to_string();
+            eprintln!("Failed to download the file: {:?}", status_code.red());
         }
     
         Ok(())

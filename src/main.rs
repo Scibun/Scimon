@@ -1,66 +1,44 @@
+extern crate colored;
+
 mod ui;
 mod cmd;
 mod utils;
-mod addons;
 mod monlib;
+mod addons;
 mod configs;
 mod args_cli;
 
+use colored::*;
 use clap::Parser;
 use std::error::Error;
 
-use crate::args_cli::Flags;
-
-use crate::utils::misc::Misc;
-
-use crate::configs::env::Env;
-
-use crate::addons::scrape::Scrape;
-
-use crate::cmd::bootstrap::Paimon;
-
-use crate::ui::ui_base::PaimonUIBase;
-
-use crate::monlib::{
-    api_get_list::ApiGetList,
-    api_publish_list::ApiPublishList
+use crate::{
+    args_cli::Flags,
+    configs::env::Env,
+    cmd::bootstrap::Paimon,
+    addons::scrape::Scrape,
+    monlib::api_publish_list::ApiPublishList,
 };
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
     if let Err(err) = Env::download_env_file(false).await {
-        eprintln!("Error: {}", err);
+        let error = err.to_string().red();
+        eprintln!("Error: {}", error);
     }
 
-    let args_parser: Flags = Flags::parse();
+    let flags = Flags::parse();
+    let kindle_email = flags.kindle;
+    let url = flags.url.as_deref().unwrap_or_default();
+    let run = flags.run.as_deref().unwrap_or_default();
+    let options = flags.options.as_deref().unwrap_or_default();
 
-    let kindle_email = args_parser.kindle;
-    let url = args_parser.url.as_deref().unwrap_or_default();
-    let run = args_parser.run.as_deref().unwrap_or_default();
+    Paimon::basic(run, flags.noignore, flags.no_comments, kindle_email.to_owned()).await;
 
-    if !run.is_empty() {
-        PaimonUIBase::header();
-        
-        if !Misc::check_format(run) {
-            let _ = Paimon::run(
-                run, args_parser.noignore, args_parser.no_comments, kindle_email.to_owned()
-            ).await;
-        } else {
-            ApiGetList::get(
-                run, args_parser.noignore, args_parser.no_comments, kindle_email.to_owned()
-            ).await?;
-        }
-    }
-
-    let _ = Scrape::get(
-        args_parser.scrape, url, args_parser.noignore, args_parser.no_comments, kindle_email,
-    ).await;
-
-    let _ = ApiPublishList::publish(
-        args_parser.publish, args_parser.file, args_parser.title, args_parser.privacy
-    );
+    Scrape::get(flags.scrape, url, flags.noignore, flags.no_comments, kindle_email).await?;
     
-    let options = &args_parser.options.as_deref().unwrap_or_default();
+    let _ = ApiPublishList::publish(flags.publish, flags.file, flags.title, flags.privacy);
+    
     Env::options_parser(options).await?;
 
     Ok(())

@@ -1,13 +1,17 @@
 use std::{
     io,
     fs,
-    path::Path,
-    path::PathBuf
+    path::{Path, PathBuf}
 };
 
-pub struct FileUtils;
+pub struct FileMisc;
 
-impl FileUtils {
+impl FileMisc {
+
+    pub fn get_output_path(path: &str, filename: &str) -> PathBuf {
+        let file_path = format!("{}/{}", path, filename);
+        Self::clean_path(&file_path)
+    }
 
     pub fn new_path(path: &str) -> io::Result<()> {
         fs::create_dir(path)

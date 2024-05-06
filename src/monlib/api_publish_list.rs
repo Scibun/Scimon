@@ -4,18 +4,19 @@ extern crate colored;
 use std::fmt;
 use webbrowser;
 use colored::*;
+
 use std::error::Error;
 use serde::Deserialize;
 use reqwest::{Client, header, multipart};
 
-use crate::configs::{
-    env::Env,
-    apis_uri::ApisUri,
-};
-
-use crate::utils::{
-    misc::Misc,
-    file::FileUtils,
+use crate::{
+    configs::{
+        env::Env,
+        apis_uri::ApisUri,
+    }, utils::{
+        misc::Misc,
+        file::FileMisc,
+    }
 };
 
 #[derive(Debug, Deserialize)]
@@ -40,11 +41,13 @@ enum ApiError {
 }
 
 impl fmt::Display for ApiError {
+
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             ApiError::Message(msg) => write!(f, "{}", msg),
         }
     }
+    
 }
 
 impl Error for ApiError {}
@@ -69,7 +72,7 @@ impl ApiPublishList {
                     file_content
                 )
                 .file_name(
-                    FileUtils::get_file_name_string(file_path)
+                    FileMisc::get_file_name_string(file_path)
                 )
             )
             .text("title", title.to_owned())

@@ -1,99 +1,119 @@
+use reqwest;
+
 use std::{
     fs::File,
     error::Error,
     io::{BufReader, BufRead}
 };
 
-use reqwest;
+use crate::{
+    ui::ui_base::PaimonUI,
+    monlib::api_get_list::ApiGetList,
 
-extern crate colored;
+    cmd::{
+        syntax::Lexico,
+        download::Download,
+    },
 
-use crate::utils::{
-    misc::Misc,
-    file::FileUtils,
-    validation::Validate
+    utils::{
+        misc::Misc,
+        url::UrlMisc,
+        file::FileMisc,
+        validation::Validate
+    }
 };
-
-use super::syntax::Lexico;
-
-use crate::cmd::download::Download;
 
 pub struct Paimon;
 
 impl Paimon {
 
-    pub async fn read_local_file(file_path: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
-        if let Err(e) = Validate::validate_file(file_path) {
-            eprintln!("{}", e);
-            return Err(Box::new(e));
-        }
-        
+    async fn read_lines<R>(reader: R, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> where R: BufRead {
         let mut path = String::new();
-        let file = File::open(file_path)?;
-        let reader = BufReader::new(file);
-    
+
         for line_result in reader.lines() {
             let line = line_result?;
             let trimmed_line = line.trim();
-
+    
             if !Lexico::handle_check_macro_line(&trimmed_line, "open_link") {
                 if path.is_empty() {
                     path = Lexico::handle_get_path(trimmed_line);
-                    let _ = FileUtils::new_path(&path);
+                    let _ = FileMisc::new_path(&path);
                 }
-
+    
+                let url = if !trimmed_line.contains("arxiv.org") {
+                    trimmed_line.to_owned()
+                } else {
+                    trimmed_line.replace("/abs/", "/pdf/")
+                };
+    
                 Download::download_file(
-                    &trimmed_line,
+                    &url,
                     &path,
-                    no_ignore, 
-                    no_comments, 
+                    no_ignore,
+                    no_comments,
                     kindle.clone()
                 ).await?;
             } else {
-                let _ = Misc::open_url(trimmed_line);
+                UrlMisc::open_url(trimmed_line);
             }
         }
     
         Ok(())
+    }    
+
+    pub async fn read_local_file(run: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
+        let _ = Validate::validate_file(run).map_err(|e| {
+            eprintln!("{}", e);
+        });
+        
+        let file = File::open(run)?;
+        let reader = BufReader::new(file);
+
+        Self::read_lines(reader, no_ignore, no_comments, kindle).await?;
+        Ok(())
     }
     
-    pub async fn read_remote_file(url: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
-        Validate::validate_file_type(url, ".txt")?;
+    pub async fn read_remote_file(run: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
+        let _ = Validate::validate_file_type(run, ".txt").map_err(|e| {
+            eprintln!("{}", e);
+        });
     
-        let response = reqwest::get(url).await?;
+        let response = reqwest::get(run).await?;
         let bytes = response.bytes().await?;
-    
-        let reader = BufReader::new(&bytes[..]);
-    
-        for line_result in reader.lines() {
-            let line = line_result?;
-            let trimmed_line = line.trim();
-            
-            let path = Lexico::handle_get_path(trimmed_line);
-            let _ = FileUtils::new_path(&path);
+        let reader: BufReader<&[u8]> = BufReader::new(&bytes[..]);
 
-            Download::download_file(
-                &trimmed_line,
-                &path,
-                no_ignore, 
-                no_comments, 
-                kindle.clone()
-            ).await?;
-        }
-    
+        Self::read_lines(reader, no_ignore, no_comments, kindle).await?;
         Ok(())
     }
     
     pub async fn run(run: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
         if !run.starts_with("http") {
-            if let Err(_) = Self::read_local_file(run, no_ignore, no_comments, kindle).await {}
+            Self::read_local_file(
+                run, no_ignore, no_comments, kindle
+            ).await?;
         } else {
-            if let Err(e) = Self::read_remote_file(run, no_ignore, no_comments, kindle).await {
-                eprintln!("Error: {}", e);
-            }
+            Self::read_remote_file(
+                run, no_ignore, no_comments, kindle
+            ).await?;
         }
 
         Ok(())
+    }
+
+    pub async fn basic(run: &str, no_ignore: bool, no_comments: bool, kindle: Option<String>) {
+        if !run.is_empty() {
+            PaimonUI::header();
+            
+            if !Misc::check_is_user(run) {
+                let _ = Paimon::run(
+                    run, no_ignore, no_comments, kindle
+                ).await;
+            } else {
+                let _ = ApiGetList::get(
+                    run, no_ignore, no_comments, kindle
+                ).await;
+            }
+        }
     }
 
 }

@@ -1,16 +1,16 @@
 extern crate colored;
+extern crate reqwest;
 
 use colored::*;
-
-extern crate reqwest;
 
 use std::error::Error;
 
 use serde::Deserialize;
 
-use crate::cmd::download::Download;
-
-use crate::configs::apis_uri::ApisUri;
+use crate::{
+    cmd::download::Download,
+    configs::apis_uri::ApisUri
+};
 
 #[derive(Debug, Deserialize)]
 struct Item {

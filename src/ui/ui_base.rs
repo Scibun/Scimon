@@ -4,13 +4,14 @@ extern crate figlet_rs;
 use colored::*;
 use figlet_rs::FIGfont;
 
-use crate::utils::misc::Misc;
+use crate::{
+    utils::misc::Misc,
+    configs::global::Global
+};
 
-use crate::configs::global::Global;
+pub struct PaimonUI;
 
-pub struct PaimonUIBase;
-
-impl PaimonUIBase {
+impl PaimonUI {
 
     pub fn header() {
         let standard_font = FIGfont::standard().unwrap();

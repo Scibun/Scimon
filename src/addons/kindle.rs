@@ -1,46 +1,48 @@
 extern crate colored;
 
+use colored::*;
+
 use lettre_email::Email;
 
 use lettre::{
-    SmtpClient, 
     Transport,
+    SmtpClient, 
     smtp::authentication::Credentials
 };
 
 use std::path::Path;
 use mime::APPLICATION_PDF;
 
-use colored::*;
+use crate::{
+    configs::env::Env,
 
-use crate::utils::{
-    file::FileUtils,
-    validation::Validate
+    utils::{
+        file::FileMisc,
+        validation::Validate
+    }
 };
-
-use crate::configs::env::Env;
 
 pub struct Kindle;
 
 impl Kindle {
 
     pub fn send(kindle_email: &str, file: &str) -> Result<(), String> {
-        if let Err(err) = Validate::validate_email(kindle_email) {
-            println!("Error: {}", err);
+        if let Err(e) = Validate::validate_email(kindle_email) {
+            println!("Error: {}", e.red());
         }
     
-        if let Err(e) = FileUtils::check_file_exists(file) {
-            println!("{}", e);
+        if let Err(e) = FileMisc::check_file_exists(file) {
+            println!("Error: {}", e.red());
         }
     
-        if FileUtils::is_file_over(file, 25) {
-            println!("Error: The file is larger than 25 MB");
+        if FileMisc::is_file_over(file, 25) {
+            println!("Error: {}", "The file is larger than 25 MB".red());
             return Ok(());
         }
     
         let file_path = Path::new(file);
-        let file_name = FileUtils::get_file_name(file).unwrap_or_else(|err| {
-            println!("{}", err);
+        let file_name = FileMisc::get_file_name(file).unwrap_or_else(|e| {
+            println!("{}", e.red());
             "".to_string()
         });
     
@@ -51,11 +53,9 @@ impl Kindle {
             .attachment_from_file(file_path, None, &APPLICATION_PDF)
             .and_then(|e| e.build()) {
                 Ok(e) => e,
-                Err(err) => {
+                Err(e) => {
                     return Err(
-                        format!(
-                            "Failed to build email: {:?}", err
-                        )
+                        format!("Failed to build email: {:?}", e.to_string().red())
                     );
                 }
             };
@@ -77,8 +77,9 @@ impl Kindle {
                 println!("-> Document sent to the Kindle, file: {}", file_name.green());
                 Ok(())
             },
+            
             Err(e) => {
-                println!("Could not send Kindle: {:?}", e);
+                println!("Could not send Kindle: {:?}", e.to_string().red());
     
                 Err(
                     format!("Could not send Kindle: {:?}", e)
