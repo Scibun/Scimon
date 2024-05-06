@@ -8,14 +8,14 @@ use std::{
     error::Error
 };
 
-use crate::configs::regex::RegexRules;
+use crate::configs::regex::RegExp;
 
 pub struct Validate;
 
 impl Validate {
 
     pub fn validate_email(email: &str) -> Result<(), String> {
-        let re = Regex::new(RegexRules::VALIDATE_EMAIL).unwrap();
+        let re = Regex::new(RegExp::VALIDATE_EMAIL).unwrap();
     
         if re.is_match(email) {
             Ok(())

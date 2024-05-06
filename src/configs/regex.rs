@@ -1,6 +1,6 @@
-pub struct RegexRules;
+pub struct RegExp;
 
-impl RegexRules {
+impl RegExp {
     
     pub const EXTRACT_URL: &'static str = r"(?P<url>https?://[^\s]+)";
     pub const EXTRACT_PDF_NAME: &'static str = r"/([^/?]+)(?:\?.*)?$";

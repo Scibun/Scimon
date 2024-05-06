@@ -1,7 +1,7 @@
 use regex::Regex;
 use std::error::Error;
 
-use crate::configs::regex::RegexRules;
+use crate::configs::regex::RegExp;
 
 pub struct UrlMisc;
 
@@ -13,7 +13,7 @@ impl UrlMisc {
     }
 
     pub fn extract_url(line: &str) -> String {
-        let re = Regex::new(RegexRules::EXTRACT_URL).unwrap();
+        let re = Regex::new(RegExp::EXTRACT_URL).unwrap();
 
         if let Some(capture) = re.find(line) {
             capture.as_str().to_string()
@@ -24,7 +24,7 @@ impl UrlMisc {
     
     pub fn extract_file_name(url: &str) -> Option<String> {
         let url_cleaned = url.split(' ').next().unwrap_or_default();
-        let re = Regex::new(RegexRules::EXTRACT_PDF_NAME).expect("Invalid regex pattern");
+        let re = Regex::new(RegExp::EXTRACT_PDF_NAME).expect("Invalid regex pattern");
 
         if let Some(captures) = re.captures(url_cleaned) {
             let parser_filename = captures.get(1).unwrap().as_str().to_string();

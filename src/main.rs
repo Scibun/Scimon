@@ -3,7 +3,6 @@ extern crate colored;
 mod ui;
 mod cmd;
 mod utils;
-mod monlib;
 mod addons;
 mod configs;
 mod args_cli;
@@ -17,7 +16,7 @@ use crate::{
     configs::env::Env,
     cmd::paimon::Paimon,
     addons::scrape::Scrape,
-    monlib::api_publish_list::ApiPublishList,
+    addons::monlib::Monlib,
 };
 
 #[tokio::main]
@@ -37,7 +36,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     Scrape::get(flags.scrape, url, flags.noignore, flags.no_comments).await?;
     
-    let _ = ApiPublishList::publish(flags.publish, flags.file, flags.title, flags.privacy);
+    let _ = Monlib::publish(flags.publish, flags.file, flags.title, flags.privacy);
     
     Env::options_parser(options).await?;
 

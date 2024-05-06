@@ -3,8 +3,8 @@ use std::error::Error;
 use crate::{
     utils::misc::Misc,
     ui::ui_base::PaimonUI,
+    addons::monlib::Monlib,
     cmd::read_list::ReadList,
-    monlib::api_get_list::ApiGetList,
 };
 
 pub struct Paimon;
@@ -34,7 +34,7 @@ impl Paimon {
                     run, no_ignore, no_comments, kindle
                 ).await;
             } else {
-                let _ = ApiGetList::get(
+                let _ = Monlib::get(
                     run, no_ignore, no_comments
                 ).await;
             }
