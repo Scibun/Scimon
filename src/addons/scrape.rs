@@ -61,9 +61,12 @@ impl Scrape {
                             if !response.list.is_empty() {
                                 for item in &response.list {
                                     if !item.encrypted {
+                                        let path = "./";
+                                        let url = &item.url;
+
                                         Download::download_file(
-                                            &item.url, 
-                                            "",
+                                            url,
+                                            path,
                                             no_ignore, 
                                             no_comments
                                         ).await?;

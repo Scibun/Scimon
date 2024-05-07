@@ -7,7 +7,11 @@ use std::{
     fs,
     fmt,
     error::Error,
-    io::{self, BufRead}
+    
+    io::{
+        self,
+        BufRead
+    }
 };
 
 use serde_json::Value;
@@ -39,11 +43,13 @@ enum ApiError {
 }
 
 impl fmt::Display for ApiError {
+
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             ApiError::Message(msg) => write!(f, "{}", msg),
         }
     }
+
 }
 
 impl Error for ApiError {}
@@ -86,12 +92,12 @@ impl Ravenlib {
                 let lines_iter = io::Cursor::new(&data).lines();
     
                 for line_result in lines_iter {
-                    let line = line_result?;
-                    let path = Lexico::handle_get_path(&line);
+                    let url = line_result?;
+                    let path = Lexico::handle_get_path(&url);
                     let _ = fs::create_dir(&path);
 
                     Download::download_file(
-                        &line, 
+                        &url, 
                         &path,
                         no_ignore, 
                         no_comments
@@ -105,7 +111,7 @@ impl Ravenlib {
     
             if let Ok(error_response) = serde_json::from_str::<ErrorResponse>(&response_text) {
                 let message = ApiError::Message(error_response.message);
-                println!("[{}] {}", Misc::date_time().blue(), message.to_string().red());
+                eprintln!("[{}] {}", Misc::date_time().blue(), message.to_string().red());
     
                 Ok(message.to_string())
             } else {

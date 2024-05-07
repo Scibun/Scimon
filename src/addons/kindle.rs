@@ -94,7 +94,9 @@ impl Kindle {
             let kindle_filename = FileMisc::get_output_path(&path, &filename);
 
             if let Some(kindle_filename_str) = kindle_filename.to_str() {
-                self::Kindle::execute(&kindle_email, kindle_filename_str)?; // Prefixo self::
+                let file = kindle_filename_str;
+                self::Kindle::execute(&kindle_email, file)?;
+                
                 Ok(())
             } else {
                 Err("Failed to convert output path to string".into())
