@@ -22,6 +22,7 @@ For more help and document, see our Wiki pages:
 
 * [Basic usage](https://github.com/Ravenlib/Paimon/wiki/Basic-usage)
 * [Macros & Comments](https://github.com/Ravenlib/Paimon/wiki/Macros-&-Comments)
+* [RenderMarkdown](https://github.com/Ravenlib/Paimon/wiki/RenderMarkdown)
 * [Setting's](https://github.com/Ravenlib/Paimon/wiki/Settings)
 * [Send to Kindle](https://github.com/Ravenlib/Paimon/wiki/Kindle)
 * [Scrape](https://github.com/Ravenlib/Paimon/wiki/Scrape)
