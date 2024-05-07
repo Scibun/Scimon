@@ -10,7 +10,7 @@ use crate::{
     configs::env::Env,
     ui::ui_base::PaimonUI,
     cmd::read_list::ReadList,
-    render::render::RenderMarkdown,
+    render::render_markdown::RenderMarkdown,
 
     addons::{
         scrape::Scrape,

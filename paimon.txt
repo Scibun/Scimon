@@ -17,7 +17,6 @@ This is a comment that is displayed with the debug !debug
 
 Tool to download pdfs in batches written in Rust
 
-> [!important]
 > ***Under in development***
 
 ## Build
@@ -28,7 +27,6 @@ To build, run (`using cargo`)
 cargo build
 ```
 
-> [!note]
 > *The directory of output is* `target/release`
 
 ## Wiki

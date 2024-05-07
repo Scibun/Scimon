@@ -24,7 +24,13 @@ pub struct ReadList;
 
 impl ReadList {
 
-    async fn read_lines<R>(reader: R, no_ignore: bool, no_comments: bool, no_open_link: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> where R: BufRead {
+    async fn read_lines<R>(
+        reader: R, 
+        no_ignore: bool, 
+        no_comments: bool, 
+        no_open_link: bool, 
+        kindle: Option<String>
+    ) -> Result<(), Box<dyn Error>> where R: BufRead {
         let mut path = String::new();
 
         for line_result in reader.lines() {
