@@ -6,6 +6,8 @@ https://arxiv.org/pdf/2405.01513
 https://olacesar.com/e-books/rituais.pdf
 https://olacesar.com/e-books/biblia.pdf !ignore
 https://www.scielo.br/j/rdbci/a/fwDKj9FMX7YTRDgkJGG4gnR?format=pdf&lang=pt
+https://en.wikipedia.org/wiki/Rust_(programming_language)
+https://en.wikipedia.org/wiki/Google
 
 lorem ipsum dolor sit name -> This is a common comment without displayed (use macro debug to show the line)
 
@@ -51,6 +53,8 @@ sys.exit()
 ~~Strike~~
 
 [Link](#)
+
+[!paimon qrcode data='https://www.google.com']
 
 [PDF Preview](https://www.mackenzie.br/fileadmin/OLD/47/Graduacao/CCBS/Cursos/Ciencias_Biologicas/1o_2012/Biblioteca_TCC_Lic/2009/2o_Semestre/Karen_e_Priscila.pdf)
 

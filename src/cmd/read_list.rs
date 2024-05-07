@@ -26,7 +26,7 @@ use crate::{
     utils::{
         url::UrlMisc,
         validation::Validate
-    }
+    },
 };
 
 pub struct ReadList;
@@ -51,11 +51,13 @@ impl ReadList {
                     path = Lexico::handle_get_path(trimmed_line);
                     let _ = fs::create_dir(&path);
                 }
+
+                let escape_quotes = UrlMisc::escape_quotes(trimmed_line);
     
-                let url = if !trimmed_line.contains("arxiv.org") {
-                    trimmed_line.to_owned()
+                let url = if !UrlMisc::check_domain(&escape_quotes, "arxiv.org") {
+                    escape_quotes.to_owned()
                 } else {
-                    trimmed_line.replace("/abs/", "/pdf/")
+                    escape_quotes.replace("/abs/", "/pdf/")
                 };
     
                 Download::download_file(

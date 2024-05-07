@@ -17,6 +17,20 @@ impl UrlMisc {
         }
     }
 
+    pub fn escape_quotes(url: &str) -> String {
+        url.replace("\"", "%22")
+    }
+    
+    pub fn get_last_part(line: &str) -> String {
+        let parts: Vec<&str> = line.split('/').collect();
+
+        if let Some(last_part) = parts.last() {
+            last_part.to_string()
+        } else {
+            String::new()
+        }
+    }
+
     pub fn open_url(url: &str, extract_url: bool) {
         let open_url = if extract_url {
             Self::extract_url(url)
@@ -27,6 +41,10 @@ impl UrlMisc {
         let _ = webbrowser::open(&open_url);
     }
     
+    pub fn check_domain(line: &str, domain: &str) -> bool {
+        line.contains(domain)
+    }
+
     pub fn extract_file_name(url: &str) -> Option<String> {
         let url_cleaned = url.split(' ').next().unwrap_or_default();
         let re = Regex::new(RegExp::EXTRACT_PDF_NAME).expect("Invalid regex pattern");

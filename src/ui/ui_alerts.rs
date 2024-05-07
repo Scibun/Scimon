@@ -56,7 +56,7 @@ impl PaimonUIAlerts {
         let current_datetime = Misc::date_time();
 
         eprintln!(
-            "[{}] -> Error downloading or detecting the name: {}", current_datetime.blue(), e.red()
+            "[{}] -> Error: downloading name: {}", current_datetime.blue(), e.red()
         );
     }
 

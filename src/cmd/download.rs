@@ -20,6 +20,7 @@ use indicatif::{
 
 use crate::{
     cmd::syntax::Lexico,
+    configs::apis_uri::ApisUri,
     ui::ui_alerts::PaimonUIAlerts,
 
     utils::{
@@ -33,10 +34,24 @@ pub struct Download;
 
 impl Download {
 
-    async fn make_download(url: &str, path: &str) -> Result<String, Box<dyn std::error::Error>> {
-        Validate::check_url_status(url).await?;  
-        let response = reqwest::get(url).await?;
+    pub async fn make_download(url: &str, path: &str) -> Result<String, Box<dyn Error>> {
+        Validate::check_url_status(url).await?;
         
+        let response;
+        let filename;
+    
+        if UrlMisc::check_domain(url, "wikipedia.org") {
+            let wiki_name = UrlMisc::get_last_part(url);
+            let request_url = ApisUri::WIKIPEDIA_API_REQUEST_PDF.to_string() + &wiki_name;
+
+            response = reqwest::get(&request_url).await?;
+            filename = format!("{}.pdf", wiki_name);
+        } else {
+            response = reqwest::get(url).await?;
+            let content_disposition = response.headers().get("content-disposition");
+            filename = FileMisc::detect_name(url, content_disposition).await?;
+        }
+    
         let total_size = response
             .headers()
             .get(reqwest::header::CONTENT_LENGTH)
@@ -49,13 +64,8 @@ impl Download {
             .template("{spinner:.green} [{elapsed_precise}] [{wide_bar:.cyan/blue}] {bytes}/{total_bytes} ({eta})")
             .progress_chars("#>-"));
     
-        let content_disposition = response.headers().get("content-disposition");
-
-        let filename = FileMisc::detect_name(url, content_disposition).await?;
         let output_path = FileMisc::get_output_path(path, &filename);
-
         let _ = Validate::validate_file_type(&filename, ".pdf");
-
         let mut dest = File::create(&output_path)?;
         let content = response.bytes().await?;
         let mut reader = Cursor::new(content);
@@ -70,8 +80,8 @@ impl Download {
     
         pb.finish_with_message("Download completed!");
         Ok(filename)
-    }
-    
+    }    
+
     pub async fn download_file(url: &str, path: &str, no_ignore: bool, no_comments: bool) -> Result<(), Box<dyn Error>> {
         let mut processed_line: Cow<str> = Cow::Borrowed(
             url.trim()
@@ -94,18 +104,18 @@ impl Download {
             )
         }
 
-        if UrlMisc::is_pdf_file(&processed_line).await? {
+        if UrlMisc::is_pdf_file(&processed_line).await? || UrlMisc::check_domain(url, "wikipedia.org") {
             let result = Self::make_download(&processed_line, path).await;
-        
+            
             match result {
                 Ok(file) => {
                     PaimonUIAlerts::success_download(&file);
                 },
-        
                 Err(e) => {
                     PaimonUIAlerts::error_download(e);
                 }
             }
+            
         }
 
         Ok(())
