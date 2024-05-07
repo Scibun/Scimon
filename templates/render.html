@@ -9,6 +9,7 @@
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism.min.css'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism-okaidia.min.css'>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v6.5.2/css/all.css'>
     <style>
         * {
             margin: 0;
@@ -18,6 +19,10 @@
         
         body{
             padding: 1em;
+        }
+
+        #pdfLinksList > p > i{
+            padding-right: .5em;
         }
     </style>
 </head>
@@ -49,7 +54,7 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-go.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-rust.min.js'></script>
     <script>
-        mermaid.initialize({theme:'dark',securityLevel:'loose'});let mermaidCodeBlocks=document.querySelectorAll('.language-mermaid');mermaidCodeBlocks.forEach(e=>{e.classList.remove('language-mermaid'),e.classList.add('diagram-mermaid')}),mermaidCodeBlocks.forEach(e=>{let a=document.createElement('div');a.classList.add('mermaid'),a.textContent=e.textContent,e.textContent='',e.appendChild(a),mermaid.init(void 0,a)});
+        mermaid.initialize({theme:'dark',securityLevel:'loose'});let mermaidCodeBlocks=document.querySelectorAll('.language-mermaid');mermaidCodeBlocks.forEach(e=>{e.classList.remove('language-mermaid'),e.classList.add('diagram-mermaid')}),mermaidCodeBlocks.forEach(e=>{let a=document.createElement('div');a.classList.add('mermaid'),a.textContent=e.textContent,e.textContent='',e.appendChild(a),mermaid.init(void 0,a)});const DocsSources=(()=>{let e=()=>{let e=document.createElement('div');e.id='pdfLinksList';let t=document.createElement('p'),n=document.createElement('i');n.className='fa-solid fa-paperclip',t.appendChild(n),t.appendChild(document.createTextNode('Documents:')),e.appendChild(t),document.body.appendChild(e)},t=e=>!!(e.endsWith('.pdf')||e.endsWith('.docx')||e.endsWith('.epub')||e.endsWith('.mobi')||e.endsWith('.doc')||e.endsWith('.rst')||e.endsWith('.yml')||e.endsWith('.yaml')||e.endsWith('.json')||e.endsWith('.toml')||e.endsWith('.7z')||e.endsWith('.zip')||e.endsWith('.rar')||e.endsWith('.tar')||e.endsWith('.tar.gz')||e.endsWith('.gz')||e.endsWith('.bin')||e.endsWith('.img')),n=()=>{let e=[];Array.from(document.querySelectorAll('a')).forEach(n=>{let d=n.href;if(t(d)){let i=d.split('/').pop();e.some(e=>e.name===i)||e.push({name:i,url:d})}});let n=document.createElement('ul'),d=document.getElementById('pdfLinksList');e.forEach(e=>{let t=document.createElement('li'),d=document.createElement('a');d.href=e.url,d.target='_blank',d.textContent=e.name,t.appendChild(d),n.appendChild(t)}),d.appendChild(n)};e(),n()})();
     </script>
 </body>
 </html>
