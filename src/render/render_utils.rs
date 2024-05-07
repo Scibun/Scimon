@@ -27,8 +27,6 @@ impl RenderMarkdownUtils {
 
     fn inject_content_template_file(file: &str, contents: String, markdown_html: String) -> String {
         contents.replace(
-            "{{ css_file_base }}", &RenderMarkdownEnv::README_CSS_BASE_FILE
-        ).replace(
             "{{ app_name }}", &RenderMarkdownEnv::README_APP_NAME
         ).replace(
             "{{ list_name }}", &file

@@ -1,5 +1,3 @@
-extern crate colored;
-
 use clap::Parser;
 use std::error::Error;
 

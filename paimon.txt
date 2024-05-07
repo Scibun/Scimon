@@ -13,30 +13,76 @@ This is a comment that is displayed with the debug !debug
 
 !readme
 
-# Paimon
+![cover](https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F48fagykg1pynim5t3fv9.png)
 
-Tool to download pdfs in batches written in Rust
+# Header 1
 
-> ***Under in development***
+## Header 2
 
-## Build
+### Header 3
 
-To build, run (`using cargo`)
+#### Header 4
 
-```shell
-cargo build
+##### Header 5
+
+###### Header 6
+
+A short description
+
+```python
+import sys
+
+print('hello')
+sys.exit()
 ```
 
-> *The directory of output is* `target/release`
+* Exemplo 1
+* Exemplo 2
+* Exemplo 3
 
-## Wiki
+1. Exemplo 1
+2. Exemplo 2
+3. Exemplo 3
 
-For more help and document, see our Wiki pages:
+**Bold**
 
-* [Basic usage](https://github.com/Ravenlib/Paimon/wiki/Basic-usage)
-* [Macros & Comments](https://github.com/Ravenlib/Paimon/wiki/Macros-&-Comments)
-* [Setting's](https://github.com/Ravenlib/Paimon/wiki/Settings)
-* [Send to Kindle](https://github.com/Ravenlib/Paimon/wiki/Kindle)
-* [Scrape](https://github.com/Ravenlib/Paimon/wiki/Scrape)
+*Italic*
+
+~~Strike~~
+
+[Link](#)
+
+[PDF Preview](https://www.mackenzie.br/fileadmin/OLD/47/Graduacao/CCBS/Cursos/Ciencias_Biologicas/1o_2012/Biblioteca_TCC_Lic/2009/2o_Semestre/Karen_e_Priscila.pdf)
+
+[Microsoft](https://en.wikipedia.org/Microsoft)
+
+[Hello world](https://en.wikipedia.org/wiki/%22Hello,_World!%22_program)
+
+* [ ] TODO 1
+* [X] TODO 2
+* [X] TODO 3
+
+> Citation
+
+`Inline code`
+
+| col1 | col2 | col3 |
+| ---- | ---- | ---- |
+| row  | row  | row  |
+| row  | row  | row  |
+
+$$
+e^{i\pi} + 1 = 0
+$$
+
+```mermaid
+graph TD
+    A[Square Rect] -- Link text --> B((Circle))
+    A --> C(Round Rect)
+    B --> D{Rhombus}
+    C --> D
+```
+
+<a href='#'>Link from HTML tag</a>
 
 !end_readme
