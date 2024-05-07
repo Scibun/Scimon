@@ -1,7 +1,6 @@
 extern crate colored;
 
 use colored::*;
-
 use uuid::Uuid;
 use is_url::is_url;
 
@@ -69,8 +68,7 @@ impl Download {
     }
 
     async fn make_download(url: &str, path: &str) -> Result<String, Box<dyn std::error::Error>> {
-        Validate::check_url_status(url).await?;
-        
+        Validate::check_url_status(url).await?;  
         let response = reqwest::get(url).await?;
         
         let total_size = response

@@ -17,11 +17,15 @@ pub struct Flags {
 
     #[arg(long)]
     /// No ignore any pdf files
-    pub noignore: bool,
+    pub no_ignore: bool,
 
     #[arg(long)]
     /// Disable the comments and !debug macro
     pub no_comments: bool,
+
+    #[arg(long)]
+    /// Disable !open_link macro
+    pub no_open_link: bool,
 
     #[arg(long)]
     /// Your Kindle email for send the ebooks for your account

@@ -7,11 +7,6 @@ pub struct UrlMisc;
 
 impl UrlMisc {
 
-    pub fn open_url(line: &str) {
-        let get_url = Self::extract_url(line);
-        let _ = webbrowser::open(&get_url);
-    }
-
     pub fn extract_url(line: &str) -> String {
         let re = Regex::new(RegExp::EXTRACT_URL).unwrap();
 
@@ -20,6 +15,16 @@ impl UrlMisc {
         } else {
             String::new()
         }
+    }
+
+    pub fn open_url(url: &str, extract_url: bool) {
+        let open_url = if extract_url {
+            Self::extract_url(url)
+        } else {
+            url.to_string()
+        };
+
+        let _ = webbrowser::open(&open_url);
     }
     
     pub fn extract_file_name(url: &str) -> Option<String> {

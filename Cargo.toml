@@ -27,3 +27,4 @@ chrono = "0.4"
 serde_json = "1.0"
 serde = { version = "1", features = ["derive"] }
 webbrowser = "1.0.0"
+pulldown-cmark = "0.10"

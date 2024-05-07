@@ -4,6 +4,7 @@ extern crate colored;
 use colored::*;
 
 use std::{
+    fs,
     fmt,
     error::Error,
     io::{self, BufRead}
@@ -14,13 +15,14 @@ use serde::Deserialize;
 use reqwest::{Client, header};
 
 use crate::{
+    utils::misc::Misc,
+
     configs::{
         env::Env,
         apis_uri::ApisUri,
-    }, utils::{
-        misc::Misc,
-        file::FileMisc,
-    }, cmd::{
+    }, 
+    
+    cmd::{
         syntax::Lexico,
         download::Download,
     }
@@ -86,7 +88,7 @@ impl Ravenlib {
                 for line_result in lines_iter {
                     let line = line_result?;
                     let path = Lexico::handle_get_path(&line);
-                    let _ = FileMisc::new_path(&path);
+                    let _ = fs::create_dir(&path);
 
                     Download::download_file(
                         &line, 

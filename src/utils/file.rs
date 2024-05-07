@@ -1,5 +1,4 @@
 use std::{
-    io,
     fs,
     path::{Path, PathBuf}
 };
@@ -8,13 +7,13 @@ pub struct FileMisc;
 
 impl FileMisc {
 
+    pub fn check_path_exists(path: &str) -> bool {
+        Path::new(&path).exists()
+    }
+
     pub fn get_output_path(path: &str, filename: &str) -> PathBuf {
         let file_path = format!("{}/{}", path, filename);
         Self::clean_path(&file_path)
-    }
-
-    pub fn new_path(path: &str) -> io::Result<()> {
-        fs::create_dir(path)
     }
 
     pub fn clean_path(path: &str) -> PathBuf {

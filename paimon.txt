@@ -1,6 +1,6 @@
 ./downloads !path
 
-https://github.com/Ravenlib/Paimon
+https://github.com/Kremilly !open_link
 
 https://arxiv.org/pdf/2405.01513
 https://olacesar.com/e-books/rituais.pdf
@@ -10,3 +10,35 @@ https://www.scielo.br/j/rdbci/a/fwDKj9FMX7YTRDgkJGG4gnR?format=pdf&lang=pt
 lorem ipsum dolor sit name -> This is a common comment without displayed (use macro debug to show the line)
 
 This is a comment that is displayed with the debug !debug
+
+!readme
+
+# Paimon
+
+Tool to download pdfs in batches written in Rust
+
+> [!important]
+> ***Under in development***
+
+## Build
+
+To build, run (`using cargo`)
+
+```shell
+cargo build
+```
+
+> [!note]
+> *The directory of output is* `target/release`
+
+## Wiki
+
+For more help and document, see our Wiki pages:
+
+* [Basic usage](https://github.com/Ravenlib/Paimon/wiki/Basic-usage)
+* [Macros & Comments](https://github.com/Ravenlib/Paimon/wiki/Macros-&-Comments)
+* [Setting's](https://github.com/Ravenlib/Paimon/wiki/Settings)
+* [Send to Kindle](https://github.com/Ravenlib/Paimon/wiki/Kindle)
+* [Scrape](https://github.com/Ravenlib/Paimon/wiki/Scrape)
+
+!end_readme
