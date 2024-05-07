@@ -1,7 +1,6 @@
 extern crate colored;
 
 use reqwest;
-use colored::*;
 
 use std::{
     env,
@@ -16,8 +15,8 @@ use tokio::{
 };
 
 use crate::{
-    utils::misc::Misc,
-    configs::global::Global
+    configs::global::Global,
+    ui::ui_alerts::PaimonUIAlerts,
 };
 
 static LOAD_ENV:Once = Once::new();
@@ -73,10 +72,10 @@ impl Env {
             let content = response.bytes().await?;
     
             file.write_all(&content).await?;
-            println!("[{}] Downloaded env file", Misc::date_time().blue());
+            PaimonUIAlerts::success_env();
         } else {
             let status_code = response.status().to_string();
-            eprintln!("Failed to download the file: {:?}", status_code.red());
+            PaimonUIAlerts::error_env(&status_code);
         }
     
         Ok(())
@@ -102,11 +101,11 @@ impl Env {
             }
     
             if print == true {
-                println!("[{}] Downloaded env file", Misc::date_time().blue());
+                PaimonUIAlerts::success_env();
             }
         } else {
             let status_code = response.status().to_string();
-            eprintln!("Failed to download the file: {:?}", status_code.red());
+            PaimonUIAlerts::error_env(&status_code);
         }
     
         Ok(())

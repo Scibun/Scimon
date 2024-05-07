@@ -1,6 +1,5 @@
 extern crate colored;
 
-use colored::*;
 use clap::Parser;
 use std::error::Error;
 
@@ -8,9 +7,13 @@ use crate::{
     args_cli::Flags,
     utils::misc::Misc,
     configs::env::Env,
-    ui::ui_base::PaimonUI,
     cmd::read_list::ReadList,
     render::render_markdown::RenderMarkdown,
+
+    ui::{
+        ui_base::PaimonUI,
+        ui_alerts::PaimonUIAlerts,
+    },
 
     addons::{
         scrape::Scrape,
@@ -44,7 +47,7 @@ impl Paimon {
 
     pub async fn init() -> Result<(), Box<dyn Error>> {
         if let Err(err) = Env::download_env_file(false).await {
-            eprintln!("Error: {}", err.to_string().red());
+            PaimonUIAlerts::generic_error(&err.to_string());
         }
 
         let flags = Flags::parse();

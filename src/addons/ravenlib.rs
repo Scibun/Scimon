@@ -1,7 +1,4 @@
 extern crate reqwest;
-extern crate colored;
-
-use colored::*;
 
 use std::{
     fs,
@@ -20,6 +17,7 @@ use reqwest::{Client, header};
 
 use crate::{
     utils::misc::Misc,
+    ui::ui_alerts::PaimonUIAlerts,
 
     configs::{
         env::Env,
@@ -111,7 +109,7 @@ impl Ravenlib {
     
             if let Ok(error_response) = serde_json::from_str::<ErrorResponse>(&response_text) {
                 let message = ApiError::Message(error_response.message);
-                eprintln!("[{}] {}", Misc::date_time().blue(), message.to_string().red());
+                PaimonUIAlerts::generic_error(&message.to_string());
     
                 Ok(message.to_string())
             } else {

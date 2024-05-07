@@ -1,20 +1,16 @@
-extern crate colored;
-
-use colored::*;
-use uuid::Uuid;
+use reqwest;
 use is_url::is_url;
 
 use std::{
     fs::File,
     borrow::Cow,
     error::Error,
-    io::{Cursor, Read, Write}
-};
 
-use reqwest::{
-    Url,
-    self,
-    header::HeaderValue
+    io::{
+        Read,
+        Write,
+        Cursor,
+    }
 };
 
 use indicatif::{
@@ -24,48 +20,18 @@ use indicatif::{
 
 use crate::{
     cmd::syntax::Lexico,
+    ui::ui_alerts::PaimonUIAlerts,
 
     utils::{
-        misc::Misc,
         url::UrlMisc,
         file::FileMisc,
-        validation::Validate,
+        validation::Validate
     }
 };
 
 pub struct Download;
 
 impl Download {
-
-    async fn detect_name(url: &str, content_disposition: Option<&HeaderValue>) -> Result<String, Box<dyn std::error::Error>> {
-        let filename_option = if let Some(value) = content_disposition {
-            let cd_string = value.to_str()?;
-            let parts: Vec<&str> = cd_string.split("filename=").collect();
-    
-            if parts.len() > 1 {
-                Some(parts[1].trim_matches('"').to_string())
-            } else {
-                None
-            }
-        } else {
-            let parsed_url = Url::parse(url)?;
-            parsed_url.path_segments()
-                .and_then(|segments| segments.last())
-                .map(|name| name.to_string())
-        };
-    
-        let final_filename = if let Some(ref filename) = filename_option {
-            if !filename.contains(".pdf") {
-                filename.clone() + ".pdf"
-            } else {
-                filename.clone()
-            }
-        } else {
-            format!("{}.pdf", Uuid::new_v4().to_string())
-        };
-        
-        Ok(final_filename)
-    }
 
     async fn make_download(url: &str, path: &str) -> Result<String, Box<dyn std::error::Error>> {
         Validate::check_url_status(url).await?;  
@@ -85,10 +51,11 @@ impl Download {
     
         let content_disposition = response.headers().get("content-disposition");
 
-        let filename = Self::detect_name(url, content_disposition).await?;
+        let filename = FileMisc::detect_name(url, content_disposition).await?;
+        let output_path = FileMisc::get_output_path(path, &filename);
+
         let _ = Validate::validate_file_type(&filename, ".pdf");
 
-        let output_path = FileMisc::get_output_path(path, &filename);
         let mut dest = File::create(&output_path)?;
         let content = response.bytes().await?;
         let mut reader = Cursor::new(content);
@@ -120,7 +87,7 @@ impl Download {
         }
     
         if let Err(e) = Validate::validate_url(&processed_line) {
-            eprintln!("Error: {}", e.to_string().red());
+            PaimonUIAlerts::generic_error(&e.to_string());
     
             return Err(
                 Box::new(e)
@@ -131,14 +98,12 @@ impl Download {
             let result = Self::make_download(&processed_line, path).await;
         
             match result {
-                Ok(file_name) => {
-                    println!("[{}] -> Downloaded file name: {}", Misc::date_time().blue(), file_name.green());
-                    return Ok(())
+                Ok(file) => {
+                    PaimonUIAlerts::success_download(&file);
                 },
         
                 Err(e) => {
-                    eprintln!("[{}] -> Error downloading or detecting the name: {}", Misc::date_time().blue(), e.to_string().red());
-                    return Err(e);
+                    PaimonUIAlerts::error_download(e);
                 }
             }
         }

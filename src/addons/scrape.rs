@@ -1,7 +1,4 @@
-extern crate colored;
 extern crate reqwest;
-
-use colored::*;
 
 use std::error::Error;
 
@@ -9,7 +6,8 @@ use serde::Deserialize;
 
 use crate::{
     cmd::download::Download,
-    configs::apis_uri::ApisUri
+    configs::apis_uri::ApisUri,
+    ui::ui_alerts::PaimonUIAlerts,
 };
 
 #[derive(Debug, Deserialize)]
@@ -51,7 +49,7 @@ impl Scrape {
                 Ok(response) => {
                     if let Some(success) = response.success {
                         if !success {
-                            eprintln!("Error: {}", response.message.red());
+                            PaimonUIAlerts::generic_error(&response.message);
                             return Ok(())
                         }
                     }
@@ -74,12 +72,12 @@ impl Scrape {
                                 }
                             }
                         } else {
-                            println!("{}", response.message.red());
+                            PaimonUIAlerts::generic_error(&response.message);
                         }
                     }
                 }
 
-                Err(e) => eprintln!("Error: {}", e.to_string().red())
+                Err(e) => PaimonUIAlerts::generic_error(&e.to_string())
             }
         }
     

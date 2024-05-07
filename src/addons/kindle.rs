@@ -15,6 +15,7 @@ use mime::APPLICATION_PDF;
 
 use crate::{
     configs::env::Env,
+    ui::ui_alerts::PaimonUIAlerts,
 
     utils::{
         url::UrlMisc,
@@ -29,21 +30,20 @@ impl Kindle {
 
     fn execute(kindle_email: &str, file: &str) -> Result<(), String> {
         if let Err(e) = Validate::validate_email(kindle_email) {
-            println!("Error: {}", e.red());
+            PaimonUIAlerts::generic_error(&e);
         }
     
         if let Err(e) = FileMisc::check_file_exists(file) {
-            println!("Error: {}", e.red());
+            PaimonUIAlerts::generic_error(&e);
         }
     
         if FileMisc::is_file_over(file, 25) {
-            println!("Error: {}", "The file is larger than 25 MB".red());
-            return Ok(());
+            PaimonUIAlerts::generic_error("The file is larger than 25 MB");
         }
     
         let file_path = Path::new(file);
         let file_name = FileMisc::get_file_name(file).unwrap_or_else(|e| {
-            println!("{}", e.red());
+            PaimonUIAlerts::generic_error(&e);
             "".to_string()
         });
     
@@ -54,6 +54,7 @@ impl Kindle {
             .attachment_from_file(file_path, None, &APPLICATION_PDF)
             .and_then(|e| e.build()) {
                 Ok(e) => e,
+
                 Err(e) => {
                     return Err(
                         format!("Failed to build email: {:?}", e.to_string().red())
@@ -75,12 +76,12 @@ impl Kindle {
     
         match mailer.send(email.into()) {
             Ok(_) => {
-                println!("-> Document sent to the Kindle, file: {}", file_name.green());
+                PaimonUIAlerts::success_kindle(&file_name);
                 Ok(())
             },
             
             Err(e) => {
-                println!("Could not send Kindle: {:?}", e.to_string().red());
+                PaimonUIAlerts::error_kindle(&e.to_string());
     
                 Err(
                     format!("Could not send Kindle: {:?}", e)

@@ -2,12 +2,21 @@ use reqwest;
 
 use std::{
     error::Error,
-    fs::{self, File},
-    io::{BufRead, BufReader}
+
+    fs::{
+        self,
+        File,
+    },
+
+    io::{
+        BufRead,
+        BufReader,
+    }
 };
 
 use crate::{
     addons::kindle::Kindle,
+    ui::ui_alerts::PaimonUIAlerts,
 
     cmd::{
         syntax::Lexico,
@@ -71,7 +80,7 @@ impl ReadList {
 
     pub async fn read_local_file(run: &str, no_ignore: bool, no_comments: bool, no_open_link: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
         let _ = Validate::validate_file(run).map_err(|e| {
-            eprintln!("{}", e);
+            PaimonUIAlerts::generic_error(&e.to_string());
         });
         
         let file = File::open(run)?;
@@ -83,7 +92,7 @@ impl ReadList {
     
     pub async fn read_remote_file(run: &str, no_ignore: bool, no_comments: bool, no_open_link: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
         let _ = Validate::validate_file_type(run, ".txt").map_err(|e| {
-            eprintln!("{}", e);
+            PaimonUIAlerts::generic_error(&e.to_string());
         });
     
         let response = reqwest::get(run).await?;

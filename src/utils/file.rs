@@ -1,6 +1,19 @@
+use uuid::Uuid;
+
 use std::{
     fs,
-    path::{Path, PathBuf}
+    error::Error,
+
+    path::{
+        Path, 
+        PathBuf
+    }
+};
+
+use reqwest::{
+    Url,
+    self,
+    header::HeaderValue
 };
 
 pub struct FileMisc;
@@ -63,6 +76,38 @@ impl FileMisc {
         } else {
             Err("The specified file does not exist.")
         }
+    }
+
+    pub async fn detect_name(url: &str, content_disposition: Option<&HeaderValue>) -> Result<String, Box<dyn Error>> {
+        let filename_option = if let Some(value) = content_disposition {
+            let cd_string = value.to_str()?;
+            let parts: Vec<&str> = cd_string.split("filename=").collect();
+    
+            if parts.len() > 1 {
+                Some(parts[1].trim_matches('"').to_string())
+            } else {
+                None
+            }
+        } else {
+            let parsed_url = Url::parse(url)?;
+            parsed_url.path_segments()
+                .and_then(|segments| segments.last())
+                .map(|name| name.to_string())
+        };
+    
+        let final_filename = if let Some(ref filename) = filename_option {
+            if !filename.contains(".pdf") {
+                filename.clone() + ".pdf"
+            } else {
+                filename.clone()
+            }
+        } else {
+            format!(
+                "{}.pdf", Uuid::new_v4().to_string()
+            )
+        };
+        
+        Ok(final_filename)
     }
 
 }
