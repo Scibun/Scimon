@@ -16,6 +16,7 @@ use pulldown_cmark::{
 
 use crate::{
     configs::global::Global,
+    render::render_env::RenderEnv,
 
     utils::{
         url::UrlMisc,
@@ -28,7 +29,7 @@ pub struct RenderMarkdown;
 impl RenderMarkdown {
 
     fn get_output_path() -> String {
-        let path_buf = &*Global::README_FOLDER;
+        let path_buf = &*RenderEnv::README_FOLDER;
         let path = path_buf.to_str().unwrap();
 
         if !FileMisc::check_path_exists(&path) {
@@ -78,7 +79,7 @@ impl RenderMarkdown {
 
     fn render_content(markdown_html: String, file: &str) -> String {
         let contents = fs::read_to_string(
-            Global::README_TEMPLATE_FILE
+            RenderEnv::README_TEMPLATE_FILE
         ).expect(
             &"Unable to read readme.html file".to_string().red()
         );
@@ -90,6 +91,10 @@ impl RenderMarkdown {
         );
 
         contents.replace(
+            "{{ css_file_base }}", &RenderEnv::README_CSS_BASE_FILE
+        ).replace(
+            "{{ app_name }}", &Global::APP_NAME
+        ).replace(
             "{{ list_name }}", &file
         ).replace(
             "{{ markdown_content }}", &markdown_html

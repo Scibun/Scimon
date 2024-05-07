@@ -3,11 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paimon -> {{ list_name }} > README</title>
+    <title>{{ app_name }} -> {{ list_name }} -> README</title>
+    <link rel='stylesheet' href='{{ css_file_base }}'>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body{
+            padding: 1em;
+        }
+    </style>
 </head>
-<body>
-    <div>
-        {{ markdown_content }}
-    </div>
+<body class='markdown-body'>
+    {{ markdown_content }}
 </body>
 </html>
