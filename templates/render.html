@@ -7,6 +7,8 @@
     
     <!-- NOT MODIFIED THIS -->
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism.min.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism-okaidia.min.css'>
     <style>
         * {
             margin: 0;
@@ -26,6 +28,26 @@
     <!-- Adds support for extra plugins -->
     <script src='https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/prism.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-markup.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-css.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-c.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-clike.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-javascript.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-java.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-php.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-python.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-ruby.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-sql.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-swift.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-typescript.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-dart.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-aspnet.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-bash.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-csharp.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-fortran.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-go.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-rust.min.js'></script>
     <script>
         mermaid.initialize({theme:'dark',securityLevel:'loose'});let mermaidCodeBlocks=document.querySelectorAll('.language-mermaid');mermaidCodeBlocks.forEach(e=>{e.classList.remove('language-mermaid'),e.classList.add('diagram-mermaid')}),mermaidCodeBlocks.forEach(e=>{let a=document.createElement('div');a.classList.add('mermaid'),a.textContent=e.textContent,e.textContent='',e.appendChild(a),mermaid.init(void 0,a)});
     </script>
