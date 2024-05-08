@@ -14,7 +14,8 @@ use pulldown_cmark::{
 
 use crate::render::{
     render_env::RenderMarkdownEnv,
-    injection::render_inject::RenderMarkdownInject
+    injection::render_inject::RenderMarkdownInject,
+    extra::render_extra_qrcode::RenderMarkdownExtraQrCode,
 };
 
 pub struct RenderMarkdownUtils;
@@ -43,7 +44,8 @@ impl RenderMarkdownUtils {
             let end_index = end_match.start() + "!end_readme".len();
         
             let markdown_block = &contents[start_index..end_index];
-            let parser = Parser::new_ext(&markdown_block, Options::all());
+            let markdown_block_extra = &RenderMarkdownExtraQrCode::generate(markdown_block);
+            let parser = Parser::new_ext(&markdown_block_extra, Options::all());
         
             let mut html_output = String::new();
             html::push_html(&mut html_output, parser);
@@ -63,6 +65,7 @@ impl RenderMarkdownUtils {
         
         let markdown_html = Self::remove_readme_macros(markdown_html);
         let content = RenderMarkdownInject::content(&file, contents, markdown_html);
+        
         minify(&content)
     }
     

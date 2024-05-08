@@ -6,4 +6,6 @@ impl RegExp {
     pub const EXTRACT_PDF_NAME: &'static str = r"/([^/?]+)(?:\?.*)?$";
     pub const VALIDATE_EMAIL: &'static str = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
 
+    pub const RENDER_EXTRA_QRCODE: &'static str = r#"\[!paimon qrcode data=['"](.*?)['"], size=(\d+)\]"#;
+
 }

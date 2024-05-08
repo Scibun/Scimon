@@ -5,14 +5,11 @@
     <title>{{ page_title }}</title>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <!-- NOT MODIFIED THIS -->
-    {{ inject_css_cdn }}
-    {{ inject_css_files }}
+    {{ inject_css }}
 </head>
 <body class='markdown-body'>
     {{ markdown_content }}
     <!-- NOT MODIFIED THIS -->
-    <!-- Adds support for extra plugins -->
-    {{ inject_js_cdn }}
-    {{ inject_js_files }}
+    {{ inject_js }}
 </body>
 </html>
