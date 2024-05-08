@@ -14,8 +14,7 @@ use pulldown_cmark::{
 
 use crate::render::{
     render_env::RenderMarkdownEnv,
-    render_inject_js::RenderMarkdownInjectJS,
-    render_inject_css::RenderMarkdownInjectCSS,
+    injection::render_inject::RenderMarkdownInject
 };
 
 pub struct RenderMarkdownUtils;
@@ -27,30 +26,6 @@ impl RenderMarkdownUtils {
             "<p>!readme</p>\n", ""
         ).replace(
             "<p>!end_readme</p>\n", ""
-        )
-    }
-
-    fn inject_content_template_file(file: &str, contents: String, markdown_html: String) -> String {
-        let js_files_string = &RenderMarkdownInjectJS::load_from_files();
-        let js_cdn_files_string = &RenderMarkdownInjectJS::load_from_cdn();
-
-        let css_files_string = &RenderMarkdownInjectCSS::load_from_files();
-        let css_cdn_files_string = &RenderMarkdownInjectCSS::load_from_cdn();
-
-        let title = format!("{}: {}: README", &RenderMarkdownEnv::README_APP_NAME, &file);
-        
-        contents.replace(
-            "{{ page_title }}", &title
-        ).replace(
-            "{{ inject_css_cdn }}", &css_cdn_files_string
-        ).replace(
-            "{{ inject_css_files }}", &css_files_string
-        ).replace(
-            "{{ markdown_content }}", &markdown_html
-        ).replace(
-            "{{ inject_js_cdn }}", &js_cdn_files_string
-        ).replace(
-            "{{ inject_js_files }}", &js_files_string
         )
     }
 
@@ -87,7 +62,7 @@ impl RenderMarkdownUtils {
         );
         
         let markdown_html = Self::remove_readme_macros(markdown_html);
-        let content = Self::inject_content_template_file(&file, contents, markdown_html);
+        let content = RenderMarkdownInject::content(&file, contents, markdown_html);
         minify(&content)
     }
     
