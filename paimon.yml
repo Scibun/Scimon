@@ -1,0 +1,36 @@
+general:
+  mode: 'standard' # String (valid values: 'standard' and 'demon'; default: 'standard')
+
+render_markdown:
+  mode: 'paimon' # String (valid values: 'paimon' and 'pure'; default: 'paimon')
+  output_path: '__DEFAULT__' # String (default: '__DEFAULT__')
+
+  load_css_cdn:
+    - 'https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css'
+    - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism.min.css'
+    - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism-okaidia.min.css'
+    - 'https://use.fontawesome.com/releases/v6.5.2/css/all.css'
+
+  load_js_cdn:
+    - 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+    - 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js'
+    - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/prism.min.js'
+    - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-markup.min.js'
+    - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-css.min.js'
+    - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-c.min.js'
+    - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-clike.min.js'
+    - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-javascript.min.js'
+    - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-java.min.js'
+    - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-php.min.js'
+    - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-python.min.js'
+    - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-ruby.min.js'
+    - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-sql.min.js'
+    - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-swift.min.js'
+    - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-typescript.min.js'
+    - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-dart.min.js'
+    - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-aspnet.min.js'
+    - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-bash.min.js'
+    - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-csharp.min.js'
+    - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-fortran.min.js'
+    - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-go.min.js'
+    - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-rust.min.js'

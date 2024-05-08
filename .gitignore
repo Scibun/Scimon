@@ -34,7 +34,3 @@ Cargo.lock
 
 # Ignore JetBrains path
 .idea/
-
-# Ignore yaml files
-*.yml
-*.yaml
