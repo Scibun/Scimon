@@ -113,10 +113,11 @@ impl Download {
             
             match result {
                 Ok(file) => {
-                    PaimonUIAlerts::success_download(&file);
+                    PaimonUIAlerts::success_download(&file, url);
                 },
+
                 Err(e) => {
-                    PaimonUIAlerts::error_download(e);
+                    PaimonUIAlerts::error_download(e, url);
                 }
             }
             

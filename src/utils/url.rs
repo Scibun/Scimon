@@ -10,6 +10,11 @@ pub struct UrlMisc;
 
 impl UrlMisc {
 
+    pub fn get_domain(url: &str) -> String {
+        let url = Url::parse(url).expect("");
+        url.host_str().expect("").to_owned()
+    }
+
     pub fn extract_url(line: &str) -> String {
         let re = Regex::new(RegExp::EXTRACT_URL).unwrap();
 
@@ -23,7 +28,7 @@ impl UrlMisc {
     pub fn escape_quotes(url: &str) -> String {
         url.replace("\"", "%22")
     }
-   
+
     pub fn get_subdomain(url: &str) -> String {
         let url = Url::parse(url).expect("");
         let host = url.host_str().expect("");

@@ -4,7 +4,10 @@ use colored::*;
 
 use::std::error::Error;
 
-use crate::utils::misc::Misc;
+use crate::utils::{
+    misc::Misc,
+    url::UrlMisc
+};
 
 pub struct PaimonUIAlerts;
 
@@ -43,20 +46,21 @@ impl PaimonUIAlerts {
         println!("-----------------------------");
     }
 
-    pub fn success_download(file: &str) {
+    pub fn success_download(file: &str, url: &str) {
+        let domain = UrlMisc::get_domain(url);
         let current_datetime = Misc::date_time();
-
+    
         println!(
-            "[{}] -> Downloaded file name: {}", current_datetime.blue(), file.green()
+            "[{}] -> Downloaded file name: {} (from: {})", current_datetime.blue(), file.green(), domain.cyan(),
         );
     }
 
-    pub fn error_download(e: Box<dyn Error>) {
+    pub fn error_download(e: Box<dyn Error>, url: &str) {
         let e = e.to_string();
         let current_datetime = Misc::date_time();
 
         eprintln!(
-            "[{}] -> Error: downloading name: {}", current_datetime.blue(), e.red()
+            "[{}] -> Error: {} (from {})", current_datetime.blue(), e.red(), url
         );
     }
 
