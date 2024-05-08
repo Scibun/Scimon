@@ -42,7 +42,11 @@ impl Download {
     
         if UrlMisc::check_domain(url, "wikipedia.org") {
             let wiki_name = UrlMisc::get_last_part(url);
-            let request_url = ApisUri::WIKIPEDIA_API_REQUEST_PDF.to_string() + &wiki_name;
+            let wikipedia_region = format!("{}.", UrlMisc::get_subdomain(url));
+
+            let request_url = ApisUri::WIKIPEDIA_API_REQUEST_PDF.to_string().replace(
+                "en.", &wikipedia_region
+            ) + &wiki_name;
 
             response = reqwest::get(&request_url).await?;
             filename = format!("{}.pdf", wiki_name);

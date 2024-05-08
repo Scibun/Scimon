@@ -1,3 +1,6 @@
+extern crate url;
+
+use url::Url;
 use regex::Regex;
 use std::error::Error;
 
@@ -20,7 +23,13 @@ impl UrlMisc {
     pub fn escape_quotes(url: &str) -> String {
         url.replace("\"", "%22")
     }
-    
+   
+    pub fn get_subdomain(url: &str) -> String {
+        let url = Url::parse(url).expect("");
+        let host = url.host_str().expect("");
+        host.split('.').next().expect("").to_owned()
+    }
+ 
     pub fn get_last_part(line: &str) -> String {
         let parts: Vec<&str> = line.split('/').collect();
 
@@ -40,7 +49,7 @@ impl UrlMisc {
 
         let _ = webbrowser::open(&open_url);
     }
-    
+
     pub fn check_domain(line: &str, domain: &str) -> bool {
         line.contains(domain)
     }
