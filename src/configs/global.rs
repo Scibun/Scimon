@@ -17,6 +17,13 @@ impl Global {
         path
     });
     
+    pub const SETTINGS_FILE: Lazy<PathBuf> = Lazy::new(|| {
+        let mut path = config_dir().expect("No config directory");
+        path.push(Self::APP_NAME);
+        path.push("paimon.yml");
+        path
+    });     
+    
     pub const ENV_URL: &'static str = "https://pastebin.com/raw/wZGaNtsL";
 
 }
