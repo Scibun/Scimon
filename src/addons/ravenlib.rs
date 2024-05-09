@@ -16,7 +16,6 @@ use serde::Deserialize;
 use reqwest::{Client, header};
 
 use crate::{
-    utils::misc::Misc,
     ui::ui_alerts::PaimonUIAlerts,
 
     configs::{
@@ -55,9 +54,23 @@ impl Error for ApiError {}
 pub struct Ravenlib;
 
 impl Ravenlib {
+    
+    fn remove_initial_character(text: &str, character: char) -> String {
+        if let Some(rest) = text.strip_prefix(character) {
+            return String::from(rest);
+        }
+        
+        return String::from(text);
+    }
+    
+    pub fn check_is_user(input: &str) -> bool {
+        let parts: Vec<&str> = input.split('/').collect();
+        if parts.len() == 2 && input.starts_with('@') && !parts[1].is_empty() { return true }
+        false
+    }
 
     pub async fn get(list_id: &str, no_ignore: bool, no_comments: bool) -> Result<String, Box<dyn Error>> {
-        let list = Misc::remove_initial_character(list_id, '@');
+        let list = Self::remove_initial_character(list_id, '@');
         let mut url = ApisUri::RAVENLIB_API_REQUEST.to_owned();
     
         url.push_str(ApisUri::RAVENLIB_API_LISTS_ENDPOINT);

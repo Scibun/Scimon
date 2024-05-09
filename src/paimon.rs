@@ -3,7 +3,6 @@ use std::error::Error;
 
 use crate::{
     args_cli::Flags,
-    utils::misc::Misc,
     configs::env::Env,
     cmd::read_list::ReadList,
     render::render_markdown::RenderMarkdown,
@@ -56,7 +55,7 @@ impl Paimon {
         if !run.is_empty() {
             PaimonUI::header();
             
-            if !Misc::check_is_user(run) {
+            if !Ravenlib::check_is_user(run) {
                 let _ = Paimon::get(
                     run, flags.no_ignore, flags.no_comments, flags.no_open_link, flags.kindle
                 ).await;
