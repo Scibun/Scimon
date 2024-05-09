@@ -94,7 +94,15 @@ impl Download {
         );
 
         let _ = Lexico::handle_comments(&processed_line, no_comments);
-        if !is_url(&processed_line) { return Ok(()) }
+
+        if processed_line.contains(".pdf") && !Lexico::handle_check_macro_line(&processed_line, "ignore") {
+            UrlMisc::check_errors(&processed_line).await?;
+            return Ok(())
+        }
+
+        if !is_url(&processed_line) {
+            return Ok(())
+        }
     
         let result_ignore_macro_flag = Lexico::handle_ignore_macro_flag(&processed_line, no_ignore);
         match result_ignore_macro_flag {

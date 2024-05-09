@@ -60,7 +60,7 @@ impl PaimonUIAlerts {
         let current_datetime = Misc::date_time();
 
         eprintln!(
-            "[{}] -> Error: {} (from {})", current_datetime.blue(), e.red(), url
+            "[{}] -> Error: {} (from {})", current_datetime.blue(), e.red(), url.cyan()
         );
     }
 

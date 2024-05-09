@@ -1,6 +1,9 @@
 use std::error::Error;
 
-use crate::ui::ui_alerts::PaimonUIAlerts;
+use crate::{
+    utils::url::UrlMisc,
+    ui::ui_alerts::PaimonUIAlerts
+};
 
 pub struct Lexico;
 
@@ -38,9 +41,7 @@ impl Lexico {
         }
     
         Ok(
-            line.replace(
-                " !ignore", ""
-            )
+            UrlMisc::extract_url(line)
         )
     }
 

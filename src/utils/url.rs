@@ -2,9 +2,13 @@ extern crate url;
 
 use url::Url;
 use regex::Regex;
+use is_url::is_url;
 use std::error::Error;
 
-use crate::configs::regex::RegExp;
+use crate::{
+    configs::regex::RegExp,
+    ui::ui_alerts::PaimonUIAlerts,
+};
 
 pub struct UrlMisc;
 
@@ -14,6 +18,11 @@ impl UrlMisc {
         let url = Url::parse(url).expect("");
         url.host_str().expect("").to_owned()
     }
+
+    // pub fn get_protocol(url: &str) -> String {
+    //     let url = Url::parse(url).expect("Failed to parse URL");
+    //     url.scheme().to_string()
+    // }
 
     pub fn extract_url(line: &str) -> String {
         let re = Regex::new(RegExp::EXTRACT_URL).unwrap();
@@ -53,6 +62,13 @@ impl UrlMisc {
         };
 
         let _ = webbrowser::open(&open_url);
+    }
+
+    pub async fn get_status_code(url: &str) -> u16 {
+        reqwest::get(url)
+            .await
+            .map(|response| response.status().as_u16())
+            .unwrap_or(0)
     }
 
     pub fn check_domain(line: &str, domain: &str) -> bool {
@@ -95,6 +111,24 @@ impl UrlMisc {
         }
     
         Ok(false)
+    }
+
+    pub async fn check_errors(url: &str) -> Result<(), Box<dyn Error>> {
+        let mut url_valid = false;
+        
+        if !is_url(url) {
+            let url_invalid = Box::from("Invalid URL provided. Please enter a valid URL");
+            PaimonUIAlerts::error_download(url_invalid, url);
+        } else {
+            url_valid = true;
+        }
+
+        if UrlMisc::get_status_code(url).await != 200 && url_valid == true {
+            let status_code = Box::from("Failed to retrieve the URL with status code other than 200");
+            PaimonUIAlerts::error_download(status_code, url);
+        }
+        
+        Ok(())
     }
 
 }
