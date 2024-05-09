@@ -1,0 +1,30 @@
+#pdfLinksList{
+    padding: 1em;
+    border-radius: 6px;
+    background: #161b22;
+}
+
+#pdfLinksList > p > i{
+    padding-right: .5em;
+}
+
+#pdfLinksList > ul > li{
+    height: 3em;
+    display: block;
+    cursor: pointer;
+    list-style: none;
+    line-height: 3em;
+    padding-left: 1em;
+    background: inherit;
+    border: .1em solid #161b22;
+    text-decoration: none !important;
+}
+
+#pdfLinksList > ul > li:hover{
+    background: #0d1117;
+    text-decoration: none !important;
+}
+
+#pdfLinksList > ul > li > a:hover{
+    text-decoration: none !important;
+}

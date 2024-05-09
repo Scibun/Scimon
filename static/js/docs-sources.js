@@ -1,16 +1,26 @@
 const DocsSources = ( e => {
 
+    let nameElementRoot = 'pdfLinksList';
+
+    let getDomain = url => {
+        var url = "https://www.mackenzie.br/fileadmin/OLD/47/Graduacao/CCBS/Cursos/Ciencias_Biologicas/1o_2012/Biblioteca_TCC_Lic/2009/2o_Semestre/Karen_e_Priscila.pdf";
+
+        var urlObj = new URL(url);
+        return urlObj.hostname;
+    };
+
     let createPdfLinksList = e => {
         let pdfLinksList = document.createElement('div');
-        pdfLinksList.className = 'pdfLinksList';
-        pdfLinksList.id = 'pdfLinksList';
+        pdfLinksList.className = nameElementRoot;
+        pdfLinksList.id = nameElementRoot;
 
         let paragraph = document.createElement('p');
         let icon = document.createElement('i');
         icon.className = 'fa-solid fa-paperclip';
 
         paragraph.appendChild(icon);
-        paragraph.appendChild(document.createTextNode('Documents:'));
+        let textLabel = document.createTextNode('Documents:');
+        paragraph.appendChild(textLabel);
         pdfLinksList.appendChild(paragraph);
 
         document.body.appendChild(pdfLinksList);
@@ -38,25 +48,28 @@ const DocsSources = ( e => {
             }
         });
 
-        let ul = document.createElement('ul');
-        let pdfLinksListDiv = document.getElementById('pdfLinksList');
+        if (docsList.length > 0) {
+            createPdfLinksList();
 
-        docsList.forEach( doc => {
-            let li = document.createElement('li');
-            let a = document.createElement('a');
-
-            a.href = doc.url;
-            a.target = '_blank';
-            a.textContent = doc.name;
-            
-            li.appendChild(a);
-            ul.appendChild(li);
-        });
-
-        pdfLinksListDiv.appendChild(ul);
+            let ul = document.createElement('ul');
+            let pdfLinksListDiv = document.getElementById(nameElementRoot);
+    
+            docsList.forEach( doc => {
+                let li = document.createElement('li');
+                let a = document.createElement('a');
+    
+                a.href = doc.url;
+                a.target = '_blank';
+                a.textContent = doc.name + ` (from: ${ getDomain(doc.url) })`;
+                
+                li.appendChild(a);
+                ul.appendChild(li);
+            });
+    
+            pdfLinksListDiv.appendChild(ul);
+        }
     };
 
-    createPdfLinksList();
     listDocs();
     
 })();

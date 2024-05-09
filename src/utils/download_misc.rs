@@ -53,21 +53,22 @@ impl DownloadMisc {
     }
 
     pub async fn check_errors(url: &str) -> Result<(), Box<dyn Error>> {
+        let final_url = &url.replace(" !ignore", "");
         let regex = Regex::new(RegExp::VALIDATE_TAGS).unwrap();
 
-        if regex.is_match(url) && !url.contains("*") && !url.is_empty() {
+        if regex.is_match(final_url) && !final_url.contains("*") && !final_url.is_empty() {
             let mut url_valid = false;
         
-            if !is_url(url) {
+            if !is_url(final_url) {
                 let url_invalid = Box::from("Invalid URL provided. Please enter a valid URL");
-                PaimonUIAlerts::error_download(url_invalid, url);
+                PaimonUIAlerts::error_download(url_invalid, final_url);
             } else {
                 url_valid = true;
             }
 
-            if UrlMisc::get_status_code(url).await != 200 && url_valid == true {
+            if UrlMisc::get_status_code(final_url).await != 200 && url_valid == true {
                 let status_code = Box::from("Failed to retrieve the URL with status code other than 200");
-                PaimonUIAlerts::error_download(status_code, url);
+                PaimonUIAlerts::error_download(status_code, final_url);
             }
         }
         

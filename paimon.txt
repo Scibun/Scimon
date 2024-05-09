@@ -2,12 +2,12 @@
 
 https://github.com/Kremilly !open_link
 
-https://arxiv.org/pdf/2405.01513
-https://olacesar.com/e-books/rituais.pdf
+https://arxiv.org/pdf/2405.01513 !ignore
+https://olacesar.com/e-books/rituais.pdf !ignore
 https://olacesar.com/e-books/biblia.pdf !ignore
-https://www.scielo.br/j/rdbci/a/fwDKj9FMX7YTRDgkJGG4gnR?format=pdf&lang=pt
-https://en.wikipedia.org/wiki/Rust_(programming_language)
-https://en.wikipedia.org/wiki/Google
+https://www.scielo.br/j/rdbci/a/fwDKj9FMX7YTRDgkJGG4gnR?format=pdf&lang=pt !ignore
+https://en.wikipedia.org/wiki/Rust_(programming_language) !ignore
+https://en.wikipedia.org/wiki/Google !ignore
 
 lorem ipsum dolor sit name -> This is a common comment without displayed (use macro debug to show the line)
 
