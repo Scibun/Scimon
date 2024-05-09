@@ -68,7 +68,11 @@ impl Ravenlib {
         let client = Client::builder().danger_accept_invalid_certs(true).build()?;
         let response = client
             .get(&url)
-            .header(header::AUTHORIZATION, format!("Bearer {}", Env::env_var("MONLIB_API_KEY")))
+            .header(
+                header::AUTHORIZATION, format!(
+                    "Bearer {}", Env::env_var("RAVENLIB_API_KEY")
+                )
+            )
             .send().await?;
     
         if response.status().is_success() {
