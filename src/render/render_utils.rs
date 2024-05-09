@@ -12,10 +12,14 @@ use pulldown_cmark::{
     Options,
 };
 
-use crate::render::{
-    render_env::RenderMarkdownEnv,
-    injection::render_inject::RenderMarkdownInject,
-    extra::render_extra_qrcode::RenderMarkdownExtraQrCode,
+use crate::{
+    configs::settings::Settings,
+
+    render::{
+        render_env::RenderMarkdownEnv,
+        injection::render_inject::RenderMarkdownInject,
+        extra::render_extra_qrcode::RenderMarkdownExtraQrCode,
+    },
 };
 
 pub struct RenderMarkdownUtils;
@@ -57,6 +61,8 @@ impl RenderMarkdownUtils {
     }
 
     pub fn render_content(file: &str, markdown_html: String) -> String {
+        let minify_prop = Settings::get("render_markdown.minify_html", "BOOLEAN");
+
         let contents = fs::read_to_string(
             RenderMarkdownEnv::README_TEMPLATE_FILE
         ).expect(
@@ -65,8 +71,12 @@ impl RenderMarkdownUtils {
         
         let markdown_html = Self::remove_readme_macros(markdown_html);
         let content = RenderMarkdownInject::content(&file, contents, markdown_html);
-        
-        minify(&content)
+
+        if minify_prop == true {
+            minify(&content)
+        } else {
+            content
+        }
     }
     
 }

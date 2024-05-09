@@ -2,8 +2,9 @@ general:
   mode: 'standard' # String (valid values: 'standard' and 'demon'; default: 'standard')
 
 render_markdown:
+  output_path: '{configs_path}' # String (default: '{configs_path}')
   mode: 'paimon' # String (valid values: 'paimon' and 'pure'; default: 'paimon')
-  output_path: '__DEFAULT__' # String (default: '__DEFAULT__')
+  minify_html: true # Boolean (valid values: 'true' or 'false'; default: 'true')
 
   load_css_cdn:
     - 'https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css'
