@@ -26,7 +26,8 @@ use crate::{
     utils::{
         url::UrlMisc,
         file::FileMisc,
-        validation::Validate
+        validation::Validate,
+        download_misc::DownloadMisc,
     }
 };
 
@@ -93,9 +94,8 @@ impl Download {
             url.trim()
         );
 
+        DownloadMisc::check_errors(&processed_line).await?;
         let _ = Lexico::handle_comments(&processed_line, no_comments);
-
-        UrlMisc::check_errors(&processed_line).await?;
 
         if !is_url(&processed_line) {
             return Ok(())
@@ -115,17 +115,12 @@ impl Download {
             )
         }
 
-        if UrlMisc::is_pdf_file(&processed_line).await? || UrlMisc::check_domain(url, "wikipedia.org") {
+        if DownloadMisc::is_pdf_file(&processed_line).await? || UrlMisc::check_domain(url, "wikipedia.org") {
             let result = Self::make_download(&processed_line, path).await;
             
             match result {
-                Ok(file) => {
-                    PaimonUIAlerts::success_download(&file, url);
-                },
-
-                Err(e) => {
-                    PaimonUIAlerts::error_download(e, url);
-                }
+                Ok(file) => PaimonUIAlerts::success_download(&file, url),
+                Err(e) => PaimonUIAlerts::error_download(e, url),
             }
             
         }

@@ -8,6 +8,6 @@ impl RegExp {
 
     pub const RENDER_EXTRA_QRCODE: &'static str = r#"\[!paimon qrcode data=['"](.*?)['"], size=(\d+)\]"#;
 
-    pub const VALIDATE_TAGS: &'static str = r".*([*_]{1,2}|<\s*[a-zA-Z]+[^>]*>).*";
+    pub const VALIDATE_TAGS: &'static str = r".*\*{1,2}.*|.*_.*|.*<\s*[a-zA-Z]+[^>]*>.*";
 
 }

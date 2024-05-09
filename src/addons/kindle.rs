@@ -18,9 +18,9 @@ use crate::{
     ui::ui_alerts::PaimonUIAlerts,
 
     utils::{
-        url::UrlMisc,
         file::FileMisc,
-        validation::Validate
+        validation::Validate,
+        download_misc::DownloadMisc,
     }
 };
 
@@ -91,7 +91,7 @@ impl Kindle {
     }
     
     pub fn send(url: &str, path: &str, kindle_email: &str) -> Result<(), Box<dyn std::error::Error>> {
-        if let Some(filename) = UrlMisc::extract_file_name(&url) {
+        if let Some(filename) = DownloadMisc::extract_file_name(&url) {
             let kindle_filename = FileMisc::get_output_path(&path, &filename);
 
             if let Some(kindle_filename_str) = kindle_filename.to_str() {
