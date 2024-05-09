@@ -95,10 +95,7 @@ impl Download {
 
         let _ = Lexico::handle_comments(&processed_line, no_comments);
 
-        if processed_line.contains(".pdf") && !Lexico::handle_check_macro_line(&processed_line, "ignore") {
-            UrlMisc::check_errors(&processed_line).await?;
-            return Ok(())
-        }
+        UrlMisc::check_errors(&processed_line).await?;
 
         if !is_url(&processed_line) {
             return Ok(())

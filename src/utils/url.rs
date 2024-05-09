@@ -95,7 +95,7 @@ impl UrlMisc {
     }
     
     pub async fn is_pdf_file(url: &str) -> Result<bool, Box<dyn Error>> {
-        let client = reqwest::Client::new();
+        let client: reqwest::Client = reqwest::Client::new();
         let response = client.get(url).send().await?;
 
         if !response.status().is_success() {
@@ -114,18 +114,22 @@ impl UrlMisc {
     }
 
     pub async fn check_errors(url: &str) -> Result<(), Box<dyn Error>> {
-        let mut url_valid = false;
-        
-        if !is_url(url) {
-            let url_invalid = Box::from("Invalid URL provided. Please enter a valid URL");
-            PaimonUIAlerts::error_download(url_invalid, url);
-        } else {
-            url_valid = true;
-        }
+        let regex = Regex::new(RegExp::VALIDATE_TAGS).unwrap();
 
-        if UrlMisc::get_status_code(url).await != 200 && url_valid == true {
-            let status_code = Box::from("Failed to retrieve the URL with status code other than 200");
-            PaimonUIAlerts::error_download(status_code, url);
+        if regex.is_match(url) && !url.contains("*") && !url.is_empty() {
+            let mut url_valid = false;
+        
+            if !is_url(url) {
+                let url_invalid = Box::from("Invalid URL provided. Please enter a valid URL");
+                PaimonUIAlerts::error_download(url_invalid, url);
+            } else {
+                url_valid = true;
+            }
+
+            if UrlMisc::get_status_code(url).await != 200 && url_valid == true {
+                let status_code = Box::from("Failed to retrieve the URL with status code other than 200");
+                PaimonUIAlerts::error_download(status_code, url);
+            }
         }
         
         Ok(())
