@@ -1,13 +1,20 @@
+use regex::Regex;
 use std::error::Error;
 
 use crate::{
     utils::url::UrlMisc,
+    configs::regex::RegExp,
     ui::ui_alerts::PaimonUIAlerts
 };
 
 pub struct Lexico;
 
 impl Lexico {
+
+    pub fn remove_macros(input: &str) -> String {
+        let re = Regex::new(RegExp::GET_MACROS).unwrap();
+        re.replace_all(input, "").to_string()
+    }
 
     pub fn handle_get_path(line: &str) -> String {
         if line.contains("!path") {

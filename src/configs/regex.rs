@@ -10,4 +10,6 @@ impl RegExp {
 
     pub const VALIDATE_TAGS: &'static str = r".*\*{1,2}.*|.*_.*|.*<\s*[a-zA-Z]+[^>]*>.*";
 
+    pub const GET_MACROS: &'static str = r"\s*![^\s]+";
+
 }
