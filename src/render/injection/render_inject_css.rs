@@ -6,7 +6,7 @@ use crate::{
 
     render::{
         render_env::RenderMarkdownEnv,
-        injection::render_inject_minify::RenderMarkdownInjectMinify,
+        minify::render_minify::RenderMarkdownMinify,
     },
 };
 
@@ -60,7 +60,7 @@ impl RenderMarkdownInjectCSS {
             }
         }
     
-        content_css = RenderMarkdownInjectMinify::css(&content_css);
+        content_css = RenderMarkdownMinify::css(&content_css);
         format!("<style>{}</style>", &content_css)
     }
     

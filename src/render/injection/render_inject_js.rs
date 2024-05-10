@@ -6,7 +6,7 @@ use crate::{
 
     render::{
         render_env::RenderMarkdownEnv,
-        injection::render_inject_minify::RenderMarkdownInjectMinify,
+        minify::render_minify::RenderMarkdownMinify,
     },
 };
 
@@ -60,7 +60,7 @@ impl RenderMarkdownInjectJS {
             }
         }
         
-        content_js = RenderMarkdownInjectMinify::js(&content_js);
+        content_js = RenderMarkdownMinify::js(&content_js);
         format!("<script>{}</script>", &content_js)
     }
 

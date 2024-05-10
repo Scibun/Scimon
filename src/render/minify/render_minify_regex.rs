@@ -1,6 +1,6 @@
-pub struct RenderMarkdownInjectRegExp;
+pub struct RenderMarkdownMinifyRegExp;
 
-impl RenderMarkdownInjectRegExp {
+impl RenderMarkdownMinifyRegExp {
     
     pub const MIN_JS_REMOVE_WHITESPACE: &'static str = r" +";
     pub const MIN_JS_REMOVE_SINGLE_LINE_COMMENT: &'static str = r"//.*?(?:\n|$)";
