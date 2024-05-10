@@ -31,6 +31,12 @@ impl RenderMarkdownMinify {
             " + ", "+"
         ).replace(
             "( ", "("
+        ).replace(
+            "{ ", "{"
+        ).replace(
+            ", ", ","
+        ).replace(
+            ": ", ":"
         );
 
         let code = Regex::new(RenderMarkdownMinifyRegExp::MIN_JS_DOUBLE_QUOTED_STRING).unwrap().replace_all(
