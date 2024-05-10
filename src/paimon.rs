@@ -1,5 +1,4 @@
 use clap::Parser;
-use std::error::Error;
 
 use crate::{
     args_cli::Flags,
@@ -22,21 +21,7 @@ pub struct Paimon;
 
 impl Paimon {
 
-    async fn get(
-        run: &str,
-        no_ignore: bool,
-        no_comments: bool,
-        no_open_link: bool,
-        kindle: Option<String>
-    ) -> Result<(), Box<dyn Error>> {
-        ReadList::read_dataset(
-            run, no_ignore, no_comments, no_open_link, kindle
-        ).await?;
-
-        Ok(())
-    }
-
-    pub async fn init() -> Result<(), Box<dyn Error>> {
+    pub async fn init() {
         if let Err(err) = Env::download_env_file(false).await {
             PaimonUIAlerts::generic_error(&err.to_string());
         }
@@ -46,11 +31,11 @@ impl Paimon {
         let run = flags.run.as_deref().unwrap_or_default();
         let options = flags.options.as_deref().unwrap_or_default();
 
+        PaimonUI::header();
+        
         if !run.is_empty() {
-            PaimonUI::header();
-            
             if !Ravenlib::check_is_user(run) {
-                let _ = Paimon::get(
+                let _ = ReadList::read_dataset(
                     run, flags.no_ignore, flags.no_comments, flags.no_open_link, flags.kindle
                 ).await;
 
@@ -67,8 +52,6 @@ impl Paimon {
         ).await;
 
         let _ = Env::options_parser(options).await;
-
-        Ok(())
     }
 
 }

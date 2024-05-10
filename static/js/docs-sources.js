@@ -3,8 +3,6 @@ const DocsSources = ( e => {
     let nameElementRoot = 'pdfLinksList';
 
     let getDomain = url => {
-        var url = "https://www.mackenzie.br/fileadmin/OLD/47/Graduacao/CCBS/Cursos/Ciencias_Biologicas/1o_2012/Biblioteca_TCC_Lic/2009/2o_Semestre/Karen_e_Priscila.pdf";
-
         var urlObj = new URL(url);
         return urlObj.hostname;
     };

@@ -13,5 +13,5 @@ use crate::paimon::Paimon;
 
 #[tokio::main]
 async fn main() {
-    let _ = Paimon::init().await;
+    Paimon::init().await;
 }
