@@ -1,14 +1,26 @@
 use std::fs;
+use regex::Regex;
 use serde_yaml::Value;
 
 use crate::{
     configs::settings::Settings,
-    render::render_env::RenderMarkdownEnv,
+
+    render::{
+        render_env::RenderMarkdownEnv,
+        injection::render_inject_regex::RenderMarkdownInjectRegExp,
+    },
 };
 
 pub struct RenderMarkdownInjectCSS;
 
 impl RenderMarkdownInjectCSS {
+
+    fn minify(code: &str) -> String {
+        let css = Regex::new(RenderMarkdownInjectRegExp::MIN_CSS_REMOVE_MULTI_LINE_COMMENT).unwrap().replace_all(code, "");
+        let css = Regex::new(RenderMarkdownInjectRegExp::MIN_CSS_REMOVE_WHITESPACE).unwrap().replace_all(&css, " ");
+        let css = Regex::new(RenderMarkdownInjectRegExp::MIN_CSS_REMOVE_SPACES).unwrap().replace_all(&css, "$1");
+        css.to_string()
+    }
     
     fn generate_link_tags(css_list: &[Value]) -> String {
         let mut tags = String::new();
@@ -56,6 +68,7 @@ impl RenderMarkdownInjectCSS {
             }
         }
     
+        content_css = Self::minify(&content_css);
         format!("<style>{}</style>", &content_css)
     }
     
