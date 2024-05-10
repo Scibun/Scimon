@@ -1,5 +1,4 @@
 use std::fs;
-use regex::Regex;
 use serde_yaml::Value;
 
 use crate::{
@@ -7,50 +6,13 @@ use crate::{
 
     render::{
         render_env::RenderMarkdownEnv,
-        injection::render_inject_regex::RenderMarkdownInjectRegExp,
+        injection::render_inject_minify::RenderMarkdownInjectMinify,
     },
 };
 
 pub struct RenderMarkdownInjectJS;
 
 impl RenderMarkdownInjectJS {
-
-    fn minify(code: &str) -> String {
-        let code = Regex::new(RenderMarkdownInjectRegExp::MIN_JS_REMOVE_WHITESPACE).unwrap().replace_all(code, " ");
-        let code = Regex::new(RenderMarkdownInjectRegExp::MIN_JS_REMOVE_SINGLE_LINE_COMMENT).unwrap().replace_all(&code, "");
-        let code = Regex::new(RenderMarkdownInjectRegExp::MIN_JS_REMOVE_MULTI_LINE_COMMENT).unwrap().replace_all(&code.trim(), "");
-        let code = Regex::new(RenderMarkdownInjectRegExp::MIN_JS_REMOVE_STRINGS).unwrap().replace_all(&code, "\"\"");
-        let code = Regex::new(RenderMarkdownInjectRegExp::MIN_JS_REMOVE_OPERATORS_KEYWORDS).unwrap().replace_all(&code, "$1");
-        let code = Regex::new(RenderMarkdownInjectRegExp::MIN_JS_REMOVE_SPACES).unwrap().replace_all(&code, "$1");
-
-        let code = Regex::new(
-            &format!(r"\b({})\b", RenderMarkdownInjectRegExp::MIN_JS_KEYWORDS)
-        ).unwrap().replace_all(
-            &code, " $1 "
-        );
-
-        let code = Regex::new(RenderMarkdownInjectRegExp::MIN_JS_DUPLICATE_SPACES).unwrap().replace_all(&code, " ");
-        let code = Regex::new(RenderMarkdownInjectRegExp::MIN_JS_LOGICAL_OPERATORS).unwrap().replace_all(&code, "||");
-
-        let code = code.replace(
-            "; ", ";"
-        ).replace(
-            "if (", "if("
-        ).replace(
-            " + ", "+"
-        ).replace(
-            "( ", "("
-        );
-
-        let code = Regex::new(RenderMarkdownInjectRegExp::MIN_JS_DOUBLE_QUOTED_STRING).unwrap().replace_all(
-            &code, |caps: &regex::Captures| {
-                let inner = &caps[0][1..caps[0].len() - 1];
-                format!("\"{}\"", inner.replace("\\\"", "\""))
-            }
-        );
-
-        code.to_string()
-    }
     
     fn generate_script_tags(css_list: &[Value]) -> String {
         let mut tags = String::new();
@@ -98,7 +60,7 @@ impl RenderMarkdownInjectJS {
             }
         }
         
-        content_js = Self::minify(&content_js);
+        content_js = RenderMarkdownInjectMinify::js(&content_js);
         format!("<script>{}</script>", &content_js)
     }
 
