@@ -11,7 +11,3 @@ body{
 input[type="checkbox"]{
     margin-right: .5em;
 }
-
-#pdfLinksList > p > i{
-    padding-right: .5em;
-}

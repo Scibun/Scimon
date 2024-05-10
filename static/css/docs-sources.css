@@ -1,14 +1,14 @@
-#pdfLinksList{
+#docsSourceList{
     padding: 1em;
     border-radius: 6px;
     background: #161b22;
 }
 
-#pdfLinksList > p > i{
+#docsSourceList > p > i{
     padding-right: .5em;
 }
 
-#pdfLinksList > ul > li{
+#docsSourceList > ul > li{
     height: 3em;
     display: block;
     cursor: pointer;
@@ -20,11 +20,11 @@
     text-decoration: none !important;
 }
 
-#pdfLinksList > ul > li:hover{
+#docsSourceList > ul > li:hover{
     background: #0d1117;
     text-decoration: none !important;
 }
 
-#pdfLinksList > ul > li > a:hover{
+#docsSourceList > ul > li > a:hover{
     text-decoration: none !important;
 }

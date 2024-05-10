@@ -1,6 +1,6 @@
 const DocsSources = ( e => {
 
-    let nameElementRoot = 'pdfLinksList';
+    let nameElementRoot = 'docsSourceList';
 
     let getDomain = url => {
         var urlObj = new URL(url);
