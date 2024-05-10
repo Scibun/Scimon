@@ -29,15 +29,9 @@ impl Paimon {
         no_open_link: bool,
         kindle: Option<String>
     ) -> Result<(), Box<dyn Error>> {
-        if !run.starts_with("http") {
-            ReadList::read_local_file(
-                run, no_ignore, no_comments, no_open_link, kindle
-            ).await?;
-        } else {
-            ReadList::read_remote_file(
-                run, no_ignore, no_comments, no_open_link, kindle
-            ).await?;
-        }
+        ReadList::read_dataset(
+            run, no_ignore, no_comments, no_open_link, kindle
+        ).await?;
 
         Ok(())
     }

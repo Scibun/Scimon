@@ -9,6 +9,8 @@ use std::{
     },
 
     io::{
+        Read,
+        Cursor,
         BufRead,
         BufReader,
     }
@@ -79,27 +81,33 @@ impl ReadList {
     
         Ok(())
     }    
+   
+    pub async fn read_dataset(
+        run: &str,
+        no_ignore: bool,
+        no_comments: bool,
+        no_open_link: bool,
+        kindle: Option<String>
+    ) -> Result<(), Box<dyn Error>> {
+        let reader: BufReader<Box<dyn Read>>;
 
-    pub async fn read_local_file(run: &str, no_ignore: bool, no_comments: bool, no_open_link: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
-        let _ = Validate::validate_file(run).map_err(|e| {
-            PaimonUIAlerts::generic_error(&e.to_string());
-        });
-        
-        let file = File::open(run)?;
-        let reader = BufReader::new(file);
-
-        Self::read_lines(reader, no_ignore, no_comments, no_open_link, kindle).await?;
-        Ok(())
-    }
-    
-    pub async fn read_remote_file(run: &str, no_ignore: bool, no_comments: bool, no_open_link: bool, kindle: Option<String>) -> Result<(), Box<dyn Error>> {
-        let _ = Validate::validate_file_type(run, ".txt").map_err(|e| {
-            PaimonUIAlerts::generic_error(&e.to_string());
-        });
-    
-        let response = reqwest::get(run).await?;
-        let bytes = response.bytes().await?;
-        let reader: BufReader<&[u8]> = BufReader::new(&bytes[..]);
+        if run.starts_with("http") {
+            let _ = Validate::validate_file_type(run, ".txt").map_err(|e| {
+                PaimonUIAlerts::generic_error(&e.to_string());
+            });
+            
+            let response = reqwest::get(run).await?;
+            let bytes = response.bytes().await?;
+            let cursor = Cursor::new(bytes);
+            reader = BufReader::new(Box::new(cursor) as Box<dyn Read>);
+        } else {
+            let _ = Validate::validate_file(run).map_err(|e| {
+                PaimonUIAlerts::generic_error(&e.to_string());
+            });
+            
+            let file = File::open(run)?;
+            reader = BufReader::new(Box::new(file) as Box<dyn Read>);
+        }
 
         Self::read_lines(reader, no_ignore, no_comments, no_open_link, kindle).await?;
         Ok(())
