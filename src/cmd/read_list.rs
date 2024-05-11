@@ -55,7 +55,8 @@ impl ReadList {
                     let _ = fs::create_dir(&path);
                 }
     
-                let url = Providers::arxiv(trimmed_line);
+                let arxiv_check = Providers::arxiv(trimmed_line);
+                let url = Providers::github(&arxiv_check);
     
                 Download::download_file(
                     &url,

@@ -28,4 +28,6 @@ impl Global {
     
     pub const ENV_URL: &'static str = "https://pastebin.com/raw/wZGaNtsL";
 
+    pub const PROVIDERS_DOMAINS: [&'static str; 3] = ["wikipedia.org", "sci-hub.se", "github.com"];
+
 }

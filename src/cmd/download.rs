@@ -45,9 +45,9 @@ impl Download {
         let filename;
         let request_uri;
     
-        if UrlMisc::check_domain(url, "wikipedia.org") {
+        if UrlMisc::check_domain(url, Global::PROVIDERS_DOMAINS[0]) {
             (request_uri, filename) = Providers::wikipedia(url);
-        } else if UrlMisc::check_domain(url, "sci-hub.se") {
+        } else if UrlMisc::check_domain(url, Global::PROVIDERS_DOMAINS[1]) {
             (request_uri, filename) = Providers::scihub(url).await?
         } else {
             (request_uri, filename) = Providers::generic(url).await?
@@ -113,7 +113,7 @@ impl Download {
             )
         }
 
-        if DownloadMisc::is_pdf_file(&processed_line).await? || UrlMisc::check_domain(url, "wikipedia.org") || UrlMisc::check_domain(url, "sci-hub.se") {
+        if DownloadMisc::is_pdf_file(&processed_line).await? || Providers::check_provider_domain(&processed_line) {
             let result = Self::make_download(&processed_line, path).await;
             
             match result {

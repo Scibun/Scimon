@@ -5,7 +5,11 @@ use std::error::Error;
 
 use crate::{
     addons::scihub::SciHub,
-    configs::apis_uri::ApisUri,
+
+    configs::{
+        global::Global,
+        apis_uri::ApisUri,
+    },
     
     utils::{
         url::UrlMisc,
@@ -39,10 +43,20 @@ impl Providers {
     pub fn arxiv(url: &str) -> String {
         let escape_quotes = UrlMisc::escape_quotes(url);
 
-        if !UrlMisc::check_domain(&escape_quotes, "arxiv.org") {
+        if !UrlMisc::check_domain(&escape_quotes, Global::PROVIDERS_DOMAINS[1]) {
             escape_quotes.to_owned()
         } else {
             escape_quotes.replace("/abs/", "/pdf/")
+        }
+    }
+    
+    pub fn github(url: &str) -> String {
+        let escape_quotes = UrlMisc::escape_quotes(url);
+
+        if !UrlMisc::check_domain(&escape_quotes, "github.com") {
+            escape_quotes.to_owned()
+        } else {
+            escape_quotes.replace("/blob/", "/raw/")
         }
     }
 
@@ -77,6 +91,18 @@ impl Providers {
         let filename = Self::get_filename(url).await?;
 
         Ok((request_uri, filename))
+    }
+
+    pub fn check_provider_domain(url: &str) -> bool {
+        let mut valid_domain = false;
+
+        for domain in &Global::PROVIDERS_DOMAINS {
+            if UrlMisc::check_domain(url, domain) {
+                valid_domain = true
+            }
+        }
+
+        valid_domain
     }
 
 }
