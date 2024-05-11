@@ -53,7 +53,7 @@ impl Providers {
     pub fn github(url: &str) -> String {
         let escape_quotes = UrlMisc::escape_quotes(url);
 
-        if !UrlMisc::check_domain(&escape_quotes, "github.com") {
+        if !UrlMisc::check_domain(&escape_quotes, Global::PROVIDERS_DOMAINS[2]) {
             escape_quotes.to_owned()
         } else {
             escape_quotes.replace("/blob/", "/raw/")
