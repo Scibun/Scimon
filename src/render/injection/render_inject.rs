@@ -17,7 +17,7 @@ pub struct RenderMarkdownInject;
 
 impl RenderMarkdownInject {
 
-    fn get_js(render_mode: Value) -> String {
+    fn get_js(render_mode: Value, minify: Value) -> String {
         let cdn = if render_mode == "paimon" {
             RenderMarkdownInjectJS::load_from_cdn()
         } else {
@@ -25,7 +25,7 @@ impl RenderMarkdownInject {
         };
 
         let local = if render_mode == "paimon" {
-            RenderMarkdownInjectJS::load_from_files()
+            RenderMarkdownInjectJS::load_from_files(minify)
         } else {
             "".to_string()
         };
@@ -33,7 +33,7 @@ impl RenderMarkdownInject {
         format!("{}{}", cdn, local)
     }
 
-    fn get_css(render_mode: Value) -> String {
+    fn get_css(render_mode: Value, minify: Value) -> String {
         let cdn = if render_mode == "paimon" {
             RenderMarkdownInjectCSS::load_from_cdn()
         } else {
@@ -41,7 +41,7 @@ impl RenderMarkdownInject {
         };
 
         let local = if render_mode == "paimon" {
-            RenderMarkdownInjectCSS::load_from_files()
+            RenderMarkdownInjectCSS::load_from_files(minify)
         } else {
             "".to_string()
         };
@@ -51,6 +51,8 @@ impl RenderMarkdownInject {
 
     pub fn content(file: &str, contents: String, markdown_html: String) -> String {
         let render_mode = Settings::get("render_markdown.mode", "STRING");
+        let render_minify_extra_plugins = Settings::get("render_markdown.minify_extra_plugins", "BOOLEAN");
+
         let title = format!("{}: {}: README", &RenderMarkdownEnv::README_APP_NAME, &file);
         
         contents.replace(
@@ -58,9 +60,9 @@ impl RenderMarkdownInject {
         ).replace(
             "{{ markdown_content }}", &markdown_html
         ).replace(
-            "{{ inject_css }}", &Self::get_css(render_mode.clone())
+            "{{ inject_css }}", &Self::get_css(render_mode.clone(), render_minify_extra_plugins.clone())
         ).replace(
-            "{{ inject_js }}", &Self::get_js(render_mode.clone())
+            "{{ inject_js }}", &Self::get_js(render_mode.clone(), render_minify_extra_plugins.clone())
         )
     }
     

@@ -8,6 +8,7 @@ render_markdown:
   output_path: '{app_path}' # String (default: '{app_path}')
   mode: 'paimon' # String (valid values: 'paimon' and 'pure'; default: 'paimon')
   minify_html: true # Boolean (valid values: 'true' or 'false'; default: 'true')
+  minify_extra_plugins: true # Boolean (valid values: 'true' or 'false'; default: 'true')
 
   load_css_cdn: # List
     - 'https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css'

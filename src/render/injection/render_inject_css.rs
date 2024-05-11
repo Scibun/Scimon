@@ -44,7 +44,7 @@ impl RenderMarkdownInjectCSS {
         ).trim().to_string()
     }    
 
-    pub fn load_from_files() -> String {
+    pub fn load_from_files(minify: Value) -> String {
         let mut content_css = String::new();
         let js_path = RenderMarkdownEnv::README_TEMPLATE_CSS_FILES;
     
@@ -60,7 +60,12 @@ impl RenderMarkdownInjectCSS {
             }
         }
     
-        content_css = RenderMarkdownMinify::css(&content_css);
+        content_css = if minify == true {
+            RenderMarkdownMinify::css(&content_css)
+        } else {
+            content_css
+        };
+
         format!("<style>{}</style>", &content_css)
     }
     

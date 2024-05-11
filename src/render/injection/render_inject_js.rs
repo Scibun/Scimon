@@ -44,7 +44,7 @@ impl RenderMarkdownInjectJS {
         ).trim().to_string()
     } 
 
-    pub fn load_from_files() -> String {
+    pub fn load_from_files(minify: Value) -> String {
         let mut content_js = String::new();
         let js_path = RenderMarkdownEnv::README_TEMPLATE_JS_FILES;
     
@@ -59,8 +59,13 @@ impl RenderMarkdownInjectJS {
                 );
             }
         }
+    
+        content_js = if minify == true {
+            RenderMarkdownMinify::js(&content_js)
+        } else {
+            content_js
+        };
         
-        content_js = RenderMarkdownMinify::js(&content_js);
         format!("<script>{}</script>", &content_js)
     }
 
