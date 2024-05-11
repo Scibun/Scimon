@@ -19,10 +19,10 @@ impl UrlMisc {
     //     url.scheme().to_string()
     // }
 
-    pub fn extract_url(line: &str) -> String {
+    pub fn extract_url(url: &str) -> String {
         let re = Regex::new(RegExp::EXTRACT_URL).unwrap();
 
-        if let Some(capture) = re.find(line) {
+        if let Some(capture) = re.find(url) {
             capture.as_str().to_string()
         } else {
             String::new()
@@ -39,8 +39,8 @@ impl UrlMisc {
         host.split('.').next().expect("").to_owned()
     }
  
-    pub fn get_last_part(line: &str) -> String {
-        let parts: Vec<&str> = line.split('/').collect();
+    pub fn get_last_part(url: &str) -> String {
+        let parts: Vec<&str> = url.split('/').collect();
 
         if let Some(last_part) = parts.last() {
             last_part.to_string()
@@ -66,8 +66,8 @@ impl UrlMisc {
             .unwrap_or(0)
     }
 
-    pub fn check_domain(line: &str, domain: &str) -> bool {
-        line.contains(domain)
+    pub fn check_domain(url: &str, domain: &str) -> bool {
+        url.contains(domain)
     }
 
 }

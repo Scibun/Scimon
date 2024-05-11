@@ -20,8 +20,12 @@ use indicatif::{
 
 use crate::{
     cmd::syntax::Lexico,
-    configs::apis_uri::ApisUri,
     ui::ui_alerts::PaimonUIAlerts,
+
+    configs::{
+        global::Global,
+        apis_uri::ApisUri,
+    },
 
     utils::{
         url::UrlMisc,
@@ -40,24 +44,27 @@ impl Download {
         
         let response;
         let filename;
+        let get_filename;
     
         if UrlMisc::check_domain(url, "wikipedia.org") {
             let wiki_name = UrlMisc::get_last_part(url);
             let wikipedia_region = format!("{}.", UrlMisc::get_subdomain(url));
 
-            let mut request_url = ApisUri::WIKIPEDIA_API_REQUEST_PDF.to_string().replace(
+            let request_url = format!("{}{}", ApisUri::WIKIPEDIA_API_REQUEST_PDF.to_string().replace(
                 "en.", &wikipedia_region
-            );
-
-            request_url = format!("{}{}", request_url, wiki_name);
+            ), wiki_name);
 
             response = reqwest::get(&request_url).await?;
-            filename = format!("{}.pdf", wiki_name);
+            get_filename = format!("{}.pdf", wiki_name);
         } else {
             response = reqwest::get(url).await?;
-            let content_disposition = response.headers().get("content-disposition");
-            filename = FileMisc::detect_name(url, content_disposition).await?;
+
+            get_filename = FileMisc::detect_name(
+                url, response.headers().get("content-disposition")
+            ).await?;
         }
+
+        filename = get_filename;
     
         let total_size = response
             .headers()
@@ -67,9 +74,11 @@ impl Download {
             .unwrap_or(0);
     
         let pb = ProgressBar::new(total_size);
-        pb.set_style(ProgressStyle::default_bar()
-            .template("{spinner:.green} [{elapsed_precise}] [{wide_bar:.cyan/blue}] {bytes}/{total_bytes} ({eta})")
-            .progress_chars("#>-"));
+        pb.set_style(
+            ProgressStyle::with_template(Global::PB_STYLE).unwrap().progress_chars("█░")
+        );
+
+        pb.set_prefix("Downloading");
     
         let output_path = FileMisc::get_output_path(path, &filename);
         let _ = Validate::validate_file_type(&filename, ".pdf");

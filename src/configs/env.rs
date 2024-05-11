@@ -27,7 +27,7 @@ impl Env {
 
     fn load_env_from_app_config() {
         let app_folder = &*Global::APP_FOLDER;
-        let env_path: PathBuf = app_folder.join(".env");
+        let env_path = app_folder.join(".env");
         dotenv::from_path(&env_path).ok();
     }
     

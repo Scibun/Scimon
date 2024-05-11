@@ -10,6 +10,8 @@ impl Global {
     pub const APP_VERSION: &'static str = "0.0.1";
     pub const APP_AUTHOR: &'static str = "@Ravenlib";
     pub const APP_HOMEPAGE: &'static str = "https://github.com/Ravenlib/Paimon";
+
+    pub const PB_STYLE: &'static str = "[{elapsed_precise}] [{wide_bar:.cyan/blue}] {bytes}/{total_bytes} ({bytes_per_sec}, {eta})";
     
     pub const APP_FOLDER: Lazy<PathBuf> = Lazy::new(|| {
         let mut path = config_dir().expect("No config directory");
