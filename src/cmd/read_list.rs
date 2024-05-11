@@ -19,6 +19,7 @@ use std::{
 use crate::{
     addons::kindle::Kindle,
     ui::ui_alerts::PaimonUIAlerts,
+    configs::providers::Providers,
 
     cmd::{
         syntax::Lexico,
@@ -53,14 +54,8 @@ impl ReadList {
                     path = Lexico::handle_get_path(trimmed_line);
                     let _ = fs::create_dir(&path);
                 }
-
-                let escape_quotes = UrlMisc::escape_quotes(trimmed_line);
     
-                let url = if !UrlMisc::check_domain(&escape_quotes, "arxiv.org") {
-                    escape_quotes.to_owned()
-                } else {
-                    escape_quotes.replace("/abs/", "/pdf/")
-                };
+                let url = Providers::arxiv(trimmed_line);
     
                 Download::download_file(
                     &url,

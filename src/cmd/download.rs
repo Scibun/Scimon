@@ -24,7 +24,7 @@ use crate::{
 
     configs::{
         global::Global,
-        apis_uri::ApisUri,
+        providers::Providers,
     },
 
     utils::{
@@ -42,29 +42,18 @@ impl Download {
     pub async fn make_download(url: &str, path: &str) -> Result<String, Box<dyn Error>> {
         Validate::check_url_status(url).await?;
         
-        let response;
         let filename;
-        let get_filename;
+        let request_uri;
     
         if UrlMisc::check_domain(url, "wikipedia.org") {
-            let wiki_name = UrlMisc::get_last_part(url);
-            let wikipedia_region = format!("{}.", UrlMisc::get_subdomain(url));
-
-            let request_url = format!("{}{}", ApisUri::WIKIPEDIA_API_REQUEST_PDF.to_string().replace(
-                "en.", &wikipedia_region
-            ), wiki_name);
-
-            response = reqwest::get(&request_url).await?;
-            get_filename = format!("{}.pdf", wiki_name);
+            (request_uri, filename) = Providers::wikipedia(url);
+        } else if UrlMisc::check_domain(url, "sci-hub.se") {
+            (request_uri, filename) = Providers::scihub(url).await?
         } else {
-            response = reqwest::get(url).await?;
-
-            get_filename = FileMisc::detect_name(
-                url, response.headers().get("content-disposition")
-            ).await?;
+            (request_uri, filename) = Providers::generic(url).await?
         }
-
-        filename = get_filename;
+        
+        let response = reqwest::get(&request_uri).await?;
     
         let total_size = response
             .headers()
@@ -124,14 +113,13 @@ impl Download {
             )
         }
 
-        if DownloadMisc::is_pdf_file(&processed_line).await? || UrlMisc::check_domain(url, "wikipedia.org") {
+        if DownloadMisc::is_pdf_file(&processed_line).await? || UrlMisc::check_domain(url, "wikipedia.org") || UrlMisc::check_domain(url, "sci-hub.se") {
             let result = Self::make_download(&processed_line, path).await;
             
             match result {
                 Ok(file) => PaimonUIAlerts::success_download(&file, url),
                 Err(e) => PaimonUIAlerts::error_download(e, url),
             }
-            
         }
 
         Ok(())
