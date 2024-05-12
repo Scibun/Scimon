@@ -17,7 +17,6 @@ use std::{
 };
 
 use crate::{
-    addons::kindle::Kindle,
     ui::ui_alerts::PaimonUIAlerts,
     configs::providers::Providers,
 
@@ -40,8 +39,7 @@ impl ReadList {
         reader: R, 
         no_ignore: bool, 
         no_comments: bool, 
-        no_open_link: bool, 
-        kindle: Option<String>
+        no_open_link: bool
     ) -> Result<(), Box<dyn Error>> where R: BufRead {
         let mut path = String::new();
 
@@ -64,10 +62,6 @@ impl ReadList {
                     no_ignore,
                     no_comments
                 ).await?;
-
-                if let Some(kindle_email) = kindle.as_deref() {
-                    Kindle::send(&url, &path, kindle_email)?;
-                }
             } else {
                 if !no_open_link {
                     UrlMisc::open_url(trimmed_line, true);
@@ -82,8 +76,7 @@ impl ReadList {
         run: &str,
         no_ignore: bool,
         no_comments: bool,
-        no_open_link: bool,
-        kindle: Option<String>
+        no_open_link: bool
     ) -> Result<(), Box<dyn Error>> {
         let reader: BufReader<Box<dyn Read>>;
 
@@ -111,7 +104,13 @@ impl ReadList {
             );
         }
 
-        Self::read_lines(reader, no_ignore, no_comments, no_open_link, kindle).await?;
+        Self::read_lines(
+            reader,
+            no_ignore,
+            no_comments,
+            no_open_link
+        ).await?;
+
         Ok(())
     }
 

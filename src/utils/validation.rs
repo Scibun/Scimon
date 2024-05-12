@@ -1,5 +1,4 @@
 use reqwest;
-use regex::Regex;
 use is_url::is_url;
 
 use std::{
@@ -8,22 +7,10 @@ use std::{
     error::Error
 };
 
-use crate::configs::regex::RegExp;
-
 pub struct Validate;
 
 impl Validate {
-
-    pub fn validate_email(email: &str) -> Result<(), String> {
-        let re = Regex::new(RegExp::VALIDATE_EMAIL).unwrap();
-    
-        if re.is_match(email) {
-            Ok(())
-        } else {
-            Err("Invalid email address.".to_string())
-        }
-    }
-    
+  
     pub fn validate_url(url_line: &str) -> io::Result<()> {
         if !is_url(url_line) {
             return Err(

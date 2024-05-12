@@ -54,22 +54,6 @@ impl PaimonUIAlerts {
         );
     }
 
-    pub fn error_kindle(error: &str) {
-        let current_datetime = PaimonUI::date_time();
-
-        eprintln!(
-            "[{}] -> Could not send Kindle: {}", current_datetime.blue(), error.green()
-        );
-    }
-
-    pub fn success_kindle(file: &str) {
-        let current_datetime = PaimonUI::date_time();
-
-        println!(
-            "[{}] -> Document sent to the Kindle, file: {}", current_datetime.blue(), file.green()
-        );
-    }
-
     pub fn success_download(file: &str, url: &str) {
         let domain = UrlMisc::get_domain(url);
         let current_datetime = PaimonUI::date_time();
