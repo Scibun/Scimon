@@ -37,25 +37,6 @@ use crate::{
 pub struct DownloadMarkdown;
 
 impl DownloadMarkdown {
-    
-    async fn fetch_markdown_content_size(url: &str) -> Result<u64, Box<dyn Error>> {
-        let response = reqwest::get(url).await?;
-    
-        let total_size = response
-            .headers()
-            .get(reqwest::header::CONTENT_LENGTH)
-            .and_then(|ct_len| ct_len.to_str().ok())
-            .and_then(|ct_len| ct_len.parse::<u64>().ok())
-            .unwrap_or(0);
-
-        Ok(total_size)
-    }
-
-    async fn fetch_markdown_content(url: &str) -> Result<String, Box<dyn Error>> {
-        let response = reqwest::get(url).await?;
-        let content = response.text().await?;
-        Ok(content)
-    }
 
     async fn markdown_to_html(url: &str) -> Result<String, Box<dyn Error>> {
         let markdown_content = Self::fetch_markdown_content(url).await?;
@@ -67,6 +48,25 @@ impl DownloadMarkdown {
         html::push_html(&mut html_output, parser);
     
         Ok(html_output)
+    }
+
+    async fn fetch_markdown_content(url: &str) -> Result<String, Box<dyn Error>> {
+        let response = reqwest::get(url).await?;
+        let content = response.text().await?;
+        Ok(content)
+    }
+
+    async fn fetch_markdown_content_size(url: &str) -> Result<u64, Box<dyn Error>> {
+        let response = reqwest::get(url).await?;
+    
+        let total_size = response
+            .headers()
+            .get(reqwest::header::CONTENT_LENGTH)
+            .and_then(|ct_len| ct_len.to_str().ok())
+            .and_then(|ct_len| ct_len.parse::<u64>().ok())
+            .unwrap_or(0);
+
+        Ok(total_size)
     }
 
     async fn html_to_pdf(content: &str, path: PathBuf, url: &str, file: &str) -> Result<(), Box<dyn Error>> {
@@ -82,13 +82,11 @@ impl DownloadMarkdown {
         let file_path = format!("data:text/html;base64,{}", html_str);
 
         let pdf_options: Option<PrintToPdfOptions> = None;
-        let contents = tab.navigate_to(
-            &file_path
-        )?.wait_until_navigated()?.print_to_pdf(
-            pdf_options
-        )?;
+
+        let contents = tab.navigate_to(&file_path)?.wait_until_navigated()?.print_to_pdf(pdf_options)?;
     
         let pb = ProgressBar::new(total_size);
+
         pb.set_style(
             ProgressStyle::with_template(Global::PB_STYLE).unwrap().progress_chars("█░")
         );
@@ -116,4 +114,3 @@ impl DownloadMarkdown {
     }
 
 }
-

@@ -1,7 +1,7 @@
 use std::{
     fs::File,
     io::Read,
-    error::Error
+    error::Error,
 };
 
 use serde_yaml::{

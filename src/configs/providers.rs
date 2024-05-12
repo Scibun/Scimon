@@ -5,11 +5,7 @@ use std::error::Error;
 
 use crate::{
     addons::scihub::SciHub,
-
-    configs::{
-        global::Global,
-        apis_uri::ApisUri,
-    },
+    configs::apis_uri::ApisUri,
     
     utils::{
         url::UrlMisc,
@@ -21,9 +17,17 @@ pub struct Providers;
 
 impl Providers {
 
+    const PROVIDERS_DOMAINS: [&'static str; 4] = [
+        "wikipedia.org",
+        "sci-hub.se",
+        "github.com",
+        "githubusercontent.com"
+    ];
+
     fn extract_doi(url: &str) -> String {
         if let Some(index) = url.find('/') {
             let restante = &url[index + 2..];
+            
             if let Some(index) = restante.find('/') {
                 return restante[index + 1..].to_string();
             }
@@ -43,7 +47,7 @@ impl Providers {
     pub fn arxiv(url: &str) -> String {
         let escape_quotes = UrlMisc::escape_quotes(url);
 
-        if !UrlMisc::check_domain(&escape_quotes, Global::PROVIDERS_DOMAINS[1]) {
+        if !UrlMisc::check_domain(&escape_quotes, Self::PROVIDERS_DOMAINS[1]) {
             escape_quotes.to_owned()
         } else {
             escape_quotes.replace("/abs/", "/pdf/")
@@ -53,9 +57,9 @@ impl Providers {
     pub fn github(url: &str) -> String {
         let escape_quotes = UrlMisc::escape_quotes(url);
 
-        if !UrlMisc::check_domain(&escape_quotes, Global::PROVIDERS_DOMAINS[2]) {
+        if !UrlMisc::check_domain(&escape_quotes, Self::PROVIDERS_DOMAINS[2]) {
             escape_quotes.to_owned()
-        } else if !UrlMisc::check_domain(&escape_quotes, Global::PROVIDERS_DOMAINS[3]) {
+        } else if !UrlMisc::check_domain(&escape_quotes, Self::PROVIDERS_DOMAINS[3]) {
             escape_quotes.to_owned()
         } else {
             escape_quotes.replace("/blob/", "/raw/")
@@ -98,7 +102,7 @@ impl Providers {
     pub fn check_provider_domain(url: &str) -> bool {
         let mut valid_domain = false;
 
-        for domain in &Global::PROVIDERS_DOMAINS {
+        for domain in &Self::PROVIDERS_DOMAINS {
             if UrlMisc::check_domain(url, domain) {
                 valid_domain = true
             }
@@ -111,9 +115,9 @@ impl Providers {
         let filename;
         let request_uri;
 
-        if UrlMisc::check_domain(url, Global::PROVIDERS_DOMAINS[0]) {
+        if UrlMisc::check_domain(url, Self::PROVIDERS_DOMAINS[0]) {
             (request_uri, filename) = Self::wikipedia(url);
-        } else if UrlMisc::check_domain(url, Global::PROVIDERS_DOMAINS[1]) {
+        } else if UrlMisc::check_domain(url, Self::PROVIDERS_DOMAINS[1]) {
             (request_uri, filename) = Self::scihub(url).await?;
         } else {
             (request_uri, filename) = Self::generic(url).await?;

@@ -95,14 +95,20 @@ impl ReadList {
             let response = reqwest::get(run).await?;
             let bytes = response.bytes().await?;
             let cursor = Cursor::new(bytes);
-            reader = BufReader::new(Box::new(cursor) as Box<dyn Read>);
+
+            reader = BufReader::new(
+                Box::new(cursor)
+            );
         } else {
             let _ = Validate::validate_file(run).map_err(|e| {
                 PaimonUIAlerts::generic_error(&e.to_string());
             });
             
             let file = File::open(run)?;
-            reader = BufReader::new(Box::new(file) as Box<dyn Read>);
+
+            reader = BufReader::new(
+                Box::new(file)
+            );
         }
 
         Self::read_lines(reader, no_ignore, no_comments, no_open_link, kindle).await?;

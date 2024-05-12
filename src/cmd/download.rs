@@ -42,7 +42,7 @@ pub struct Download;
 
 impl Download {
 
-    pub async fn make_download(url: &str, path: &str) -> Result<String, Box<dyn Error>> {
+    async fn make_download(url: &str, path: &str) -> Result<String, Box<dyn Error>> {
         Validate::check_url_status(url).await?;
         
         let filename;
