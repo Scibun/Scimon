@@ -35,7 +35,7 @@ impl RenderMarkdownUtils {
     }
 
     pub fn render_markdown(file: &str) -> Option<String> {
-        let contents = fs::read_to_string(&file).expect("Unable to read file");
+        let contents = fs::read_to_string(&file).expect("");
     
         let start_regex = Regex::new(r"!readme").unwrap();
         let end_regex = Regex::new(r"!end_readme").unwrap();

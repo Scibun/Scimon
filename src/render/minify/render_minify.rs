@@ -38,6 +38,7 @@ impl RenderMarkdownMinify {
         let css = Regex::new(RenderMarkdownMinifyRegExp::MIN_CSS_REMOVE_MULTI_LINE_COMMENT).unwrap().replace_all(code, "");
         let css = Regex::new(RenderMarkdownMinifyRegExp::MIN_CSS_REMOVE_WHITESPACE).unwrap().replace_all(&css, " ");
         let css = Regex::new(RenderMarkdownMinifyRegExp::MIN_CSS_REMOVE_SPACES).unwrap().replace_all(&css, "$1");
+        
         css.to_string()
     }
    

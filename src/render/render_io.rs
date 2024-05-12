@@ -50,12 +50,15 @@ impl RenderMarkdownIO {
     pub fn open_readme_url(path: &str, no_open_link: bool) {
         if !no_open_link {
             let full_path = env::current_dir().expect(
-                &"Error getting current working directory".to_string().red()
+                ""
             ).join(&path).to_str().unwrap().replace(
                 "\\", "/"
             );
 
-            let url_file = &format!("file://{}", full_path);
+            let url_file = &format!(
+                "file://{}", full_path
+            );
+
             UrlMisc::open_url(&url_file, false);
         }
     }
