@@ -5,7 +5,6 @@ use std::error::Error;
 
 use crate::{
     addons::scihub::SciHub,
-    configs::apis_uri::ApisUri,
     
     utils::{
         url::UrlMisc,
@@ -16,6 +15,8 @@ use crate::{
 pub struct Providers;
 
 impl Providers {
+
+    const WIKIPEDIA_API_REQUEST_PDF: &'static str = "https://en.wikipedia.org/api/rest_v1/page/pdf/";
 
     const PROVIDERS_DOMAINS: [&'static str; 4] = [
         "wikipedia.org",
@@ -70,7 +71,7 @@ impl Providers {
         let wiki_name = UrlMisc::get_last_part(url);
         let wikipedia_region = format!("{}.", UrlMisc::get_subdomain(url));
 
-        let request_url = format!("{}{}", ApisUri::WIKIPEDIA_API_REQUEST_PDF.to_string().replace(
+        let request_url = format!("{}{}", Self::WIKIPEDIA_API_REQUEST_PDF.to_string().replace(
             "en.", &wikipedia_region
         ), wiki_name);
 

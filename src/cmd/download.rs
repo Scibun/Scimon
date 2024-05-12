@@ -23,7 +23,7 @@ use crate::{
     },
 
     cmd::{
-        syntax::Lexico,
+        syntax::Macros,
         download_markdown::DownloadMarkdown, 
     },
     
@@ -78,13 +78,13 @@ impl Download {
         );
 
         DownloadMisc::check_errors(&processed_line).await?;
-        let _ = Lexico::handle_comments(&processed_line, no_comments);
+        let _ = Macros::handle_comments(&processed_line, no_comments);
 
         if !is_url(&processed_line) {
             return Ok(())
         }
     
-        let result_ignore_macro_flag = Lexico::handle_ignore_macro_flag(&processed_line, no_ignore);
+        let result_ignore_macro_flag = Macros::handle_ignore_macro_flag(&processed_line, no_ignore);
         match result_ignore_macro_flag {
             Ok(new_line) => processed_line = Cow::Owned(new_line),
             Err(_) => return Ok(()),

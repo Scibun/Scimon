@@ -21,7 +21,7 @@ use crate::{
     configs::providers::Providers,
 
     cmd::{
-        syntax::Lexico,
+        syntax::Macros,
         download::Download,
     },
 
@@ -47,9 +47,9 @@ impl ReadList {
             let line = line_result?;
             let trimmed_line = line.trim();
     
-            if !Lexico::handle_check_macro_line(&trimmed_line, "open_link") {
+            if !Macros::handle_check_macro_line(&trimmed_line, "open_link") {
                 if path.is_empty() {
-                    path = Lexico::handle_get_path(trimmed_line);
+                    path = Macros::handle_get_path(trimmed_line);
                     let _ = fs::create_dir(&path);
                 }
     

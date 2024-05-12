@@ -16,15 +16,11 @@ use serde::Deserialize;
 use reqwest::{Client, header};
 
 use crate::{
+    configs::env::Env, 
     ui::ui_alerts::PaimonUIAlerts,
-
-    configs::{
-        env::Env,
-        apis_uri::ApisUri,
-    }, 
     
     cmd::{
-        syntax::Lexico,
+        syntax::Macros,
         download::Download,
     }
 };
@@ -55,6 +51,8 @@ pub struct Ravenlib;
 
 impl Ravenlib {
     
+    pub const RAVENLIB_API_REQUEST: &'static str = "http://localhost/Ravenlib/api/";
+    
     fn remove_initial_character(text: &str, character: char) -> String {
         if let Some(rest) = text.strip_prefix(character) {
             return String::from(rest);
@@ -71,9 +69,9 @@ impl Ravenlib {
 
     pub async fn get(list_id: &str, no_ignore: bool, no_comments: bool) -> Result<String, Box<dyn Error>> {
         let list = Self::remove_initial_character(list_id, '@');
-        let mut url = ApisUri::RAVENLIB_API_REQUEST.to_owned();
+        let mut url = Self::RAVENLIB_API_REQUEST.to_owned();
     
-        url.push_str(ApisUri::RAVENLIB_API_LISTS_ENDPOINT);
+        url.push_str("lists");
         url.push_str("/");
         url.push_str(&list);
         url.push_str("/raw");
@@ -108,7 +106,7 @@ impl Ravenlib {
     
                 for line_result in lines_iter {
                     let url = line_result?;
-                    let path = Lexico::handle_get_path(&url);
+                    let path = Macros::handle_get_path(&url);
                     let _ = fs::create_dir(&path);
 
                     Download::download_file(

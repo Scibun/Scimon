@@ -6,7 +6,7 @@ use std::error::Error;
 
 use crate::{
     utils::url::UrlMisc,
-    cmd::syntax::Lexico,
+    cmd::syntax::Macros,
     configs::regex::RegExp,
     ui::ui_alerts::PaimonUIAlerts,
 };
@@ -35,7 +35,7 @@ impl DownloadMisc {
     }
 
     pub async fn check_errors(url: &str) -> Result<(), Box<dyn Error>> {
-        let final_url = &Lexico::remove_macros(url);
+        let final_url = &Macros::remove_macros(url);
         let regex = Regex::new(RegExp::VALIDATE_TAGS).unwrap();
 
         if regex.is_match(final_url) && !final_url.contains("*") && !final_url.is_empty() {

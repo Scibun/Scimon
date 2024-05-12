@@ -7,9 +7,9 @@ use crate::{
     ui::ui_alerts::PaimonUIAlerts
 };
 
-pub struct Lexico;
+pub struct Macros;
 
-impl Lexico {
+impl Macros {
 
     pub fn remove_macros(input: &str) -> String {
         let re = Regex::new(RegExp::GET_MACROS).unwrap();
