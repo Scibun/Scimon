@@ -12,6 +12,8 @@ pub struct PaimonUI;
 
 impl PaimonUI {
 
+    pub const PB_STYLE: &'static str = "[{elapsed_precise}] [{wide_bar:.cyan/blue}] {bytes}/{total_bytes} ({bytes_per_sec}, {eta})";
+
     pub fn header() {
         let standard_font = FIGfont::standard().unwrap();
 

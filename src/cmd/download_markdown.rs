@@ -25,8 +25,10 @@ use indicatif::{
 };
 
 use crate::{
-    configs::global::Global,
-    ui::ui_alerts::PaimonUIAlerts,
+    ui::{
+        ui_base::PaimonUI,
+        ui_alerts::PaimonUIAlerts
+    },
 
     utils::{
         url::UrlMisc,
@@ -88,7 +90,7 @@ impl DownloadMarkdown {
         let pb = ProgressBar::new(total_size);
 
         pb.set_style(
-            ProgressStyle::with_template(Global::PB_STYLE).unwrap().progress_chars("█░")
+            ProgressStyle::with_template(PaimonUI::PB_STYLE).unwrap().progress_chars("█░")
         );
 
         pb.set_message("Generating PDF...");

@@ -19,16 +19,16 @@ use indicatif::{
 };
 
 use crate::{
-    ui::ui_alerts::PaimonUIAlerts,
+    configs::providers::Providers,
+
+    ui::{
+        ui_base::PaimonUI,
+        ui_alerts::PaimonUIAlerts
+    },
 
     cmd::{
         syntax::Lexico,
         download_markdown::DownloadMarkdown, 
-    },
-
-    configs::{
-        global::Global,
-        providers::Providers,
     },
     
     utils::{
@@ -61,7 +61,7 @@ impl Download {
     
         let pb = ProgressBar::new(total_size);
         pb.set_style(
-            ProgressStyle::with_template(Global::PB_STYLE).unwrap().progress_chars("█░")
+            ProgressStyle::with_template(PaimonUI::PB_STYLE).unwrap().progress_chars("█░")
         );
 
         pb.set_prefix("Downloading");
