@@ -1,25 +1,15 @@
 # Paimon
 
-Tool to download pdfs in batches written in Rust
+Increase productivity with a Rust-based batch PDF downloader. Fetch multiple PDFs swiftly, improving accessibility and efficiency. Ideal for managing large document collections.
 
 > [!important]
 > ***Under in development***
-
-## Build
-
-To build, run (`using cargo`)
-
-```shell
-cargo build
-```
-
-> [!note]
-> *The directory of output is* `target/release`
 
 ## Wiki
 
 For more help and document, see our Wiki pages:
 
+* [Build](https://github.com/Ravenlib/Paimon/wiki/Build)
 * [Basic usage](https://github.com/Ravenlib/Paimon/wiki/Basic-usage)
 * [Macros & Comments](https://github.com/Ravenlib/Paimon/wiki/Macros-&-Comments)
 * [RenderMarkdown](https://github.com/Ravenlib/Paimon/wiki/RenderMarkdown)
