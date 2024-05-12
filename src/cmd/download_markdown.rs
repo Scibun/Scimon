@@ -1,5 +1,6 @@
 use reqwest;
 use base64::prelude::*;
+use indicatif::ProgressBar;
 
 use std::{
     fs,
@@ -17,11 +18,6 @@ use pulldown_cmark::{
     html,
     Parser,
     Options,
-};
-
-use indicatif::{
-    ProgressBar,
-    ProgressStyle
 };
 
 use crate::{
@@ -76,9 +72,7 @@ impl DownloadMarkdown {
     
         let pb = ProgressBar::new(total_size);
 
-        pb.set_style(
-            ProgressStyle::with_template(PaimonUI::PB_STYLE).unwrap().progress_chars("█░")
-        );
+        pb.set_style(PaimonUI::pb_template());
 
         pb.set_message("Generating PDF...");
 

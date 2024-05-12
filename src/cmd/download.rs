@@ -1,5 +1,6 @@
 use reqwest;
 use is_url::is_url;
+use indicatif::ProgressBar;
 
 use std::{
     fs::File,
@@ -11,11 +12,6 @@ use std::{
         Write,
         Cursor,
     }
-};
-
-use indicatif::{
-    ProgressBar,
-    ProgressStyle
 };
 
 use crate::{
@@ -54,9 +50,7 @@ impl Download {
         let total_size = FileMisc::get_remote_file_size(&request_uri).await?;
     
         let pb = ProgressBar::new(total_size);
-        pb.set_style(
-            ProgressStyle::with_template(PaimonUI::PB_STYLE).unwrap().progress_chars("█░")
-        );
+        pb.set_style(PaimonUI::pb_template());
 
         pb.set_prefix("Downloading");
     

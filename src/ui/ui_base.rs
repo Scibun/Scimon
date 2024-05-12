@@ -5,6 +5,7 @@ extern crate figlet_rs;
 use colored::*;
 use chrono::Local;
 use figlet_rs::FIGfont;
+use indicatif::ProgressStyle;
 
 use crate::configs::global::Global;
 
@@ -26,7 +27,7 @@ impl PaimonUI {
             println!("-------------------------------------------------------------------");
         }
     }
-    
+ 
     pub fn date_time() -> String {
         let local_time = Local::now();
     
@@ -34,6 +35,10 @@ impl PaimonUI {
         let hour_formated = local_time.format("%H:%M:%S").to_string();
     
         format!("{} {}", date_formated, hour_formated)
+    }
+   
+    pub fn pb_template() -> ProgressStyle {
+        ProgressStyle::with_template(PaimonUI::PB_STYLE).unwrap().progress_chars("█░")
     }
 
 }
