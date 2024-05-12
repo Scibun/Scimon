@@ -49,15 +49,9 @@ impl Download {
         let request_uri;
 
         (request_uri, filename) = Providers::get_from_provider(url).await?;
-        
-        let response = reqwest::get(&request_uri).await?;
-    
-        let total_size = response
-            .headers()
-            .get(reqwest::header::CONTENT_LENGTH)
-            .and_then(|ct_len| ct_len.to_str().ok())
-            .and_then(|ct_len| ct_len.parse::<u64>().ok())
-            .unwrap_or(0);
+  
+        let response = reqwest::get(&request_uri).await?;    
+        let total_size = FileMisc::get_remote_file_size(&request_uri).await?;
     
         let pb = ProgressBar::new(total_size);
         pb.set_style(

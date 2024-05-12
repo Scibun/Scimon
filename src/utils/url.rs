@@ -14,11 +14,6 @@ impl UrlMisc {
         url.host_str().expect("").to_owned()
     }
 
-    // pub fn get_protocol(url: &str) -> String {
-    //     let url = Url::parse(url).expect("Failed to parse URL");
-    //     url.scheme().to_string()
-    // }
-
     pub fn extract_url(url: &str) -> String {
         let re = Regex::new(RegExp::EXTRACT_URL).unwrap();
 

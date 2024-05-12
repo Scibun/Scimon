@@ -58,21 +58,8 @@ impl DownloadMarkdown {
         Ok(content)
     }
 
-    async fn fetch_markdown_content_size(url: &str) -> Result<u64, Box<dyn Error>> {
-        let response = reqwest::get(url).await?;
-    
-        let total_size = response
-            .headers()
-            .get(reqwest::header::CONTENT_LENGTH)
-            .and_then(|ct_len| ct_len.to_str().ok())
-            .and_then(|ct_len| ct_len.parse::<u64>().ok())
-            .unwrap_or(0);
-
-        Ok(total_size)
-    }
-
     async fn html_to_pdf(content: &str, path: PathBuf, url: &str, file: &str) -> Result<(), Box<dyn Error>> {
-        let total_size = Self::fetch_markdown_content_size(url).await?;
+        let total_size = FileMisc::get_remote_file_size(url).await?;
 
         let browser = Browser::new(
             LaunchOptionsBuilder::default().build().expect(""),
