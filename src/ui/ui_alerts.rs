@@ -1,6 +1,7 @@
 extern crate colored;
 
 use colored::*;
+
 use::std::error::Error;
 
 use crate::{
@@ -45,24 +46,6 @@ impl PaimonUIAlerts {
         println!("-----------------------------");
     }
 
-    pub fn success_download(file: &str, url: &str) {
-        let domain = UrlMisc::get_domain(url);
-        let current_datetime = PaimonUI::date_time();
-    
-        println!(
-            "[{}] -> Downloaded file name: {} (from: {})", current_datetime.blue(), file.green(), domain.cyan(),
-        );
-    }
-
-    pub fn error_download(e: Box<dyn Error>, url: &str) {
-        let e = e.to_string();
-        let current_datetime = PaimonUI::date_time();
-
-        eprintln!(
-            "[{}] -> Error: {} (from {})", current_datetime.blue(), e.red(), url.cyan()
-        );
-    }
-
     pub fn generic_error(e: &str) {
         let current_datetime = PaimonUI::date_time();
 
@@ -84,6 +67,33 @@ impl PaimonUIAlerts {
 
         println!(
             "[{}] -> Document sent to the Kindle, file: {}", current_datetime.blue(), file.green()
+        );
+    }
+
+    pub fn success_download(file: &str, url: &str) {
+        let domain = UrlMisc::get_domain(url);
+        let current_datetime = PaimonUI::date_time();
+    
+        println!(
+            "[{}] -> Downloaded file name: {} (from: {})", current_datetime.green(), file.blue(), domain.cyan(),
+        );
+    }
+
+    pub fn error_download(e: Box<dyn Error>, url: &str) {
+        let e = e.to_string();
+        let current_datetime = PaimonUI::date_time();
+
+        eprintln!(
+            "[{}] -> Error: {} (from {})", current_datetime.blue(), e.red(), url.cyan()
+        );
+    }
+  
+    pub fn success_download_and_generated_pdf(file: &str, url: &str) {
+        let domain = UrlMisc::get_domain(url);
+        let current_datetime = PaimonUI::date_time();
+    
+        println!(
+            "[{}] -> Downloaded and generated pdf: {} (from: {})", current_datetime.green(), file.blue(), domain.cyan(),
         );
     }
 

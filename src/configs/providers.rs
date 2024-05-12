@@ -55,6 +55,8 @@ impl Providers {
 
         if !UrlMisc::check_domain(&escape_quotes, Global::PROVIDERS_DOMAINS[2]) {
             escape_quotes.to_owned()
+        } else if !UrlMisc::check_domain(&escape_quotes, Global::PROVIDERS_DOMAINS[3]) {
+            escape_quotes.to_owned()
         } else {
             escape_quotes.replace("/blob/", "/raw/")
         }
@@ -103,6 +105,21 @@ impl Providers {
         }
 
         valid_domain
+    }
+
+    pub async fn get_from_provider(url: &str) -> Result<(String, String), Box<dyn Error>> {
+        let filename;
+        let request_uri;
+
+        if UrlMisc::check_domain(url, Global::PROVIDERS_DOMAINS[0]) {
+            (request_uri, filename) = Self::wikipedia(url);
+        } else if UrlMisc::check_domain(url, Global::PROVIDERS_DOMAINS[1]) {
+            (request_uri, filename) = Self::scihub(url).await?;
+        } else {
+            (request_uri, filename) = Self::generic(url).await?;
+        }
+
+        Ok((request_uri, filename))
     }
 
 }

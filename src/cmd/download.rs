@@ -19,16 +19,19 @@ use indicatif::{
 };
 
 use crate::{
-    cmd::syntax::Lexico,
     ui::ui_alerts::PaimonUIAlerts,
+
+    cmd::{
+        syntax::Lexico,
+        download_markdown::DownloadMarkdown, 
+    },
 
     configs::{
         global::Global,
         providers::Providers,
     },
-
+    
     utils::{
-        url::UrlMisc,
         file::FileMisc,
         validation::Validate,
         download_misc::DownloadMisc,
@@ -44,14 +47,8 @@ impl Download {
         
         let filename;
         let request_uri;
-    
-        if UrlMisc::check_domain(url, Global::PROVIDERS_DOMAINS[0]) {
-            (request_uri, filename) = Providers::wikipedia(url);
-        } else if UrlMisc::check_domain(url, Global::PROVIDERS_DOMAINS[1]) {
-            (request_uri, filename) = Providers::scihub(url).await?
-        } else {
-            (request_uri, filename) = Providers::generic(url).await?
-        }
+
+        (request_uri, filename) = Providers::get_from_provider(url).await?;
         
         let response = reqwest::get(&request_uri).await?;
     
@@ -113,12 +110,16 @@ impl Download {
             )
         }
 
-        if DownloadMisc::is_pdf_file(&processed_line).await? || Providers::check_provider_domain(&processed_line) {
-            let result = Self::make_download(&processed_line, path).await;
-            
-            match result {
-                Ok(file) => PaimonUIAlerts::success_download(&file, url),
-                Err(e) => PaimonUIAlerts::error_download(e, url),
+        if processed_line.ends_with(".md") {
+            DownloadMarkdown::generate_pdf(&processed_line, &path).await?;
+        } else {
+            if DownloadMisc::is_pdf_file(&processed_line).await? || Providers::check_provider_domain(&processed_line) {
+                let result = Self::make_download(&processed_line, path).await;
+                
+                match result {
+                    Ok(file) => PaimonUIAlerts::success_download(&file, url),
+                    Err(e) => PaimonUIAlerts::error_download(e, url),
+                }
             }
         }
 
