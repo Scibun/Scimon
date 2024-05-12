@@ -28,10 +28,6 @@ pub struct Flags {
     pub no_open_link: bool,
 
     #[arg(long)]
-    /// Your Kindle email for send the ebooks for your account
-    pub kindle: Option<String>,
-
-    #[arg(long)]
     /// Your Paimon settings
     pub options: Option<String>,
 
