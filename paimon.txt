@@ -9,9 +9,10 @@ https://www.scielo.br/j/rdbci/a/fwDKj9FMX7YTRDgkJGG4gnR?format=pdf&lang=pt !igno
 https://en.wikipedia.org/wiki/Rust_(programming_language) !ignore
 https://en.wikipedia.org/wiki/Google !ignore
 https://www.nasa.gov/wp-content/uploads/static/history/alsj/a17/A17_FlightPlan.pdf !ignore
-https://sci-hub.se/10.1080/0025570x.2002.11953151
-https://github.com/huyubing/books-pdf/blob/master/slime.pdf
-https://raw.githubusercontent.com/facebook/react/main/README.md
+https://sci-hub.se/10.1080/0025570x.2002.11953151 !ignore
+https://github.com/huyubing/books-pdf/blob/master/slime.pdf !ignore
+https://raw.githubusercontent.com/facebook/react/main/README.md !ignore
+https://pt.wikisource.org/wiki/Manifesto_da_Guerrilha_do_Livre_Acesso !ignore
 
 lorem ipsum dolor sit name -> This is a common comment without displayed (use macro debug to show the line)
 

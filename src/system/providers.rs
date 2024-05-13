@@ -15,11 +15,12 @@ pub struct Providers;
 
 impl Providers {
 
-    const PROVIDERS_DOMAINS: [&'static str; 4] = [
+    const PROVIDERS_DOMAINS: [&'static str; 5] = [
         "wikipedia.org",
         "sci-hub.se",
         "github.com",
-        "githubusercontent.com"
+        "githubusercontent.com",
+        "wikisource.org",
     ];
 
     fn extract_doi(url: &str) -> String {
@@ -69,6 +70,19 @@ impl Providers {
         (request_url, filename)
     }
 
+    pub fn wikisource(url: &str) -> (String, String) {
+        let wiki_name = UrlMisc::get_last_part(url);
+        let wikipedia_region = format!("{}.", UrlMisc::get_subdomain(url));
+
+        let request_url = format!("{}{}", Uris::WIKISOURCE_API_REQUEST_PDF.to_string().replace(
+            "en.", &wikipedia_region
+        ), wiki_name);
+
+        let filename = format!("{}.pdf", wiki_name);
+
+        (request_url, filename)
+    }
+
     pub fn check_provider_domain(url: &str) -> bool {
         let mut valid_domain = false;
 
@@ -108,6 +122,8 @@ impl Providers {
 
         if UrlMisc::check_domain(url, Self::PROVIDERS_DOMAINS[0]) {
             (request_uri, filename) = Self::wikipedia(url);
+        } else if UrlMisc::check_domain(url, Self::PROVIDERS_DOMAINS[4]) {
+            (request_uri, filename) = Self::wikisource(url);
         } else if UrlMisc::check_domain(url, Self::PROVIDERS_DOMAINS[1]) {
             (request_uri, filename) = Self::scihub(url).await?;
         } else {
