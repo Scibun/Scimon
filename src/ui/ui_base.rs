@@ -1,13 +1,14 @@
-extern crate chrono;
 extern crate colored;
 extern crate figlet_rs;
 
 use colored::*;
-use chrono::Local;
 use figlet_rs::FIGfont;
 use indicatif::ProgressStyle;
 
-use crate::configs::global::Global;
+use crate::{
+    utils::system::System,
+    configs::global::Global,
+};
 
 pub struct UI;
 
@@ -23,20 +24,11 @@ impl UI {
             println!("-------------------------------------------------------------------");
             println!("📜 Version: {}", Global::APP_VERSION.yellow());
             println!("🏠 Homepage: {} | {}", Global::APP_HOMEPAGE.blue(), Global::APP_AUTHOR.green());
-            println!("⏰ Started in: {}", Self::date_time().blue());
+            println!("⏰ Started in: {}", System::date_time().blue());
             println!("-------------------------------------------------------------------");
         }
     }
  
-    pub fn date_time() -> String {
-        let local_time = Local::now();
-    
-        let date_formated = local_time.format("%Y-%m-%d").to_string();
-        let hour_formated = local_time.format("%H:%M:%S").to_string();
-    
-        format!("{} {}", date_formated, hour_formated)
-    }
-   
     pub fn pb_template() -> ProgressStyle {
         ProgressStyle::with_template(UI::PB_STYLE).unwrap().progress_chars("█░")
     }

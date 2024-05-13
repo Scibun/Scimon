@@ -9,11 +9,11 @@ use std::{
 
 use crate::{
     configs::settings::Settings,
-    render::render_env::RenderMarkdownEnv,
 
     utils::{
         url::UrlMisc,
         file::FileMisc,
+        system::System,
     }
 };
 
@@ -29,7 +29,7 @@ impl RenderMarkdownIO {
         };
 
         value_str.replace(
-            "{app_path}", RenderMarkdownEnv::README_FOLDER.to_str().unwrap_or_default()
+            "{app_path}", System::README_FOLDER.to_str().unwrap_or_default()
         ).to_string()
     }
 

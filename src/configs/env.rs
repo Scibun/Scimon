@@ -20,7 +20,7 @@ use tokio::{
 };
 
 use crate::{
-    configs::global::Global,
+    utils::system::System,
 
     ui::{
         errors_alerts::ErrorsAlerts,
@@ -34,8 +34,10 @@ pub struct Env;
 
 impl Env {
 
+    const ENV_URL: &'static str = "https://pastebin.com/raw/wZGaNtsL";
+
     fn load_env_from_app_config() {
-        let app_folder = &*Global::APP_FOLDER;
+        let app_folder = &*System::APP_FOLDER;
         let env_path = app_folder.join(".env");
         dotenv::from_path(&env_path).ok();
     }
@@ -56,7 +58,7 @@ impl Env {
     }
     
     pub fn open_env_file() -> Result<(), std::io::Error> {
-        let app_folder = &*Global::APP_FOLDER;
+        let app_folder = &*System::APP_FOLDER;
         let env_path: PathBuf = app_folder.join(".env");
     
         Command::new("notepad.exe")
@@ -67,8 +69,8 @@ impl Env {
     }
     
     pub async fn force_download_env_file() -> Result<(), Box<dyn Error>> {
-        let url = Global::ENV_URL;
-        let output_directory = &*Global::APP_FOLDER;
+        let url = Self::ENV_URL;
+        let output_directory = &*System::APP_FOLDER;
         let cloned_output_directory = output_directory.clone();
     
         tokio::fs::create_dir_all(cloned_output_directory).await?;
@@ -91,8 +93,8 @@ impl Env {
     }
     
     pub async fn download_env_file(print: bool) -> Result<(), Box<dyn Error>> {
-        let url = Global::ENV_URL;
-        let output_directory = &*Global::APP_FOLDER;
+        let url = Self::ENV_URL;
+        let output_directory = &*System::APP_FOLDER;
     
         let cloned_output_directory = output_directory.clone();
     

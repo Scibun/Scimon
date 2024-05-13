@@ -9,14 +9,14 @@ use serde_yaml::{
     from_str,
 };
 
-use crate::configs::global::Global;
+use crate::utils::system::System;
 
 pub struct Settings;
 
 impl Settings {
 
     fn search_property_in_file(prop: &str) -> Result<String, Box<dyn Error>> {
-        let mut file = File::open(&*Global::SETTINGS_FILE)?;
+        let mut file = File::open(&*System::SETTINGS_FILE)?;
         let mut contents = String::new();
         file.read_to_string(&mut contents)?;
 
@@ -39,14 +39,14 @@ impl Settings {
 
             return Ok(
                 format!(
-                    "{}:{}", &Global::SETTINGS_FILE.display(), line_number
+                    "{}:{}", &System::SETTINGS_FILE.display(), line_number
                 )
             );
         }
 
         Ok(
             format!(
-                "Please fix it in: {}:{}", &Global::SETTINGS_FILE.display(), line_position
+                "Please fix it in: {}:{}", &System::SETTINGS_FILE.display(), line_position
             )
         )
     }
@@ -80,7 +80,7 @@ impl Settings {
     }
 
     fn get_value(prop: &str, data_type: &str) -> Result<Value, Box<dyn Error>> {
-        let mut file = File::open(&*Global::SETTINGS_FILE)?;
+        let mut file = File::open(&*System::SETTINGS_FILE)?;
         let mut contents = String::new();
         file.read_to_string(&mut contents)?;
 
