@@ -13,6 +13,7 @@ For more help and document, see our Wiki pages:
 * [Basic usage](https://github.com/Ravenlib/Paimon/wiki/Basic-usage)
 * [Macros & Comments](https://github.com/Ravenlib/Paimon/wiki/Macros-&-Comments)
 * [Paimon.yml](https://github.com/Ravenlib/Paimon/wiki/Paimon.yml)
+* [Providers](https://github.com/Ravenlib/Paimon/wiki/Providers)
 * [RenderMarkdown](https://github.com/Ravenlib/Paimon/wiki/RenderMarkdown)
 * [Setting's](https://github.com/Ravenlib/Paimon/wiki/Settings)
 * [Scrape](https://github.com/Ravenlib/Paimon/wiki/Scrape)
