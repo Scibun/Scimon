@@ -5,8 +5,13 @@ use reqwest;
 use std::{
     env,
     sync::Once,
+    error::Error,
     process::Command,
-    path::{Path, PathBuf}
+
+    path::{
+        Path,
+        PathBuf,
+    }
 };
 
 use tokio::{
@@ -16,7 +21,11 @@ use tokio::{
 
 use crate::{
     configs::global::Global,
-    ui::ui_alerts::PaimonUIAlerts,
+
+    ui::{
+        errors_alerts::ErrorsAlerts,
+        success_alerts::SuccessAlerts,
+    },
 };
 
 static LOAD_ENV:Once = Once::new();
@@ -57,7 +66,7 @@ impl Env {
         Ok(())
     }
     
-    pub async fn force_download_env_file() -> Result<(), Box<dyn std::error::Error>> {
+    pub async fn force_download_env_file() -> Result<(), Box<dyn Error>> {
         let url = Global::ENV_URL;
         let output_directory = &*Global::APP_FOLDER;
         let cloned_output_directory = output_directory.clone();
@@ -72,16 +81,16 @@ impl Env {
             let content = response.bytes().await?;
     
             file.write_all(&content).await?;
-            PaimonUIAlerts::success_env();
+            SuccessAlerts::env();
         } else {
             let status_code = response.status().to_string();
-            PaimonUIAlerts::error_env(&status_code);
+            ErrorsAlerts::env(&status_code);
         }
     
         Ok(())
     }
     
-    pub async fn download_env_file(print: bool) -> Result<(), Box<dyn std::error::Error>> {
+    pub async fn download_env_file(print: bool) -> Result<(), Box<dyn Error>> {
         let url = Global::ENV_URL;
         let output_directory = &*Global::APP_FOLDER;
     
@@ -101,17 +110,17 @@ impl Env {
             }
     
             if print == true {
-                PaimonUIAlerts::success_env();
+                SuccessAlerts::env();
             }
         } else {
             let status_code = response.status().to_string();
-            PaimonUIAlerts::error_env(&status_code);
+            ErrorsAlerts::env(&status_code);
         }
     
         Ok(())
     }
     
-    pub async fn options_parser(options: &str) -> Result<(), Box<dyn std::error::Error>> {
+    pub async fn options_parser(options: &str) -> Result<(), Box<dyn Error>> {
         if options == "open-env" {
             let _ = Self::open_env_file();
         } else if options == "force-download-env" {

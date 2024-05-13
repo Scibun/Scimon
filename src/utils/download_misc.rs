@@ -5,35 +5,16 @@ use is_url::is_url;
 use std::error::Error;
 
 use crate::{
-    utils::url::UrlMisc,
     cmd::syntax::Macros,
     configs::regex::RegExp,
-    ui::ui_alerts::PaimonUIAlerts,
+    utils::remote::FileRemote,
+    ui::errors_alerts::ErrorsAlerts,
 };
 
 pub struct DownloadMisc;
 
 impl DownloadMisc {
-
-    pub async fn is_pdf_file(url: &str) -> Result<bool, Box<dyn Error>> {
-        let client: reqwest::Client = reqwest::Client::new();
-        let response = client.get(url).send().await?;
-
-        if !response.status().is_success() {
-            return Ok(false);
-        }
-
-        if let Some(content_type) = response.headers().get(reqwest::header::CONTENT_TYPE) {
-            if let Ok(content_type_str) = content_type.to_str() {
-                if content_type_str == "application/pdf" {
-                    return Ok(true);
-                }
-            }
-        }
     
-        Ok(false)
-    }
-
     pub async fn check_errors(url: &str) -> Result<(), Box<dyn Error>> {
         let final_url = &Macros::remove_macros(url);
         let regex = Regex::new(RegExp::VALIDATE_TAGS).unwrap();
@@ -43,14 +24,14 @@ impl DownloadMisc {
         
             if !is_url(final_url) {
                 let url_invalid = Box::from("Invalid URL provided. Please enter a valid URL");
-                PaimonUIAlerts::error_download(url_invalid, final_url);
+                ErrorsAlerts::download(url_invalid, final_url);
             } else {
                 url_valid = true;
             }
 
-            if UrlMisc::get_status_code(final_url).await != 200 && url_valid == true {
+            if FileRemote::get_status_code(final_url).await != 200 && url_valid == true {
                 let status_code = Box::from("Failed to retrieve the URL with status code other than 200");
-                PaimonUIAlerts::error_download(status_code, final_url);
+                ErrorsAlerts::download(status_code, final_url);
             }
         }
         

@@ -1,14 +1,12 @@
-use reqwest;
-use scihub_scraper::SciHubScraper;
-
 use std::error::Error;
+use scihub_scraper::SciHubScraper;
 
 use crate::{
     addons::scihub::SciHub,
     
     utils::{
         url::UrlMisc,
-        file::FileMisc,
+        remote::FileRemote,
     },
 };
 
@@ -35,14 +33,6 @@ impl Providers {
         }
 
         String::new()
-    }
-
-    async fn get_filename(url: &str) -> Result<String, Box<dyn Error>> {
-        let filename = FileMisc::detect_name(
-            url, reqwest::get(url).await?.headers().get("content-disposition")
-        ).await?;
-
-        Ok(filename)
     }
 
     pub fn arxiv(url: &str) -> String {
@@ -80,26 +70,6 @@ impl Providers {
         (request_url, filename)
     }
 
-    pub async fn scihub(url: &str) -> Result<(String, String), Box<dyn Error>> {
-        let mut scraper = SciHubScraper::new();
-        let paper = scraper.fetch_paper_pdf_url_by_doi(
-            &Self::extract_doi(url)
-        ).await?;
-
-        let paper_url = paper.to_string();
-        let paper_pdf_url = SciHub::get_pdf_file(&paper_url).await?;
-        let filename = Self::get_filename(&paper_url).await?;
-
-        Ok((paper_pdf_url, filename))
-    }
-
-    pub async fn generic(url: &str) -> Result<(String, String), Box<dyn Error>> {
-        let request_uri = url.to_string();
-        let filename = Self::get_filename(url).await?;
-
-        Ok((request_uri, filename))
-    }
-
     pub fn check_provider_domain(url: &str) -> bool {
         let mut valid_domain = false;
 
@@ -110,6 +80,27 @@ impl Providers {
         }
 
         valid_domain
+    }
+
+    pub async fn scihub(url: &str) -> Result<(String, String), Box<dyn Error>> {
+        let mut scraper = SciHubScraper::new();
+
+        let paper = scraper.fetch_paper_pdf_url_by_doi(
+            &Self::extract_doi(url)
+        ).await?;
+
+        let paper_url = paper.to_string();
+        let paper_pdf_url = SciHub::get_pdf_file(&paper_url).await?;
+        let filename = FileRemote::get_filename(&paper_url).await?;
+
+        Ok((paper_pdf_url, filename))
+    }
+
+    pub async fn generic(url: &str) -> Result<(String, String), Box<dyn Error>> {
+        let request_uri = url.to_string();
+        let filename = FileRemote::get_filename(url).await?;
+
+        Ok((request_uri, filename))
     }
 
     pub async fn get_from_provider(url: &str) -> Result<(String, String), Box<dyn Error>> {

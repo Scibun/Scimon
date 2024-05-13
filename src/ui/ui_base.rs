@@ -9,9 +9,9 @@ use indicatif::ProgressStyle;
 
 use crate::configs::global::Global;
 
-pub struct PaimonUI;
+pub struct UI;
 
-impl PaimonUI {
+impl UI {
 
     pub const PB_STYLE: &'static str = "[{elapsed_precise}] [{wide_bar:.cyan/blue}] {bytes}/{total_bytes} ({bytes_per_sec}, {eta})";
 
@@ -38,7 +38,7 @@ impl PaimonUI {
     }
    
     pub fn pb_template() -> ProgressStyle {
-        ProgressStyle::with_template(PaimonUI::PB_STYLE).unwrap().progress_chars("█░")
+        ProgressStyle::with_template(UI::PB_STYLE).unwrap().progress_chars("█░")
     }
 
 }

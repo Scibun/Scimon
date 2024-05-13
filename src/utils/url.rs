@@ -54,13 +54,6 @@ impl UrlMisc {
         let _ = webbrowser::open(&open_url);
     }
 
-    pub async fn get_status_code(url: &str) -> u16 {
-        reqwest::get(url)
-            .await
-            .map(|response| response.status().as_u16())
-            .unwrap_or(0)
-    }
-
     pub fn check_domain(url: &str, domain: &str) -> bool {
         url.contains(domain)
     }

@@ -16,8 +16,8 @@ use serde::Deserialize;
 use reqwest::{Client, header};
 
 use crate::{
-    configs::env::Env, 
-    ui::ui_alerts::PaimonUIAlerts,
+    configs::env::Env,
+    ui::errors_alerts::ErrorsAlerts,
     
     cmd::{
         syntax::Macros,
@@ -124,7 +124,7 @@ impl Ravenlib {
     
             if let Ok(error_response) = serde_json::from_str::<ErrorResponse>(&response_text) {
                 let message = ApiError::Message(error_response.message);
-                PaimonUIAlerts::generic_error(&message.to_string());
+                ErrorsAlerts::generic(&message.to_string());
     
                 Ok(message.to_string())
             } else {

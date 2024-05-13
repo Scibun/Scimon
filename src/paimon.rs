@@ -7,8 +7,8 @@ use crate::{
     render::render_markdown::RenderMarkdown,
 
     ui::{
-        ui_base::PaimonUI,
-        ui_alerts::PaimonUIAlerts,
+        ui_base::UI,
+        errors_alerts::ErrorsAlerts,
     },
 
     addons::{
@@ -23,7 +23,7 @@ impl Paimon {
 
     pub async fn init() {
         if let Err(err) = Env::download_env_file(false).await {
-            PaimonUIAlerts::generic_error(&err.to_string());
+            ErrorsAlerts::generic(&err.to_string());
         }
 
         let flags = Flags::parse();
@@ -31,7 +31,7 @@ impl Paimon {
         let run = flags.run.as_deref().unwrap_or_default();
         let options = flags.options.as_deref().unwrap_or_default();
 
-        PaimonUI::header();
+        UI::header();
         
         if !run.is_empty() {
             if !Ravenlib::check_is_user(run) {

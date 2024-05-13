@@ -17,8 +17,8 @@ use std::{
 };
 
 use crate::{
-    ui::ui_alerts::PaimonUIAlerts,
     configs::providers::Providers,
+    ui::errors_alerts::ErrorsAlerts,
 
     cmd::{
         syntax::Macros,
@@ -82,7 +82,7 @@ impl ReadList {
 
         if run.starts_with("http") {
             let _ = Validate::validate_file_type(run, ".txt").map_err(|e| {
-                PaimonUIAlerts::generic_error(&e.to_string());
+                ErrorsAlerts::generic(&e.to_string());
             });
             
             let response = reqwest::get(run).await?;
@@ -94,7 +94,7 @@ impl ReadList {
             );
         } else {
             let _ = Validate::validate_file(run).map_err(|e| {
-                PaimonUIAlerts::generic_error(&e.to_string());
+                ErrorsAlerts::generic(&e.to_string());
             });
             
             let file = File::open(run)?;

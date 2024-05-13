@@ -6,7 +6,7 @@ use serde::Deserialize;
 
 use crate::{
     cmd::download::Download,
-    ui::ui_alerts::PaimonUIAlerts,
+    ui::errors_alerts::ErrorsAlerts,
 };
 
 #[derive(Debug, Deserialize)]
@@ -50,7 +50,7 @@ impl Scrape {
                 Ok(response) => {
                     if let Some(success) = response.success {
                         if !success {
-                            PaimonUIAlerts::generic_error(&response.message);
+                            ErrorsAlerts::generic(&response.message);
                             return Ok(())
                         }
                     }
@@ -73,12 +73,12 @@ impl Scrape {
                                 }
                             }
                         } else {
-                            PaimonUIAlerts::generic_error(&response.message);
+                            ErrorsAlerts::generic(&response.message);
                         }
                     }
                 }
 
-                Err(e) => PaimonUIAlerts::generic_error(&e.to_string())
+                Err(e) => ErrorsAlerts::generic(&e.to_string())
             }
         }
     

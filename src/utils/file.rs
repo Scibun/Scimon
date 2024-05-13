@@ -42,19 +42,6 @@ impl FileMisc {
         Self::clean_path(&file_path)
     }
 
-    pub async fn get_remote_file_size(url: &str) -> Result<u64, Box<dyn Error>> {
-        let response = reqwest::get(url).await?;
-    
-        let total_size = response
-            .headers()
-            .get(reqwest::header::CONTENT_LENGTH)
-            .and_then(|ct_len| ct_len.to_str().ok())
-            .and_then(|ct_len| ct_len.parse::<u64>().ok())
-            .unwrap_or(0);
-
-        Ok(total_size)
-    }
-
     pub async fn detect_name(url: &str, content_disposition: Option<&HeaderValue>) -> Result<String, Box<dyn Error>> {
         let filename_option = if let Some(value) = content_disposition {
             let cd_string = value.to_str()?;

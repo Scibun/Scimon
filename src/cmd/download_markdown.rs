@@ -1,4 +1,3 @@
-use reqwest;
 use base64::prelude::*;
 use indicatif::ProgressBar;
 
@@ -22,13 +21,14 @@ use pulldown_cmark::{
 
 use crate::{
     ui::{
-        ui_base::PaimonUI,
-        ui_alerts::PaimonUIAlerts
+        ui_base::UI,
+        success_alerts::SuccessAlerts,
     },
 
     utils::{
         url::UrlMisc,
         file::FileMisc,
+        remote::FileRemote,
     }
 };
 
@@ -37,7 +37,7 @@ pub struct DownloadMarkdown;
 impl DownloadMarkdown {
 
     async fn markdown_to_html(url: &str) -> Result<String, Box<dyn Error>> {
-        let markdown_content = Self::fetch_markdown_content(url).await?;
+        let markdown_content = FileRemote::get_markdown_content(url).await?;
     
         let options = Options::empty();
         let parser = Parser::new_ext(&markdown_content, options);
@@ -48,14 +48,8 @@ impl DownloadMarkdown {
         Ok(html_output)
     }
 
-    async fn fetch_markdown_content(url: &str) -> Result<String, Box<dyn Error>> {
-        let response = reqwest::get(url).await?;
-        let content = response.text().await?;
-        Ok(content)
-    }
-
     async fn html_to_pdf(content: &str, path: PathBuf, url: &str, file: &str) -> Result<(), Box<dyn Error>> {
-        let total_size = FileMisc::get_remote_file_size(url).await?;
+        let total_size = FileRemote::get_file_size(url).await?;
 
         let browser = Browser::new(
             LaunchOptionsBuilder::default().build().expect(""),
@@ -72,14 +66,14 @@ impl DownloadMarkdown {
     
         let pb = ProgressBar::new(total_size);
 
-        pb.set_style(PaimonUI::pb_template());
+        pb.set_style(UI::pb_template());
 
         pb.set_message("Generating PDF...");
 
         fs::write(path, contents)?;
         
         pb.finish_with_message("Download and generated completed!");
-        PaimonUIAlerts::success_download_and_generated_pdf(file, url);
+        SuccessAlerts::download_and_generated_pdf(file, url);
 
         Ok(())
     }

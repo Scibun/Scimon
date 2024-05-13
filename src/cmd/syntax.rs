@@ -4,7 +4,7 @@ use std::error::Error;
 use crate::{
     utils::url::UrlMisc,
     configs::regex::RegExp,
-    ui::ui_alerts::PaimonUIAlerts
+    ui::macros_alerts::MacrosAlerts
 };
 
 pub struct Macros;
@@ -35,7 +35,7 @@ impl Macros {
 
     pub fn handle_comments(line: &str, no_comments: bool) -> Result<(), Box<dyn Error>> {
         if !no_comments && line.contains("!debug") {
-            PaimonUIAlerts::comments(line);
+            MacrosAlerts::comments(line);
         }
     
         Ok(())
@@ -43,7 +43,7 @@ impl Macros {
     
     pub fn handle_ignore_macro_flag(line: &str, no_ignore: bool) -> Result<String, &'static str> {
         if !no_ignore && line.to_lowercase().contains("!ignore") {
-            PaimonUIAlerts::ignore(line);
+            MacrosAlerts::ignore(line);
             return Err("Line contains the '!ignore' directive.");
         }
     

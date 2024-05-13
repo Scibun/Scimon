@@ -18,8 +18,9 @@ use crate::{
     configs::providers::Providers,
 
     ui::{
-        ui_base::PaimonUI,
-        ui_alerts::PaimonUIAlerts
+        ui_base::UI,
+        errors_alerts::ErrorsAlerts,
+        success_alerts::SuccessAlerts,
     },
 
     cmd::{
@@ -29,6 +30,7 @@ use crate::{
     
     utils::{
         file::FileMisc,
+        remote::FileRemote,
         validation::Validate,
         download_misc::DownloadMisc,
     }
@@ -47,10 +49,10 @@ impl Download {
         (request_uri, filename) = Providers::get_from_provider(url).await?;
   
         let response = reqwest::get(&request_uri).await?;    
-        let total_size = FileMisc::get_remote_file_size(&request_uri).await?;
+        let total_size = FileRemote::get_file_size(&request_uri).await?;
     
         let pb = ProgressBar::new(total_size);
-        pb.set_style(PaimonUI::pb_template());
+        pb.set_style(UI::pb_template());
 
         pb.set_prefix("Downloading");
     
@@ -91,7 +93,7 @@ impl Download {
         }
     
         if let Err(e) = Validate::validate_url(&processed_line) {
-            PaimonUIAlerts::generic_error(&e.to_string());
+            ErrorsAlerts::generic(&e.to_string());
     
             return Err(
                 Box::new(e)
@@ -101,12 +103,12 @@ impl Download {
         if processed_line.ends_with(".md") {
             DownloadMarkdown::generate_pdf(&processed_line, &path).await?;
         } else {
-            if DownloadMisc::is_pdf_file(&processed_line).await? || Providers::check_provider_domain(&processed_line) {
+            if FileRemote::is_pdf_file(&processed_line).await? || Providers::check_provider_domain(&processed_line) {
                 let result = Self::make_download(&processed_line, path).await;
                 
                 match result {
-                    Ok(file) => PaimonUIAlerts::success_download(&file, url),
-                    Err(e) => PaimonUIAlerts::error_download(e, url),
+                    Ok(file) => SuccessAlerts::download(&file, url),
+                    Err(e) => ErrorsAlerts::download(e, url),
                 }
             }
         }

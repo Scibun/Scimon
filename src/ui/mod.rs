@@ -1,2 +1,4 @@
 pub mod ui_base;
-pub mod ui_alerts;
+pub mod macros_alerts;
+pub mod errors_alerts;
+pub mod success_alerts;
