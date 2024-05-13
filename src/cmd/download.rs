@@ -15,7 +15,10 @@ use std::{
 };
 
 use crate::{
+    cmd::download_markdown::DownloadMarkdown,
+
     system::{
+        syntax::Macros,
         reporting::Reporting,
         providers::Providers,
     },
@@ -24,11 +27,6 @@ use crate::{
         ui_base::UI,
         errors_alerts::ErrorsAlerts,
         success_alerts::SuccessAlerts,
-    },
-
-    cmd::{
-        syntax::Macros,
-        download_markdown::DownloadMarkdown, 
     },
     
     utils::{

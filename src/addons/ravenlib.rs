@@ -13,16 +13,17 @@ use std::{
 
 use serde_json::Value;
 use serde::Deserialize;
-use reqwest::{Client, header};
+
+use reqwest::{
+    header,
+    Client,
+};
 
 use crate::{
     configs::env::Env,
+    system::syntax::Macros,
+    cmd::download::Download,
     ui::errors_alerts::ErrorsAlerts,
-    
-    cmd::{
-        syntax::Macros,
-        download::Download,
-    }
 };
 
 #[derive(Debug, Deserialize)]

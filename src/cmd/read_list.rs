@@ -17,12 +17,12 @@ use std::{
 };
 
 use crate::{
-    system::providers::Providers,
+    cmd::download::Download,
     ui::errors_alerts::ErrorsAlerts,
 
-    cmd::{
+    system::{
         syntax::Macros,
-        download::Download,
+        providers::Providers,
     },
 
     utils::{
