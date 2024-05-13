@@ -5,6 +5,7 @@ use std::error::Error;
 use serde::Deserialize;
 
 use crate::{
+    consts::uris::Uris,
     cmd::download::Download,
     ui::errors_alerts::ErrorsAlerts,
 };
@@ -33,10 +34,8 @@ pub struct Scrape;
 
 impl Scrape {
 
-    const PAIMON_SCRAPE_API_REQUEST: &'static str = "https://paimon-scrape.vercel.app/api?url=";
-
     async fn fetch_items(url: &str) -> Result<Response, Box<dyn std::error::Error>> {
-        let url_with_param = Self::PAIMON_SCRAPE_API_REQUEST.to_string() + url;
+        let url_with_param = Uris::PAIMON_SCRAPE_API_REQUEST.to_string() + url;
         let response = reqwest::get(&url_with_param).await?;
         let body = response.bytes().await?;
         

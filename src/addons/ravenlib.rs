@@ -21,6 +21,7 @@ use reqwest::{
 
 use crate::{
     configs::env::Env,
+    consts::uris::Uris,
     system::syntax::Macros,
     cmd::download::Download,
     ui::errors_alerts::ErrorsAlerts,
@@ -52,8 +53,6 @@ pub struct Ravenlib;
 
 impl Ravenlib {
     
-    pub const RAVENLIB_API_REQUEST: &'static str = "http://localhost/Ravenlib/api/";
-    
     fn remove_initial_character(text: &str, character: char) -> String {
         if let Some(rest) = text.strip_prefix(character) {
             return String::from(rest);
@@ -70,7 +69,7 @@ impl Ravenlib {
 
     pub async fn get(list_id: &str, no_ignore: bool, no_comments: bool) -> Result<String, Box<dyn Error>> {
         let list = Self::remove_initial_character(list_id, '@');
-        let mut url = Self::RAVENLIB_API_REQUEST.to_owned();
+        let mut url = Uris::RAVENLIB_API_REQUEST.to_owned();
     
         url.push_str("lists");
         url.push_str("/");

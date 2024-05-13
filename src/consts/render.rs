@@ -1,4 +1,4 @@
-use crate::configs::global::Global;
+use crate::consts::global::Global;
 
 pub struct RenderMarkdownEnv;
 

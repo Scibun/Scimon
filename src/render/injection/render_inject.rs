@@ -2,14 +2,11 @@ use serde_yaml::Value;
 
 use crate::{
     configs::settings::Settings,
+    consts::render::RenderMarkdownEnv,
 
-    render::{
-        render_env::RenderMarkdownEnv,
-
-        injection::{
-            render_inject_js::RenderMarkdownInjectJS,
-            render_inject_css::RenderMarkdownInjectCSS,
-        },
+    render::injection::{
+        render_inject_js::RenderMarkdownInjectJS,
+        render_inject_css::RenderMarkdownInjectCSS,
     }
 };
 

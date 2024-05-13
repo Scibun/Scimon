@@ -5,7 +5,7 @@ use std::path::PathBuf;
 use once_cell::sync::Lazy;
 use dirs_next::config_dir;
 
-use crate::configs::global::Global;
+use crate::consts::global::Global;
 
 pub struct System;
 

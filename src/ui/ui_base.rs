@@ -7,7 +7,7 @@ use indicatif::ProgressStyle;
 
 use crate::{
     system::system::System,
-    configs::global::Global,
+    consts::global::Global,
 };
 
 pub struct UI;

@@ -3,11 +3,8 @@ use serde_yaml::Value;
 
 use crate::{
     configs::settings::Settings,
-
-    render::{
-        render_env::RenderMarkdownEnv,
-        minify::render_minify::RenderMarkdownMinify,
-    },
+    consts::render::RenderMarkdownEnv,
+    render::minify::render_minify::RenderMarkdownMinify,
 };
 
 pub struct RenderMarkdownInjectCSS;

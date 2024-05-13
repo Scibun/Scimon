@@ -3,7 +3,7 @@ extern crate url;
 use url::Url;
 use regex::Regex;
 
-use crate::configs::regex::RegExp;
+use crate::consts::regex::RegExp;
 
 pub struct UrlMisc;
 

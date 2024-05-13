@@ -4,9 +4,9 @@ use qrcode::QrCode;
 use std::io::Cursor;
 use base64::prelude::*;
 
-use crate::configs::{
-    regex::RegExp,
-    settings::Settings,
+use crate::{
+    consts::regex::RegExp,
+    configs::settings::Settings,
 };
 
 pub struct RenderMarkdownExtraQrCode;

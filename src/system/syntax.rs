@@ -3,7 +3,7 @@ use std::error::Error;
 
 use crate::{
     utils::url::UrlMisc,
-    configs::regex::RegExp,
+    consts::regex::RegExp,
     ui::macros_alerts::MacrosAlerts
 };
 

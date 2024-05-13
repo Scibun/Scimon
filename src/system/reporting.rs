@@ -5,8 +5,8 @@ use is_url::is_url;
 use std::error::Error;
 
 use crate::{
+    consts::regex::RegExp,
     system::syntax::Macros,
-    configs::regex::RegExp,
     utils::remote::FileRemote,
     ui::errors_alerts::ErrorsAlerts,
 };

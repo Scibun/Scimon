@@ -14,9 +14,9 @@ use pulldown_cmark::{
 
 use crate::{
     configs::settings::Settings,
+    consts::render::RenderMarkdownEnv,
 
     render::{
-        render_env::RenderMarkdownEnv,
         injection::render_inject::RenderMarkdownInject,
         extra::render_extra_qrcode::RenderMarkdownExtraQrCode,
     },
