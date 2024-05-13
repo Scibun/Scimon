@@ -6,7 +6,7 @@ use figlet_rs::FIGfont;
 use indicatif::ProgressStyle;
 
 use crate::{
-    utils::system::System,
+    system::system::System,
     configs::global::Global,
 };
 

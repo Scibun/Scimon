@@ -2,9 +2,9 @@ extern crate colored;
 
 use colored::*;
 
-use crate::utils::{
-    url::UrlMisc,
-    system::System,
+use crate::{
+    utils::url::UrlMisc,
+    system::system::System,
 };
 
 pub struct SuccessAlerts;

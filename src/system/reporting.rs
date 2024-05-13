@@ -11,11 +11,11 @@ use crate::{
     ui::errors_alerts::ErrorsAlerts,
 };
 
-pub struct DownloadMisc;
+pub struct Reporting;
 
-impl DownloadMisc {
+impl Reporting {
     
-    pub async fn check_errors(url: &str) -> Result<(), Box<dyn Error>> {
+    pub async fn check_download_errors(url: &str) -> Result<(), Box<dyn Error>> {
         let final_url = &Macros::remove_macros(url);
         let regex = Regex::new(RegExp::VALIDATE_TAGS).unwrap();
 

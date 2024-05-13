@@ -2,7 +2,7 @@ extern crate colored;
 
 use colored::*;
 
-use crate::utils::system::System;
+use crate::system::system::System;
 
 pub struct MacrosAlerts;
 

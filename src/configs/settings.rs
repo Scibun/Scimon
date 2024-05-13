@@ -9,7 +9,7 @@ use serde_yaml::{
     from_str,
 };
 
-use crate::utils::system::System;
+use crate::system::system::System;
 
 pub struct Settings;
 

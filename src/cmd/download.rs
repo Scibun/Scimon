@@ -15,7 +15,10 @@ use std::{
 };
 
 use crate::{
-    configs::providers::Providers,
+    system::{
+        reporting::Reporting,
+        providers::Providers,
+    },
 
     ui::{
         ui_base::UI,
@@ -32,7 +35,6 @@ use crate::{
         file::FileMisc,
         remote::FileRemote,
         validation::Validate,
-        download_misc::DownloadMisc,
     }
 };
 
@@ -79,7 +81,7 @@ impl Download {
             url.trim()
         );
 
-        DownloadMisc::check_errors(&processed_line).await?;
+        Reporting::check_download_errors(&processed_line).await?;
         let _ = Macros::handle_comments(&processed_line, no_comments);
 
         if !is_url(&processed_line) {

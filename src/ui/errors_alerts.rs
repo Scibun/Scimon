@@ -3,7 +3,7 @@ extern crate colored;
 use colored::*;
 use::std::error::Error;
 
-use crate::utils::system::System;
+use crate::system::system::System;
 
 pub struct ErrorsAlerts;
 

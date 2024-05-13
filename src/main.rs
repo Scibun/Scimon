@@ -5,6 +5,7 @@ mod cmd;
 mod utils;
 mod render;
 mod addons;
+mod system;
 mod paimon;
 mod configs;
 mod args_cli;

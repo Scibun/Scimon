@@ -17,7 +17,7 @@ use std::{
 };
 
 use crate::{
-    configs::providers::Providers,
+    system::providers::Providers,
     ui::errors_alerts::ErrorsAlerts,
 
     cmd::{
