@@ -29,7 +29,19 @@ impl SciHub {
 
         None
     }
-    
+
+    pub fn extract_doi(url: &str) -> String {
+        if let Some(index) = url.find('/') {
+            let restante = &url[index + 2..];
+            
+            if let Some(index) = restante.find('/') {
+                return restante[index + 1..].to_string();
+            }
+        }
+
+        String::new()
+    }
+
     pub async fn get_pdf_file(url: &str) -> Result<String, Box<dyn std::error::Error>> {
         let mut pdf_url = String::new();
 

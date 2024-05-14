@@ -2,8 +2,10 @@ use std::error::Error;
 use scihub_scraper::SciHubScraper;
 
 use crate::{
-    consts::uris::Uris,
-    addons::scihub::SciHub,
+    addons::{
+        scihub::SciHub,
+        wikipedia::Wikipedia,
+    },
     
     utils::{
         url::UrlMisc,
@@ -22,18 +24,6 @@ impl Providers {
         "githubusercontent.com",
         "wikisource.org",
     ];
-
-    fn extract_doi(url: &str) -> String {
-        if let Some(index) = url.find('/') {
-            let restante = &url[index + 2..];
-            
-            if let Some(index) = restante.find('/') {
-                return restante[index + 1..].to_string();
-            }
-        }
-
-        String::new()
-    }
 
     pub fn arxiv(url: &str) -> String {
         let escape_quotes = UrlMisc::escape_quotes(url);
@@ -57,32 +47,6 @@ impl Providers {
         }
     }
 
-    pub fn wikipedia(url: &str) -> (String, String) {
-        let wiki_name = UrlMisc::get_last_part(url);
-        let wikipedia_region = format!("{}.", UrlMisc::get_subdomain(url));
-
-        let request_url = format!("{}{}", Uris::WIKIPEDIA_API_REQUEST_PDF.to_string().replace(
-            "en.", &wikipedia_region
-        ), wiki_name);
-
-        let filename = format!("{}.pdf", wiki_name);
-
-        (request_url, filename)
-    }
-
-    pub fn wikisource(url: &str) -> (String, String) {
-        let wiki_name = UrlMisc::get_last_part(url);
-        let wikipedia_region = format!("{}.", UrlMisc::get_subdomain(url));
-
-        let request_url = format!("{}{}", Uris::WIKISOURCE_API_REQUEST_PDF.to_string().replace(
-            "en.", &wikipedia_region
-        ), wiki_name);
-
-        let filename = format!("{}.pdf", wiki_name);
-
-        (request_url, filename)
-    }
-
     pub fn check_provider_domain(url: &str) -> bool {
         let mut valid_domain = false;
 
@@ -99,7 +63,7 @@ impl Providers {
         let mut scraper = SciHubScraper::new();
 
         let paper = scraper.fetch_paper_pdf_url_by_doi(
-            &Self::extract_doi(url)
+            &SciHub::extract_doi(url)
         ).await?;
 
         let paper_url = paper.to_string();
@@ -121,9 +85,9 @@ impl Providers {
         let request_uri;
 
         if UrlMisc::check_domain(url, Self::PROVIDERS_DOMAINS[0]) {
-            (request_uri, filename) = Self::wikipedia(url);
+            (request_uri, filename) = Wikipedia::wikipedia(url);
         } else if UrlMisc::check_domain(url, Self::PROVIDERS_DOMAINS[4]) {
-            (request_uri, filename) = Self::wikisource(url);
+            (request_uri, filename) = Wikipedia::wikisource(url);
         } else if UrlMisc::check_domain(url, Self::PROVIDERS_DOMAINS[1]) {
             (request_uri, filename) = Self::scihub(url).await?;
         } else {
