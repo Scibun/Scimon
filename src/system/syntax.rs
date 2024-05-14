@@ -32,6 +32,14 @@ impl Macros {
         let get_macro = format!("!{}", &word);
         line.contains(&get_macro.to_string())
     }
+    
+    pub fn remove_readme_macros_html(markdown_html: String) -> String {
+        markdown_html.replace(
+            "<p>!readme</p>\n", ""
+        ).replace(
+            "<p>!end_readme</p>\n", ""
+        )
+    }
 
     pub fn handle_comments(line: &str, no_comments: bool) -> Result<(), Box<dyn Error>> {
         if !no_comments && line.contains("!debug") {

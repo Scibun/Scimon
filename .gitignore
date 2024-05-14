@@ -24,3 +24,6 @@ Cargo.lock
 
 # Ignore JetBrains path
 .idea/
+
+# Ignore credentials
+credentials.json

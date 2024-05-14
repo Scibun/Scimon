@@ -13,6 +13,7 @@ use pulldown_cmark::{
 };
 
 use crate::{
+    system::syntax::Macros,
     configs::settings::Settings,
     consts::render::RenderMarkdownEnv,
 
@@ -25,14 +26,6 @@ use crate::{
 pub struct RenderMarkdownUtils;
 
 impl RenderMarkdownUtils {
-
-    fn remove_readme_macros(markdown_html: String) -> String {
-        markdown_html.replace(
-            "<p>!readme</p>\n", ""
-        ).replace(
-            "<p>!end_readme</p>\n", ""
-        )
-    }
 
     pub fn render_markdown(file: &str) -> Option<String> {
         let contents = fs::read_to_string(&file).expect("");
@@ -69,7 +62,7 @@ impl RenderMarkdownUtils {
             &"Unable to read readme.html file".to_string().red()
         );
         
-        let markdown_html = Self::remove_readme_macros(markdown_html);
+        let markdown_html = Macros::remove_readme_macros_html(markdown_html);
         let content = RenderMarkdownInject::content(&file, contents, markdown_html);
 
         if minify_prop == true {
