@@ -1,6 +1,7 @@
 extern crate colored;
 
 use reqwest;
+use serde_yaml::Value::String as SerdeValue;
 
 use std::{
     env,
@@ -22,6 +23,7 @@ use tokio::{
 use crate::{
     consts::global::Global,
     system::system::System,
+    configs::settings::Settings,
 
     ui::{
         errors_alerts::ErrorsAlerts,
@@ -59,11 +61,17 @@ impl Env {
     pub fn open_env_file() -> Result<(), std::io::Error> {
         let app_folder = &*System::APP_FOLDER;
         let env_path: PathBuf = app_folder.join(".env");
-    
-        Command::new("notepad.exe")
-            .arg(env_path)
-            .spawn()?;
-    
+
+        if let SerdeValue(editor) = &Settings::get(
+            "general.default_text_editor", "STRING"
+        ) {
+            Command::new(
+                editor
+            ).arg(
+                env_path
+            ).spawn()?;
+        }
+        
         Ok(())
     }
     
