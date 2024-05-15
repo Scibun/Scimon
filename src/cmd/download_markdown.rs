@@ -32,29 +32,34 @@ pub struct DownloadMarkdown;
 
 impl DownloadMarkdown {
 
-    async fn html_to_pdf(content: &str, path: PathBuf, url: &str, file: &str) -> Result<(), Box<dyn Error>> {
-        let total_size = FileRemote::get_file_size(url).await?;
-
+    async fn connect_to_browser(content: &str) -> Result<Vec<u8>, Box<dyn Error>> {
         let browser = Browser::new(
             LaunchOptionsBuilder::default().build().expect(""),
         )?;
 
-        let tab = browser.new_tab()?;
-
-        let html_str = BASE64_STANDARD.encode(content);
-        let file_path = format!("data:text/html;base64,{}", html_str);
-
         let pdf_options: Option<PrintToPdfOptions> = None;
 
-        let contents = tab.navigate_to(&file_path)?.wait_until_navigated()?.print_to_pdf(pdf_options)?;
+        let contents = browser.new_tab()?.navigate_to(
+            &format!(
+                "data:text/html;base64,{}", BASE64_STANDARD.encode(content)
+            )
+        )?.wait_until_navigated()?.print_to_pdf(
+            pdf_options
+        )?;
+
+        Ok(contents)
+    }
+
+    async fn html_to_pdf(content: &str, path: PathBuf, url: &str, file: &str) -> Result<(), Box<dyn Error>> {
+        let total_size = FileRemote::get_file_size(url).await?;
+        let pdf_contents = Self::connect_to_browser(content).await?;
     
         let pb = ProgressBar::new(total_size);
 
         pb.set_style(UI::pb_template());
-
         pb.set_message("Generating PDF...");
 
-        fs::write(path, contents)?;
+        fs::write(path, pdf_contents)?;
         
         pb.finish_with_message("Download and generated completed!");
         SuccessAlerts::download_and_generated_pdf(file, url);
