@@ -109,7 +109,7 @@ impl Ravenlib {
                     let path = Macros::handle_get_path(&url);
                     let _ = fs::create_dir(&path);
 
-                    Download::download_file(
+                    Download::download_pdf(
                         &url, 
                         &path,
                         no_ignore, 

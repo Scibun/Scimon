@@ -14,23 +14,17 @@ use headless_chrome::{
 };
 
 use crate::{
-    system::markdown::Markdown,
+    utils::remote::FileRemote,
 
     ui::{
         ui_base::UI,
         success_alerts::SuccessAlerts,
     },
-
-    utils::{
-        url::UrlMisc,
-        file::FileMisc,
-        remote::FileRemote,
-    }
 };
 
-pub struct DownloadMarkdown;
+pub struct PdfCreator;
 
-impl DownloadMarkdown {
+impl PdfCreator {
 
     async fn connect_to_browser(content: &str) -> Result<Vec<u8>, Box<dyn Error>> {
         let browser = Browser::new(
@@ -50,7 +44,7 @@ impl DownloadMarkdown {
         Ok(contents)
     }
 
-    async fn html_to_pdf(content: &str, path: PathBuf, url: &str, file: &str) -> Result<(), Box<dyn Error>> {
+    pub async fn from_html(content: &str, path: PathBuf, url: &str, file: &str) -> Result<(), Box<dyn Error>> {
         let total_size = FileRemote::get_file_size(url).await?;
         let pdf_contents = Self::connect_to_browser(content).await?;
     
@@ -65,18 +59,6 @@ impl DownloadMarkdown {
         SuccessAlerts::download_and_generated_pdf(file, url);
 
         Ok(())
-    }
-
-    pub async fn generate_pdf(url: &str, path: &str) -> Result<String, Box<dyn std::error::Error>> {
-        let html_content = Markdown::render_core(url).await?;
-        
-        let original_name = UrlMisc::get_last_part(url);
-        let new_filename = original_name.replace(".md", ".pdf");
-
-        let output_path = FileMisc::get_output_path(&path, &new_filename);
-
-        Self::html_to_pdf(&html_content, output_path, &url, &new_filename).await?;
-        Ok(new_filename.to_string())
     }
 
 }

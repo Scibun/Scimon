@@ -56,7 +56,7 @@ impl ReadList {
                 let arxiv_check = Providers::arxiv(trimmed_line);
                 let url = Providers::github(&arxiv_check);
     
-                Download::download_file(
+                Download::download_pdf(
                     &url,
                     &path,
                     no_ignore,

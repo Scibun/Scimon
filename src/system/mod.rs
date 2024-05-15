@@ -1,3 +1,4 @@
+pub mod pdf;
 pub mod syntax;
 pub mod system;
 pub mod markdown;
