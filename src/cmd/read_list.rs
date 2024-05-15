@@ -20,14 +20,14 @@ use crate::{
     cmd::download::Download,
     ui::errors_alerts::ErrorsAlerts,
 
-    system::{
-        syntax::Macros,
-        providers::Providers,
-    },
-
     utils::{
         url::UrlMisc,
         validation::Validate
+    },
+
+    system::{
+        syntax::Macros,
+        providers::Providers,
     },
 };
 

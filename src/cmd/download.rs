@@ -30,10 +30,10 @@ use crate::{
 
     system::{
         syntax::Macros,
-        pdf::PdfCreator,
         markdown::Markdown,
         reporting::Reporting,
         providers::Providers,
+        pdf_creator::PdfCreator,
     },
 
 };
@@ -72,7 +72,7 @@ impl Download {
         Ok(filename)
     }    
 
-    pub async fn download_markdown(url: &str, path: &str) -> Result<String, Box<dyn std::error::Error>> {
+    pub async fn download_markdown(url: &str, path: &str) -> Result<(), Box<dyn std::error::Error>> {
         let html_content = Markdown::render_core(url).await?;
         
         let original_name = UrlMisc::get_last_part(url);
@@ -80,7 +80,7 @@ impl Download {
         let output_path = FileMisc::get_output_path(&path, &new_filename);
 
         PdfCreator::from_html(&html_content, output_path, &url, &new_filename).await?;
-        Ok(new_filename.to_string())
+        Ok(())
     }
 
     pub async fn download_pdf(url: &str, path: &str, no_ignore: bool, no_comments: bool) -> Result<(), Box<dyn Error>> {

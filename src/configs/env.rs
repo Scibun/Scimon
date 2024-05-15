@@ -20,6 +20,7 @@ use tokio::{
 };
 
 use crate::{
+    consts::global::Global,
     system::system::System,
 
     ui::{
@@ -28,13 +29,11 @@ use crate::{
     },
 };
 
-static LOAD_ENV:Once = Once::new();
+static LOAD_ENV: Once = Once::new();
 
 pub struct Env;
 
 impl Env {
-
-    const ENV_URL: &'static str = "https://pastebin.com/raw/wZGaNtsL";
 
     fn load_env_from_app_config() {
         let app_folder = &*System::APP_FOLDER;
@@ -69,7 +68,7 @@ impl Env {
     }
     
     pub async fn force_download_env_file() -> Result<(), Box<dyn Error>> {
-        let url = Self::ENV_URL;
+        let url = Global::ENV_URL;
         let output_directory = &*System::APP_FOLDER;
         let cloned_output_directory = output_directory.clone();
     
@@ -93,7 +92,7 @@ impl Env {
     }
     
     pub async fn download_env_file(print: bool) -> Result<(), Box<dyn Error>> {
-        let url = Self::ENV_URL;
+        let url = Global::ENV_URL;
         let output_directory = &*System::APP_FOLDER;
     
         let cloned_output_directory = output_directory.clone();
