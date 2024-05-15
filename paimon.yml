@@ -2,9 +2,6 @@ general:
   mode: 'standard' # String (valid values: 'standard' and 'demon'; default: 'standard')
   default_text_editor: 'notepad.exe' # String (default: 'notepad.exe')
 
-security:
-  download_only_with_https: false # Boolean (valid values: 'ture' or 'false'; default: 'false')
-
 render_markdown:
   output_path: '{app_path}' # String (default: '{app_path}')
   mode: 'paimon' # String (valid values: 'paimon' and 'pure'; default: 'paimon')
