@@ -13,13 +13,9 @@ use headless_chrome::{
     types::PrintToPdfOptions,
 };
 
-use pulldown_cmark::{
-    html,
-    Parser,
-    Options,
-};
-
 use crate::{
+    system::markdown::Markdown,
+
     ui::{
         ui_base::UI,
         success_alerts::SuccessAlerts,
@@ -35,18 +31,6 @@ use crate::{
 pub struct DownloadMarkdown;
 
 impl DownloadMarkdown {
-
-    async fn markdown_to_html(url: &str) -> Result<String, Box<dyn Error>> {
-        let markdown_content = FileRemote::get_markdown_content(url).await?;
-    
-        let options = Options::empty();
-        let parser = Parser::new_ext(&markdown_content, options);
-
-        let mut html_output = String::new();
-        html::push_html(&mut html_output, parser);
-    
-        Ok(html_output)
-    }
 
     async fn html_to_pdf(content: &str, path: PathBuf, url: &str, file: &str) -> Result<(), Box<dyn Error>> {
         let total_size = FileRemote::get_file_size(url).await?;
@@ -79,7 +63,7 @@ impl DownloadMarkdown {
     }
 
     pub async fn generate_pdf(url: &str, path: &str) -> Result<String, Box<dyn std::error::Error>> {
-        let html_content = Self::markdown_to_html(url).await?;
+        let html_content = Markdown::render_core(url).await?;
         
         let original_name = UrlMisc::get_last_part(url);
         let new_filename = original_name.replace(".md", ".pdf");

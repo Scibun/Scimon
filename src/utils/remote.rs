@@ -56,10 +56,4 @@ impl FileRemote {
         Ok(filename)
     }
 
-    pub async fn get_markdown_content(url: &str) -> Result<String, Box<dyn Error>> {
-        let response = reqwest::get(url).await?;
-        let content = response.text().await?;
-        Ok(content)
-    }
-
 }
