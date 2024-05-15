@@ -14,7 +14,7 @@ use pulldown_cmark::{
 };
 
 use crate::{
-    regex::macros_regex::MacrosRegExp,
+    regex::regex_macros::MacrosRegExp,
     render::extra::render_extra_qrcode::RenderMarkdownExtraQrCode,
 };
 

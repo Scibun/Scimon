@@ -1,3 +1,3 @@
-pub mod core_regex;
-pub mod macros_regex;
-pub mod minify_regex;
+pub mod regex_core;
+pub mod regex_macros;
+pub mod regex_minify;

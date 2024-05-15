@@ -6,7 +6,7 @@ use base64::prelude::*;
 
 use crate::{
     configs::settings::Settings,
-    regex::core_regex::CoreRegExp,
+    regex::regex_core::CoreRegExp,
 };
 
 pub struct RenderMarkdownExtraQrCode;

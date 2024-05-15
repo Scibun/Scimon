@@ -7,7 +7,7 @@ use std::error::Error;
 use crate::{
     system::syntax::Macros,
     utils::remote::FileRemote,
-    regex::core_regex::CoreRegExp,
+    regex::regex_core::CoreRegExp,
     ui::errors_alerts::ErrorsAlerts,
 };
 
