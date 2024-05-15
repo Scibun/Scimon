@@ -15,7 +15,7 @@ use pulldown_cmark::{
 
 use crate::{
     regex::regex_macros::MacrosRegExp,
-    render::extra::render_extra_qrcode::RenderMarkdownExtraQrCode,
+    render::render_extra_qrcode::RenderMarkdownExtraQrCode,
 };
 
 pub struct Markdown;
