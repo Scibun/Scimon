@@ -41,6 +41,11 @@ impl Providers {
         }
     }
 
+    pub fn check_provider_line(url: &str) -> String {
+        let arxiv_check = Providers::arxiv(url);
+        Providers::github(&arxiv_check)
+    }
+
     pub fn check_provider_domain(url: &str) -> bool {
         let mut valid_domain = false;
 
