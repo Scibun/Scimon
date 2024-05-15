@@ -68,6 +68,7 @@ impl Settings {
 
         if value_type != data_type {
             let property_position = Self::get_wrong_property_position(prop, false)?;
+            
             return Err(
                 format!(
                     "The '{}' configuration is invalid. Expected type {}, but instead a {} was passed. {}.",
