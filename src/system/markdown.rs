@@ -13,7 +13,10 @@ use pulldown_cmark::{
     Options,
 };
 
-use crate::render::extra::render_extra_qrcode::RenderMarkdownExtraQrCode;
+use crate::{
+    regex::macros_regex::MacrosRegExp,
+    render::extra::render_extra_qrcode::RenderMarkdownExtraQrCode,
+};
 
 pub struct Markdown;
 
@@ -40,8 +43,8 @@ impl Markdown {
     pub fn render_readme(file: &str) -> Option<String> {
         let contents = fs::read_to_string(&file).expect("");
     
-        let start_regex = Regex::new(r"!readme").unwrap();
-        let end_regex = Regex::new(r"!end_readme").unwrap();
+        let start_regex = Regex::new(MacrosRegExp::GET_README[0]).unwrap();
+        let end_regex = Regex::new(MacrosRegExp::GET_README[1]).unwrap();
 
         if start_regex.is_match(&contents) && end_regex.is_match(&contents) {
             let start_match = start_regex.find(&contents).unwrap();

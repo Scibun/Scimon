@@ -3,8 +3,8 @@ use std::error::Error;
 
 use crate::{
     utils::url::UrlMisc,
-    consts::regex::RegExp,
-    ui::macros_alerts::MacrosAlerts
+    ui::macros_alerts::MacrosAlerts,
+    regex::macros_regex::MacrosRegExp,
 };
 
 pub struct Macros;
@@ -12,7 +12,7 @@ pub struct Macros;
 impl Macros {
 
     pub fn remove_macros(input: &str) -> String {
-        let re = Regex::new(RegExp::GET_MACROS).unwrap();
+        let re = Regex::new(MacrosRegExp::GET_MACROS).unwrap();
         re.replace_all(input, "").to_string()
     }
 

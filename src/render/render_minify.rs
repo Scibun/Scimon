@@ -1,6 +1,6 @@
 use regex::Regex;
 
-use crate::consts::minify_regex::MinifyRegExp;
+use crate::regex::minify_regex::MinifyRegExp;
 
 pub struct RenderMarkdownMinify;
 

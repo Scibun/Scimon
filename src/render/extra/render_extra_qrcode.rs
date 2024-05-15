@@ -5,8 +5,8 @@ use std::io::Cursor;
 use base64::prelude::*;
 
 use crate::{
-    consts::regex::RegExp,
     configs::settings::Settings,
+    regex::core_regex::CoreRegExp,
 };
 
 pub struct RenderMarkdownExtraQrCode;
@@ -27,7 +27,7 @@ impl RenderMarkdownExtraQrCode {
     
     pub fn generate(markdown: &str) -> String {
         if Settings::get("render_markdown.mode", "STRING") == "paimon" {
-            let re = Regex::new(RegExp::RENDER_EXTRA_QRCODE).unwrap();
+            let re = Regex::new(CoreRegExp::RENDER_EXTRA_QRCODE).unwrap();
         
             let replaced_markdown = re.replace_all(markdown, |captures: &regex::Captures| {
                 let link = captures.get(1).unwrap().as_str();

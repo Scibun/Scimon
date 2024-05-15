@@ -5,9 +5,9 @@ use is_url::is_url;
 use std::error::Error;
 
 use crate::{
-    consts::regex::RegExp,
     system::syntax::Macros,
     utils::remote::FileRemote,
+    regex::core_regex::CoreRegExp,
     ui::errors_alerts::ErrorsAlerts,
 };
 
@@ -17,7 +17,7 @@ impl Reporting {
     
     pub async fn check_download_errors(url: &str) -> Result<(), Box<dyn Error>> {
         let final_url = &Macros::remove_macros(url);
-        let regex = Regex::new(RegExp::VALIDATE_TAGS).unwrap();
+        let regex = Regex::new(CoreRegExp::VALIDATE_TAGS).unwrap();
 
         if regex.is_match(final_url) && !final_url.contains("*") && !final_url.is_empty() {
             let mut url_valid = false;

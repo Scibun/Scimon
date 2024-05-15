@@ -3,6 +3,7 @@ extern crate colored;
 mod ui;
 mod cmd;
 mod utils;
+mod regex;
 mod consts;
 mod render;
 mod addons;

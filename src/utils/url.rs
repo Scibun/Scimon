@@ -3,7 +3,7 @@ extern crate url;
 use url::Url;
 use regex::Regex;
 
-use crate::consts::regex::RegExp;
+use crate::regex::core_regex::CoreRegExp;
 
 pub struct UrlMisc;
 
@@ -15,7 +15,7 @@ impl UrlMisc {
     }
 
     pub fn extract_url(url: &str) -> String {
-        let re = Regex::new(RegExp::EXTRACT_URL).unwrap();
+        let re = Regex::new(CoreRegExp::EXTRACT_URL).unwrap();
 
         if let Some(capture) = re.find(url) {
             capture.as_str().to_string()
