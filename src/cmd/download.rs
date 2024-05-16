@@ -59,7 +59,7 @@ impl Download {
         let content = response.bytes().await?;
         let mut reader = Cursor::new(content);
 
-        let _ = Validate::validate_file_type(&filename, ".pdf");
+        let _ = Validate::file_type(&filename, ".pdf");
     
         let mut buffer = [0; 8192];
         while let Ok(size) = reader.read(&mut buffer) {
@@ -101,14 +101,6 @@ impl Download {
         match Macros::handle_ignore_macro_flag(&line_url, no_ignore) {
             Ok(new_line) => line_url = Cow::Owned(new_line),
             Err(_) => return Ok(()),
-        }
-    
-        if let Err(e) = Validate::validate_url(&line_url) {
-            ErrorsAlerts::generic(&e.to_string());
-    
-            return Err(
-                Box::new(e)
-            )
         }
 
         if FileRemote::check_content_type(&line_url, "text/markdown").await? {

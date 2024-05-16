@@ -80,7 +80,7 @@ impl ReadList {
         let reader: BufReader<Box<dyn Read>>;
 
         if run.starts_with("http") {
-            let _ = Validate::validate_file_type(run, ".txt").map_err(|e| {
+            let _ = Validate::file_type(run, ".txt").map_err(|e| {
                 ErrorsAlerts::generic(&e.to_string());
             });
             
@@ -92,7 +92,7 @@ impl ReadList {
                 Box::new(cursor)
             );
         } else {
-            let _ = Validate::validate_file(run).map_err(|e| {
+            let _ = Validate::file(run).map_err(|e| {
                 ErrorsAlerts::generic(&e.to_string());
             });
             
