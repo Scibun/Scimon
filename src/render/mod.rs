@@ -6,4 +6,4 @@ pub mod render_markdown;
 pub mod injection;
 
 // Extras
-pub mod render_extra_qrcode;
+pub mod render_extras;

@@ -4,7 +4,7 @@ use colored::*;
 
 use std::{
     fs,
-    env
+    env,
 };
 
 use crate::{
@@ -47,6 +47,12 @@ impl RenderMarkdownIO {
         )
     }
 
+    pub fn write_file(path: &str, contents: String) {
+        fs::write(path, contents).expect(
+            &"Error saving HTML file".to_string().red()
+        );
+    }
+
     pub fn open_readme_url(path: &str, no_open_link: bool) {
         if !no_open_link {
             let full_path = env::current_dir().expect(
@@ -61,12 +67,6 @@ impl RenderMarkdownIO {
 
             UrlMisc::open_url(&url_file, false);
         }
-    }
-
-    pub fn write_file(path: &str, contents: String) {
-        fs::write(path, contents).expect(
-            &"Error saving HTML file".to_string().red()
-        );
     }
 
 }

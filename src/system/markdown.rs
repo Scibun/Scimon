@@ -15,21 +15,21 @@ use pulldown_cmark::{
 
 use crate::{
     regex::regex_macros::MacrosRegExp,
-    render::render_extra_qrcode::RenderMarkdownExtraQrCode,
+    render::render_extras::RenderMarkdownExtras,
 };
 
 pub struct Markdown;
 
 impl Markdown {
 
-    async fn get_markdown_content(url: &str) -> Result<String, Box<dyn Error>> {
+    async fn get_content(url: &str) -> Result<String, Box<dyn Error>> {
         let response = reqwest::get(url).await?;
         let content = response.text().await?;
         Ok(content)
     }
 
     pub async fn render_core(url: &str) -> Result<String, Box<dyn Error>> {
-        let markdown_content = Self::get_markdown_content(url).await?;
+        let markdown_content = Self::get_content(url).await?;
     
         let options = Options::empty();
         let parser = Parser::new_ext(&markdown_content, options);
@@ -54,8 +54,8 @@ impl Markdown {
             let end_index = end_match.start() + "!end_readme".len();
         
             let markdown_block = &contents[start_index..end_index];
-            let markdown_block_extra = &RenderMarkdownExtraQrCode::generate(markdown_block);
-            let parser = Parser::new_ext(&markdown_block_extra, Options::all());
+            let markdown_block_extras = &RenderMarkdownExtras::qrcode(markdown_block);
+            let parser = Parser::new_ext(&markdown_block_extras, Options::all());
         
             let mut html_output = String::new();
             html::push_html(&mut html_output, parser);
