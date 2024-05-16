@@ -1,8 +1,8 @@
 use serde_yaml::Value;
 
 use crate::{
+    consts::global::Global,
     configs::settings::Settings,
-    consts::render::RenderMarkdownEnv,
 
     render::injection::{
         render_inject_js::RenderMarkdownInjectJS,
@@ -50,7 +50,7 @@ impl RenderMarkdownInject {
         let render_mode = Settings::get("render_markdown.mode", "STRING");
         let render_minify_extra_plugins = Settings::get("render_markdown.minify_extra_plugins", "BOOLEAN");
 
-        let title = format!("{}: {}: README", &RenderMarkdownEnv::README_APP_NAME, &file);
+        let title = format!("{}: {}: README", &Global::APP_NAME, &file);
         
         contents.replace(
             "{{ page_title }}", &title

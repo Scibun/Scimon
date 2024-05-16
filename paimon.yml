@@ -15,6 +15,7 @@ render_markdown:
     - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism.min.css'
     - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism-okaidia.min.css'
     - 'https://use.fontawesome.com/releases/v6.5.2/css/all.css'
+    - 'https://cdn.jsdelivr.net/gh/lonekorean/gist-syntax-themes@d49b91b3/stylesheets/idle-fingers.css'
 
   load_js_cdn: # List
     - 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'

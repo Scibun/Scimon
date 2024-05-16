@@ -48,8 +48,9 @@ impl Markdown {
             let end_index = end_match.start() + "!end_readme".len();
         
             let markdown_block = &contents[start_index..end_index];
-            let markdown_block_extras = &RenderMarkdownExtras::qrcode(markdown_block);
-            let parser = Parser::new_ext(&markdown_block_extras, Options::all());
+            let markdown_block_extras_qrcode = &RenderMarkdownExtras::qrcode(markdown_block);
+            let markdown_block_extras_gist = &RenderMarkdownExtras::gist(markdown_block_extras_qrcode);
+            let parser = Parser::new_ext(&markdown_block_extras_gist, Options::all());
         
             let mut html_output = String::new();
             html::push_html(&mut html_output, parser);
