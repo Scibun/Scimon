@@ -53,13 +53,13 @@ impl Download {
         pb.set_style(UI::pb_template());
 
         pb.set_prefix("Downloading");
-
-        Validate::validate_file_type(&filename, ".pdf")?;
     
         let output_path = FileMisc::get_output_path(path, &filename);
         let mut dest = File::create(&output_path)?;
         let content = response.bytes().await?;
         let mut reader = Cursor::new(content);
+
+        let _ = Validate::validate_file_type(&filename, ".pdf");
     
         let mut buffer = [0; 8192];
         while let Ok(size) = reader.read(&mut buffer) {
@@ -109,7 +109,7 @@ impl Download {
             )
         }
 
-        if  FileRemote::check_content_type(&line_url, "text/markdown").await? {
+        if FileRemote::check_content_type(&line_url, "text/markdown").await? {
             Self::download_markdown(&line_url, &path).await?;
         } else {
             if FileRemote::is_pdf_file(&line_url).await? || Providers::check_provider_domain(&line_url) {
