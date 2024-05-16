@@ -55,5 +55,24 @@ impl FileRemote {
 
         Ok(filename)
     }
+    
+    pub async fn check_content_type(url: &str, mime_type: &str) -> Result<bool, Box<dyn Error>> {
+        let client: reqwest::Client = reqwest::Client::new();
+        let response = client.get(url).send().await?;
+
+        if !response.status().is_success() {
+            return Ok(false);
+        }
+
+        if let Some(content_type) = response.headers().get(reqwest::header::CONTENT_TYPE) {
+            if let Ok(content_type_str) = content_type.to_str() {
+                if content_type_str == mime_type {
+                    return Ok(true);
+                }
+            }
+        }
+    
+        Ok(false)
+    }
 
 }

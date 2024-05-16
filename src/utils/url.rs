@@ -2,6 +2,7 @@ extern crate url;
 
 use url::Url;
 use regex::Regex;
+use std::error::Error;
 
 use crate::regex::regex_core::CoreRegExp;
 
@@ -56,6 +57,21 @@ impl UrlMisc {
 
     pub fn check_domain(url: &str, domain: &str) -> bool {
         url.contains(domain)
+    }
+
+    pub async fn check_url_status(url: &str) -> Result<(), Box<dyn Error>> {
+        let response = reqwest::get(url).await?;
+    
+        if response.status().as_u16() == 200 {
+            Ok(())
+        } else {
+            Err(
+                format!(
+                    "Received a non-200 status: {}", 
+                    response.status()
+                ).into()
+            )
+        }
     }
 
 }

@@ -43,7 +43,7 @@ pub struct Download;
 impl Download {
 
     async fn make_download(url: &str, path: &str) -> Result<String, Box<dyn Error>> {
-        Validate::check_url_status(url).await?;
+        UrlMisc::check_url_status(url).await?;
 
         let (request_uri, filename) = Providers::get_from_provider(url).await?;
         let response = reqwest::get(&request_uri).await?;    
@@ -53,9 +53,10 @@ impl Download {
         pb.set_style(UI::pb_template());
 
         pb.set_prefix("Downloading");
+
+        Validate::validate_file_type(&filename, ".pdf")?;
     
         let output_path = FileMisc::get_output_path(path, &filename);
-        let _ = Validate::validate_file_type(&filename, ".pdf");
         let mut dest = File::create(&output_path)?;
         let content = response.bytes().await?;
         let mut reader = Cursor::new(content);
@@ -72,7 +73,7 @@ impl Download {
         Ok(filename)
     }    
 
-    pub async fn download_markdown(url: &str, path: &str) -> Result<(), Box<dyn std::error::Error>> {
+    pub async fn download_markdown(url: &str, path: &str) -> Result<(), Box<dyn Error>> {
         let html_content = Markdown::render_core(url).await?;
         
         let original_name = UrlMisc::get_last_part(url);
@@ -84,24 +85,23 @@ impl Download {
     }
 
     pub async fn download_pdf(url: &str, path: &str, no_ignore: bool, no_comments: bool) -> Result<(), Box<dyn Error>> {
-        let mut processed_line: Cow<str> = Cow::Borrowed(
+        let mut line_url: Cow<str> = Cow::Borrowed(
             url.trim()
         );
 
-        Reporting::check_download_errors(&processed_line).await?;
-        let _ = Macros::handle_comments(&processed_line, no_comments);
+        Reporting::check_download_errors(&line_url).await?;
+        let _ = Macros::handle_comments(&line_url, no_comments);
 
-        if !is_url(&processed_line) {
+        if !is_url(&line_url) {
             return Ok(())
         }
     
-        let result_ignore_macro_flag = Macros::handle_ignore_macro_flag(&processed_line, no_ignore);
-        match result_ignore_macro_flag {
-            Ok(new_line) => processed_line = Cow::Owned(new_line),
+        match Macros::handle_ignore_macro_flag(&line_url, no_ignore) {
+            Ok(new_line) => line_url = Cow::Owned(new_line),
             Err(_) => return Ok(()),
         }
     
-        if let Err(e) = Validate::validate_url(&processed_line) {
+        if let Err(e) = Validate::validate_url(&line_url) {
             ErrorsAlerts::generic(&e.to_string());
     
             return Err(
@@ -109,11 +109,11 @@ impl Download {
             )
         }
 
-        if processed_line.ends_with(".md") {
-            Self::download_markdown(&processed_line, &path).await?;
+        if  FileRemote::check_content_type(&line_url, "text/markdown").await? {
+            Self::download_markdown(&line_url, &path).await?;
         } else {
-            if FileRemote::is_pdf_file(&processed_line).await? || Providers::check_provider_domain(&processed_line) {
-                let result = Self::make_download(&processed_line, path).await;
+            if FileRemote::is_pdf_file(&line_url).await? || Providers::check_provider_domain(&line_url) {
+                let result = Self::make_download(&line_url, path).await;
                 
                 match result {
                     Ok(file) => SuccessAlerts::download(&file, url),

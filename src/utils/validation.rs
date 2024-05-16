@@ -1,10 +1,8 @@
-use reqwest;
 use is_url::is_url;
 
 use std::{
     io,
-    path::Path,
-    error::Error
+    path::Path
 };
 
 pub struct Validate;
@@ -61,21 +59,6 @@ impl Validate {
         }
     
         Ok(())
-    }
-    
-    pub async fn check_url_status(url: &str) -> Result<(), Box<dyn Error>> {
-        let response = reqwest::get(url).await?;
-    
-        if response.status().as_u16() == 200 {
-            Ok(())
-        } else {
-            Err(
-                format!(
-                    "Received a non-200 status: {}", 
-                    response.status()
-                ).into()
-            )
-        }
     }
     
 }

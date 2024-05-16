@@ -37,13 +37,27 @@ impl FileMisc {
         Path::new(&path).exists()
     }
 
+    pub fn set_final_filename(file: Option<String>) -> String {
+        if let Some(ref filename) = file {
+            if !filename.contains(".pdf") {
+                filename.clone() + ".pdf"
+            } else {
+                filename.clone()
+            }
+        } else {
+            format!(
+                "{}.pdf", Uuid::new_v4().to_string()
+            )
+        }
+    }
+
     pub fn get_output_path(path: &str, filename: &str) -> PathBuf {
         let file_path = format!("{}/{}", path, filename);
         Self::clean_path(&file_path)
     }
 
-    pub async fn detect_name(url: &str, content_disposition: Option<&HeaderValue>) -> Result<String, Box<dyn Error>> {
-        let filename_option = if let Some(value) = content_disposition {
+    pub async fn detect_name(url: &str, disposition: Option<&HeaderValue>) -> Result<String, Box<dyn Error>> {
+        let filename_option = if let Some(value) = disposition {
             let cd_string = value.to_str()?;
             let parts: Vec<&str> = cd_string.split("filename=").collect();
     
@@ -59,18 +73,7 @@ impl FileMisc {
                 .map(|name| name.to_string())
         };
     
-        let final_filename = if let Some(ref filename) = filename_option {
-            if !filename.contains(".pdf") {
-                filename.clone() + ".pdf"
-            } else {
-                filename.clone()
-            }
-        } else {
-            format!(
-                "{}.pdf", Uuid::new_v4().to_string()
-            )
-        };
-        
+        let final_filename = Self::set_final_filename(filename_option);
         Ok(final_filename)
     }
 

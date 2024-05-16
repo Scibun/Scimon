@@ -50,7 +50,7 @@ impl ReadList {
             if !Macros::handle_check_macro_line(&trimmed_line, "open_link") {
                 if path.is_empty() {
                     path = Macros::handle_get_path(trimmed_line);
-                    let _ = fs::create_dir(&path);
+                    fs::create_dir(&path)?;
                 }
     
                 let url = Providers::check_provider_line(&trimmed_line);

@@ -8,6 +8,7 @@ use std::{
     sync::Once,
     error::Error,
     process::Command,
+    io::Error as IoError,
 
     path::{
         Path,
@@ -58,7 +59,7 @@ impl Env {
         )
     }
     
-    pub fn open_env_file() -> Result<(), std::io::Error> {
+    pub fn open_env_file() -> Result<(), IoError> {
         let app_folder = &*System::APP_FOLDER;
         let env_path: PathBuf = app_folder.join(".env");
 
