@@ -15,21 +15,15 @@ use pulldown_cmark::{
 
 use crate::{
     regex::regex_macros::MacrosRegExp,
-    render::render_extras::RenderMarkdownExtras,
+    render::render_extras::RenderMarkdownExtras, utils::remote::FileRemote,
 };
 
 pub struct Markdown;
 
 impl Markdown {
 
-    async fn get_content(url: &str) -> Result<String, Box<dyn Error>> {
-        let response = reqwest::get(url).await?;
-        let content = response.text().await?;
-        Ok(content)
-    }
-
     pub async fn render_core(url: &str) -> Result<String, Box<dyn Error>> {
-        let markdown_content = Self::get_content(url).await?;
+        let markdown_content = FileRemote::content(url).await?;
     
         let options = Options::empty();
         let parser = Parser::new_ext(&markdown_content, options);

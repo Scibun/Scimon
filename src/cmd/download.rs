@@ -42,7 +42,7 @@ pub struct Download;
 
 impl Download {
 
-    async fn make_download(url: &str, path: &str) -> Result<String, Box<dyn Error>> {
+    async fn make(url: &str, path: &str) -> Result<String, Box<dyn Error>> {
         UrlMisc::check_url_status(url).await?;
 
         let (request_uri, filename) = Providers::get_from_provider(url).await?;
@@ -73,18 +73,20 @@ impl Download {
         Ok(filename)
     }    
 
-    pub async fn download_markdown(url: &str, path: &str) -> Result<(), Box<dyn Error>> {
+    pub async fn markdown(url: &str, path: &str) -> Result<(), Box<dyn Error>> {
         let html_content = Markdown::render_core(url).await?;
         
         let original_name = UrlMisc::get_last_part(url);
         let new_filename = original_name.replace(".md", ".pdf");
         let output_path = FileMisc::get_output_path(&path, &new_filename);
 
-        PdfCreator::from_html(&html_content, output_path, &url, &new_filename).await?;
+        PdfCreator::from_html(&html_content, output_path, &url).await?;
+        SuccessAlerts::download_and_generated_pdf(&new_filename, url);
+
         Ok(())
     }
 
-    pub async fn download_pdf(url: &str, path: &str, no_ignore: bool, no_comments: bool) -> Result<(), Box<dyn Error>> {
+    pub async fn pdf(url: &str, path: &str, no_ignore: bool, no_comments: bool) -> Result<(), Box<dyn Error>> {
         let mut line_url: Cow<str> = Cow::Borrowed(
             url.trim()
         );
@@ -110,10 +112,10 @@ impl Download {
         }
 
         if FileRemote::check_content_type(&line_url, "text/markdown").await? {
-            Self::download_markdown(&line_url, &path).await?;
+            Self::markdown(&line_url, &path).await?;
         } else {
             if FileRemote::is_pdf_file(&line_url).await? || Providers::check_provider_domain(&line_url) {
-                let result = Self::make_download(&line_url, path).await;
+                let result = Self::make(&line_url, path).await;
                 
                 match result {
                     Ok(file) => SuccessAlerts::download(&file, url),

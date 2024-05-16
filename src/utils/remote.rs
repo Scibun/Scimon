@@ -16,6 +16,12 @@ impl FileRemote {
             .unwrap_or(0)
     }
 
+    pub async fn content(url: &str) -> Result<String, Box<dyn Error>> {
+        let response = reqwest::get(url).await?;
+        let content = response.text().await?;
+        Ok(content)
+    }
+
     pub async fn is_pdf_file(url: &str) -> Result<bool, Box<dyn Error>> {
         let client: reqwest::Client = reqwest::Client::new();
         let response = client.get(url).send().await?;

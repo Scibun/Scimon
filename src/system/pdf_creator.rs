@@ -1,4 +1,3 @@
-use base64::prelude::*;
 use indicatif::ProgressBar;
 
 use std::{
@@ -14,11 +13,11 @@ use headless_chrome::{
 };
 
 use crate::{
-    utils::remote::FileRemote,
+    ui::ui_base::UI,
 
-    ui::{
-        ui_base::UI,
-        success_alerts::SuccessAlerts,
+    utils::{
+        base64::Base64,
+        remote::FileRemote,
     },
 };
 
@@ -34,9 +33,7 @@ impl PdfCreator {
         let pdf_options: Option<PrintToPdfOptions> = None;
 
         let contents = browser.new_tab()?.navigate_to(
-            &format!(
-                "data:text/html;base64,{}", BASE64_STANDARD.encode(content)
-            )
+            &Base64::encode_html(content)
         )?.wait_until_navigated()?.print_to_pdf(
             pdf_options
         )?;
@@ -44,19 +41,17 @@ impl PdfCreator {
         Ok(contents)
     }
 
-    pub async fn from_html(content: &str, path: PathBuf, url: &str, file: &str) -> Result<(), Box<dyn Error>> {
-        let total_size = FileRemote::get_file_size(url).await?;
+    pub async fn from_html(content: &str, path: PathBuf, url: &str) -> Result<(), Box<dyn Error>> {
+        let len = FileRemote::get_file_size(url).await?;
         let pdf_contents = Self::connect_to_browser(content).await?;
     
-        let pb = ProgressBar::new(total_size);
+        let pb = ProgressBar::new(len);
 
         pb.set_style(UI::pb_template());
         pb.set_message("Generating PDF...");
 
         fs::write(path, pdf_contents)?;
-        
         pb.finish_with_message("Download and generated completed!");
-        SuccessAlerts::download_and_generated_pdf(file, url);
 
         Ok(())
     }

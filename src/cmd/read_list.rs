@@ -55,7 +55,7 @@ impl ReadList {
     
                 let url = Providers::check_provider_line(&trimmed_line);
     
-                Download::download_pdf(
+                Download::pdf(
                     &url,
                     &path,
                     no_ignore,

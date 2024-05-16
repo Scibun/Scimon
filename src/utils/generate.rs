@@ -1,7 +1,8 @@
 use image::Luma;
 use qrcode::QrCode;
 use std::io::Cursor;
-use base64::prelude::*;
+
+use crate::utils::base64::Base64;
 
 pub struct Generate;
 
@@ -15,7 +16,7 @@ impl Generate {
         let mut cursor = Cursor::new(&mut img_bytes);
         image.write_to(&mut cursor, image::ImageFormat::Png).unwrap();
     
-        BASE64_STANDARD.encode(&img_bytes)
+        Base64::encode(img_bytes)
     }
     
 }
