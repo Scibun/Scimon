@@ -1,4 +1,5 @@
 use clap::Parser;
+use std::error::Error;
 
 use crate::{
     args_cli::Flags,
@@ -20,9 +21,19 @@ use crate::{
 pub struct Paimon;
 
 impl Paimon {
+    
+    async fn options(value: &str) -> Result<(), Box<dyn Error>> {
+        if value == "open-env" {
+            Env::open_env_file()?;
+        } else if value == "force-download-env" {
+            Env::download_env_file(true, true).await?;
+        }
+        
+        Ok(())
+    }
 
     pub async fn init() {
-        if let Err(err) = Env::download_env_file(false).await {
+        if let Err(err) = Env::download_env_file(false, false).await {
             ErrorsAlerts::generic(&err.to_string());
         }
 
@@ -51,7 +62,7 @@ impl Paimon {
             flags.scrape, url, flags.no_ignore, flags.no_comments
         ).await;
 
-        let _ = Env::options_parser(options).await;
+        let _ = Self::options(options).await;
     }
 
 }
