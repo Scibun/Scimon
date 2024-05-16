@@ -1,5 +1,4 @@
 general:
-  mode: 'standard' # String (valid values: 'standard' and 'demon'; default: 'standard')
   default_text_editor: 'notepad.exe' # String (default: 'notepad.exe')
 
 render_markdown:
