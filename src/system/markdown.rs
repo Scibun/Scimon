@@ -1,7 +1,5 @@
 extern crate colored;
 
-use regex::Regex;
-
 use std::{
     fs,
     error::Error,
@@ -14,8 +12,13 @@ use pulldown_cmark::{
 };
 
 use crate::{
+    utils::remote::FileRemote,
     regex::regex_macros::MacrosRegExp,
-    render::render_extras::RenderMarkdownExtras, utils::remote::FileRemote,
+
+    render::{
+        render_markdown::RenderMarkdown,
+        render_extras::RenderMarkdownExtras,
+    }, 
 };
 
 pub struct Markdown;
@@ -36,16 +39,14 @@ impl Markdown {
 
     pub fn render_readme(file: &str) -> Option<String> {
         let contents = fs::read_to_string(&file).expect("");
-    
-        let start_regex = Regex::new(MacrosRegExp::GET_README[0]).unwrap();
-        let end_regex = Regex::new(MacrosRegExp::GET_README[1]).unwrap();
+        let (start_regex, end_regex) = RenderMarkdown::start_end_macros_position().unwrap();
 
         if start_regex.is_match(&contents) && end_regex.is_match(&contents) {
             let start_match = start_regex.find(&contents).unwrap();
             let end_match = end_regex.find(&contents).unwrap();
         
             let start_index = start_match.start();
-            let end_index = end_match.start() + "!end_readme".len();
+            let end_index = end_match.start() + MacrosRegExp::GET_README[1].len();
         
             let markdown_block = &contents[start_index..end_index];
             let markdown_block_extras_qrcode = &RenderMarkdownExtras::qrcode(markdown_block);

@@ -2,11 +2,13 @@ extern crate colored;
 
 use std::fs;
 use colored::*;
+use regex::Regex;
 use minify::html::minify;
 
 use crate::{
     configs::settings::Settings,
     consts::render::RenderMarkdownEnv,
+    regex::regex_macros::MacrosRegExp,
 
     system::{
         syntax::Macros,
@@ -52,4 +54,13 @@ impl RenderMarkdown {
         }
     }
     
+    pub fn start_end_macros_position() -> Result<(Regex, Regex), String> {
+        let start_regex = Regex::new(MacrosRegExp::GET_README[0])
+            .map_err(|e| format!("Failed to compile start regex: {}", e))?;
+        let end_regex = Regex::new(MacrosRegExp::GET_README[1])
+            .map_err(|e| format!("Failed to compile end regex: {}", e))?;
+    
+        Ok((start_regex, end_regex))
+    }
+
 }
