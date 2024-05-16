@@ -1,6 +1,9 @@
 general:
   default_text_editor: 'notepad.exe' # String (default: 'notepad.exe')
 
+ui:
+  show_header: true # Boolean (valid values: 'true' or 'false'; default: 'true')
+
 render_markdown:
   output_path: '{app_path}' # String (default: '{app_path}')
   mode: 'paimon' # String (valid values: 'paimon' and 'pure'; default: 'paimon')

@@ -46,7 +46,7 @@ impl Download {
         UrlMisc::check_url_status(url).await?;
 
         let (request_uri, filename) = Providers::get_from_provider(url).await?;
-        let response = reqwest::get(&request_uri).await?;    
+        let response = reqwest::get(&request_uri).await?;
         let total_size = FileRemote::get_file_size(&request_uri).await?;
     
         let pb = ProgressBar::new(total_size);
@@ -73,7 +73,7 @@ impl Download {
         Ok(filename)
     }    
 
-    pub async fn markdown(url: &str, path: &str) -> Result<(), Box<dyn Error>> {
+    async fn markdown(url: &str, path: &str) -> Result<(), Box<dyn Error>> {
         let html_content = Markdown::render_core(url).await?;
         
         let original_name = UrlMisc::get_last_part(url);
@@ -92,7 +92,7 @@ impl Download {
         );
 
         Reporting::check_download_errors(&line_url).await?;
-        let _ = Macros::handle_comments(&line_url, no_comments);
+        Macros::handle_comments(&line_url, no_comments)?;
 
         if !is_url(&line_url) {
             return Ok(())
