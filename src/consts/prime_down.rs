@@ -1,6 +1,6 @@
-pub struct RenderMarkdownEnv;
+pub struct PrimeDownEnv;
 
-impl RenderMarkdownEnv {
+impl PrimeDownEnv {
 
     pub const README_TEMPLATE_JS_FILES: &'static str = "static/js/";
     pub const README_TEMPLATE_CSS_FILES: &'static str = "static/css/";

@@ -15,6 +15,8 @@ use std::{
 };
 
 use crate::{
+    prime_down::pd_engine::PrimeDownEngine,
+
     ui::{
         ui_base::UI,
         errors_alerts::ErrorsAlerts,
@@ -30,10 +32,8 @@ use crate::{
 
     system::{
         syntax::Macros,
-        markdown::Markdown,
         reporting::Reporting,
         providers::Providers,
-        pdf_creator::PdfCreator,
     },
 
 };
@@ -74,13 +74,13 @@ impl Download {
     }    
 
     async fn markdown(url: &str, path: &str) -> Result<(), Box<dyn Error>> {
-        let html_content = Markdown::render_core(url).await?;
+        let html_content = PrimeDownEngine::render_core(url).await?;
         
         let original_name = UrlMisc::get_last_part(url);
         let new_filename = original_name.replace(".md", ".pdf");
         let output_path = FileMisc::get_output_path(&path, &new_filename);
 
-        PdfCreator::from_html(&html_content, output_path, &url).await?;
+        PrimeDownEngine::create_pdf(&html_content, output_path, &url).await?;
         SuccessAlerts::download_and_generated_pdf(&new_filename, url);
 
         Ok(())

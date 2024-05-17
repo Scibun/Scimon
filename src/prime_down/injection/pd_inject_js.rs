@@ -3,7 +3,7 @@ use serde_yaml::Value;
 
 use crate::{
     configs::settings::Settings,
-    consts::render::RenderMarkdownEnv,
+    consts::prime_down::PrimeDownEnv,
     prime_down::pd_minify::PrimeDownMinify,
 };
 
@@ -43,7 +43,7 @@ impl PrimeDownInjectJS {
 
     pub fn load_from_files(minify: Value) -> String {
         let mut content_js = String::new();
-        let js_path = RenderMarkdownEnv::README_TEMPLATE_JS_FILES;
+        let js_path = PrimeDownEnv::README_TEMPLATE_JS_FILES;
     
         for entry in fs::read_dir(js_path).unwrap() {
             let entry = entry.unwrap();

@@ -2,19 +2,12 @@ extern crate colored;
 
 use colored::*;
 
-use std::{
-    fs,
-    env,
-};
+use std::fs;
 
 use crate::{
+    utils::file::FileMisc,
     system::system::System,
     configs::settings::Settings,
-
-    utils::{
-        url::UrlMisc,
-        file::FileMisc,
-    }
 };
 
 pub struct PrimeDownIO;
@@ -51,22 +44,6 @@ impl PrimeDownIO {
         fs::write(path, contents).expect(
             &"Error saving HTML file".to_string().red()
         );
-    }
-
-    pub fn open_readme_url(path: &str, no_open_link: bool) {
-        if !no_open_link {
-            let full_path = env::current_dir().expect(
-                ""
-            ).join(&path).to_str().unwrap().replace(
-                "\\", "/"
-            );
-
-            let url_file = &format!(
-                "file://{}", full_path
-            );
-
-            UrlMisc::open_url(&url_file, false);
-        }
     }
 
 }
