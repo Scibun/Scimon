@@ -3,7 +3,6 @@ use std::error::Error;
 
 use crate::{
     args_cli::Flags,
-    configs::env::Env,
     cmd::read_list::ReadList,
     prime_down::pd_core::PrimeDown,
 
@@ -16,6 +15,12 @@ use crate::{
         scrape::Scrape,
         ravenlib::Ravenlib, 
     },
+
+    configs::{
+        env::Env,
+        settings::Settings,
+        configs_files::ConfigsFiles,
+    },
 };
 
 pub struct Paimon;
@@ -25,15 +30,23 @@ impl Paimon {
     async fn options(value: &str) -> Result<(), Box<dyn Error>> {
         if value == "open-env" {
             Env::open_env_file()?;
-        } else if value == "force-download-env" {
-            Env::download_env_file(true, true).await?;
+        } else if value == "open-settings" {
+            Settings::open_settings_file()?;
+        } else if value == "download-env" {
+            ConfigsFiles::env_file(true, true).await?;
+        } else if value == "download-settings" {
+            ConfigsFiles::settings_file(true, true).await?;
         }
         
         Ok(())
     }
 
     pub async fn init() {
-        if let Err(err) = Env::download_env_file(false, false).await {
+        if let Err(err) = ConfigsFiles::env_file(false, false).await {
+            ErrorsAlerts::generic(&err.to_string());
+        }
+
+        if let Err(err) = ConfigsFiles::settings_file(false, false).await {
             ErrorsAlerts::generic(&err.to_string());
         }
 

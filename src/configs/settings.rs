@@ -1,7 +1,15 @@
+use serde_yaml::Value::String as SerdeValue;
+
 use std::{
     fs::File,
-    io::Read,
     error::Error,
+    path::PathBuf,
+    process::Command,
+
+    io::{
+        Read,
+        Error as IoError,
+    },
 };
 
 use serde_yaml::{
@@ -14,42 +22,6 @@ use crate::system::system::System;
 pub struct Settings;
 
 impl Settings {
-
-    fn search_property_in_file(prop: &str) -> Result<String, Box<dyn Error>> {
-        let mut file = File::open(&*System::SETTINGS_FILE)?;
-        let mut contents = String::new();
-        file.read_to_string(&mut contents)?;
-
-        for (line_number, line) in contents.lines().enumerate() {
-            if line.contains(prop.split('.').last().unwrap()) {
-                return Ok(format!("{} -> '{}'", line_number + 1, line.trim()));
-            }
-        }
-
-        Err(
-            format!("Property '{}' not found in file.", prop).into()
-        )
-    }
-
-    fn get_wrong_property_position(prop: &str, open_file: bool) -> Result<String, Box<dyn Error>> {
-        let line_position = Self::search_property_in_file(prop)?;
-
-        if open_file {
-            let line_number = line_position.split(" -> ").next().unwrap();
-
-            return Ok(
-                format!(
-                    "{}:{}", &System::SETTINGS_FILE.display(), line_number
-                )
-            );
-        }
-
-        Ok(
-            format!(
-                "Please fix it in: {}:{}", &System::SETTINGS_FILE.display(), line_position
-            )
-        )
-    }
 
     fn is_valid(prop: &str, value: &Value, data_type: &str) -> Result<Value, Box<dyn Error>> {
         let value_type = match value {
@@ -67,12 +39,10 @@ impl Settings {
         };
 
         if value_type != data_type {
-            let property_position = Self::get_wrong_property_position(prop, false)?;
-            
             return Err(
                 format!(
-                    "The '{}' configuration is invalid. Expected type {}, but instead a {} was passed. {}.",
-                    prop, data_type, value_type, property_position
+                    "The '{}' configuration is invalid. Expected type {}, but instead a {} was passed.",
+                    prop, data_type, value_type
                 ).into()
             );
         }
@@ -106,6 +76,23 @@ impl Settings {
                 Value::Null
             }
         }
+    }
+
+    pub fn open_settings_file() -> Result<(), IoError> {
+        let app_folder = &*System::APP_FOLDER;
+        let env_path: PathBuf = app_folder.join("paimon.yml");
+
+        if let SerdeValue(editor) = &Settings::get(
+            "general.default_text_editor", "STRING"
+        ) {
+            Command::new(
+                editor
+            ).arg(
+                env_path
+            ).spawn()?;
+        }
+        
+        Ok(())
     }
 
 }

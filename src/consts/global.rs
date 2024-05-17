@@ -8,6 +8,7 @@ impl Global {
     pub const APP_HOMEPAGE: &'static str = "https://github.com/Ravenlib/Paimon";
 
     pub const ENV_URL: &'static str = "https://pastebin.com/raw/wZGaNtsL";
+    pub const SETTING_URL: &'static str = "https://pastebin.com/raw/jVdvKhWg";
 
     pub const PB_STYLE: &'static str = "[{elapsed_precise}] [{wide_bar:.cyan/blue}] {bytes}/{total_bytes} ({bytes_per_sec}, {eta})";
 

@@ -1,39 +1,16 @@
-extern crate colored;
-
-use reqwest;
 use serde_yaml::Value::String as SerdeValue;
 
 use std::{
     env,
     sync::Once,
-    error::Error,
+    path::PathBuf,
     process::Command,
     io::Error as IoError,
-
-    path::{
-        Path,
-        PathBuf,
-    }
-};
-
-use tokio::{
-    io::AsyncWriteExt,
-
-    fs::{
-        File,
-        self as TkFs,
-    },
 };
 
 use crate::{
-    consts::global::Global,
     system::system::System,
     configs::settings::Settings,
-
-    ui::{
-        errors_alerts::ErrorsAlerts,
-        success_alerts::SuccessAlerts,
-    },
 };
 
 pub struct Env;
@@ -68,42 +45,5 @@ impl Env {
         
         Ok(())
     }
-    
-    pub async fn download_env_file(print: bool, force_mode: bool) -> Result<(), Box<dyn Error>> {
-        let url = Global::ENV_URL;
-        let output_directory = &*System::APP_FOLDER;
-    
-        TkFs::create_dir_all(
-            output_directory.clone()
-        ).await?;
-    
-        let response = reqwest::get(url).await?;
-        if response.status().is_success() {
-            let file_path = output_directory.join(".env");
-    
-            if !force_mode {
-                if !Path::new(&file_path).is_file() {
-                    let mut file = File::create(&file_path).await?;
-                    let content = response.bytes().await?;
-        
-                    file.write_all(&content).await?;
-                }
-            } else {
-                let mut file = File::create(&file_path).await?;
-                let content = response.bytes().await?;
-    
-                file.write_all(&content).await?;
-            }
-    
-            if print == true {
-                SuccessAlerts::env();
-            }
-        } else {
-            let status_code = response.status().to_string();
-            ErrorsAlerts::env(&status_code);
-        }
-    
-        Ok(())
-    }
-   
+  
 }
