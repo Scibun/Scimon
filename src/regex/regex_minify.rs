@@ -13,6 +13,7 @@ impl MinifyRegExp {
     pub const MIN_JS_LOGICAL_OPERATORS: &'static str = r"\s*\|\|\s*";
     pub const MIN_JS_DOUBLE_QUOTED_STRING: &'static str = r#""(?:\\.|[^"\\])*""#;
     pub const MIN_JS_WHITESPACE_TRIM: &'static str = r#"\s*([;,+{}:])\s*"#;
+    pub const MIN_JS_REMOVE_SPACES_AFTER_PAREN_REGEX: &'static str = r#"\(\s+"#;
 
     pub const MIN_CSS_REMOVE_MULTI_LINE_COMMENT: &'static str = r"/\*.*?\*/";
     pub const MIN_CSS_REMOVE_WHITESPACE: &'static str = r"\s+";

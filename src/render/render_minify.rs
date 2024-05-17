@@ -23,6 +23,7 @@ impl RenderMarkdownMinify {
         let code = Regex::new(MinifyRegExp::MIN_JS_DUPLICATE_SPACES).unwrap().replace_all(&code, " ");
         let code = Regex::new(MinifyRegExp::MIN_JS_LOGICAL_OPERATORS).unwrap().replace_all(&code, "||");
         let code = Regex::new(MinifyRegExp::MIN_JS_WHITESPACE_TRIM).unwrap().replace_all(&code, "$1");
+        let code = Regex::new(MinifyRegExp::MIN_JS_REMOVE_SPACES_AFTER_PAREN_REGEX).unwrap().replace_all(&code, "(");
 
         let code = Regex::new(MinifyRegExp::MIN_JS_DOUBLE_QUOTED_STRING).unwrap().replace_all(
             &code, |caps: &regex::Captures| {
