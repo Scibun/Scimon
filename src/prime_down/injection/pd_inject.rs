@@ -4,25 +4,25 @@ use crate::{
     consts::global::Global,
     configs::settings::Settings,
 
-    render::injection::{
-        render_inject_js::RenderMarkdownInjectJS,
-        render_inject_css::RenderMarkdownInjectCSS,
+    prime_down::injection::{
+        pd_inject_js::PrimeDownInjectJS,
+        pd_inject_css::PrimeDownInjectCSS,
     }
 };
 
-pub struct RenderMarkdownInject;
+pub struct PrimeDownInject;
 
-impl RenderMarkdownInject {
+impl PrimeDownInject {
 
     fn get_js(render_mode: Value, minify: Value) -> String {
         let cdn = if render_mode == "paimon" {
-            RenderMarkdownInjectJS::load_from_cdn()
+            PrimeDownInjectJS::load_from_cdn()
         } else {
             "".to_string()
         };
 
         let local = if render_mode == "paimon" {
-            RenderMarkdownInjectJS::load_from_files(minify)
+            PrimeDownInjectJS::load_from_files(minify)
         } else {
             "".to_string()
         };
@@ -32,13 +32,13 @@ impl RenderMarkdownInject {
 
     fn get_css(render_mode: Value, minify: Value) -> String {
         let cdn = if render_mode == "paimon" {
-            RenderMarkdownInjectCSS::load_from_cdn()
+            PrimeDownInjectCSS::load_from_cdn()
         } else {
             "".to_string()
         };
 
         let local = if render_mode == "paimon" {
-            RenderMarkdownInjectCSS::load_from_files(minify)
+            PrimeDownInjectCSS::load_from_files(minify)
         } else {
             "".to_string()
         };

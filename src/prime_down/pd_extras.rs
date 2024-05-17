@@ -6,9 +6,9 @@ use crate::{
     regex::regex_core::CoreRegExp,
 };
 
-pub struct RenderMarkdownExtras;
+pub struct PrimeDownExtras;
 
-impl RenderMarkdownExtras {
+impl PrimeDownExtras {
    
     pub fn gist(markdown: &str) -> String {
         if Settings::get("render_markdown.mode", "STRING") == "paimon" {

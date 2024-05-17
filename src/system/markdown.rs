@@ -15,9 +15,9 @@ use crate::{
     utils::remote::FileRemote,
     regex::regex_macros::MacrosRegExp,
 
-    render::{
-        render_markdown::RenderMarkdown,
-        render_extras::RenderMarkdownExtras,
+    prime_down::{
+        pd_core::PrimeDown,
+        pd_extras::PrimeDownExtras,
     }, 
 };
 
@@ -39,7 +39,7 @@ impl Markdown {
 
     pub fn render_readme(file: &str) -> Option<String> {
         let contents = fs::read_to_string(&file).expect("");
-        let (start_regex, end_regex) = RenderMarkdown::start_end_macros_position().unwrap();
+        let (start_regex, end_regex) = PrimeDown::start_end_macros_position().unwrap();
 
         if start_regex.is_match(&contents) && end_regex.is_match(&contents) {
             let start_match = start_regex.find(&contents).unwrap();
@@ -49,8 +49,8 @@ impl Markdown {
             let end_index = end_match.start() + MacrosRegExp::GET_README[1].len();
         
             let markdown_block = &contents[start_index..end_index];
-            let markdown_block_extras_qrcode = &RenderMarkdownExtras::qrcode(markdown_block);
-            let markdown_block_extras_gist = &RenderMarkdownExtras::gist(markdown_block_extras_qrcode);
+            let markdown_block_extras_qrcode = &PrimeDownExtras::qrcode(markdown_block);
+            let markdown_block_extras_gist = &PrimeDownExtras::gist(markdown_block_extras_qrcode);
             let parser = Parser::new_ext(&markdown_block_extras_gist, Options::all());
         
             let mut html_output = String::new();

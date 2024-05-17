@@ -17,9 +17,9 @@ use crate::{
     }
 };
 
-pub struct RenderMarkdownIO;
+pub struct PrimeDownIO;
 
-impl RenderMarkdownIO {
+impl PrimeDownIO {
 
     fn get_path() -> String {
         let value = Settings::get("render_markdown.output_path", "STRING");

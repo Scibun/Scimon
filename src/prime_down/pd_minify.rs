@@ -2,9 +2,9 @@ use regex::Regex;
 
 use crate::regex::regex_minify::MinifyRegExp;
 
-pub struct RenderMarkdownMinify;
+pub struct PrimeDownMinify;
 
-impl RenderMarkdownMinify {
+impl PrimeDownMinify {
 
     pub fn js(code: &str) -> String {
         let code = Regex::new(MinifyRegExp::MIN_JS_REMOVE_WHITESPACE).unwrap().replace_all(code, " ");

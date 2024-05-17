@@ -15,15 +15,15 @@ use crate::{
         markdown::Markdown,
     },
 
-    render::{
-        render_io::RenderMarkdownIO,
-        injection::render_inject::RenderMarkdownInject,
+    prime_down::{
+        pd_io::PrimeDownIO,
+        injection::pd_inject::PrimeDownInject,
     }
 };
 
-pub struct RenderMarkdown;
+pub struct PrimeDown;
 
-impl RenderMarkdown {
+impl PrimeDown {
 
     fn render_content(file: &str, md_content: String) -> String {
         let minify_prop = Settings::get("render_markdown.minify_html", "BOOLEAN");
@@ -35,7 +35,7 @@ impl RenderMarkdown {
         );
         
         let markdown_html = Macros::remove_readme_macros_html(md_content);
-        let content = RenderMarkdownInject::content(&file, contents, markdown_html);
+        let content = PrimeDownInject::content(&file, contents, markdown_html);
 
         if minify_prop == true {
             minify(&content)
@@ -46,11 +46,11 @@ impl RenderMarkdown {
 
     pub fn render_and_save_file(file: &str, no_open_link: bool) {
         if let Some(markdown_html) = Markdown::render_readme(file) {
-            let path = RenderMarkdownIO::get_file_path(file);
+            let path = PrimeDownIO::get_file_path(file);
             let contents = Self::render_content(&file, markdown_html);
 
-            RenderMarkdownIO::write_file(&path, contents);
-            RenderMarkdownIO::open_readme_url(&path, no_open_link)
+            PrimeDownIO::write_file(&path, contents);
+            PrimeDownIO::open_readme_url(&path, no_open_link)
         }
     }
     

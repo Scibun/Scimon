@@ -5,7 +5,7 @@ use crate::{
     args_cli::Flags,
     configs::env::Env,
     cmd::read_list::ReadList,
-    render::render_markdown::RenderMarkdown,
+    prime_down::pd_core::PrimeDown,
 
     ui::{
         ui_base::UI,
@@ -50,7 +50,7 @@ impl Paimon {
                     run, flags.no_ignore, flags.no_comments, flags.no_open_link
                 ).await;
 
-                RenderMarkdown::render_and_save_file(run, flags.no_open_link);
+                PrimeDown::render_and_save_file(run, flags.no_open_link);
             } else {
                 let _ = Ravenlib::get(
                     run, flags.no_ignore, flags.no_comments

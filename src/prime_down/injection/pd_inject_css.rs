@@ -4,12 +4,12 @@ use serde_yaml::Value;
 use crate::{
     configs::settings::Settings,
     consts::render::RenderMarkdownEnv,
-    render::render_minify::RenderMarkdownMinify,
+    prime_down::pd_minify::PrimeDownMinify,
 };
 
-pub struct RenderMarkdownInjectCSS;
+pub struct PrimeDownInjectCSS;
 
-impl RenderMarkdownInjectCSS {
+impl PrimeDownInjectCSS {
     
     fn generate_link_tags(css_list: &[Value]) -> String {
         let mut tags = String::new();
@@ -58,7 +58,7 @@ impl RenderMarkdownInjectCSS {
         }
     
         content_css = if minify == true {
-            RenderMarkdownMinify::css(&content_css)
+            PrimeDownMinify::css(&content_css)
         } else {
             content_css
         };
