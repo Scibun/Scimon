@@ -1,31 +1,39 @@
-#docsSourceList{
+#refsSourceList{
     padding: 1em;
     border-radius: 6px;
+    margin-bottom: .5em;
     background: #161b22;
 }
 
-#docsSourceList > p > i{
+#refsSourceList > p > i{
     padding-right: .5em;
 }
 
-#docsSourceList > ul > li{
+#refsSourceList > ul > li{
     height: 3em;
     display: block;
     cursor: pointer;
     list-style: none;
     line-height: 3em;
-    padding-left: 1em;
     margin-left: -1.5em;
     background: inherit;
     border: .1em solid #161b22;
     text-decoration: none !important;
 }
 
-#docsSourceList > ul > li:hover{
+#refsSourceList > ul > li > i{
+    width: 3em;
+    height: 3em;
+    float: left;
+    line-height: 3em;
+    text-align: center;
+}
+
+#refsSourceList > ul > li:hover{
     background: #0d1117;
     text-decoration: none !important;
 }
 
-#docsSourceList > ul > li > a:hover{
+#refsSourceList > ul > li > a:hover{
     text-decoration: none !important;
 }

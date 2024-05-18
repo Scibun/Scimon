@@ -31,7 +31,9 @@ const DocsSources = ( e => {
     let listDocs = e => {
         let docsList = [];
 
-        Array.from(document.querySelectorAll('a')).forEach( link => {
+        Array.from(
+            document.querySelectorAll('a')
+        ).forEach( link => {
             let url = link.href;
 
             if (checkDocsUrlExt(url)) {
