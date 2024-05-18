@@ -18,6 +18,7 @@ render_markdown:
     - 'https://cdn.jsdelivr.net/gh/lonekorean/gist-syntax-themes@d49b91b3/stylesheets/idle-fingers.css'
 
   load_js_cdn: # List
+    - 'https://cdn.jsdelivr.net/npm/citation-js'
     - 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
     - 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js'
     - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/prism.min.js'
