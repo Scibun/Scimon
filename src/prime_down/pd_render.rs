@@ -1,9 +1,7 @@
-extern crate colored;
-
 use crate::prime_down::{
+    pd_core::PrimeDown,
     pd_io::PrimeDownIO,
     pd_misc::PrimeDownMisc,
-    pd_core::PrimeDown,
 };
 
 use crate::utils::file::FileMisc;
