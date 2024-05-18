@@ -1,6 +1,7 @@
 use uuid::Uuid;
 
 use std::{
+    fs,
     error::Error,
 
     path::{
@@ -37,6 +38,12 @@ impl FileMisc {
         Path::new(&path).exists()
     }
 
+    pub fn write_file(path: &str, contents: String) {
+        fs::write(path, contents).expect(
+            &"Error saving file".to_string()
+        );
+    }
+
     pub fn set_final_filename(file: Option<String>) -> String {
         if let Some(ref filename) = file {
             if !filename.contains(".pdf") {
@@ -62,7 +69,9 @@ impl FileMisc {
             let parts: Vec<&str> = cd_string.split("filename=").collect();
     
             if parts.len() > 1 {
-                Some(parts[1].trim_matches('"').to_string())
+                Some(
+                    parts[1].trim_matches('"').to_string()
+                )
             } else {
                 None
             }

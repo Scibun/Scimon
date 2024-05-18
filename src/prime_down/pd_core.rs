@@ -6,6 +6,8 @@ use crate::prime_down::{
     pd_engine::PrimeDownEngine,
 };
 
+use crate::utils::file::FileMisc;
+
 pub struct PrimeDown;
 
 impl PrimeDown {
@@ -15,7 +17,7 @@ impl PrimeDown {
             let path = PrimeDownIO::get_file_path(file);
             let contents = PrimeDownMisc::render_content(&file, markdown_html);
 
-            PrimeDownIO::write_file(&path, contents);
+            FileMisc::write_file(&path, contents);
             PrimeDownMisc::open_readme_url(&path, no_open_link)
         }
     }

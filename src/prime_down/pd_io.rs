@@ -1,7 +1,3 @@
-extern crate colored;
-
-use colored::*;
-
 use std::fs;
 
 use crate::{
@@ -16,6 +12,7 @@ impl PrimeDownIO {
 
     fn get_path() -> String {
         let value = Settings::get("render_markdown.output_path", "STRING");
+
         let value_str = match value {
             serde_yaml::Value::String(s) => s.to_string(),
             _ => String::new()
@@ -38,12 +35,6 @@ impl PrimeDownIO {
                 ".txt", ".html"
             )
         )
-    }
-
-    pub fn write_file(path: &str, contents: String) {
-        fs::write(path, contents).expect(
-            &"Error saving HTML file".to_string().red()
-        );
     }
 
 }
