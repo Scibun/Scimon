@@ -27,7 +27,9 @@ impl PrimeDownInject {
             "".to_string()
         };
 
-        format!("{}{}", cdn, local)
+        format!(
+            "{}{}", cdn, local
+        )
     }
 
     fn get_css(render_mode: Value, minify: Value) -> String {
@@ -43,23 +45,31 @@ impl PrimeDownInject {
             "".to_string()
         };
 
-        format!("{}{}", cdn, local)
+        format!(
+            "{}{}", cdn, local
+        )
     }
 
     pub fn content(file: &str, contents: String, markdown_html: String) -> String {
         let render_mode = Settings::get("render_markdown.mode", "STRING");
         let render_minify_extra_plugins = Settings::get("render_markdown.minify_extra_plugins", "BOOLEAN");
 
-        let title = format!("{}: {}: README", &Global::APP_NAME, &file);
+        let title = format!(
+            "{}: {}: README", &Global::APP_NAME, &file
+        );
         
         contents.replace(
             "{{ page_title }}", &title
         ).replace(
             "{{ markdown_content }}", &markdown_html
         ).replace(
-            "{{ inject_css }}", &Self::get_css(render_mode.clone(), render_minify_extra_plugins.clone())
+            "{{ inject_css }}", &Self::get_css(
+                render_mode.clone(), render_minify_extra_plugins.clone()
+            )
         ).replace(
-            "{{ inject_js }}", &Self::get_js(render_mode.clone(), render_minify_extra_plugins.clone())
+            "{{ inject_js }}", &Self::get_js(
+                render_mode.clone(), render_minify_extra_plugins.clone()
+            )
         )
     }
     

@@ -16,7 +16,11 @@ impl PrimeDownInjectJS {
 
         for css_file in css_list {
             if let Value::String(file_name) = css_file {
-                tags.push_str(&format!("<script src=\"{}\"></script>\n", file_name));
+                let script_js = &format!(
+                    "<script src=\"{}\"></script>\n", file_name
+                );
+
+                tags.push_str(&script_js);
             }
         }
     
@@ -27,7 +31,9 @@ impl PrimeDownInjectJS {
         let js_list = Settings::get("render_markdown.load_js_cdn", "LIST");
 
         if let Value::Sequence(js_list) = js_list {
-            Value::String(Self::generate_script_tags(&js_list))
+            Value::String(
+                Self::generate_script_tags(&js_list)
+            )
         } else {
             Value::Null
         }
@@ -51,9 +57,9 @@ impl PrimeDownInjectJS {
     
             if path.is_file() && path.extension().map_or(false, |ext| ext == "js") {
                 let js_content = fs::read_to_string(path).unwrap();
-                content_js.push_str(
-                    &format!("{}\n", &js_content)
-                );
+                let format_js_content = &format!("{}\n", &js_content);
+
+                content_js.push_str(&format_js_content);
             }
         }
     
@@ -63,7 +69,9 @@ impl PrimeDownInjectJS {
             content_js
         };
         
-        format!("<script>{}</script>", &content_js)
+        format!(
+            "<script>{}</script>", &content_js
+        )
     }
 
 }

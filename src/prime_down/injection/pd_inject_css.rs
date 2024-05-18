@@ -16,7 +16,11 @@ impl PrimeDownInjectCSS {
 
         for css_file in css_list {
             if let Value::String(file_name) = css_file {
-                tags.push_str(&format!("<link rel=\"stylesheet\" href=\"{}\">\n", file_name));
+                let link_css = &format!(
+                    "<link rel=\"stylesheet\" href=\"{}\">\n", file_name
+                );
+
+                tags.push_str(&link_css);
             }
         }
     
@@ -27,7 +31,9 @@ impl PrimeDownInjectCSS {
         let css_list = Settings::get("render_markdown.load_css_cdn", "LIST");
 
         if let Value::Sequence(css_list) = css_list {
-            Value::String(Self::generate_link_tags(&css_list))
+            Value::String(
+                Self::generate_link_tags(&css_list)
+            )
         } else {
             Value::Null
         }
@@ -50,10 +56,10 @@ impl PrimeDownInjectCSS {
             let path = entry.path();
     
             if path.is_file() && path.extension().map_or(false, |ext| ext == "css") {
-                let js_content = fs::read_to_string(path).unwrap();
-                content_css.push_str(
-                    &format!("{}\n", &js_content)
-                );
+                let css_content = fs::read_to_string(path).unwrap();
+                let format_css_content = &format!("{}\n", &css_content);
+
+                content_css.push_str(&format_css_content);
             }
         }
     
@@ -63,7 +69,9 @@ impl PrimeDownInjectCSS {
             content_css
         };
 
-        format!("<style>{}</style>", &content_css)
+        format!(
+            "<style>{}</style>", &content_css
+        )
     }
     
 }
