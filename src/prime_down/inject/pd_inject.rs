@@ -4,7 +4,7 @@ use crate::{
     consts::global::Global,
     configs::settings::Settings,
 
-    prime_down::injection::{
+    prime_down::inject::{
         pd_inject_js::PrimeDownInjectJS,
         pd_inject_css::PrimeDownInjectCSS,
     }

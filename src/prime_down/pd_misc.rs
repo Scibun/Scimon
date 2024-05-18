@@ -21,7 +21,7 @@ use crate::{
     configs::settings::Settings,
     consts::prime_down::PrimeDownEnv,
     regex::regex_macros::MacrosRegExp,
-    prime_down::injection::pd_inject::PrimeDownInject,
+    prime_down::inject::pd_inject::PrimeDownInject,
 
     utils::{
         url::UrlMisc,
