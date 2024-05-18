@@ -1,15 +1,15 @@
-#refsSourceList{
+#refsList{
     padding: 1em;
     border-radius: 6px;
     margin-bottom: .5em;
     background: #161b22;
 }
 
-#refsSourceList > p > i{
+#refsList > p > i{
     padding-right: .5em;
 }
 
-#refsSourceList > ul > li{
+#refsList > ul > li{
     height: 3em;
     display: block;
     cursor: pointer;
@@ -21,7 +21,7 @@
     text-decoration: none !important;
 }
 
-#refsSourceList > ul > li > i{
+#refsList > ul > li > i{
     width: 3em;
     height: 3em;
     float: left;
@@ -29,11 +29,7 @@
     text-align: center;
 }
 
-#refsSourceList > ul > li:hover{
+#refsList > ul > li:hover{
     background: #0d1117;
-    text-decoration: none !important;
-}
-
-#refsSourceList > ul > li > a:hover{
     text-decoration: none !important;
 }

@@ -1,7 +1,8 @@
 const Citations = ( e => {
 
+    let nameElementRoot = 'refsList';
+    
     let Cite = require('citation-js');
-    let nameElementRoot = 'refsSourceList';
 
     let testRegex = (value) => {
         return /^@[a-zA-Z]+\{/.test(value);
