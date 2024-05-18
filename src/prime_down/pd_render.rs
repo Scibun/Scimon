@@ -1,10 +1,12 @@
-use crate::prime_down::{
-    pd_core::PrimeDown,
-    pd_io::PrimeDownIO,
-    pd_misc::PrimeDownMisc,
-};
+use crate::{
+    utils::file::FileMisc,
 
-use crate::utils::file::FileMisc;
+    prime_down::{
+        pd_core::PrimeDown,
+        pd_io::PrimeDownIO,
+        pd_misc::PrimeDownMisc,
+    }
+};
 
 pub struct PrimeDownRender;
 
