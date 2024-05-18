@@ -1,6 +1,18 @@
-const Diagrams = ( e => {
+const MathDiagram = ( e => {
 
-    const load = e => {
+    const math = e => {
+        MathJax.typesetPromise().then( e => {
+            const spanContent = document.querySelector('.math-display').textContent.trim();
+            
+            document.querySelector('.math-display').replaceWith(
+                MathJax.tex2chtml(spanContent, {
+                    display: true
+                })
+            );
+        });
+    };
+
+    const diagram = e => {
         mermaid.initialize({
             theme: 'dark',
             securityLevel: 'loose',
@@ -26,6 +38,8 @@ const Diagrams = ( e => {
         });
     };
 
-    load();
+    math();
+
+    diagram();
 
 })();
