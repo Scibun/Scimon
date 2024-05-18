@@ -1,9 +1,7 @@
-extern crate colored;
-
 mod ui;
 mod cmd;
 mod utils;
-mod regex;
+mod regexp;
 mod consts;
 mod addons;
 mod system;

@@ -4,7 +4,7 @@ use std::error::Error;
 use crate::{
     utils::url::UrlMisc,
     ui::macros_alerts::MacrosAlerts,
-    regex::regex_macros::MacrosRegExp,
+    regexp::regex_macros::MacrosRegExp,
 };
 
 pub struct Macros;

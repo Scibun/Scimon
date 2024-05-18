@@ -17,7 +17,7 @@ use pulldown_cmark::{
 use crate::{
     ui::ui_base::UI,
     utils::remote::FileRemote,
-    regex::regex_macros::MacrosRegExp,
+    regexp::regex_macros::MacrosRegExp,
 
     prime_down::{
         pd_misc::PrimeDownMisc,

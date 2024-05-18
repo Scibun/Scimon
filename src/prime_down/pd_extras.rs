@@ -3,7 +3,7 @@ use regex::Regex;
 use crate::{
     utils::generate::Generate,
     configs::settings::Settings,
-    regex::regex_core::CoreRegExp,
+    regexp::regex_core::CoreRegExp,
 };
 
 pub struct PrimeDownExtras;

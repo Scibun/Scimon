@@ -4,7 +4,7 @@ use url::Url;
 use regex::Regex;
 use std::error::Error;
 
-use crate::regex::regex_core::CoreRegExp;
+use crate::regexp::regex_core::CoreRegExp;
 
 pub struct UrlMisc;
 

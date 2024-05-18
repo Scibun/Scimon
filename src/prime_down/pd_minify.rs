@@ -1,6 +1,6 @@
 use regex::Regex;
 
-use crate::regex::regex_minify::MinifyRegExp;
+use crate::regexp::regex_minify::MinifyRegExp;
 
 pub struct PrimeDownMinify;
 
