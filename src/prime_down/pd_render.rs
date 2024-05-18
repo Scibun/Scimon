@@ -1,5 +1,6 @@
 use crate::{
     utils::file::FileMisc,
+    ui::macros_alerts::MacrosAlerts,
 
     prime_down::{
         pd_core::PrimeDown,
@@ -18,6 +19,7 @@ impl PrimeDownRender {
             let contents = PrimeDownMisc::render_content(&file, markdown_html);
 
             FileMisc::write_file(&path, contents);
+            MacrosAlerts::readme(&path);
             PrimeDownMisc::open_readme_url(&path, no_open_link)
         }
     }

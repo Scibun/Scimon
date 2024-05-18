@@ -31,4 +31,17 @@ impl MacrosAlerts {
         println!("-----------------------------");
     }
 
+    pub fn readme(file: &str) {
+        let readme_word = "README";
+        let current_datetime = System::date_time();
+
+        println!("---------- {} -----------", readme_word.yellow());
+
+        println!(
+            "[{}] README file rendered with successfully ({})", current_datetime.blue(), file.cyan()
+        );
+
+        println!("-----------------------------");
+    }
+
 }
