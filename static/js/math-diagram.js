@@ -2,13 +2,13 @@ const MathDiagram = ( e => {
 
     const math = e => {
         MathJax.typesetPromise().then( e => {
-            const spanContent = document.querySelector('.math-display').textContent.trim();
-            
-            document.querySelector('.math-display').replaceWith(
-                MathJax.tex2chtml(spanContent, {
-                    display: true
-                })
-            );
+            document.querySelectorAll('.math-display').forEach( block => {
+                block.replaceWith(
+                    MathJax.tex2chtml(block.textContent.trim(), {
+                        display: true
+                    }).childNodes[0]
+                );
+            });
         });
     };
 
