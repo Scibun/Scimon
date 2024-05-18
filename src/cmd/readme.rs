@@ -9,9 +9,9 @@ use crate::{
     }
 };
 
-pub struct PrimeDownRender;
+pub struct ReadMe;
 
-impl PrimeDownRender {
+impl ReadMe {
 
     pub fn render_and_save_file(file: &str, no_open_link: bool) {
         if let Some(markdown_html) = PrimeDown::render_readme(file) {
@@ -19,8 +19,9 @@ impl PrimeDownRender {
             let contents = PrimeDownMisc::render_content(&file, markdown_html);
 
             FileMisc::write_file(&path, contents);
+            PrimeDownMisc::open_readme_url(&path, no_open_link);
+            
             MacrosAlerts::readme(&path);
-            PrimeDownMisc::open_readme_url(&path, no_open_link)
         }
     }
 

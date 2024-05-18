@@ -3,12 +3,15 @@ use std::error::Error;
 
 use crate::{
     args_cli::Flags,
-    cmd::read_list::ReadList,
-    prime_down::pd_render::PrimeDownRender,
 
     ui::{
         ui_base::UI,
         errors_alerts::ErrorsAlerts,
+    },
+    
+    cmd::{
+        readme::ReadMe,
+        read_list::ReadList,
     },
 
     addons::{
@@ -63,7 +66,7 @@ impl Paimon {
                     run, flags.no_ignore, flags.no_comments, flags.no_open_link
                 ).await;
 
-                PrimeDownRender::render_and_save_file(run, flags.no_open_link);
+                ReadMe::render_and_save_file(run, flags.no_open_link);
             } else {
                 let _ = Ravenlib::get(
                     run, flags.no_ignore, flags.no_comments

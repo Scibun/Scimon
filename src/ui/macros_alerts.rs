@@ -12,9 +12,22 @@ impl MacrosAlerts {
         let current_datetime = System::date_time();
         let url = line.replace(" !ignore", "");
 
-        eprintln!(
+        println!(
             "[{}] -> The url {} was ignored", current_datetime.green(), url.blue()
         );
+    }
+
+    pub fn readme(file: &str) {
+        let readme_word = "README";
+        let current_datetime = System::date_time();
+
+        println!("---------- {} -----------", readme_word.yellow());
+
+        println!(
+            "[{}] README file rendered with successfully ({})", current_datetime.blue(), file.cyan()
+        );
+
+        println!("-----------------------------");
     }
 
     pub fn comments(line: &str) {
@@ -26,19 +39,6 @@ impl MacrosAlerts {
 
         println!(
             "[{}] {}", current_datetime.blue(), line_without_macros.yellow()
-        );
-
-        println!("-----------------------------");
-    }
-
-    pub fn readme(file: &str) {
-        let readme_word = "README";
-        let current_datetime = System::date_time();
-
-        println!("---------- {} -----------", readme_word.yellow());
-
-        println!(
-            "[{}] README file rendered with successfully ({})", current_datetime.blue(), file.cyan()
         );
 
         println!("-----------------------------");
