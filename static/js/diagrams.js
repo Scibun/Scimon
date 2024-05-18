@@ -1,4 +1,4 @@
-const Mermaid = ( e => {
+const Diagrams = ( e => {
 
     const load = e => {
         mermaid.initialize({
@@ -28,4 +28,4 @@ const Mermaid = ( e => {
 
     load();
 
-})()
+})();
