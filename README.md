@@ -2,7 +2,7 @@
 
 Increase productivity with a Rust-based batch PDF downloader. Fetch multiple PDFs swiftly, improving accessibility and efficiency. Ideal for managing large document collections.
 
-## Wiki
+## Documentation
 
 For more help and document, see our Wiki pages:
 
