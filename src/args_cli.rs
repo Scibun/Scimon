@@ -30,8 +30,4 @@ pub struct Flags {
     #[arg(long)]
     /// Your Paimon settings
     pub options: Option<String>,
-
-    #[arg(long)]
-    /// Inspect the pdf files at library selected
-    pub inspect: bool,
 }
