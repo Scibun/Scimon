@@ -50,6 +50,14 @@ const Licenses = ( e => {
         }
     };
 
+    let forceHideBox = e => {
+        let element = document.getElementById(nameElementRoot);
+        let elementBtn = document.getElementById(idElementToggleBtn);
+
+        element.style.display = 'none';
+        elementBtn.classList.remove(classActivedElementRoot);
+    };
+
     let toggleLicensesBox = e => {
         let element = document.getElementById(nameElementRoot);
 
@@ -79,6 +87,7 @@ const Licenses = ( e => {
     return {
         list: () => { return list(); },
         init: () => { return init(); },
+        forceHideBox: () => { return forceHideBox(); },
         toggleLicensesBox: () => { return toggleLicensesBox(); },
     };
 

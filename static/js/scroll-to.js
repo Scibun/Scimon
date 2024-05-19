@@ -40,6 +40,8 @@ const ScrollTo = ( e => {
         let elements = document.querySelectorAll(classNameLicensesItems);
 
         if (elements.length > 0) {
+            Licenses.forceHideBox();
+            
             let parseId = parseInt(id);
             let pos = elements[parseId].getBoundingClientRect();
 
