@@ -11,18 +11,17 @@ const ScrollTo = ( e => {
         });
     };
 
-    let element = (el, type = 'id') => {
-        let getElement;
-        
-        if (type == 'id') {
-            getElement = document.getElementById(el);
-        } else {
-            getElement = document.getElementsByClassName(el);
-        }
+    let license = (id) => {
+        let elements = document.querySelectorAll(classNameLicensesItems);
 
-        if (getElement) {
-            getElement.scrollIntoView({ behavior: 'smooth' });
-            Effects.bounce(getElement);
+        if (elements.length > 0) {
+            Licenses.forceHideBox();
+
+            let parseId = parseInt(id);
+            let pos = elements[parseId].getBoundingClientRect();
+
+            window.scrollTo(0, window.scrollY + pos.top - 90);
+            Effects.bounce(elements[parseId].parentElement);
         }
     };
 
@@ -36,17 +35,20 @@ const ScrollTo = ( e => {
         }
     };
 
-    let license = (id) => {
-        let elements = document.querySelectorAll(classNameLicensesItems);
+    let element = (el, type = 'id') => {
+        let getElement;
+        
+        if (type == 'id') {
+            getElement = document.getElementById(el);
+        } else {
+            getElement = document.getElementsByClassName(el);
+        }
 
-        if (elements.length > 0) {
+        if (getElement) {
+            getElement.scrollIntoView({ behavior: 'smooth' });
+
             Licenses.forceHideBox();
-
-            let parseId = parseInt(id);
-            let pos = elements[parseId].getBoundingClientRect();
-
-            window.scrollTo(0, window.scrollY + pos.top - 90);
-            Effects.bounce(elements[parseId].parentElement);
+            Effects.bounce(getElement);
         }
     };
     
