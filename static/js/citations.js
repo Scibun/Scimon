@@ -1,6 +1,7 @@
 const Citations = ( e => {
 
     let nameElementRoot = 'refsList';
+    let headerScrollToBtn = 'scrollToDocsBtn';
     let classNameElementRoot = 'plugin-section';
     let classesElementEffect = ['animate__animated', 'animate__bounce'];
 
@@ -76,6 +77,10 @@ const Citations = ( e => {
                     block.remove();
                 }
             });
+
+            document.getElementById(headerScrollToBtn).style.display = 'inline';
+        } else {
+            document.getElementById(headerScrollToBtn).style.display = 'none';
         }
     };
 

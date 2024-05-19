@@ -1,6 +1,7 @@
 const DocsSources = ( e => {
 
     let nameElementRoot = 'docsSourceList';
+    let headerScrollToBtn = 'scrollToRefsBtn';
     let classNameElementRoot = 'plugin-section';
     let classesElementEffect = ['animate__animated', 'animate__bounce'];
 
@@ -71,6 +72,10 @@ const DocsSources = ( e => {
             });
     
             pdfLinksListDiv.appendChild(ul);
+            
+            document.getElementById(headerScrollToBtn).style.display = 'inline';
+        } else {
+            document.getElementById(headerScrollToBtn).style.display = 'none';
         }
     };
 
