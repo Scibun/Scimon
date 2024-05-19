@@ -11,7 +11,7 @@ const ScrollTo = ( e => {
         });
     };
 
-    let license = (id) => {
+    let license = id => {
         let elements = document.querySelectorAll(classNameLicensesItems);
 
         if (elements.length > 0) {

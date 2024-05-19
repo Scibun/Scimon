@@ -1,6 +1,6 @@
 const MathDiagram = ( e => {
 
-    const math = e => {
+    let math = e => {
         MathJax.typesetPromise().then( e => {
             document.querySelectorAll('.math-display').forEach( block => {
                 block.replaceWith(
@@ -12,7 +12,7 @@ const MathDiagram = ( e => {
         });
     };
 
-    const diagram = e => {
+    let diagram = e => {
         mermaid.initialize({
             theme: 'dark',
             securityLevel: 'loose',
