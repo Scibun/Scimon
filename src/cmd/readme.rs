@@ -1,4 +1,5 @@
 use crate::{
+    configs::settings::Settings,
     ui::macros_alerts::MacrosAlerts,
 
     utils::{
@@ -19,8 +20,17 @@ impl ReadMe {
 
     pub fn render_and_save_file(file: &str, no_open_link: bool) {
         if let Some(markdown_html) = PrimeDown::render_readme(file) {
-            let rand_name = format!("_{}.html", Generate::random_string(16));
-            let path = PrimeDownIO::get_file_path(file).replace(".html", &rand_name);
+            let filename = if Settings::get("render_markdown.overwrite", "BOOLEAN") == true {
+                ".html".to_string()
+            } else {
+                format!(
+                    "_{}.html", Generate::random_string(16)
+                )
+            };
+
+            let path = PrimeDownIO::get_file_path(file).replace(
+                ".html", &filename
+            );
 
             let contents = PrimeDownMisc::render_content(&file, markdown_html);
 
