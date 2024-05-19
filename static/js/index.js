@@ -1,5 +1,6 @@
 window.onload = e => {
 
+    Licenses.init();
     Citations.init();
     DocsSources.init();
 

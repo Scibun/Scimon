@@ -13,10 +13,13 @@
 
         <div class='nav'>
             <div class='fa-solid fa-arrow-up' id='scrollToTopBtn' onclick='ScrollTo.top()'></div>
+            <div class='fa-solid fa-scale-balanced' id='toggleLicensesBox' onclick='Licenses.toggleLicensesBox()'></div>
             <div class='fa-solid fa-book' id='scrollToRefsBtn' onclick='Citations.scrollTo()'></div>
             <div class='fa-solid fa-paperclip' id='scrollToDocsBtn' onclick='DocsSources.scrollTo()'></div>
         </div>
     </header>
+
+    <div class='licenses-box' id='licensesBox'></div>
 
     {{ markdown_content }}
 

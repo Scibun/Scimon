@@ -1,10 +1,16 @@
 const Effects = ( e => {
 
-    let classesElementEffect = ['animate__animated', 'animate__bounce'];
+    let classRootAnimate = 'animate__animated';
+    let classesBounceEffect = [classRootAnimate, 'animate__bounce'];
 
-    let bounce = el => {
-        el.classList.remove(...classesElementEffect);
-        setTimeout( e => { el.classList.add(...classesElementEffect); }, 100);
+    let bounce = (el, timeOut = true) => {
+        el.classList.remove(...classesBounceEffect);
+        
+        if (timeOut) {
+            setTimeout( e => { el.classList.add(...classesBounceEffect); }, 100);
+        } else {
+            el.classList.add(...classesBounceEffect);
+        }
     };
     
     return {

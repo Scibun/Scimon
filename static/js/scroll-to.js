@@ -1,6 +1,7 @@
 const ScrollTo = ( e => {
 
     let headerScrollToBtn = 'scrollToTopBtn';
+    let classNameLicensesItems = '.language-license';
 
     let top = e => {
         window.scroll({
@@ -10,8 +11,14 @@ const ScrollTo = ( e => {
         });
     };
 
-    let element = (el) => {
-        let getElement = document.getElementById(el);
+    let element = (el, type = 'id') => {
+        let getElement;
+        
+        if (type == 'id') {
+            getElement = document.getElementById(el);
+        } else {
+            getElement = document.getElementsByClassName(el);
+        }
 
         if (getElement) {
             getElement.scrollIntoView({ behavior: 'smooth' });
@@ -20,7 +27,7 @@ const ScrollTo = ( e => {
     };
 
     let checkScroll = e => {
-        const scrollToTopBtn = document.getElementById(headerScrollToBtn);
+        let scrollToTopBtn = document.getElementById(headerScrollToBtn);
         
         if (window.scrollY > 0) {
             scrollToTopBtn.style.display = 'block';
@@ -28,10 +35,23 @@ const ScrollTo = ( e => {
             scrollToTopBtn.style.display = 'none';
         }
     };
+
+    let license = (id) => {
+        let elements = document.querySelectorAll(classNameLicensesItems);
+
+        if (elements.length > 0) {
+            let parseId = parseInt(id);
+            let pos = elements[parseId].getBoundingClientRect();
+
+            window.scrollTo(0, window.scrollY + pos.top - 90);
+            Effects.bounce(elements[parseId].parentElement);
+        }
+    };
     
     return {
         top: () => { return top(); },
         element: (el) => { return element(el); },
+        license: (el) => { return license(el); },
         checkScroll: () => { return checkScroll(); },
     };
 

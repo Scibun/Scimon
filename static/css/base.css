@@ -18,6 +18,7 @@
     --spacing-xl: 45px;
     --min-width-size: 200px;
     --max-width-size: 1100px;
+    --header-size: 2.5em;
 }
 
 * {
