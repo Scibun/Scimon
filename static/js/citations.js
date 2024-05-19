@@ -3,7 +3,6 @@ const Citations = ( e => {
     let nameElementRoot = 'refsList';
     let headerScrollToBtn = 'scrollToDocsBtn';
     let classNameElementRoot = 'plugin-section';
-    let classesElementEffect = ['animate__animated', 'animate__bounce'];
 
     let Cite = require('citation-js');
 
@@ -83,25 +82,11 @@ const Citations = ( e => {
             document.getElementById(headerScrollToBtn).style.display = 'none';
         }
     };
-
-    let scrollBounceEffet = el => {
-        el.classList.remove(...classesElementEffect);
-        setTimeout( e => { el.classList.add(...classesElementEffect); }, 100);
-    };
-
-    let scrollTo = e => {
-        let element = document.getElementById(nameElementRoot);
-
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-            scrollBounceEffet(element);
-        }
-    };
     
     return {
         init: () => { return load(); },
-        scrollTo: () => { return scrollTo(); },
         getNameElementRoot: () => { return nameElementRoot; },
+        scrollTo: () => { return ScrollTo.element(nameElementRoot); },
     };
 
 })();

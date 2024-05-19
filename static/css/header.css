@@ -37,3 +37,7 @@ header > .nav > div{
 header > .nav > div:hover{
     background: var(--color-border);
 }
+
+#scrollToTopBtn{
+    display: none;
+}

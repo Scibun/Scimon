@@ -3,7 +3,10 @@ window.onload = e => {
     Citations.init();
     DocsSources.init();
 
+    ScrollTo.checkScroll();
+    window.addEventListener('scroll', ScrollTo.checkScroll);
+
     let pageTitle = document.title.split(':');
-    document.getElementById('header-label').textContent = `${ pageTitle[1] }: ${ pageTitle[2] }`;
+    document.getElementById('headerLabel').textContent = `${ pageTitle[1] }: ${ pageTitle[2] }`;
     
 };
