@@ -82,9 +82,13 @@ sys.exit()
 | row  | row  | row  |
 | row  | row  | row  |
 
+This math equation #1:
+
 $$
 e^{i\pi} + 1 = 0
 $$
+
+This math equation #2:
 
 $$
 e^{i\pi} + 1 = 0
@@ -101,21 +105,21 @@ graph TD
 <a href='#'>Link from HTML tag</a>
 
 @misc{ananth2024simultaneous,
-      title={Simultaneous Haar Indistinguishability with Applications to Unclonable Cryptography}, 
-      author={Prabhanjan Ananth and Fatih Kaleoglu and Henry Yuen},
-      year={2024},
-      eprint={2405.10274},
-      archivePrefix={arXiv},
-      primaryClass={quant-ph}
+    title={Simultaneous Haar Indistinguishability with Applications to Unclonable Cryptography}, 
+    author={Prabhanjan Ananth and Fatih Kaleoglu and Henry Yuen},
+    year={2024},
+    eprint={2405.10274},
+    archivePrefix={arXiv},
+    primaryClass={quant-ph}
 }
 
 @misc{ananth2024simultaneous,
-      title={Simultaneous Haar Indistinguishability with Applications to Unclonable Cryptography}, 
-      author={Prabhanjan Ananth and Fatih Kaleoglu and Henry Yuen},
-      year={2024},
-      eprint={2405.10274},
-      archivePrefix={arXiv},
-      primaryClass={quant-ph}
+    title={Simultaneous Haar Indistinguishability with Applications to Unclonable Cryptography}, 
+    author={Prabhanjan Ananth and Fatih Kaleoglu and Henry Yuen},
+    year={2024},
+    eprint={2405.10274},
+    archivePrefix={arXiv},
+    primaryClass={quant-ph}
 }
 
 !end_readme

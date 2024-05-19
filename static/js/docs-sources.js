@@ -1,6 +1,7 @@
 const DocsSources = ( e => {
 
     let nameElementRoot = 'docsSourceList';
+    let classesElementEffect = ['animate__animated', 'animate__bounce'];
 
     let getDomain = url => {
         var urlObj = new URL(url);
@@ -70,6 +71,24 @@ const DocsSources = ( e => {
         }
     };
 
-    listDocs();
+    let scrollBounceEffet = el => {
+        el.classList.remove(...classesElementEffect);
+        setTimeout( e => { el.classList.add(...classesElementEffect); }, 100);
+    };
+
+    let scrollTo = e => {
+        let element = document.getElementById(nameElementRoot);
+
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+            scrollBounceEffet(element);
+        }
+    };
+    
+    return {
+        init: () => { return listDocs(); },
+        scrollTo: () => { return scrollTo(); },
+        getNameElementRoot: () => { return nameElementRoot; },
+    };
     
 })();

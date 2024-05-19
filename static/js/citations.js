@@ -1,7 +1,8 @@
 const Citations = ( e => {
 
     let nameElementRoot = 'refsList';
-    
+    let classesElementEffect = ['animate__animated', 'animate__bounce'];
+
     let Cite = require('citation-js');
 
     let testRegex = (value) => {
@@ -71,12 +72,30 @@ const Citations = ( e => {
                     `;
     
                     refsList.appendChild(citationItem);
-                    block.style.display = 'none';
+                    block.remove();
                 }
             });
         }
     };
 
-    load();
+    let scrollBounceEffet = el => {
+        el.classList.remove(...classesElementEffect);
+        setTimeout( e => { el.classList.add(...classesElementEffect); }, 100);
+    };
+
+    let scrollTo = e => {
+        let element = document.getElementById(nameElementRoot);
+
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+            scrollBounceEffet(element);
+        }
+    };
+    
+    return {
+        init: () => { return load(); },
+        scrollTo: () => { return scrollTo(); },
+        getNameElementRoot: () => { return nameElementRoot; },
+    };
 
 })();
