@@ -33,21 +33,13 @@ impl PrimeDownInject {
     }
 
     fn get_css(render_mode: Value, minify: Value) -> String {
-        let cdn = if render_mode == "paimon" {
-            PrimeDownInjectCSS::load_from_cdn()
-        } else {
-            "".to_string()
-        };
-
         let local = if render_mode == "paimon" {
             PrimeDownInjectCSS::load_from_files(minify)
         } else {
             "".to_string()
         };
 
-        format!(
-            "{}{}", cdn, local
-        )
+        format!("{}", local)
     }
 
     pub fn content(file: &str, contents: String, markdown_html: String) -> String {
