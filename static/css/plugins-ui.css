@@ -1,4 +1,4 @@
-.paimon-box{
+.plugin-section{
     padding: 1em;
     border-radius: 6px;
     margin-bottom: .5em;
@@ -6,11 +6,11 @@
     border: .1em solid var(--color-border);
 }
 
-.paimon-box > p > i{
+.plugin-section > p > i{
     padding-right: .5em;
 }
 
-.paimon-box > ul > li{
+.plugin-section > ul > li{
     height: 3em;
     display: block;
     cursor: pointer;
@@ -24,15 +24,15 @@
     border: .1em solid var(--color-border);
 }
 
-.paimon-box > ul > li > a{
+.plugin-section > ul > li > a{
     color: inherit !important;
 }
 
-.paimon-box > ul > .pdd-left{
+.plugin-section > ul > .pdd-left{
     padding-left: 1em;
 }
 
-.paimon-box > ul > li > i{
+.plugin-section > ul > li > i{
     width: 3em;
     height: 3em;
     float: left;
@@ -40,7 +40,7 @@
     text-align: center;
 }
 
-.paimon-box > ul > li:hover{
+.plugin-section > ul > li:hover{
     background: var(--color-quote);
     text-decoration: none !important;
     border-left: .5em solid var(--color-border);

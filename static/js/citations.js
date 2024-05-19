@@ -1,7 +1,7 @@
 const Citations = ( e => {
 
     let nameElementRoot = 'refsList';
-    let classNameElementRoot = 'paimon-box';
+    let classNameElementRoot = 'plugin-section';
     let classesElementEffect = ['animate__animated', 'animate__bounce'];
 
     let Cite = require('citation-js');

@@ -1,7 +1,7 @@
 const DocsSources = ( e => {
 
     let nameElementRoot = 'docsSourceList';
-    let classNameElementRoot = 'paimon-box';
+    let classNameElementRoot = 'plugin-section';
     let classesElementEffect = ['animate__animated', 'animate__bounce'];
 
     let getDomain = url => {
