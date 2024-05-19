@@ -34,7 +34,13 @@ impl PrimeDownExtras {
                 let size: u32 = captures.get(2).unwrap().as_str().parse().unwrap();
         
                 let qr_code_base64 = Generate::qrcode(link, size);
-                format!("![QR Code](data:image/png;base64,{})", qr_code_base64)
+                let link_qrcode = format!("data:image/png;base64,{}", qr_code_base64);
+
+                format!(
+                    "<p class='qrcode'>
+                        <img src='{}' alt='QR Code of {}' />
+                    </p>", link_qrcode, link
+                )
             });
         
             replaced_markdown.to_string()

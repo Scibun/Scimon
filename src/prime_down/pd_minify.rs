@@ -10,7 +10,7 @@ impl PrimeDownMinify {
         let code = Regex::new(MinifyRegExp::MIN_JS_REMOVE_WHITESPACE).unwrap().replace_all(code, " ");
         let code = Regex::new(MinifyRegExp::MIN_JS_REMOVE_SINGLE_LINE_COMMENT).unwrap().replace_all(&code, "");
         let code = Regex::new(MinifyRegExp::MIN_JS_REMOVE_MULTI_LINE_COMMENT).unwrap().replace_all(&code.trim(), "");
-        let code = Regex::new(MinifyRegExp::MIN_JS_REMOVE_STRINGS).unwrap().replace_all(&code, "\"\"");
+        let code = Regex::new(MinifyRegExp::MIN_JS_STRING_LITERAL).unwrap().replace_all(&code, "$0");
         let code = Regex::new(MinifyRegExp::MIN_JS_REMOVE_OPERATORS_KEYWORDS).unwrap().replace_all(&code, "$1");
         let code = Regex::new(MinifyRegExp::MIN_JS_REMOVE_SPACES).unwrap().replace_all(&code, "$1");
 
