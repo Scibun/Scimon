@@ -14,6 +14,7 @@
     height: 3em;
     display: block;
     cursor: pointer;
+    font-size: .9em;
     list-style: none;
     line-height: 3em;
     border-radius: 3px;
@@ -42,6 +43,5 @@
 
 .plugin-section > ul > li:hover{
     background: var(--color-quote);
-    text-decoration: none !important;
     border-left: .5em solid var(--color-border);
 }

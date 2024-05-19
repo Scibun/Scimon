@@ -1,0 +1,39 @@
+header{
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2.5em;
+    position: fixed;
+    z-index: 99999999999;
+    color: var(--color-text);
+    background: var(--color-pre-bg);
+    border: .1em solid var(--color-border);
+}
+
+header > .label{
+    float: left;
+    cursor: default;
+    font-weight: 600;
+    padding-left: 1em;
+    padding-right: 1em;
+    line-height: 2.5em;
+}
+
+header > .nav{
+    float: right;
+    height: 2.45em;
+    line-height: 2.45em;
+}
+
+header > .nav > div{
+    width: 3em;
+    float: left;
+    cursor: pointer;
+    text-align: center;
+    line-height: 2.45em;
+}
+
+header > .nav > div:hover{
+    background: var(--color-border);
+}

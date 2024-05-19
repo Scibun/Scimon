@@ -16,6 +16,8 @@
     --spacing-md: 16px;
     --spacing-lg: 24px;
     --spacing-xl: 45px;
+    --min-width-size: 200px;
+    --max-width-size: 1100px;
 }
 
 * {
@@ -95,7 +97,7 @@ code, pre {
 }
 
 pre {
-    background-color: var(--color-pre-bg);
+    background: var(--color-pre-bg);
     padding: var(--spacing-md);
     overflow: auto;
     border-radius: 3px;
@@ -174,11 +176,11 @@ img {
 /* Additional styles for GitHub-specific elements */
 
 .markdown-body {
+    margin: 1.5em auto;
     box-sizing: border-box;
-    min-width: 200px;
-    max-width: 1200px;
-    margin: 0 auto;
     padding: var(--spacing-xl);
+    min-width: var(--min-width-size);
+    max-width: var(--max-width-size);
 }
 
 .markdown-body blockquote {
@@ -186,11 +188,11 @@ img {
 }
 
 .markdown-body pre > code {
-    padding: 0;
     margin: 0;
-    font-size: 100%;
-    word-break: normal;
-    white-space: pre;
-    background: transparent;
     border: 0;
+    padding: 0;
+    font-size: 100%;
+    white-space: pre;
+    word-break: normal;
+    background: transparent;
 }
