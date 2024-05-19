@@ -11,11 +11,7 @@ render_markdown:
   minify_extra_plugins: true # Boolean (valid values: 'true' or 'false'; default: 'true')
 
   load_css_cdn: # List
-    - 'https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css'
-    - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism.min.css'
-    - 'https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism-okaidia.min.css'
-    - 'https://use.fontawesome.com/releases/v6.5.2/css/all.css'
-    - 'https://cdn.jsdelivr.net/gh/lonekorean/gist-syntax-themes@d49b91b3/stylesheets/idle-fingers.css'
+    - 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'
 
   load_js_cdn: # List
     - 'https://cdn.jsdelivr.net/npm/citation-js'

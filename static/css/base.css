@@ -1,13 +1,231 @@
+/* IMPORT ALL STYLES USED BY RENDER */
+
+/* 
+
+    Prism.js
+    https://cdnjs.com/libraries/prism-themes
+
+*/
+@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism.min.css');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-one-dark.min.css');
+
+/* 
+
+    GitHub Gist
+    https://github.com/lonekorean/gist-syntax-themes 
+
+*/
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://cdn.rawgit.com/lonekorean/gist-syntax-themes/d49b91b3/stylesheets/one-dark.css');
+
+/* 
+
+    FontAwesome
+    https://fontawesome.com
+
+*/
+@import url('https://use.fontawesome.com/releases/v6.5.2/css/all.css');
+
+/* 
+
+    Animate.css
+    https://animate.style/
+
+*/
+@import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css');
+
+:root {
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Open Sans", "Apple Color Emoji", "Segoe UI Emoji";
+    --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    --color-text: #abb2bf;
+    --color-bg: #282c34;
+    --color-link: #61afef;
+    --color-link-hover: #528bff;
+    --color-border: #3e4451;
+    --color-muted: #5c6370;
+    --color-quote: #5c6370;
+    --color-pre-bg: #21252b;
+    --color-important-bg: #e5c07b; /* Amber for important */
+    --color-note-bg: #98c379; /* Green for note */
+    --color-warning-bg: #e06c75; /* Red for warning */
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 45px;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
-body{
-    padding: 1em;
+body {
+    font-family: var(--font-body);
+    line-height: 1.6;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    padding: var(--spacing-xl);
 }
 
-input[type="checkbox"]{
-    margin-right: .5em;
+h1, h2, h3, h4, h5, h6 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+h1 {
+    font-size: 2em;
+}
+
+h2 {
+    font-size: 1.5em;
+}
+
+h3 {
+    font-size: 1.25em;
+}
+
+h4 {
+    font-size: 1em;
+}
+
+h5 {
+    font-size: 0.875em;
+}
+
+h6 {
+    font-size: 0.85em;
+    color: var(--color-muted);
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+}
+
+a {
+    color: var(--color-link);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: var(--color-link-hover);
+}
+
+ul, ol {
+    padding-left: var(--spacing-lg);
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+}
+
+li {
+    margin-bottom: var(--spacing-sm);
+}
+
+code, pre {
+    font-family: var(--font-mono);
+    font-size: 85%;
+}
+
+pre {
+    background-color: var(--color-pre-bg);
+    padding: var(--spacing-md);
+    overflow: auto;
+    border-radius: 3px;
+    margin-bottom: var(--spacing-md);
+    border: 1px solid var(--color-border);
+}
+
+code {
+    background-color: rgba(27,31,35,0.05);
+    padding: 0.2em 0.4em;
+    margin: 0;
+    border-radius: 3px;
+}
+
+blockquote {
+    padding: 0 var(--spacing-md);
+    color: var(--color-muted);
+    border-left: 0.25em solid var(--color-quote);
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+}
+
+hr {
+    height: 0.25em;
+    padding: 0;
+    margin: var(--spacing-lg) 0;
+    background-color: var(--color-border);
+    border: 0;
+}
+
+table {
+    width: auto;
+    max-width: 100%;
+    overflow: auto;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-bottom: var(--spacing-md);
+}
+
+table th {
+    font-weight: 600;
+}
+
+table th, table td {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--color-border);
+}
+
+input[type="checkbox"] {
+    margin-right: 0.5em;
+}
+
+img {
+    max-width: 100%;
+    box-sizing: initial;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.alert-important {
+    background-color: var(--color-important-bg);
+    border-left: 6px solid darken(var(--color-important-bg), 10%);
+}
+
+.alert-note {
+    background-color: var(--color-note-bg);
+    border-left: 6px solid darken(var(--color-note-bg), 10%);
+}
+
+.alert-warning {
+    background-color: var(--color-warning-bg);
+    border-left: 6px solid darken(var(--color-warning-bg), 10%);
+}
+
+/* Additional styles for GitHub-specific elements */
+
+.markdown-body {
+    box-sizing: border-box;
+    min-width: 200px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-xl);
+}
+
+.markdown-body blockquote {
+    border-left-color: var(--color-border);
+}
+
+.markdown-body pre > code {
+    padding: 0;
+    margin: 0;
+    font-size: 100%;
+    word-break: normal;
+    white-space: pre;
+    background: transparent;
+    border: 0;
 }

@@ -1,6 +1,7 @@
 const Citations = ( e => {
 
     let nameElementRoot = 'refsList';
+    let classNameElementRoot = 'paimon-box';
     let classesElementEffect = ['animate__animated', 'animate__bounce'];
 
     let Cite = require('citation-js');
@@ -14,7 +15,7 @@ const Citations = ( e => {
 
         if (!refsList) {
             refsList = document.createElement('div');
-            refsList.className = nameElementRoot;
+            refsList.className = classNameElementRoot;
             refsList.id = nameElementRoot;
 
             let paragraph = document.createElement('p');

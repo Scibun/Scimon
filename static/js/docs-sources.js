@@ -1,6 +1,7 @@
 const DocsSources = ( e => {
 
     let nameElementRoot = 'docsSourceList';
+    let classNameElementRoot = 'paimon-box';
     let classesElementEffect = ['animate__animated', 'animate__bounce'];
 
     let getDomain = url => {
@@ -10,7 +11,7 @@ const DocsSources = ( e => {
 
     let createPdfLinksList = e => {
         let pdfLinksList = document.createElement('div');
-        pdfLinksList.className = nameElementRoot;
+        pdfLinksList.className = classNameElementRoot;
         pdfLinksList.id = nameElementRoot;
 
         let paragraph = document.createElement('p');
@@ -57,6 +58,8 @@ const DocsSources = ( e => {
     
             docsList.forEach( doc => {
                 let li = document.createElement('li');
+                li.className = 'pdd-left';
+                
                 let a = document.createElement('a');
     
                 a.href = doc.url;
