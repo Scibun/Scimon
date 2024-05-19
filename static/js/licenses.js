@@ -1,8 +1,8 @@
 const Licenses = ( e => {
 
-    let nameElementRoot = 'licensesBox';
     let classActivedElementRoot = 'actived';
-    let idElementToggleBtn = 'toggleLicensesBox';
+    let nameElementRoot = Elements.licensesBox;
+    let headerScrollToBtn = Elements.toggleLicensesBox;
 
     let keywords = [
         'GPL', 
@@ -52,7 +52,7 @@ const Licenses = ( e => {
 
     let forceHideBox = e => {
         let element = document.getElementById(nameElementRoot);
-        let elementBtn = document.getElementById(idElementToggleBtn);
+        let elementBtn = document.getElementById(headerScrollToBtn);
 
         element.style.display = 'none';
         elementBtn.classList.remove(classActivedElementRoot);
@@ -74,7 +74,7 @@ const Licenses = ( e => {
     };
 
     let toggleActivedClassLicensesBtn = e => {
-        let elementBtn = document.getElementById(idElementToggleBtn);
+        let elementBtn = document.getElementById(headerScrollToBtn);
         let isActived = elementBtn.classList.contains(classActivedElementRoot);
         
         if (isActived) {
@@ -85,6 +85,9 @@ const Licenses = ( e => {
     };
     
     return {
+        element: nameElementRoot,
+        toggleBtn: headerScrollToBtn,
+
         list: () => { return list(); },
         init: () => { return init(); },
         forceHideBox: () => { return forceHideBox(); },

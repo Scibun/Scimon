@@ -1,8 +1,8 @@
 const Citations = ( e => {
 
-    let nameElementRoot = 'refsList';
-    let headerScrollToBtn = 'scrollToDocsBtn';
+    let nameElementRoot = Elements.refsList;
     let classNameElementRoot = 'plugin-section';
+    let headerScrollToBtn = Elements.scrollToRefsBtn;
 
     let Cite = require('citation-js');
 
@@ -84,8 +84,10 @@ const Citations = ( e => {
     };
     
     return {
+        element: nameElementRoot,
+        toggleBtn: headerScrollToBtn,
+        
         init: () => { return load(); },
-        getNameElementRoot: () => { return nameElementRoot; },
         scrollTo: () => { return ScrollTo.element(nameElementRoot); },
     };
 

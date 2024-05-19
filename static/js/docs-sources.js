@@ -1,8 +1,8 @@
 const DocsSources = ( e => {
 
-    let nameElementRoot = 'docsSourceList';
-    let headerScrollToBtn = 'scrollToRefsBtn';
     let classNameElementRoot = 'plugin-section';
+    let nameElementRoot = Elements.docsSourceList;
+    let headerScrollToBtn = Elements.scrollToDocsBtn;
 
     let getDomain = url => {
         var urlObj = new URL(url);
@@ -79,8 +79,10 @@ const DocsSources = ( e => {
     };
     
     return {
+        element: nameElementRoot,
+        toggleBtn: headerScrollToBtn,
+
         init: () => { return listDocs(); },
-        getNameElementRoot: () => { return nameElementRoot; },
         scrollTo: () => { return ScrollTo.element(nameElementRoot); },
     };
     

@@ -1,6 +1,6 @@
 const ScrollTo = ( e => {
 
-    let headerScrollToBtn = 'scrollToTopBtn';
+    let headerScrollToBtn = Elements.scrollToTopBtn;
     let classNameLicensesItems = '.language-license';
 
     let top = e => {
@@ -41,7 +41,7 @@ const ScrollTo = ( e => {
 
         if (elements.length > 0) {
             Licenses.forceHideBox();
-            
+
             let parseId = parseInt(id);
             let pos = elements[parseId].getBoundingClientRect();
 
@@ -51,6 +51,8 @@ const ScrollTo = ( e => {
     };
     
     return {
+        topBtn: headerScrollToBtn,
+
         top: () => { return top(); },
         element: (el) => { return element(el); },
         license: (el) => { return license(el); },
