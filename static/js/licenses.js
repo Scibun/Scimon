@@ -84,7 +84,7 @@ const Licenses = ( e => {
         let element = document.getElementById(nameElementRoot);
 
         toggleActivedClassLicensesBtn();
-        Animate.effect(element, 'animate__pulse');
+        Animate.effect(element, 'animate__slideInDown');
 
         setTimeout( e => {
             if (element.style.display == 'block') {
