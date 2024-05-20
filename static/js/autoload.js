@@ -18,6 +18,9 @@ const Elements = ( e => {
 
 window.onload = e => {
 
+    MathDiagram.math();
+    MathDiagram.diagram();
+
     Licenses.init();
     Citations.init();
     DocsSources.init();
@@ -28,7 +31,7 @@ window.onload = e => {
     let pageTitle = document.title.split(':');
     document.getElementById(Elements.headerLabel).textContent = `${ pageTitle[1] }: ${ pageTitle[2] }`;
 
-    window.addEventListener("click", function(event) {
+    window.addEventListener("click", event => {
         if (event.target === document.getElementById(BibTex.modal)) {
             BibTex.close();
         }

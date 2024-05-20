@@ -38,8 +38,9 @@ const MathDiagram = ( e => {
         });
     };
 
-    math();
-
-    diagram();
+    return {
+        math: () => { return math(); },
+        diagram: () => { return diagram(); },
+    };
 
 })();
