@@ -58,6 +58,28 @@ const Licenses = ( e => {
         elementBtn.classList.remove(classActivedElementRoot);
     };
 
+    let formatBibText = text => {
+        let textWithoutPTag = text.replace(
+            /<\/?p>/g, ''
+        );
+
+        let braceIndex = textWithoutPTag.indexOf(
+            '{', textWithoutPTag.indexOf('@misc')
+        );
+
+        let firstPart = textWithoutPTag.slice(
+            0, braceIndex + 1
+        );
+
+        let secondPart = textWithoutPTag.slice(
+            braceIndex + 1
+        ).replace(
+            /,/g, ',\n      '
+        );
+
+        return firstPart + secondPart.slice(0, -1) + '\n' + secondPart.slice(-1);
+    };
+
     let toggleLicensesBox = e => {
         let element = document.getElementById(nameElementRoot);
 
@@ -91,6 +113,7 @@ const Licenses = ( e => {
         list: () => { return list(); },
         init: () => { return init(); },
         forceHideBox: () => { return forceHideBox(); },
+        formatBibText: (text) => {return formatBibText(text); },
         toggleLicensesBox: () => { return toggleLicensesBox(); },
     };
 

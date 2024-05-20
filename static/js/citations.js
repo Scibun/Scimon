@@ -68,7 +68,7 @@ const Citations = ( e => {
                     
                     citationItem.className = 'ref';
                     citationItem.innerHTML = `
-                        <i class='fa-solid fa-bookmark'></i>
+                        <i class='fa-solid fa-code hover-icon' data-bibtex='${ text }' onclick='BibTex.get(this)'></i>
                         ${ convertToCitation(text) }
                     `;
     

@@ -31,10 +31,6 @@
     color: inherit !important;
 }
 
-.plugin-section > ul > .pdd-left{
-    padding-left: 1em;
-}
-
 .plugin-section > ul > li > i{
     width: 3em;
     height: 3em;
@@ -48,12 +44,20 @@
     border-left: .5em solid var(--color-border);
 }
 
+.plugin-section > ul > .pdd-left{
+    padding-left: 1em;
+}
+
+.plugin-section > ul > li > .hover-icon:hover{
+    color: var(--color-link-hover);
+}
+
 /* LICENSES BOX */
 
 .licenses-box{
     top: 0;
     right: 0;
-    width: 16em;
+    width: 22em;
     display: none;
     overflow: auto;
     position: fixed;
@@ -68,10 +72,11 @@
     height: 3em;
     display: block;
     cursor: pointer;
-    font-size: .9em;
+    font-size: .8em;
     list-style: none;
     line-height: 3em;
     padding-left: 1em;
+    font-weight: bold;
     background: inherit;
     color: inherit !important;
     text-decoration: none !important;

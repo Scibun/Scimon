@@ -1,6 +1,6 @@
 ./downloads !path
 
-https://github.com/Kremilly
+https://github.com/Kremilly !open_link
 
 https://arxiv.org/pdf/2405.01513 !ignore
 https://olacesar.com/e-books/rituais.pdf !ignore
