@@ -64,7 +64,7 @@ const Licenses = ( e => {
         );
 
         let braceIndex = textWithoutPTag.indexOf(
-            '{', textWithoutPTag.indexOf('@misc')
+            '{', textWithoutPTag.indexOf('@')
         );
 
         let firstPart = textWithoutPTag.slice(

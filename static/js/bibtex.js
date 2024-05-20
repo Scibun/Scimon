@@ -15,7 +15,7 @@ const BibTex = ( e => {
         document.getElementById(elementModal).style.display = 'flex';
         document.getElementById(elementMaskModal).style.display = 'flex';
         
-        Effects.bounce(getElementModal);
+        Effects.heartBeat(getElementModal);
     };
 
     let copy = e => {
