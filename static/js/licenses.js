@@ -83,8 +83,8 @@ const Licenses = ( e => {
     let toggleLicensesBox = e => {
         let element = document.getElementById(nameElementRoot);
 
-        Effects.bounce(element);
         toggleActivedClassLicensesBtn();
+        Animate.effect(element, 'animate__pulse');
 
         setTimeout( e => {
             if (element.style.display == 'block') {

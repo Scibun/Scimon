@@ -71,7 +71,6 @@ const DocsSources = ( e => {
             });
     
             pdfLinksListDiv.appendChild(ul);
-            
             document.getElementById(headerScrollToBtn).style.display = 'inline';
         } else {
             document.getElementById(headerScrollToBtn).style.display = 'none';

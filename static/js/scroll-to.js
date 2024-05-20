@@ -21,7 +21,7 @@ const ScrollTo = ( e => {
             let pos = elements[parseId].getBoundingClientRect();
 
             window.scrollTo(0, window.scrollY + pos.top - 90);
-            Effects.bounce(elements[parseId].parentElement);
+            Animate.effect(elements[parseId].parentElement, 'animate__pulse');
         }
     };
 
@@ -48,7 +48,7 @@ const ScrollTo = ( e => {
             getElement.scrollIntoView({ behavior: 'smooth' });
 
             Licenses.forceHideBox();
-            Effects.bounce(getElement);
+            Animate.effect(getElement, 'animate__pulse');
         }
     };
     
