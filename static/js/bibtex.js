@@ -10,6 +10,8 @@ const BibTex = ( e => {
     };
 
     let get = (element) => {
+        let getElementModal = document.getElementById(elementModal);
+
         let dataBibtexValue = element.getAttribute('data-bibtex');
         let getBibTex = Licenses.formatBibText(dataBibtexValue);
 
@@ -17,6 +19,8 @@ const BibTex = ( e => {
 
         document.getElementById(elementModal).style.display = 'flex';
         document.getElementById(elementMaskModal).style.display = 'flex';
+        
+        Effects.bounce(getElementModal);
     };
 
     let copy = e => {
