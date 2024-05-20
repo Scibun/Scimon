@@ -3,16 +3,11 @@ const BibTex = ( e => {
     let elementCode = Elements.bibTexCode;
     let elementModal = Elements.bibTexModal;
     let elementMaskModal = Elements.bibTextMaskModal;
-    
-    let close = e => {
-        document.getElementById(elementModal).style.display = 'none';
-        document.getElementById(elementMaskModal).style.display = 'none';
-    };
 
-    let get = (element) => {
+    let get = el => {
         let getElementModal = document.getElementById(elementModal);
 
-        let dataBibtexValue = element.getAttribute('data-bibtex');
+        let dataBibtexValue = el.getAttribute('data-bibtex');
         let getBibTex = Licenses.formatBibText(dataBibtexValue);
 
         document.getElementById(elementCode).innerHTML = getBibTex;
@@ -36,6 +31,11 @@ const BibTex = ( e => {
             selection.addRange(range);
             navigator.clipboard.writeText(codeElement.textContent);
         }
+    };
+    
+    let close = e => {
+        document.getElementById(elementModal).style.display = 'none';
+        document.getElementById(elementMaskModal).style.display = 'none';
     };
 
     return {
