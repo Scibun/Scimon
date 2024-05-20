@@ -74,14 +74,16 @@ impl Download {
     }    
 
     async fn markdown(url: &str, path: &str) -> Result<(), Box<dyn Error>> {
-        let html_content = PrimeDown::render_core(url).await?;
-        
-        let original_name = UrlMisc::get_last_part(url);
-        let new_filename = original_name.replace(".md", ".pdf");
-        let output_path = FileMisc::get_output_path(&path, &new_filename);
+        if FileRemote::check_content_type(&url, "text/markdown").await? || url.contains(".md") {
+            let html_content = PrimeDown::render_core(url).await?;
+            
+            let original_name = UrlMisc::get_last_part(url);
+            let new_filename = original_name.replace(".md", ".pdf");
+            let output_path = FileMisc::get_output_path(&path, &new_filename);
 
-        PrimeDown::create_pdf(&html_content, output_path, &url).await?;
-        SuccessAlerts::download_and_generated_pdf(&new_filename, url);
+            PrimeDown::create_pdf(&html_content, output_path, &url).await?;
+            SuccessAlerts::download_and_generated_pdf(&new_filename, url);
+        }
 
         Ok(())
     }
@@ -103,16 +105,14 @@ impl Download {
             Err(_) => return Ok(()),
         }
 
-        if FileRemote::check_content_type(&line_url, "text/markdown").await? {
-            Self::markdown(&line_url, &path).await?;
-        } else {
-            if FileRemote::is_pdf_file(&line_url).await? || Providers::check_provider_domain(&line_url) {
-                let result = Self::make(&line_url, path).await;
-                
-                match result {
-                    Ok(file) => SuccessAlerts::download(&file, url),
-                    Err(e) => ErrorsAlerts::download(e, url),
-                }
+        Self::markdown(&line_url, &path).await?;
+
+        if FileRemote::is_pdf_file(&line_url).await? || Providers::check_provider_domain(url) && !line_url.contains(".md") {
+            let result = Self::make(&line_url, path).await;
+            
+            match result {
+                Ok(file) => SuccessAlerts::download(&file, url),
+                Err(e) => ErrorsAlerts::download(e, url),
             }
         }
 
