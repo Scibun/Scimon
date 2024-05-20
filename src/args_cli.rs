@@ -28,6 +28,10 @@ pub struct Flags {
     pub no_open_link: bool,
 
     #[arg(long)]
+    /// Disable !readme macro
+    pub no_readme: bool,
+
+    #[arg(long)]
     /// Your Paimon settings
     pub options: Option<String>,
 }

@@ -6,7 +6,6 @@ use minify::html::minify;
 
 use std::{
     fs,
-    env,
     error::Error,
 };
 
@@ -17,37 +16,17 @@ use headless_chrome::{
 };
 
 use crate::{
+    utils::base64::Base64,
     system::syntax::Macros,
     configs::settings::Settings,
     consts::prime_down::PrimeDownEnv,
     regexp::regex_macros::MacrosRegExp,
     prime_down::inject::pd_inject::PrimeDownInject,
-
-    utils::{
-        url::UrlMisc,
-        base64::Base64,
-    },
 };
 
 pub struct PrimeDownMisc;
 
 impl PrimeDownMisc {
-
-    pub fn open_readme_url(path: &str, no_open_link: bool) {
-        if !no_open_link {
-            let full_path = env::current_dir().expect(
-                ""
-            ).join(&path).to_str().unwrap().replace(
-                "\\", "/"
-            );
-
-            let url_file = &format!(
-                "file://{}", full_path
-            );
-
-            UrlMisc::open_url(&url_file, false);
-        }
-    }
 
     pub fn render_content(file: &str, md_content: String) -> String {
         let minify_prop = Settings::get("render_markdown.minify_html", "BOOLEAN");
