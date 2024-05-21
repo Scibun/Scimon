@@ -88,13 +88,12 @@ impl Download {
         Ok(())
     }
 
-    pub async fn pdf(url: &str, path: &str, no_ignore: bool, no_comments: bool) -> Result<(), Box<dyn Error>> {
+    pub async fn pdf(url: &str, path: &str, no_ignore: bool) -> Result<(), Box<dyn Error>> {
         let mut line_url: Cow<str> = Cow::Borrowed(
             url.trim()
         );
 
         Reporting::check_download_errors(&line_url).await?;
-        Macros::handle_comments(&line_url, no_comments)?;
 
         if !is_url(&line_url) {
             return Ok(())

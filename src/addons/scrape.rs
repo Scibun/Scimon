@@ -43,7 +43,7 @@ impl Scrape {
         Ok(data)
     }
 
-    pub async fn get(scrape: bool, url: &str, no_ignore: bool, no_comments: bool) -> Result<(), Box<dyn Error>> {
+    pub async fn get(scrape: bool, url: &str, no_ignore: bool) -> Result<(), Box<dyn Error>> {
         if scrape {
             match Self::fetch_items(url).await {
                 Ok(response) => {
@@ -65,8 +65,7 @@ impl Scrape {
                                         Download::pdf(
                                             url,
                                             path,
-                                            no_ignore, 
-                                            no_comments
+                                            no_ignore,
                                         ).await?;
                                     }
                                 }

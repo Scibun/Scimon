@@ -8,6 +8,7 @@ use std::{
 use crate::{
     cmd::download::Download,
     syntax::vars_block::VarsBlock,
+    ui::macros_alerts::MacrosAlerts,
 
     system::{
         syntax::Macros,
@@ -42,14 +43,17 @@ impl DownloadsBlock {
             for line in downloads_content.lines() {
                 let url = line.trim().split_whitespace().next().unwrap_or("");
                 let final_url = Providers::check_provider_line(&url);
-                
+
+                if !no_comments && line.contains("!debug") {
+                    MacrosAlerts::comments(line);
+                }
+
                 if !Macros::handle_check_macro_line(&line, "ignore") {
                     if !final_url.is_empty() && is_url(&final_url) && final_url.starts_with("http") {
                         Download::pdf(
                             &url,
                             &path,
-                            no_ignore,
-                            no_comments
+                            no_ignore
                         ).await?;
                     }
                 } else {

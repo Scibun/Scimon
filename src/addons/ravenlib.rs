@@ -22,7 +22,6 @@ use reqwest::{
 use crate::{
     configs::env::Env,
     consts::uris::Uris,
-    system::syntax::Macros,
     cmd::download::Download,
     ui::errors_alerts::ErrorsAlerts,
 };
@@ -67,7 +66,7 @@ impl Ravenlib {
         false
     }
 
-    pub async fn get(list_id: &str, no_ignore: bool, no_comments: bool) -> Result<String, Box<dyn Error>> {
+    pub async fn get(list_id: &str, no_ignore: bool) -> Result<String, Box<dyn Error>> {
         let list = Self::remove_initial_character(list_id, '@');
         let mut url = Uris::RAVENLIB_API_REQUEST.to_owned();
     
@@ -105,15 +104,14 @@ impl Ravenlib {
                 let lines_iter = io::Cursor::new(&data).lines();
     
                 for line_result in lines_iter {
+                    let path = "scrape/";
                     let url = line_result?;
-                    let path = Macros::handle_get_path(&url);
                     let _ = fs::create_dir(&path);
 
                     Download::pdf(
                         &url, 
                         &path,
-                        no_ignore, 
-                        no_comments
+                        no_ignore,
                     ).await?;
                 }
             }
