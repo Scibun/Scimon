@@ -7,4 +7,6 @@ impl BlocksRegExp {
         r"\}",
     ];
 
+    pub const GET_PATH: &'static str = r#"(?i)path\s*=\s*"([^"]+)""#;
+
 }

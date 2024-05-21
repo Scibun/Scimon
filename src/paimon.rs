@@ -59,9 +59,7 @@ impl Paimon {
         
         if !run.is_empty() {
             if !Ravenlib::check_is_user(run) {
-                let _ = ReadList::read_dataset(
-                    run, flags.no_ignore, flags.no_comments, flags.no_open_link
-                ).await;
+                let _ = ReadList::read_dataset(run, flags.no_ignore, flags.no_comments).await;
 
                 ReadMeBlock::render_and_save_file(run, flags.no_open_link, flags.no_readme);
             } else {
