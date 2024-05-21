@@ -39,7 +39,7 @@ const MathDiagram = ( e => {
     };
 
     let init = e => {
-        let interval = setInterval(() => {
+        let interval = setInterval( e => {
             math();
             diagram();
     
