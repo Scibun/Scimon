@@ -56,10 +56,9 @@ const Licenses = ( e => {
 
     let forceHideBox = e => {
         let element = document.getElementById(nameElementRoot);
-        let elementBtn = document.getElementById(headerScrollToBtn);
 
         element.style.display = 'none';
-        elementBtn.classList.remove(classActivedElementRoot);
+        toggleActivedClassLicensesBtn();
     };
 
     let formatBibText = text => {
@@ -86,24 +85,27 @@ const Licenses = ( e => {
 
     let toggleLicensesBox = e => {
         let element = document.getElementById(nameElementRoot);
+        let elementBtn = document.getElementById(headerScrollToBtn);
 
-        toggleActivedClassLicensesBtn();
         Animate.effect(element, 'animate__slideInDown');
 
         setTimeout( e => {
             if (element.style.display == 'block') {
                 element.style.display = 'none';
+                elementBtn.classList.remove(classActivedElementRoot);
             } else {
                 element.style.display = 'block';
+                elementBtn.classList.add(classActivedElementRoot);
             }
         }, 100)
     };
 
     let toggleActivedClassLicensesBtn = e => {
+        let element = document.getElementById(nameElementRoot);
         let elementBtn = document.getElementById(headerScrollToBtn);
         let isActived = elementBtn.classList.contains(classActivedElementRoot);
         
-        if (isActived) {
+        if (isActived || element.style.display != 'none') {
             elementBtn.classList.remove(classActivedElementRoot);
         } else {
             elementBtn.classList.add(classActivedElementRoot);
