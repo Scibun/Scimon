@@ -18,7 +18,7 @@ impl Validate {
             );
         }
     
-        Self::file_type(file, ".txt")?;
+        Self::file_type(file, ".pbd")?;
         Ok(())
     }
     

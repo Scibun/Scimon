@@ -30,7 +30,7 @@ impl ReadList {
         let reader: BufReader<Box<dyn Read>>;
 
         if run.starts_with("http") {
-            let _ = Validate::file_type(run, ".txt").map_err(|e| {
+            let _ = Validate::file_type(run, ".pbd").map_err(|e| {
                 ErrorsAlerts::generic(&e.to_string());
             });
             
