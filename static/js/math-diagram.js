@@ -38,7 +38,19 @@ const MathDiagram = ( e => {
         });
     };
 
+    let init = e => {
+        let interval = setInterval(() => {
+            math();
+            diagram();
+    
+            if (document.getElementsByTagName('mjx-math').length > 0) {
+                clearInterval(interval);
+            }
+        }, 100);
+    };
+
     return {
+        init: () => { return init(); },
         math: () => { return math(); },
         diagram: () => { return diagram(); },
     };

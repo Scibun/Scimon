@@ -2,11 +2,9 @@ window.onload = e => {
 
     Elements.pageTitle();
 
-    MathDiagram.math();
-    MathDiagram.diagram();
-
     Licenses.init();
     Citations.init();
+    MathDiagram.init();
     DocsSources.init();
 
     ScrollTo.checkScroll();
