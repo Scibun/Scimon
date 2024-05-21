@@ -15,7 +15,7 @@ const BibTex = ( e => {
         document.getElementById(elementModal).style.display = 'flex';
         document.getElementById(elementMaskModal).style.display = 'flex';
         
-        Animate.effect(getElementModal, 'heartBeat');
+        Animate.effect(getElementModal, 'animate__pulse');
     };
 
     let copy = e => {
@@ -38,6 +38,12 @@ const BibTex = ( e => {
         document.getElementById(elementMaskModal).style.display = 'none';
     };
 
+    let autoHideClickOffset = event => {
+        if (event.target === document.getElementById(elementModal)) {
+            close();
+        }
+    };
+
     return {
         code: elementCode,
         modal: elementModal,
@@ -46,6 +52,7 @@ const BibTex = ( e => {
         copy: () => { return copy() },
         close: () => { return close(); },
         get: (event) => { return get(event) },
+        autoHideClickOffset: (event) => { return autoHideClickOffset(event); },
     };
 
 })();

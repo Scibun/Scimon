@@ -13,13 +13,8 @@ window.onload = e => {
     window.addEventListener('scroll', ScrollTo.checkScroll);
 
     window.addEventListener("click", event => {
-        if (event.target != document.getElementById(BibTex.modal)) {
-            BibTex.close();
-        }
-
-        if (event.target != document.getElementById(Licenses.element)) {
-            Licenses.forceHideBox();
-        }
+        BibTex.autoHideClickOffset(event);
+        Licenses.autoHideClickOffset(event);
     });
 
     document.getElementById(BibTex.code).addEventListener('click', BibTex.copy);

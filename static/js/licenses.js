@@ -56,9 +56,10 @@ const Licenses = ( e => {
 
     let forceHideBox = e => {
         let element = document.getElementById(nameElementRoot);
+        let elementBtn = document.getElementById(headerScrollToBtn);
 
         element.style.display = 'none';
-        toggleActivedClassLicensesBtn();
+        elementBtn.classList.remove(classActivedElementRoot);
     };
 
     let formatBibText = text => {
@@ -100,15 +101,9 @@ const Licenses = ( e => {
         }, 100)
     };
 
-    let toggleActivedClassLicensesBtn = e => {
-        let element = document.getElementById(nameElementRoot);
-        let elementBtn = document.getElementById(headerScrollToBtn);
-        let isActived = elementBtn.classList.contains(classActivedElementRoot);
-        
-        if (isActived || element.style.display != 'none') {
-            elementBtn.classList.remove(classActivedElementRoot);
-        } else {
-            elementBtn.classList.add(classActivedElementRoot);
+    let autoHideClickOffset = event => {
+        if (event.target != document.getElementById(nameElementRoot)) {
+            forceHideBox();
         }
     };
     
@@ -121,6 +116,7 @@ const Licenses = ( e => {
         forceHideBox: () => { return forceHideBox(); },
         formatBibText: (text) => {return formatBibText(text); },
         toggleLicensesBox: () => { return toggleLicensesBox(); },
+        autoHideClickOffset: (event) => { return autoHideClickOffset(event); },
     };
 
 })();
