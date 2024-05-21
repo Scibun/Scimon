@@ -23,6 +23,7 @@ impl DownloadsBlock {
         reader: R, 
         no_ignore: bool, 
         no_comments: bool,
+        no_open_link: bool
     ) -> Result<(), Box<dyn Error>> where R: BufRead {
         let contents = reader.lines().collect::<Result<Vec<_>, _>>()?.join("\n");
         let path = VarsBlock::get_path(&contents);
@@ -41,7 +42,7 @@ impl DownloadsBlock {
             for line in downloads_content.lines() {
                 let url = line.trim().split_whitespace().next().unwrap_or("");
                 let final_url = Providers::check_provider_line(&url);
-
+                
                 if !Macros::handle_check_macro_line(&line, "ignore") {
                     if !final_url.is_empty() && is_url(&final_url) && final_url.starts_with("http") {
                         Download::pdf(
@@ -54,6 +55,10 @@ impl DownloadsBlock {
                 } else {
                     Macros::handle_ignore_macro_flag(&final_url, no_ignore)?;
                 }
+            }
+
+            if !no_open_link {
+                let _ = VarsBlock::get_open(&contents).await;
             }
         } else {
             eprintln!("'downloads' block not found in file.");

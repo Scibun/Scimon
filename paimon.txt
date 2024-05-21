@@ -1,9 +1,9 @@
 path = "downloads/"
 
+open = "https://github.com/kremilly"
+
 downloads {
     https://arxiv.org/pdf/2405.01513 !ignore
-    https://olacesar.com/e-books/rituais.pdf !ignore
-    https://olacesar.com/e-books/biblia.pdf !ignore
     https://www.scielo.br/j/rdbci/a/fwDKj9FMX7YTRDgkJGG4gnR?format=pdf&lang=pt !ignore
     https://en.wikipedia.org/wiki/Rust_(programming_language) !ignore
     https://en.wikipedia.org/wiki/Google !ignore
