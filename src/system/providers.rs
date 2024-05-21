@@ -1,13 +1,8 @@
 use std::error::Error;
-use scihub_scraper::SciHubScraper;
 
 use crate::{
     consts::uris::Uris,
-
-    addons::{
-        scihub::SciHub,
-        wikipedia::Wikipedia,
-    },
+    addons::wikipedia::Wikipedia,
     
     utils::{
         url::UrlMisc,
@@ -18,6 +13,18 @@ use crate::{
 pub struct Providers;
 
 impl Providers {
+
+    fn extract_doi(url: &str) -> String {
+        if let Some(index) = url.find('/') {
+            let restante = &url[index + 2..];
+            
+            if let Some(index) = restante.find('/') {
+                return restante[index + 1..].to_string();
+            }
+        }
+
+        String::new()
+    }
 
     pub fn arxiv(url: &str) -> String {
         let escape_quotes = UrlMisc::escape_quotes(url);
@@ -59,17 +66,15 @@ impl Providers {
     }
 
     pub async fn scihub(url: &str) -> Result<(String, String), Box<dyn Error>> {
-        let mut scraper = SciHubScraper::new();
+        let paper = Self::extract_doi(url);
 
-        let paper = scraper.fetch_paper_pdf_url_by_doi(
-            &SciHub::extract_doi(url)
-        ).await?;
-
-        let paper_url = paper.to_string();
-        let paper_pdf_url = SciHub::get_pdf_file(&paper_url).await?;
+        let paper_url = format!(
+            "{}{}", Uris::SCIHUB_API_REQUEST, paper
+        );
+        
         let filename = FileRemote::get_filename(&paper_url).await?;
 
-        Ok((paper_pdf_url, filename))
+        Ok((paper_url, filename))
     }
 
     pub async fn generic(url: &str) -> Result<(String, String), Box<dyn Error>> {

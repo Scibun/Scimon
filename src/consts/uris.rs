@@ -12,6 +12,7 @@ impl Uris {
 
     // Ravenlib
     pub const RAVENLIB_API_REQUEST: &'static str = "http://localhost/Ravenlib/api/";
+    pub const SCIHUB_API_REQUEST: &'static str = "https://api.kremilly.com/scihub?paper=";
     pub const PAIMON_SCRAPE_API_REQUEST: &'static str = "https://api.kremilly.com/scrape?url=";
 
     // Third-parties
