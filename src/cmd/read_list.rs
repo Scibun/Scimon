@@ -1,9 +1,8 @@
 use reqwest;
 
 use std::{
-    error::Error,
-
     fs::File,
+    error::Error,
 
     io::{
         Read,

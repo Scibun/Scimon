@@ -1,4 +1,3 @@
-use regex::Regex;
 use is_url::is_url;
 
 use std::{
@@ -7,10 +6,13 @@ use std::{
 };
 
 use crate::{
-    system::syntax::Macros,
     cmd::download::Download,
-    system::providers::Providers,
-    regexp::regex_blocks::BlocksRegExp,
+    syntax::vars_block::VarsBlock,
+
+    system::{
+        syntax::Macros,
+        providers::Providers,
+    },
 };
 
 pub struct DownloadsBlock;
@@ -23,8 +25,7 @@ impl DownloadsBlock {
         no_comments: bool,
     ) -> Result<(), Box<dyn Error>> where R: BufRead {
         let contents = reader.lines().collect::<Result<Vec<_>, _>>()?.join("\n");
-        
-        let path = Self::get_path(&contents);
+        let path = VarsBlock::get_path(&contents);
 
         let start_index = match (contents.find("downloads {"), contents.find("downloads{")) {
             (Some(idx1), Some(idx2)) => Some(idx1.min(idx2)),
@@ -61,13 +62,4 @@ impl DownloadsBlock {
         Ok(())
     }
 
-    pub fn get_path(contents: &str) -> String {
-        let path_pattern = Regex::new(BlocksRegExp::GET_PATH).unwrap();
-        let path = path_pattern.captures(&contents)
-            .and_then(|caps| caps.get(1))
-            .map(|m| m.as_str())
-            .unwrap_or_else(|| panic!("'path' variable not found in the file."));
-
-        path.to_string()
-    }
 }
