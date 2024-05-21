@@ -47,6 +47,10 @@ const Licenses = ( e => {
 
                 document.getElementById(nameElementRoot).appendChild(a);
             });
+
+            document.getElementById(headerScrollToBtn).style.display = 'inline';
+        } else {
+            document.getElementById(headerScrollToBtn).style.display = 'none';
         }
     };
 
