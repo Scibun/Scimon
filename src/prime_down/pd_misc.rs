@@ -1,7 +1,6 @@
 extern crate colored;
 
 use colored::*;
-use regex::Regex;
 use minify::html::minify;
 
 use std::{
@@ -20,7 +19,6 @@ use crate::{
     system::syntax::Macros,
     configs::settings::Settings,
     consts::prime_down::PrimeDownEnv,
-    regexp::regex_macros::MacrosRegExp,
     prime_down::inject::pd_inject::PrimeDownInject,
 };
 
@@ -45,15 +43,6 @@ impl PrimeDownMisc {
         } else {
             content
         }
-    }
-   
-    pub fn start_end_macros_position() -> Result<(Regex, Regex), String> {
-        let start_regex = Regex::new(MacrosRegExp::GET_README[0])
-            .map_err(|e| format!("Failed to compile start regex: {}", e))?;
-        let end_regex = Regex::new(MacrosRegExp::GET_README[1])
-            .map_err(|e| format!("Failed to compile end regex: {}", e))?;
-    
-        Ok((start_regex, end_regex))
     }
 
     pub async fn connect_to_browser(content: &str) -> Result<Vec<u8>, Box<dyn Error>> {

@@ -18,156 +18,154 @@ lorem ipsum dolor sit name -> This is a common comment without displayed (use ma
 
 This is a comment that is displayed with the debug !debug
 
-!readme
+readme {
+    ![cover](https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F48fagykg1pynim5t3fv9.png)
 
-![cover](https://media.dev.to/cdn-cgi/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F48fagykg1pynim5t3fv9.png)
+    # Header 1
 
-# Header 1
+    ## Header 2
 
-## Header 2
+    ### Header 3
 
-### Header 3
+    #### Header 4
 
-#### Header 4
+    ##### Header 5
 
-##### Header 5
+    ###### Header 6
 
-###### Header 6
+    A short description
 
-A short description
+    ```python
+    import sys
 
-```python
-import sys
+    print('hello')
+    sys.exit()
+    ```
 
-print('hello')
-sys.exit()
-```
+    * Exemplo 1
+    * Exemplo 2
+    * Exemplo 3
 
-* Exemplo 1
-* Exemplo 2
-* Exemplo 3
+    1. Exemplo 1
+    2. Exemplo 2
+    3. Exemplo 3
 
-1. Exemplo 1
-2. Exemplo 2
-3. Exemplo 3
+    **Bold**
 
-**Bold**
+    *Italic*
 
-*Italic*
+    ~~Strike~~
 
-~~Strike~~
+    [Link](#)
 
-[Link](#)
+    [!paimon qrcode data="https://www.google.com", size=300]
 
-[!paimon qrcode data="https://www.google.com", size=300]
+    [!paimon gist data="https://gist.github.com/kremilly/1651c5fb8984474609f76e86242ad6d7"]
 
-[!paimon gist data="https://gist.github.com/kremilly/1651c5fb8984474609f76e86242ad6d7"]
+    [PDF Preview](https://www.mackenzie.br/fileadmin/OLD/47/Graduacao/CCBS/Cursos/Ciencias_Biologicas/1o_2012/Biblioteca_TCC_Lic/2009/2o_Semestre/Karen_e_Priscila.pdf)
 
-[PDF Preview](https://www.mackenzie.br/fileadmin/OLD/47/Graduacao/CCBS/Cursos/Ciencias_Biologicas/1o_2012/Biblioteca_TCC_Lic/2009/2o_Semestre/Karen_e_Priscila.pdf)
+    [Microsoft](https://en.wikipedia.org/Microsoft)
 
-[Microsoft](https://en.wikipedia.org/Microsoft)
+    [Hello world](https://en.wikipedia.org/wiki/%22Hello,_World!%22_program)
 
-[Hello world](https://en.wikipedia.org/wiki/%22Hello,_World!%22_program)
+    * [ ] TODO 1
+    * [X] TODO 2
+    * [X] TODO 3
 
-* [ ] TODO 1
-* [X] TODO 2
-* [X] TODO 3
+    > Citation
 
-> Citation
+    `Inline code`
 
-`Inline code`
+    | col1 | col2 | col3 |
+    | ---- | ---- | ---- |
+    | row  | row  | row  |
+    | row  | row  | row  |
 
-| col1 | col2 | col3 |
-| ---- | ---- | ---- |
-| row  | row  | row  |
-| row  | row  | row  |
+    This math equation #1:
 
-This math equation #1:
+    $$
+    e^{i\pi} + 1 = 0
+    $$
 
-$$
-e^{i\pi} + 1 = 0
-$$
+    This math equation #2:
 
-This math equation #2:
+    $$
+    e^{i\pi} + 1 = 0
+    $$
 
-$$
-e^{i\pi} + 1 = 0
-$$
+    ```mermaid
+    graph TD
+        A[Square Rect] -- Link text --> B((Circle))
+        A --> C(Round Rect)
+        B --> D{Rhombus}
+        C --> D
+    ```
 
-```mermaid
-graph TD
-    A[Square Rect] -- Link text --> B((Circle))
-    A --> C(Round Rect)
-    B --> D{Rhombus}
-    C --> D
-```
+    <a href='#'>Link from HTML tag</a>
 
-<a href='#'>Link from HTML tag</a>
+    ```license
+        MIT License
 
-```license
-    MIT License
+        Copyright (c) [year] [fullname]
 
-    Copyright (c) [year] [fullname]
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
 
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
 
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+    ```
 
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE.
-```
+    ```license
+        Apache License
 
-```license
-    Apache License
+        Copyright (c) [year] [fullname]
 
-    Copyright (c) [year] [fullname]
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
 
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
 
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+    ```
 
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE.
-```
+    @misc{ananth2024simultaneous,
+        title={Simultaneous Haar Indistinguishability with Applications to Unclonable Cryptography}, 
+        author={Prabhanjan Ananth and Fatih Kaleoglu and Henry Yuen},
+        year={2024},
+        eprint={2405.10274},
+        archivePrefix={arXiv},
+        primaryClass={quant-ph}
+    }
 
-@misc{ananth2024simultaneous,
-    title={Simultaneous Haar Indistinguishability with Applications to Unclonable Cryptography}, 
-    author={Prabhanjan Ananth and Fatih Kaleoglu and Henry Yuen},
-    year={2024},
-    eprint={2405.10274},
-    archivePrefix={arXiv},
-    primaryClass={quant-ph}
+    @misc{ananth2024simultaneous,
+        title={Simultaneous Haar Indistinguishability with Applications to Unclonable Cryptography}, 
+        author={Prabhanjan Ananth and Fatih Kaleoglu and Henry Yuen},
+        year={2024},
+        eprint={2405.10274},
+        archivePrefix={arXiv},
+        primaryClass={quant-ph}
+    }
 }
-
-@misc{ananth2024simultaneous,
-    title={Simultaneous Haar Indistinguishability with Applications to Unclonable Cryptography}, 
-    author={Prabhanjan Ananth and Fatih Kaleoglu and Henry Yuen},
-    year={2024},
-    eprint={2405.10274},
-    archivePrefix={arXiv},
-    primaryClass={quant-ph}
-}
-
-!end_readme

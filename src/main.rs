@@ -5,6 +5,7 @@ mod regexp;
 mod consts;
 mod addons;
 mod system;
+mod syntax;
 mod paimon;
 mod configs;
 mod args_cli;
