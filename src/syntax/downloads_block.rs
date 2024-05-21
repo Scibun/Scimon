@@ -7,14 +7,16 @@ use std::{
 
 use crate::{
     cmd::download::Download,
-    syntax::vars_block::VarsBlock,
+    system::providers::Providers,
     ui::macros_alerts::MacrosAlerts,
 
-    system::{
-        syntax::Macros,
-        providers::Providers,
+    syntax::{
+        macros::Macros,
+        vars_block::VarsBlock,
     },
 };
+
+use super::readme_block::ReadMeBlock;
 
 pub struct DownloadsBlock;
 
@@ -44,6 +46,12 @@ impl DownloadsBlock {
                 let url = line.trim().split_whitespace().next().unwrap_or("");
                 let final_url = Providers::check_provider_line(&url);
 
+                if line.trim().starts_with("downloads {") {
+                    continue;
+                } else if line.trim().starts_with("}") {
+                    break;
+                }
+
                 if !no_comments && line.contains("!debug") {
                     MacrosAlerts::comments(line);
                 }
@@ -64,6 +72,8 @@ impl DownloadsBlock {
             if !no_open_link {
                 let _ = VarsBlock::get_open(&contents).await;
             }
+
+            let _ = ReadMeBlock::render_var_and_save_file(&contents, no_open_link).await;
         } else {
             eprintln!("'downloads' block not found in file.");
         }

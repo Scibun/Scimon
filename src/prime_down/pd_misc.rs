@@ -16,7 +16,6 @@ use headless_chrome::{
 
 use crate::{
     utils::base64::Base64,
-    system::syntax::Macros,
     configs::settings::Settings,
     consts::prime_down::PrimeDownEnv,
     prime_down::inject::pd_inject::PrimeDownInject,
@@ -35,8 +34,7 @@ impl PrimeDownMisc {
             &"Unable to read readme.html file".to_string().red()
         );
         
-        let markdown_html = Macros::remove_readme_macros_html(md_content);
-        let content = PrimeDownInject::content(&file, contents, markdown_html);
+        let content = PrimeDownInject::content(&file, contents, md_content);
 
         if minify_prop == true {
             minify(&content)

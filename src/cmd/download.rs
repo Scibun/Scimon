@@ -15,6 +15,7 @@ use std::{
 };
 
 use crate::{
+    syntax::macros::Macros,
     prime_down::pd_core::PrimeDown,
 
     ui::{
@@ -31,7 +32,6 @@ use crate::{
     },
 
     system::{
-        syntax::Macros,
         reporting::Reporting,
         providers::Providers,
     },
