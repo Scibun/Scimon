@@ -1,5 +1,4 @@
-extern crate reqwest;
-
+use lopdf::Document;
 use indicatif::ProgressBar;
 
 use std::{
@@ -10,6 +9,7 @@ use std::{
         Read,
         Write,
         Cursor,
+        BufReader
     },
     
     fs::{
@@ -98,6 +98,18 @@ impl Pdf {
     
         pb.finish_with_message("Download completed!");
         Ok(filename)
+    }
+
+    pub fn is_pdf_encrypted(file_path: &str) -> bool {
+        if let Ok(file) = File::open(file_path) {
+            let reader = BufReader::new(file);
+
+            if let Ok(doc) = Document::load_from(reader) {
+                return doc.is_encrypted();
+            }
+        }
+        
+        false
     }
 
 }

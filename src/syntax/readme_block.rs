@@ -86,7 +86,7 @@ impl ReadMeBlock {
                 &get_last_part.replace(".md", ".html")
             );
 
-            let markdown_content = FileRemote::content(&url).await?;
+            let markdown_content = FileRemote::content(&url, false).await?;
             let contents_extras = Markdown::append_extras_and_render(&markdown_content);
             let contents = PrimeDown::render_content(&get_last_part, contents_extras);
         

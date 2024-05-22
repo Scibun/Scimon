@@ -75,7 +75,7 @@ impl Markdown {
     }
 
     pub async fn render(url: &str) -> Result<String, Box<dyn Error>> {
-        let markdown_content = FileRemote::content(url).await?;
+        let markdown_content = FileRemote::content(url, false).await?;
     
         let options = Options::empty();
         let parser = Parser::new_ext(&markdown_content, options);

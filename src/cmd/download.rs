@@ -48,7 +48,10 @@ impl Download {
             let result = Pdf::download(&line_url, path).await;
             
             match result {
-                Ok(file) => SuccessAlerts::download(&file, url),
+                Ok(file) => {
+                    let is_encrypted = Pdf::is_pdf_encrypted(&format!("downloads/{}", &file));
+                    SuccessAlerts::download(&file, url, is_encrypted)
+                },
                 Err(e) => ErrorsAlerts::download(e, url),
             }
         }

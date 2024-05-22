@@ -16,9 +16,17 @@ impl FileRemote {
             .unwrap_or(0)
     }
 
-    pub async fn content(url: &str) -> Result<String, Box<dyn Error>> {
+    pub async fn content(url: &str, bytes: bool) -> Result<String, Box<dyn Error>> {
+        let content: String;
         let response = reqwest::get(url).await?;
-        let content = response.text().await?;
+
+        if bytes {
+            let bytes = response.bytes().await?;
+            content = String::from_utf8_lossy(&bytes).to_string();
+        } else {
+            content = response.text().await?;
+        }
+
         Ok(content)
     }
 

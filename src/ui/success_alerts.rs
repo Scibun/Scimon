@@ -16,12 +16,22 @@ impl SuccessAlerts {
         println!("[{}] -> Downloaded env file", current_datetime.blue());
     }
 
-    pub fn download(file: &str, url: &str) {
+    pub fn download(file: &str, url: &str, password: bool) {
+        let mut encrypted_emoji = "";
+
         let domain = UrlMisc::get_domain(url);
         let current_datetime = System::date_time();
     
+        if password {
+            encrypted_emoji = "🔒";
+        }
+    
         println!(
-            "[{}] -> Downloaded file name: {} (from: {})", current_datetime.green(), file.blue(), domain.cyan(),
+            "[{}] -> Downloaded file name: {} (from: {}) {}", 
+            current_datetime.green(), 
+            file.blue(), 
+            domain.cyan(), 
+            encrypted_emoji
         );
     }
   
