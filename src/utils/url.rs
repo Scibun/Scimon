@@ -45,16 +45,6 @@ impl UrlMisc {
         }
     }
 
-    pub fn open_url(url: &str, extract_url: bool) {
-        let open_url = if extract_url {
-            Self::extract_url(url)
-        } else {
-            url.to_string()
-        };
-
-        let _ = webbrowser::open(&open_url);
-    }
-
     pub fn check_domain(url: &str, domain: &str) -> bool {
         url.contains(domain)
     }

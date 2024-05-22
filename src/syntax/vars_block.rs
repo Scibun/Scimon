@@ -1,9 +1,8 @@
+extern crate open;
+
 use regex::Regex;
 
-use crate::{
-    utils::url::UrlMisc,
-    regexp::regex_blocks::BlocksRegExp
-};
+use crate::regexp::regex_blocks::BlocksRegExp;
 
 pub struct VarsBlock;
 
@@ -27,7 +26,7 @@ impl VarsBlock {
             let link = caps.get(1).map(|m| m.as_str().to_string());
             
             if let Some(url) = link.clone() {
-                UrlMisc::open_url(&url, false);
+                let _ = open::that(&url);
             }
             
             link

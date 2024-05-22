@@ -1,3 +1,5 @@
+extern crate open;
+
 use regex::Regex;
 
 use std::{
@@ -114,7 +116,7 @@ impl ReadMeBlock {
                 "file://{}", full_path
             );
 
-            UrlMisc::open_url(&url_file, false);
+            let _ = open::that(&url_file);
         }
     }
 
