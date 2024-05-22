@@ -22,25 +22,6 @@ impl FileRemote {
         Ok(content)
     }
 
-    pub async fn is_pdf_file(url: &str) -> Result<bool, Box<dyn Error>> {
-        let client: reqwest::Client = reqwest::Client::new();
-        let response = client.get(url).send().await?;
-
-        if !response.status().is_success() {
-            return Ok(false);
-        }
-
-        if let Some(content_type) = response.headers().get(reqwest::header::CONTENT_TYPE) {
-            if let Ok(content_type_str) = content_type.to_str() {
-                if content_type_str == "application/pdf" {
-                    return Ok(true);
-                }
-            }
-        }
-    
-        Ok(false)
-    }
-
     pub async fn get_file_size(url: &str) -> Result<u64, Box<dyn Error>> {
         let response = reqwest::get(url).await?;
     

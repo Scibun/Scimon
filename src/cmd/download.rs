@@ -1,37 +1,21 @@
-use reqwest;
 use is_url::is_url;
-use indicatif::ProgressBar;
 
 use std::{
-    fs::File,
     borrow::Cow,
     error::Error,
-
-    io::{
-        Read,
-        Write,
-        Cursor,
-    }
 };
 
 use crate::{
     syntax::macros::Macros,
-    prime_down::pd_core::PrimeDown,
 
     ui::{
-        ui_base::UI,
         errors_alerts::ErrorsAlerts,
         success_alerts::SuccessAlerts,
     },
-    
-    utils::{
-        url::UrlMisc,
-        file::FileMisc,
-        remote::FileRemote,
-        validation::Validate,
-    },
 
     system::{
+        pdf::Pdf,
+        markdown::Markdown,
         reporting::Reporting,
         providers::Providers,
     },
@@ -42,53 +26,7 @@ pub struct Download;
 
 impl Download {
 
-    async fn make(url: &str, path: &str) -> Result<String, Box<dyn Error>> {
-        UrlMisc::check_url_status(url).await?;
-
-        let (request_uri, filename) = Providers::get_from_provider(url).await?;
-        let response = reqwest::get(&request_uri).await?;
-        let total_size = FileRemote::get_file_size(&request_uri).await?;
-    
-        let pb = ProgressBar::new(total_size);
-        pb.set_style(UI::pb_template());
-
-        pb.set_prefix("Downloading");
-    
-        let output_path = FileMisc::get_output_path(path, &filename);
-        let mut dest = File::create(&output_path)?;
-        let content = response.bytes().await?;
-        let mut reader = Cursor::new(content);
-
-        let _ = Validate::file_type(&filename, ".pdf");
-    
-        let mut buffer = [0; 8192];
-        while let Ok(size) = reader.read(&mut buffer) {
-            if size == 0 { break; }
-            
-            dest.write_all(&buffer[..size])?;
-            pb.inc(size as u64);
-        }
-    
-        pb.finish_with_message("Download completed!");
-        Ok(filename)
-    }    
-
-    async fn markdown(url: &str, path: &str) -> Result<(), Box<dyn Error>> {
-        if FileRemote::check_content_type(&url, "text/markdown").await? || url.contains(".md") {
-            let html_content = PrimeDown::render_core(url).await?;
-            
-            let original_name = UrlMisc::get_last_part(url);
-            let new_filename = original_name.replace(".md", ".pdf");
-            let output_path = FileMisc::get_output_path(&path, &new_filename);
-
-            PrimeDown::create_pdf(&html_content, output_path, &url).await?;
-            SuccessAlerts::download_and_generated_pdf(&new_filename, url);
-        }
-
-        Ok(())
-    }
-
-    pub async fn pdf(url: &str, path: &str, no_ignore: bool) -> Result<(), Box<dyn Error>> {
+    pub async fn file(url: &str, path: &str, no_ignore: bool) -> Result<(), Box<dyn Error>> {
         let mut line_url: Cow<str> = Cow::Borrowed(
             url.trim()
         );
@@ -104,10 +42,10 @@ impl Download {
             Err(_) => return Ok(()),
         }
 
-        Self::markdown(&line_url, &path).await?;
+        Markdown::create(&line_url, &path).await?;
 
-        if FileRemote::is_pdf_file(&line_url).await? || Providers::check_provider_domain(url) && !line_url.contains(".md") {
-            let result = Self::make(&line_url, path).await;
+        if Pdf::is_pdf_file(&line_url).await? || Providers::check_provider_domain(url) && !line_url.contains(".md") {
+            let result = Pdf::download(&line_url, path).await;
             
             match result {
                 Ok(file) => SuccessAlerts::download(&file, url),
