@@ -58,7 +58,7 @@ impl DownloadsBlock {
 
                 if !Macros::handle_check_macro_line(&line, "ignore") {
                     if !final_url.is_empty() && is_url(&final_url) && final_url.starts_with("http") {
-                        Download::file(
+                        Download::pdf(
                             &url,
                             &path,
                             no_ignore

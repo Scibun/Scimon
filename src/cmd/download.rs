@@ -26,7 +26,7 @@ pub struct Download;
 
 impl Download {
 
-    pub async fn file(url: &str, path: &str, no_ignore: bool) -> Result<(), Box<dyn Error>> {
+    pub async fn pdf(url: &str, path: &str, no_ignore: bool) -> Result<(), Box<dyn Error>> {
         let mut line_url: Cow<str> = Cow::Borrowed(
             url.trim()
         );

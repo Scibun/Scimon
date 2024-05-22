@@ -108,7 +108,7 @@ impl Ravenlib {
                     let url = line_result?;
                     let _ = fs::create_dir(&path);
 
-                    Download::file(
+                    Download::pdf(
                         &url, 
                         &path,
                         no_ignore,

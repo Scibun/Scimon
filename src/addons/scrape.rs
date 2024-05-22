@@ -62,7 +62,7 @@ impl Scrape {
                                         let path = "./";
                                         let url = &item.url;
 
-                                        Download::file(
+                                        Download::pdf(
                                             url,
                                             path,
                                             no_ignore,
