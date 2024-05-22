@@ -10,10 +10,7 @@ window.onload = e => {
     ScrollTo.checkScroll();
     window.addEventListener('scroll', ScrollTo.checkScroll);
 
-    window.addEventListener("click", event => {
-        BibTex.autoHideClickOffset(event);
-        Licenses.autoHideClickOffset(event);
-    });
+    window.addEventListener("click", event => { BibTex.autoHideClickOffset(event); });
 
     document.getElementById(BibTex.code).addEventListener('click', BibTex.copy);
 

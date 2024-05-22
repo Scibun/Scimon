@@ -2,7 +2,7 @@ const Licenses = ( e => {
 
     let classActivedElementRoot = 'actived';
     let nameElementRoot = Elements.licensesBox;
-    let headerScrollToBtn = Elements.toggleLicensesBox;
+    let headerLicensesToBtn = Elements.toggleLicensesBox;
 
     let keywords = [
         'GPL', 
@@ -48,15 +48,15 @@ const Licenses = ( e => {
                 document.getElementById(nameElementRoot).appendChild(a);
             });
 
-            document.getElementById(headerScrollToBtn).style.display = 'inline';
+            document.getElementById(headerLicensesToBtn).style.display = 'inline';
         } else {
-            document.getElementById(headerScrollToBtn).style.display = 'none';
+            document.getElementById(headerLicensesToBtn).style.display = 'none';
         }
     };
 
     let forceHideBox = e => {
         let element = document.getElementById(nameElementRoot);
-        let elementBtn = document.getElementById(headerScrollToBtn);
+        let elementBtn = document.getElementById(headerLicensesToBtn);
 
         element.style.display = 'none';
         elementBtn.classList.remove(classActivedElementRoot);
@@ -86,37 +86,23 @@ const Licenses = ( e => {
 
     let toggleLicensesBox = e => {
         let element = document.getElementById(nameElementRoot);
-        let elementBtn = document.getElementById(headerScrollToBtn);
+        let elementBtn = document.getElementById(headerLicensesToBtn);
 
         Animate.effect(element, 'animate__slideInDown');
 
-        setTimeout( e => {
-            if (element.style.display == 'block') {
-                element.style.display = 'none';
-                elementBtn.classList.remove(classActivedElementRoot);
-            } else {
-                element.style.display = 'block';
-                elementBtn.classList.add(classActivedElementRoot);
-            }
-        }, 100)
-    };
-
-    let autoHideClickOffset = event => {
-        if (event.target != document.getElementById(nameElementRoot)) {
-            forceHideBox();
-        }
+        elementBtn.classList.toggle(classActivedElementRoot);
+        element.style.display = (element.style.display == 'block') ? 'none' : 'block';
     };
     
     return {
         element: nameElementRoot,
-        toggleBtn: headerScrollToBtn,
+        toggleBtn: headerLicensesToBtn,
 
         list: () => { return list(); },
         init: () => { return init(); },
         forceHideBox: () => { return forceHideBox(); },
         formatBibText: (text) => {return formatBibText(text); },
         toggleLicensesBox: () => { return toggleLicensesBox(); },
-        autoHideClickOffset: (event) => { return autoHideClickOffset(event); },
     };
 
 })();
