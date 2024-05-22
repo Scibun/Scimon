@@ -49,9 +49,12 @@ impl Download {
             
             match result {
                 Ok(file) => {
-                    let is_encrypted = Pdf::is_pdf_encrypted(&format!("{}{}", &path, &file));
+                    let file_path = &format!("{}{}", &path, &file);
+                    let is_encrypted = Pdf::is_pdf_encrypted(&file_path);
+                    
                     SuccessAlerts::download(&file, url, is_encrypted)
                 },
+
                 Err(e) => ErrorsAlerts::download(e, url),
             }
         }
