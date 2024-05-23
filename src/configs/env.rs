@@ -1,10 +1,11 @@
+extern crate open;
+
 use serde_yaml::Value::String as SerdeValue;
 
 use std::{
     env,
     sync::Once,
     path::PathBuf,
-    process::Command,
     io::Error as IoError,
 };
 
@@ -36,11 +37,7 @@ impl Env {
         if let SerdeValue(editor) = &Settings::get(
             "general.default_text_editor", "STRING"
         ) {
-            Command::new(
-                editor
-            ).arg(
-                env_path
-            ).spawn()?;
+            open::with(env_path, editor)?;
         }
         
         Ok(())

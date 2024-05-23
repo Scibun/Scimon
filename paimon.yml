@@ -1,5 +1,5 @@
 general:
-  default_text_editor: 'notepad.exe' # String (default: 'notepad.exe')
+  default_text_editor: 'notepad' # String (default: 'notepad')
 
 ui:
   show_header: true # Boolean (valid values: 'true' or 'false'; default: 'true')

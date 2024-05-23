@@ -4,7 +4,6 @@ use std::{
     fs::File,
     error::Error,
     path::PathBuf,
-    process::Command,
 
     io::{
         Read,
@@ -85,11 +84,7 @@ impl Settings {
         if let SerdeValue(editor) = &Settings::get(
             "general.default_text_editor", "STRING"
         ) {
-            Command::new(
-                editor
-            ).arg(
-                env_path
-            ).spawn()?;
+            open::with(env_path, editor)?;
         }
         
         Ok(())
