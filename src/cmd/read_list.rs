@@ -12,6 +12,7 @@ use std::{
 };
 
 use crate::{
+    args_cli::Flags,
     utils::validation::Validate,
     ui::errors_alerts::ErrorsAlerts,
     syntax::downloads_block::DownloadsBlock,
@@ -23,11 +24,7 @@ impl ReadList {
    
     pub async fn read_dataset(
         run: &str,
-        no_ignore: bool,
-        no_comments: bool,
-        no_open_link: bool,
-        no_checksum: bool,
-        no_readme: bool,
+        flags: &Flags,
         checksum_file_name: &str
     ) -> Result<(), Box<dyn Error>> {
         let reader: BufReader<Box<dyn Read>>;
@@ -48,19 +45,12 @@ impl ReadList {
             });
             
             let file = File::open(run)?;
-
             reader = BufReader::new(Box::new(file) as Box<dyn Read>);
         }
 
         DownloadsBlock::read_lines(
             reader,
-
-            no_ignore,
-            no_comments,
-            no_open_link,
-            no_checksum,
-            no_readme,
-            
+            flags,
             checksum_file_name,
         ).await?;
 

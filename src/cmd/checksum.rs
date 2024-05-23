@@ -26,7 +26,7 @@ pub struct Checksum;
 
 impl Checksum {
 
-    pub fn calculate_local_sha256(file_path: &str) -> Result<String, Box<dyn std::error::Error>> {
+    fn calculate_local_sha256(file_path: &str) -> Result<String, Box<dyn Error>> {
         let mut file = File::open(file_path)?;
         let mut hasher = Sha256::new();
 

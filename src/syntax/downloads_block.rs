@@ -6,18 +6,19 @@ use std::{
 };
 
 use crate::{
-    system::providers::Providers,
+    args_cli::Flags,
+    system::providers::Providers, 
     ui::macros_alerts::MacrosAlerts,
-
+    
     cmd::{
         checksum::Checksum,
         download::Download,
-    },
-
+    }, 
+    
     syntax::{
-        macros::Macros,
+        macros::Macros, 
         vars_block::VarsBlock,
-        readme_block::ReadMeBlock,
+        readme_block::ReadMeBlock, 
     },
 };
 
@@ -27,12 +28,8 @@ impl DownloadsBlock {
 
     pub async fn read_lines<R>(
         reader: R, 
-        no_ignore: bool, 
-        no_comments: bool,
-        no_open_link: bool,
-        no_checksum: bool,
-        no_readme: bool,
-        checksum_file: &str,
+        flags: &Flags,
+        checksum_file: &str
     ) -> Result<(), Box<dyn Error>> where R: BufRead {
         let mut links = Vec::new();
         
@@ -60,7 +57,7 @@ impl DownloadsBlock {
                     break;
                 }
 
-                if !no_comments && line.contains("!debug") {
+                if !flags.no_comments && line.contains("!debug") {
                     MacrosAlerts::comments(line);
                 }
 
@@ -70,26 +67,26 @@ impl DownloadsBlock {
                             &url,
                             &path,
 
-                            no_ignore,
+                            flags.no_ignore,
                         ).await?;
 
                         let url_no_macros = Macros::remove_macros(&final_url);
                         links.push(url_no_macros.to_string());
                     }
                 } else {
-                    Macros::handle_ignore_macro_flag(&final_url, no_ignore)?;
+                    Macros::handle_ignore_macro_flag(&final_url, flags.no_ignore)?;
                 }
             }
 
-            if !no_open_link {
+            if !flags.no_open_link {
                 VarsBlock::get_open(&contents).await;
             }
 
-            if !no_readme {
-                ReadMeBlock::render_var_and_save_file(&contents, no_open_link).await?;
+            if !flags.no_readme {
+                ReadMeBlock::render_var_and_save_file(&contents, flags.no_open_link).await?;
             }
 
-            if !no_checksum {
+            if !flags.no_checksum {
                 Checksum::generate_hashes(&path, checksum_file).await?;
             }
         } else {
