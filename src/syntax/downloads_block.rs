@@ -6,17 +6,20 @@ use std::{
 };
 
 use crate::{
-    cmd::download::Download,
     system::providers::Providers,
     ui::macros_alerts::MacrosAlerts,
+
+    cmd::{
+        checksum::Checksum,
+        download::Download,
+    },
 
     syntax::{
         macros::Macros,
         vars_block::VarsBlock,
+        readme_block::ReadMeBlock,
     },
 };
-
-use super::readme_block::ReadMeBlock;
 
 pub struct DownloadsBlock;
 
@@ -26,8 +29,11 @@ impl DownloadsBlock {
         reader: R, 
         no_ignore: bool, 
         no_comments: bool,
-        no_open_link: bool
+        no_open_link: bool,
+        checksum_file: &str,
     ) -> Result<(), Box<dyn Error>> where R: BufRead {
+        let mut links = Vec::new();
+        
         let contents = reader.lines().collect::<Result<Vec<_>, _>>()?.join("\n");
         let path = VarsBlock::get_path(&contents);
 
@@ -58,11 +64,14 @@ impl DownloadsBlock {
 
                 if !Macros::handle_check_macro_line(&line, "ignore") {
                     if !final_url.is_empty() && is_url(&final_url) && final_url.starts_with("http") {
-                        Download::pdf(
+                        Download::file(
                             &url,
                             &path,
-                            no_ignore
+                            no_ignore,
                         ).await?;
+
+                        let url_no_macros = Macros::remove_macros(&final_url);
+                        links.push(url_no_macros.to_string());
                     }
                 } else {
                     Macros::handle_ignore_macro_flag(&final_url, no_ignore)?;
@@ -74,6 +83,8 @@ impl DownloadsBlock {
             }
 
             let _ = ReadMeBlock::render_var_and_save_file(&contents, no_open_link).await;
+
+            Checksum::generate_hashes(&path, checksum_file).await?;
         } else {
             eprintln!("'downloads' block not found in file.");
         }

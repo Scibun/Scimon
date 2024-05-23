@@ -86,4 +86,20 @@ impl FileMisc {
         Ok(final_filename)
     }
 
+    pub fn replace_extension(file_name: &str, new_extension: &str) -> String {
+        let mut path = PathBuf::from(file_name);
+
+        if let Some(name) = path.file_name() {
+            if let Some(name_str) = name.to_str() {
+                if let Some(_) = name_str.rfind('.') {
+                    path.set_extension(new_extension);
+                    return path.to_string_lossy().to_string();
+                }
+            }
+        }
+        
+        path.set_extension(new_extension);
+        path.to_string_lossy().to_string()
+    }
+
 }

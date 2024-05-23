@@ -30,6 +30,19 @@ impl MacrosAlerts {
         println!("-----------------------------");
     }
 
+    pub fn checksum(file: &str) {
+        let readme_word = "CHECKSUM";
+        let current_datetime = System::date_time();
+
+        println!("---------- {} -----------", readme_word.yellow());
+
+        println!(
+            "[{}] Hashes file created with successfully ({})", current_datetime.blue(), file.cyan()
+        );
+
+        println!("-----------------------------");
+    }
+
     pub fn comments(line: &str) {
         let comment_word = "Comment";
         let current_datetime = System::date_time();

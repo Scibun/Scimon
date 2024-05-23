@@ -26,6 +26,7 @@ impl ReadList {
         no_ignore: bool,
         no_comments: bool,
         no_open_link: bool,
+        checksum_file_name: &str
     ) -> Result<(), Box<dyn Error>> {
         let reader: BufReader<Box<dyn Read>>;
 
@@ -53,7 +54,8 @@ impl ReadList {
             reader,
             no_ignore,
             no_comments,
-            no_open_link
+            no_open_link,
+            checksum_file_name,
         ).await?;
 
         Ok(())
