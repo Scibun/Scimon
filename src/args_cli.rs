@@ -20,6 +20,10 @@ pub struct Flags {
     pub no_ignore: bool,
 
     #[arg(long)]
+    /// Disable checksum generator
+    pub no_checksum: bool,
+
+    #[arg(long)]
     /// Disable the comments and !debug macro
     pub no_comments: bool,
 

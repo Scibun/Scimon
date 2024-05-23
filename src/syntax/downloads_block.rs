@@ -30,6 +30,8 @@ impl DownloadsBlock {
         no_ignore: bool, 
         no_comments: bool,
         no_open_link: bool,
+        no_checksum: bool,
+        no_readme: bool,
         checksum_file: &str,
     ) -> Result<(), Box<dyn Error>> where R: BufRead {
         let mut links = Vec::new();
@@ -67,6 +69,7 @@ impl DownloadsBlock {
                         Download::file(
                             &url,
                             &path,
+
                             no_ignore,
                         ).await?;
 
@@ -79,12 +82,16 @@ impl DownloadsBlock {
             }
 
             if !no_open_link {
-                let _ = VarsBlock::get_open(&contents).await;
+                VarsBlock::get_open(&contents).await;
             }
 
-            let _ = ReadMeBlock::render_var_and_save_file(&contents, no_open_link).await;
+            if !no_readme {
+                ReadMeBlock::render_var_and_save_file(&contents, no_open_link).await?;
+            }
 
-            Checksum::generate_hashes(&path, checksum_file).await?;
+            if !no_checksum {
+                Checksum::generate_hashes(&path, checksum_file).await?;
+            }
         } else {
             eprintln!("'downloads' block not found in file.");
         }

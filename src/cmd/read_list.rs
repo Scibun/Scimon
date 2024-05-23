@@ -26,6 +26,8 @@ impl ReadList {
         no_ignore: bool,
         no_comments: bool,
         no_open_link: bool,
+        no_checksum: bool,
+        no_readme: bool,
         checksum_file_name: &str
     ) -> Result<(), Box<dyn Error>> {
         let reader: BufReader<Box<dyn Read>>;
@@ -52,9 +54,13 @@ impl ReadList {
 
         DownloadsBlock::read_lines(
             reader,
+
             no_ignore,
             no_comments,
             no_open_link,
+            no_checksum,
+            no_readme,
+            
             checksum_file_name,
         ).await?;
 
