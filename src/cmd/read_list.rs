@@ -12,10 +12,10 @@ use std::{
 };
 
 use crate::{
-    args_cli::Flags,
+    args_cli::Flags, 
     utils::validation::Validate,
     ui::errors_alerts::ErrorsAlerts,
-    syntax::downloads_block::DownloadsBlock,
+    syntax::downloads_block::DownloadsBlock, 
 };
 
 pub struct ReadList;

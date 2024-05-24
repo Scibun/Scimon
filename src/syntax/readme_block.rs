@@ -78,22 +78,24 @@ impl ReadMeBlock {
         }
     }
 
-    pub async fn render_var_and_save_file(contents: &str, no_open_link: bool) -> Result<(), Box<dyn Error>> {
-        if let Some(url) = VarsBlock::get_readme(contents).await {
-            let get_last_part = &UrlMisc::get_last_part(&url);
-
-            let path = Markdown::get_filename_rendered(
-                &get_last_part.replace(".md", ".html")
-            );
-
-            let markdown_content = FileRemote::content(&url, false).await?;
-            let contents_extras = Markdown::append_extras_and_render(&markdown_content);
-            let contents = PrimeDown::render_content(&get_last_part, contents_extras);
-        
-            FileMisc::write_file(&path, contents);
-            Markdown::open_file(&path, no_open_link);
+    pub async fn render_var_and_save_file(contents: &str, no_open_link: bool, no_readme: bool) -> Result<(), Box<dyn Error>> {
+        if !no_readme {
+            if let Some(url) = VarsBlock::get_readme(contents).await {
+                let get_last_part = &UrlMisc::get_last_part(&url);
+    
+                let path = Markdown::get_filename_rendered(
+                    &get_last_part.replace(".md", ".html")
+                );
+    
+                let markdown_content = FileRemote::content(&url, false).await?;
+                let contents_extras = Markdown::append_extras_and_render(&markdown_content);
+                let contents = PrimeDown::render_content(&get_last_part, contents_extras);
             
-            MacrosAlerts::readme(&path);
+                FileMisc::write_file(&path, contents);
+                Markdown::open_file(&path, no_open_link);
+                
+                MacrosAlerts::readme(&path);
+            }
         }
     
         Ok(())

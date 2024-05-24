@@ -29,7 +29,12 @@ impl UI {
             }
         }
     }
- 
+    
+    pub fn section_header(text: &str) {
+        let text = text.to_uppercase();
+        println!("---------- {} -----------", text.yellow());
+    }
+
     pub fn pb_template() -> ProgressStyle {
         ProgressStyle::with_template(Global::PB_STYLE).unwrap().progress_chars("█░")
     }

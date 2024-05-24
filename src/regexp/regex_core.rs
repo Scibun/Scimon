@@ -8,4 +8,6 @@ impl CoreRegExp {
     pub const RENDER_EXTRA_GIST: &'static str = r#"\[!paimon gist data=['"](.*?)['"]\]"#;
     pub const RENDER_EXTRA_QRCODE: &'static str = r#"\[!paimon qrcode data=['"](.*?)['"], size=(\d+)\]"#;
 
+    pub const GET_CHECKSUM: &'static str = r"(?i)\b([a-f0-9]{64})\b\s+(.+)";
+
 }

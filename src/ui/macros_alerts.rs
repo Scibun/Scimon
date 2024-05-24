@@ -2,7 +2,10 @@ extern crate colored;
 
 use colored::*;
 
-use crate::system::system::System;
+use crate::{
+    ui::ui_base::UI,
+    system::system::System,
+};
 
 pub struct MacrosAlerts;
 
@@ -18,10 +21,9 @@ impl MacrosAlerts {
     }
 
     pub fn readme(file: &str) {
-        let readme_word = "README";
         let current_datetime = System::date_time();
 
-        println!("---------- {} -----------", readme_word.yellow());
+        UI::section_header("readme");
 
         println!(
             "[{}] README file rendered with successfully ({})", current_datetime.blue(), file.cyan()
@@ -30,25 +32,11 @@ impl MacrosAlerts {
         println!("-----------------------------");
     }
 
-    pub fn checksum(file: &str) {
-        let readme_word = "CHECKSUM";
-        let current_datetime = System::date_time();
-
-        println!("---------- {} -----------", readme_word.yellow());
-
-        println!(
-            "[{}] Hashes file created with successfully ({})", current_datetime.blue(), file.cyan()
-        );
-
-        println!("-----------------------------");
-    }
-
     pub fn comments(line: &str) {
-        let comment_word = "Comment";
         let current_datetime = System::date_time();
         let line_without_macros = line.replace("!debug", "");
 
-        println!("---------- {} ----------", comment_word.yellow());
+        UI::section_header("comment");
 
         println!(
             "[{}] {}", current_datetime.blue(), line_without_macros.yellow()

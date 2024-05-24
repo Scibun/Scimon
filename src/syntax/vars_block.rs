@@ -45,4 +45,14 @@ impl VarsBlock {
         }
     }
 
+    pub async fn get_checksum(contents: &str) -> Option<String> {
+        let readme_pattern = Regex::new(BlocksRegExp::GET_CHECKSUM_VAR).unwrap();
+    
+        if let Some(caps) = readme_pattern.captures(&contents) {
+            caps.get(1).map(|m| m.as_str().to_string())
+        } else {
+            None
+        }
+    }
+
 }
