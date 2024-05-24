@@ -78,8 +78,6 @@ impl Pdf {
     
         let pb = ProgressBar::new(total_size);
         pb.set_style(UI::pb_template());
-
-        pb.set_prefix("Downloading");
     
         let output_path = FileMisc::get_output_path(path, &filename);
         let mut dest = File::create(&output_path)?;
@@ -96,7 +94,6 @@ impl Pdf {
             pb.inc(size as u64);
         }
     
-        pb.finish_with_message("Download completed!");
         Ok(filename)
     }
 

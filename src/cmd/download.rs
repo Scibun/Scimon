@@ -22,6 +22,8 @@ use crate::{
 
 };
 
+use super::checksum::Checksum;
+
 pub struct Download;
 
 impl Download {
@@ -50,9 +52,10 @@ impl Download {
             match result {
                 Ok(file) => {
                     let file_path = &format!("{}{}", &path, &file);
-                    let is_encrypted = Pdf::is_pdf_encrypted(&file_path);
+                    let password = Pdf::is_pdf_encrypted(&file_path);
+                    let hash = Checksum::calculate_local_sha256(file_path)?;
                     
-                    SuccessAlerts::download(&file, url, is_encrypted)
+                    SuccessAlerts::download(&file, url, password, &hash)
                 },
 
                 Err(e) => ErrorsAlerts::download(e, url),

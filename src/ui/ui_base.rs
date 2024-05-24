@@ -23,7 +23,7 @@ impl UI {
                 println!("{}", title.to_string().blue());
                 println!("-------------------------------------------------------------------");
                 println!("📜 Version: {}", Global::APP_VERSION.yellow());
-                println!("🏠 Homepage: {} | {}", Global::APP_HOMEPAGE.blue(), Global::APP_AUTHOR.green());
+                println!("🏠 Homepage: {} • {}", Global::APP_HOMEPAGE.blue(), Global::APP_AUTHOR.green());
                 println!("⏰ Started in: {}", System::date_time().blue());
                 println!("-------------------------------------------------------------------");
             }

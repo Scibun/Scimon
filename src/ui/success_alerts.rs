@@ -3,8 +3,8 @@ extern crate colored;
 use colored::*;
 
 use crate::{
-    utils::url::UrlMisc,
     system::system::System,
+    utils::domains::Domains,
 };
 
 pub struct SuccessAlerts;
@@ -16,10 +16,10 @@ impl SuccessAlerts {
         println!("[{}] -> Downloaded env file", current_datetime.blue());
     }
 
-    pub fn download(file: &str, url: &str, password: bool) {
+    pub fn download(file: &str, url: &str, password: bool, hash: &str) {
         let mut encrypted_emoji = "";
 
-        let domain = UrlMisc::get_domain(url);
+        let domain = Domains::get(url);
         let current_datetime = System::date_time();
     
         if password {
@@ -27,20 +27,25 @@ impl SuccessAlerts {
         }
     
         println!(
-            "[{}] -> Downloaded file name: {} (from: {}) {}", 
+            "[{}] -> Downloaded: {} (from: {} • sha256: {}) {}", 
             current_datetime.green(), 
             file.blue(), 
             domain.cyan(), 
+            hash.yellow(),
             encrypted_emoji
         );
     }
   
-    pub fn download_and_generated_pdf(file: &str, url: &str) {
-        let domain = UrlMisc::get_domain(url);
+    pub fn download_and_generated_pdf(file: &str, url: &str, hash: &str) {
+        let domain = Domains::get(url);
         let current_datetime = System::date_time();
     
         println!(
-            "[{}] -> Downloaded and generated pdf: {} (from: {})", current_datetime.green(), file.blue(), domain.cyan(),
+            "[{}] -> Downloaded and generated pdf: {} (from: {} • sha256: {})", 
+            current_datetime.green(), 
+            file.blue(), 
+            domain.cyan(),
+            hash.yellow()
         );
     }
 

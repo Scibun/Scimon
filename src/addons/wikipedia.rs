@@ -1,6 +1,10 @@
 use crate::{
     consts::uris::Uris,
-    utils::url::UrlMisc,
+    
+    utils::{
+        url::UrlMisc,
+        domains::Domains,
+    },
 };
 
 pub struct Wikipedia;
@@ -9,7 +13,7 @@ impl Wikipedia {
 
     pub fn wikipedia(url: &str) -> (String, String) {
         let wiki_name = UrlMisc::get_last_part(url);
-        let wikipedia_region = format!("{}.", UrlMisc::get_subdomain(url));
+        let wikipedia_region = format!("{}.", Domains::subdomain(url));
 
         let request_url = format!("{}{}", Uris::WIKIPEDIA_API_REQUEST_PDF.to_string().replace(
             "en.", &wikipedia_region
@@ -22,7 +26,7 @@ impl Wikipedia {
 
     pub fn wikisource(url: &str) -> (String, String) {
         let wiki_name = UrlMisc::get_last_part(url);
-        let wikipedia_region = format!("{}.", UrlMisc::get_subdomain(url));
+        let wikipedia_region = format!("{}.", Domains::get(url));
 
         let request_url = format!("{}{}", Uris::WIKISOURCE_API_REQUEST_PDF.to_string().replace(
             "en.", &wikipedia_region

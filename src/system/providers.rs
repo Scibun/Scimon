@@ -6,6 +6,7 @@ use crate::{
     
     utils::{
         url::UrlMisc,
+        domains::Domains,
         remote::FileRemote,
     },
 };
@@ -29,7 +30,7 @@ impl Providers {
     pub fn arxiv(url: &str) -> String {
         let escape_quotes = UrlMisc::escape_quotes(url);
 
-        if !UrlMisc::check_domain(&escape_quotes, Uris::PROVIDERS_DOMAINS[1]) {
+        if !Domains::check(&escape_quotes, Uris::PROVIDERS_DOMAINS[1]) {
             escape_quotes.to_owned()
         } else {
             escape_quotes.replace("/abs/", "/pdf/")
@@ -39,9 +40,9 @@ impl Providers {
     pub fn github(url: &str) -> String {
         let escape_quotes = UrlMisc::escape_quotes(url);
 
-        if !UrlMisc::check_domain(&escape_quotes, Uris::PROVIDERS_DOMAINS[2]) {
+        if !Domains::check(&escape_quotes, Uris::PROVIDERS_DOMAINS[2]) {
             escape_quotes.to_owned()
-        } else if !UrlMisc::check_domain(&escape_quotes, Uris::PROVIDERS_DOMAINS[3]) {
+        } else if !Domains::check(&escape_quotes, Uris::PROVIDERS_DOMAINS[3]) {
             escape_quotes.to_owned()
         } else {
             escape_quotes.replace("/blob/", "/raw/")
@@ -57,7 +58,7 @@ impl Providers {
         let mut valid_domain = false;
 
         for domain in &Uris::PROVIDERS_DOMAINS {
-            if UrlMisc::check_domain(url, domain) {
+            if Domains::check(url, domain) {
                 valid_domain = true
             }
         }
@@ -88,11 +89,11 @@ impl Providers {
         let filename;
         let request_uri;
 
-        if UrlMisc::check_domain(url, Uris::PROVIDERS_DOMAINS[0]) {
+        if Domains::check(url, Uris::PROVIDERS_DOMAINS[0]) {
             (request_uri, filename) = Wikipedia::wikipedia(url);
-        } else if UrlMisc::check_domain(url, Uris::PROVIDERS_DOMAINS[4]) {
+        } else if Domains::check(url, Uris::PROVIDERS_DOMAINS[4]) {
             (request_uri, filename) = Wikipedia::wikisource(url);
-        } else if UrlMisc::check_domain(url, Uris::PROVIDERS_DOMAINS[1]) {
+        } else if Domains::check(url, Uris::PROVIDERS_DOMAINS[1]) {
             (request_uri, filename) = Self::scihub(url).await?;
         } else {
             (request_uri, filename) = Self::generic(url).await?;
