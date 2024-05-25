@@ -3,6 +3,7 @@ extern crate colored;
 use colored::*;
 
 use crate::{
+    ui::emojis::Emojis,
     system::system::System,
     utils::domains::Domains,
 };
@@ -23,7 +24,7 @@ impl SuccessAlerts {
         let current_datetime = System::date_time();
     
         if password {
-            encrypted_emoji = "🔒";
+            encrypted_emoji = Emojis::LOCKED;
         }
     
         println!(

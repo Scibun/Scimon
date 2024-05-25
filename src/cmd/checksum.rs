@@ -145,7 +145,7 @@ impl Checksum {
     
                 if local_total_lines != remote_total_lines {
                     line_has_errors = true;
-                    ChecksumAlerts::line_count_is_different(local_total_lines, remote_total_lines);
+                    ChecksumAlerts::lines_total_is_different(local_total_lines, remote_total_lines);
                 }
             
                 for (_, (local, remote)) in local_lines.iter().zip(remote_lines.iter()).enumerate() {

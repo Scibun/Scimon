@@ -3,9 +3,13 @@ extern crate colored;
 use colored::*;
 
 use crate::{
-    ui::ui_base::UI,
     system::system::System,
     cmd::checksum::Checksum,
+    
+    ui::{
+        ui_base::UI,
+        emojis::Emojis,
+    },
 };
 
 pub struct ChecksumAlerts;
@@ -27,10 +31,11 @@ impl ChecksumAlerts {
             let current_datetime = System::date_time();
 
             println!(
-                "[{}] -> The hash {} of {} is match. ✅", 
+                "[{}] -> The hash {} of {} is match. {}", 
                 current_datetime.green(), 
                 hash.yellow(), 
                 filename.blue(), 
+                Emojis::CHECKED
             );
         }
     }
@@ -40,10 +45,11 @@ impl ChecksumAlerts {
             let current_datetime = System::date_time();
 
             println!(
-                "[{}] -> The hash {} of {} is not match. ❌", 
+                "[{}] -> The hash {} of {} is not match. {}", 
                 current_datetime.red(), 
                 hash.yellow(), 
                 filename.blue(), 
+                Emojis::ERROR
             );
         }
     }
@@ -55,10 +61,10 @@ impl ChecksumAlerts {
         let current_datetime = System::date_time();
 
         if is_match {
-            emoji = "✅";
+            emoji = Emojis::CHECKED;
             text = "is match".green();
         } else {
-            emoji = "❌";
+            emoji = Emojis::ERROR;
             text = "is not match".red();
         }
 
@@ -72,7 +78,7 @@ impl ChecksumAlerts {
         );
     }
 
-    pub fn line_count_is_different(local_lines: usize, remote_lines: usize) {
+    pub fn lines_total_is_different(local_lines: usize, remote_lines: usize) {
         let current_datetime = System::date_time();
 
         println!("[{}] -> The number of lines in the files is different (Lines: {} (local) of {} (referencies)). ❌",
