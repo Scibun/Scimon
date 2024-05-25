@@ -55,15 +55,15 @@ impl ChecksumAlerts {
         let current_datetime = System::date_time();
 
         if is_match {
+            emoji = "✅";
             text = "is match".green();
-            emoji = ". ✅"
         } else {
-            text = "is match".red();
-            emoji = ". ❌"
+            emoji = "❌";
+            text = "is not match".red();
         }
 
         println!(
-            "[{}] -> The list {} and {} list {}{}", 
+            "[{}] -> The list {} and {} list {}. {}", 
             current_datetime.green(), 
             "local".cyan(),
             "remote".blue(),
