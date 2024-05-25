@@ -59,7 +59,7 @@ impl Checksum {
     }
     
     async fn read_remote_file(url: &str) -> Result<(Vec<String>, usize), Box<dyn Error>> {
-        let body = FileRemote::content(url, false).await?;
+        let body = FileRemote::content(url).await?;
 
         let lines: Vec<String> = body
             .lines()
