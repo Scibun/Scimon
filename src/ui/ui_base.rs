@@ -37,7 +37,7 @@ impl UI {
                 println!("{} Version: {}", Emojis::VERSION, Global::APP_VERSION.yellow());
                 println!("{} Homepage: {} • {}", Emojis::HOME, Global::APP_HOMEPAGE.blue(), Global::APP_AUTHOR.green());
                 println!("{} Started in: {}", Emojis::CLOCK, System::date_time().blue());
-                println!("{}  Render mode:{}", Emojis::TOOLS, render_md_mode);
+                println!("{} Render mode: {}", Emojis::TOOLS, render_md_mode);
                 println!("-------------------------------------------------------------------");
             }
         }

@@ -85,7 +85,7 @@ impl DownloadsBlock {
             ReadMeBlock::render_var_and_save_file(&contents, flags.no_open_link, flags.no_readme).await?;
 
             Checksum::generate_hashes(&path, checksum_file, flags.no_checksum).await?;
-            Checksum::compare_lines(&contents, &path, checksum_file, flags.no_checksum).await?;
+            Checksum::compare_lines(&contents, &path, checksum_file, flags).await?;
         } else {
             eprintln!("'downloads' block not found in file.");
         }

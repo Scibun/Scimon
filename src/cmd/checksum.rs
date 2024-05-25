@@ -22,6 +22,7 @@ use sha2::{
 };
 
 use crate::{
+    args_cli::Flags,
     syntax::vars_block::VarsBlock,
     regexp::regex_core::CoreRegExp,
 
@@ -129,8 +130,8 @@ impl Checksum {
         Ok(())
     }
     
-    pub async fn compare_lines(contents: &str, path: &str, local_file: &str, no_checksum: bool) -> Result<(), Box<dyn Error>> {
-        if !no_checksum {
+    pub async fn compare_lines(contents: &str, path: &str, local_file: &str, flags: &Flags) -> Result<(), Box<dyn Error>> {
+        if !flags.no_checksum && !flags.no_checksum_validate {
             if let Some(url) = VarsBlock::get_checksum(contents).await {
                 let mut line_has_errors = false;
 
