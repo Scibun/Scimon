@@ -1,14 +1,8 @@
 use regex::Regex;
 
 use std::{
+    io::Write,
     error::Error,
-
-    io::{
-        Read,
-        Write,
-        BufRead,
-        BufReader,
-    },
     
     fs::{
         File,
@@ -16,13 +10,10 @@ use std::{
     },
 };
 
-use sha2::{
-    Digest,
-    Sha256,
-};
-
 use crate::{
     args_cli::Flags,
+    utils::file::FileMisc,
+    system::hashes::Hashes,
     syntax::vars_block::VarsBlock,
     regexp::regex_core::CoreRegExp,
 
@@ -30,48 +21,12 @@ use crate::{
         ui_base::UI,
         checksum_alerts::ChecksumAlerts, 
     },
-
-    utils::{
-        file::FileMisc,
-        remote::FileRemote,
-    },
 };
 
 pub struct Checksum;
 
 impl Checksum {
-
-    fn read_local_file(file: &str) -> Result<(Vec<String>, usize), Box<dyn Error>> {
-        let mut lines = Vec::new();
-
-        let file = File::open(file)?;
-        let reader = BufReader::new(file);
-    
-        for line in reader.lines() {
-            let line = line?;
-
-            if !line.trim().is_empty() {
-                lines.push(line);
-            }
-        }
-    
-        let total_lines = &lines.len();
-        Ok((lines, *total_lines))
-    }
-    
-    async fn read_remote_file(url: &str) -> Result<(Vec<String>, usize), Box<dyn Error>> {
-        let body = FileRemote::content(url).await?;
-
-        let lines: Vec<String> = body
-            .lines()
-            .map(|s| s.to_string())
-            .filter(|line| !line.trim().is_empty())
-            .collect();
-
-        let total_lines = &lines.len();
-        Ok((lines, *total_lines))
-    }
-    
+ 
     pub fn extract_hashes_and_filenames(line: &str) -> Result<(String, String), Box<dyn Error>> {
         let re = Regex::new(CoreRegExp::GET_CHECKSUM).unwrap();
         let captures = re.captures(line).ok_or("No match found")?;
@@ -80,24 +35,6 @@ impl Checksum {
         let filename = captures.get(2).unwrap().as_str().to_string();
 
         Ok((hash, filename))
-    }
-
-    pub fn calculate_local_sha256(file_path: &str) -> Result<String, Box<dyn Error>> {
-        let mut file = File::open(file_path)?;
-        let mut hasher = Sha256::new();
-
-        let mut buffer = [0; 1024];
-        
-        loop {
-            let bytes_read = file.read(&mut buffer)?;
-
-            if bytes_read == 0 { break; }
-
-            hasher.update(&buffer[..bytes_read]);
-        }
-    
-        let hash = hasher.finalize();
-        Ok(format!("{:x}", hash))
     }
 
     pub async fn generate_hashes(path: &str, file: &str, no_checksum: bool) -> Result<(), Box<dyn Error>> {
@@ -114,7 +51,7 @@ impl Checksum {
                 let file_path = item.to_string_lossy().to_string();
         
                 if item.is_file() && !file_path.ends_with(".sha256") {
-                    let hash = Self::calculate_local_sha256(&file_path)?;
+                    let hash = Hashes::calculate_local_sha256(&file_path)?;
     
                     writeln!(
                         output_file, "{}  {}", hash, file_path.replace(
@@ -139,8 +76,8 @@ impl Checksum {
                     "{}{}", path, FileMisc::replace_extension(local_file, "sha256")
                 ); 
 
-                let (local_lines, local_total_lines) = Self::read_local_file(&local_hash_file)?;
-                let (remote_lines, remote_total_lines) = Self::read_remote_file(&url).await?;
+                let (local_lines, local_total_lines) = Hashes::read_local_file(&local_hash_file)?;
+                let (remote_lines, remote_total_lines) = Hashes::read_remote_file(&url).await?;
 
                 UI::section_header("checksum validate");
     

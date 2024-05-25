@@ -12,8 +12,6 @@ use pulldown_cmark::{
 };
 
 use crate::{
-    system::pdf::Pdf,
-    cmd::checksum::Checksum,
     configs::settings::Settings,
     ui::success_alerts::SuccessAlerts,
     
@@ -22,6 +20,11 @@ use crate::{
         file::FileMisc,
         generate::Generate,
         remote::FileRemote,
+    },
+
+    system::{
+        pdf::Pdf,
+        hashes::Hashes,
     },
 
     prime_down::{
@@ -98,7 +101,7 @@ impl Markdown {
 
             Pdf::create_pdf(&html_content, output_path, &url).await?;
 
-            let hash = Checksum::calculate_local_sha256(&output_path_str)?;
+            let hash = Hashes::calculate_local_sha256(&output_path_str)?;
             SuccessAlerts::download_and_generated_pdf(&new_filename, url, &hash);
         }
 

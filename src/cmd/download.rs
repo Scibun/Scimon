@@ -15,14 +15,13 @@ use crate::{
 
     system::{
         pdf::Pdf,
+        hashes::Hashes,
         markdown::Markdown,
         reporting::Reporting,
         providers::Providers,
     },
 
 };
-
-use super::checksum::Checksum;
 
 pub struct Download;
 
@@ -53,7 +52,7 @@ impl Download {
                 Ok(file) => {
                     let file_path = &format!("{}{}", &path, &file);
                     let password = Pdf::is_pdf_encrypted(&file_path);
-                    let hash = Checksum::calculate_local_sha256(file_path)?;
+                    let hash = Hashes::calculate_local_sha256(file_path)?;
                     
                     SuccessAlerts::download(&file, url, password, &hash)
                 },
