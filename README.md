@@ -6,13 +6,29 @@ Increase productivity with a Rust-based batch PDF downloader. Fetch multiple PDF
 
 For more help and document, see our documentation:
 
-* [Basic usage](https://github.com/Ravenlib/Paimon/wiki/Basic-usage)
+Build:
+
 * [Build](https://github.com/Ravenlib/Paimon/wiki/Build)
+
+Getting Started:
+
+* [Basic usage](https://github.com/Ravenlib/Paimon/wiki/Basic-usage)
+
+Syntax:
+
 * [Download block](https://github.com/Ravenlib/Paimon/wiki/Download-block)
 * [Macros & Comments](https://github.com/Ravenlib/Paimon/wiki/Macros-&-Comments)
-* [Paimon.yml](https://github.com/Ravenlib/Paimon/wiki/Paimon.yml)
+* [Readme block](https://github.com/Ravenlib/Paimon/wiki/Readme-block)
+
+Addons:
+
 * [Providers](https://github.com/Ravenlib/Paimon/wiki/Providers)
 * [Scrape](https://github.com/Ravenlib/Paimon/wiki/Scrape)
+
+Internal:
+
+* [Paimon.yml](https://github.com/Ravenlib/Paimon/wiki/Paimon.yml)
+* [PrimeDown Engine](https://github.com/Ravenlib/Paimon/wiki/PrimeDown-Engine)
 * [Setting's](https://github.com/Ravenlib/Paimon/wiki/Settings)
 
 Transparency:
