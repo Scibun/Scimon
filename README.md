@@ -13,11 +13,12 @@ Build:
 Getting Started:
 
 * [Basic usage](https://github.com/Ravenlib/Paimon/wiki/Basic-usage)
+* [Flags](https://github.com/Ravenlib/Paimon/wiki/Flags)
 
 Syntax:
 
 * [Download block](https://github.com/Ravenlib/Paimon/wiki/Download-block)
-* [Macros & Comments](https://github.com/Ravenlib/Paimon/wiki/Macros-&-Comments)
+* [Macros &amp; Comments](https://github.com/Ravenlib/Paimon/wiki/Macros-&-Comments)
 * [Readme block](https://github.com/Ravenlib/Paimon/wiki/Readme-block)
 
 Addons:
@@ -29,7 +30,7 @@ Internal:
 
 * [Paimon.yml](https://github.com/Ravenlib/Paimon/wiki/Paimon.yml)
 * [PrimeDown Engine](https://github.com/Ravenlib/Paimon/wiki/PrimeDown-Engine)
-* [Setting's](https://github.com/Ravenlib/Paimon/wiki/Settings)
+* [Setting&#39;s](https://github.com/Ravenlib/Paimon/wiki/Settings)
 
 Transparency:
 

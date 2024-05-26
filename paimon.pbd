@@ -4,11 +4,6 @@ open = "https://github.com/kremilly"
 readme = "https://gist.githubusercontent.com/kremilly/5fd360d994bb0fe108b648d0e4c9e92f/raw/508b038adb977440cc3722b04f9a5fc1ebfcdcb0/readme-examples.md"
 checksum = "https://gist.githubusercontent.com/kremilly/499d6d51d096c1813cea0eade8eb0bc4/raw/d7c5965aeaf005cf0b612e3468ab47c30480083b/paimon.sha256"
 
-covers {
-    enable = true
-    path = "downloads/covers/"
-}
-
 downloads {
     https://arxiv.org/pdf/2405.01513 !ignore
     https://www.scielo.br/j/rdbci/a/fwDKj9FMX7YTRDgkJGG4gnR?format=pdf&lang=pt !ignore
@@ -21,7 +16,3 @@ downloads {
     https://raw.githubusercontent.com/facebook/react/main/README.md !ignore
     https://pt.wikisource.org/wiki/Manifesto_da_Guerrilha_do_Livre_Acesso !ignore
 }
-
-lorem ipsum dolor sit name -> This is a common comment without displayed (use macro debug to show the line)
-
-This is a comment that is displayed with the debug !debug
