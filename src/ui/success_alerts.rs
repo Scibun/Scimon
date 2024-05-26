@@ -28,7 +28,7 @@ impl SuccessAlerts {
         }
     
         println!(
-            "[{}] -> Downloaded: {} (from: {} • sha256: {}) {}", 
+            "[{}] -> Downloaded: {} ({} • {}) {}", 
             current_datetime.green(), 
             file.blue(), 
             domain.cyan(), 
@@ -42,7 +42,7 @@ impl SuccessAlerts {
         let current_datetime = System::date_time();
     
         println!(
-            "[{}] -> Downloaded and generated pdf: {} (from: {} • sha256: {})", 
+            "[{}] -> Downloaded and generated pdf: {} ({} • {})", 
             current_datetime.green(), 
             file.blue(), 
             domain.cyan(),
