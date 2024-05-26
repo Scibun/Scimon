@@ -12,7 +12,7 @@ pub struct Flags {
     pub scrape: bool,
 
     #[arg(short, long)]
-    /// Run a Ravenlib list or execute a specific list
+    /// Run a Paimon list or execute a specific list
     pub run: Option<String>,
 
     #[arg(long)]
