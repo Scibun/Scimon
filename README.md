@@ -1,10 +1,10 @@
 <div align='center'>
-    <img src='https://i.imgur.com/Gc3LvcM.png' height='64'>
+    <img src='https://i.imgur.com/Gc3LvcM.png' height='96'>
 </div>
 
+<p></p>
 
-
-Increase productivity with a Rust-based batch PDF downloader. Fetch multiple PDFs swiftly, improving accessibility and efficiency. Ideal for managing large document collections.
+<div align='center'>Increase productivity with a Rust-based batch PDF downloader. Fetch multiple PDFs swiftly, improving accessibility and efficiency. Ideal for managing large document collections.</div>
 
 ## Documentation
 
