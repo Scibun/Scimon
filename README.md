@@ -1,4 +1,8 @@
-# Paimon
+<div align='center'>
+    <img src='https://i.imgur.com/Gc3LvcM.png' height='64'>
+</div>
+
+
 
 Increase productivity with a Rust-based batch PDF downloader. Fetch multiple PDFs swiftly, improving accessibility and efficiency. Ideal for managing large document collections.
 
