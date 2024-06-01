@@ -54,18 +54,18 @@ impl ChecksumAlerts {
         }
     }
 
-    pub fn check_content(is_match: bool) {
+    pub fn check_content(is_error: bool) {
         let text;
         let emoji;
 
         let current_datetime = System::date_time();
 
-        if is_match {
-            emoji = Emojis::CHECKED;
-            text = "is match".green();
-        } else {
+        if is_error {
             emoji = Emojis::ERROR;
             text = "is not match".red();
+        } else {
+            emoji = Emojis::CHECKED;
+            text = "is match".green();
         }
 
         println!(

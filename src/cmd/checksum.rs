@@ -1,13 +1,9 @@
 use regex::Regex;
 
 use std::{
+    fs::File,
     io::Write,
     error::Error,
-    
-    fs::{
-        File,
-        self,
-    },
 };
 
 use crate::{
@@ -37,28 +33,20 @@ impl Checksum {
         Ok((hash, filename))
     }
 
-    pub async fn generate_hashes(path: &str, file: &str, no_checksum: bool) -> Result<(), Box<dyn Error>> {
+    pub async fn generate_hashes(path: &str, file: &str, refs: Vec<String>, no_checksum: bool) -> Result<(), Box<dyn Error>> {
         if !no_checksum {
             let path_file = format!(
                 "{}{}", path, FileMisc::replace_extension(file, "sha256")
             );
     
             let mut output_file = File::create(&path_file)?;
-    
-            for entry in fs::read_dir(path)? {
-                let entry = entry?;
-                let item = entry.path();
-                let file_path = item.to_string_lossy().to_string();
-        
-                if item.is_file() && !file_path.ends_with(".sha256") {
-                    let hash = Hashes::calculate_local_sha256(&file_path)?;
-    
-                    writeln!(
-                        output_file, "{}  {}", hash, file_path.replace(
-                            path, ""
-                        )
-                    )?;
-                }
+
+            for item in refs {
+                let hash = Hashes::calculate_local_sha256(&item)?;
+
+                writeln!(
+                    output_file, "{}  {}", hash, item.replace(path, "")
+                )?;
             }
     
             ChecksumAlerts::created(&path_file);
@@ -70,7 +58,7 @@ impl Checksum {
     pub async fn compare_lines(contents: &str, path: &str, local_file: &str, flags: &Flags) -> Result<(), Box<dyn Error>> {
         if !flags.no_checksum && !flags.no_checksum_validate {
             if let Some(url) = VarsBlock::get_checksum(contents).await {
-                let mut line_has_errors = false;
+                let mut is_error = false;
 
                 let local_hash_file = format!(
                     "{}{}", path, FileMisc::replace_extension(local_file, "sha256")
@@ -82,25 +70,21 @@ impl Checksum {
                 UI::section_header("checksum validate");
     
                 if local_total_lines != remote_total_lines {
-                    line_has_errors = true;
+                    is_error = true;
                     ChecksumAlerts::lines_total_is_different(local_total_lines, remote_total_lines);
                 }
             
                 for (_, (local, remote)) in local_lines.iter().zip(remote_lines.iter()).enumerate() {
                     if !local.contains(remote) {
-                        line_has_errors = true;
+                        is_error = true;
                         ChecksumAlerts::is_different(local);
                     } else {
-                        line_has_errors = false;
+                        is_error = false;
                         ChecksumAlerts::is_equal(local);
                     }
                 }
 
-                if !line_has_errors {
-                    ChecksumAlerts::check_content(true);
-                } else {
-                    ChecksumAlerts::check_content(false);
-                }
+                ChecksumAlerts::check_content(is_error);
             }
         }
         

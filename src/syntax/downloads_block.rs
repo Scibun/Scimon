@@ -45,6 +45,7 @@ impl DownloadsBlock {
         let end_index = contents.rfind("}");
 
         if let (Some(start_index), Some(end_index)) = (start_index, end_index) {
+            let mut refs = Vec::new();
             let downloads_content = &contents[start_index + "downloads ".len()..end_index];
 
             for line in downloads_content.lines() {
@@ -63,13 +64,14 @@ impl DownloadsBlock {
 
                 if !Macros::handle_check_macro_line(&line, "ignore") {
                     if !final_url.is_empty() && is_url(&final_url) && final_url.starts_with("http") {
-                        Download::file(
+                        let success = Download::file(
                             &url,
                             &path,
 
                             flags.no_ignore,
                         ).await?;
 
+                        refs.push(success);
                         let url_no_macros = Macros::remove_macros(&final_url);
                         links.push(url_no_macros.to_string());
                     }
@@ -84,7 +86,7 @@ impl DownloadsBlock {
 
             ReadMeBlock::render_var_and_save_file(&contents, flags.no_open_link, flags.no_readme).await?;
 
-            Checksum::generate_hashes(&path, checksum_file, flags.no_checksum).await?;
+            Checksum::generate_hashes(&path, checksum_file, refs, flags.no_checksum).await?;
             Checksum::compare_lines(&contents, &path, checksum_file, flags).await?;
         } else {
             eprintln!("'downloads' block not found in file.");
