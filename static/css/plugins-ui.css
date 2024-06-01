@@ -1,6 +1,6 @@
 /* PLUGIN'S SECTION */
 
-.plugin-section{
+.plugin-section {
     padding: 1em;
     border-radius: 6px;
     margin-bottom: .5em;
@@ -8,11 +8,11 @@
     border: .1em solid var(--color-border);
 }
 
-.plugin-section > p > i{
+.plugin-section > p > i {
     padding-right: .5em;
 }
 
-.plugin-section > ul > li{
+.plugin-section > ul > li {
     height: 3em;
     display: block;
     cursor: pointer;
@@ -27,11 +27,11 @@
     border: .1em solid var(--color-border);
 }
 
-.plugin-section > ul > li > a{
+.plugin-section > ul > li > a {
     color: inherit !important;
 }
 
-.plugin-section > ul > li > i{
+.plugin-section > ul > li > i {
     width: 3em;
     height: 3em;
     float: left;
@@ -39,22 +39,18 @@
     text-align: center;
 }
 
-.plugin-section > ul > li:hover{
+.plugin-section > ul > li:hover  {
     background: var(--color-quote);
     border-left: .5em solid var(--color-border);
 }
 
-.plugin-section > ul > .pdd-left{
-    padding-left: 1em;
-}
+.plugin-section > ul > .pdd-left { padding-left: 1em; }
 
-.plugin-section > ul > li > .hover-icon:hover{
-    color: var(--color-link-hover);
-}
+.plugin-section > ul > li > .hover-icon:hover { color: var(--color-link-hover); }
 
 /* LICENSES BOX */
 
-.licenses-box{
+.licenses-box {
     top: 0;
     right: 0;
     width: 22em;
@@ -68,7 +64,7 @@
     border: .1em solid var(--color-border);
 }
 
-.licenses-box > a{
+.licenses-box > a {
     height: 3em;
     display: block;
     cursor: pointer;
@@ -83,18 +79,16 @@
     border-bottom: .1em solid var(--color-border);
 }
 
-.licenses-box > a:hover{
+.licenses-box > a:hover {
     background: var(--color-quote);
     border-left: .5em solid var(--color-border);
 }
 
-.licenses-box > a:last-child{
-    border-bottom: 0 !important;
-}
+.licenses-box > a:last-child { border-bottom: 0 !important; }
 
 /* MODAL */
 
-.modal {
+.modal  {
     top: 0;
     left: 0;
     width: 100%;
@@ -107,7 +101,7 @@
     z-index: 999999999999999999;
 }
 
-.modal-mask {
+.modal-mask  {
     top: 0;
     left: 0;
     width: 100%;
@@ -119,7 +113,7 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.modal-content {
+.modal-content  {
     padding: 20px;
     max-width: 80%;
     border-radius: 6px;
@@ -134,10 +128,6 @@
     background-color: var(--color-pre-bg);
 }
 
-.modal-content > pre > code {
-    display: block;
-}
+.modal-content > pre > code { display: block; }
 
-.modal-content > .fa-solid:hover {
-    color: var(--color-link-hover);
-}
+.modal-content > .fa-solid:hover { color: var(--color-link-hover); }

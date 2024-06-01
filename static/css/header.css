@@ -1,4 +1,4 @@
-header{
+header {
     top: 0;
     left: 0;
     bottom: 0;
@@ -12,7 +12,7 @@ header{
     border: .1em solid var(--color-border);
 }
 
-header > .label{
+header > .label {
     float: left;
     cursor: default;
     font-weight: 600;
@@ -21,13 +21,13 @@ header > .label{
     line-height: calc(var(--header-size) - .05em);
 }
 
-header > .nav{
+header > .nav {
     float: right;
     height: var(--header-size);
     line-height: var(--header-size);
 }
 
-header > .nav > div{
+header > .nav > div {
     width: 3em;
     float: left;
     cursor: pointer;
@@ -35,14 +35,6 @@ header > .nav > div{
     line-height: calc(var(--header-size) - .05em);
 }
 
-header > .nav > div:hover{
-    background: var(--color-border);
-}
+header > .nav > div:hover, header > .nav > .actived { background: var(--color-border); }
 
-header > .nav > .actived{
-    background: var(--color-border);
-}
-
-#scrollToTopBtn{
-    display: none;
-}
+#scrollToTopBtn { display: none; }
