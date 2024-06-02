@@ -22,10 +22,7 @@ pub struct ReadList;
 
 impl ReadList {    
    
-    pub async fn read_dataset(
-        run: &str,
-        flags: &Flags,
-    ) -> Result<(), Box<dyn Error>> {
+    pub async fn read_dataset(run: &str, flags: &Flags) -> Result<(), Box<dyn Error>> {
         let reader: BufReader<Box<dyn Read>>;
 
         if run.starts_with("http") {

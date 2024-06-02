@@ -19,7 +19,7 @@ use crate::{
     configs::{
         env::Env,
         settings::Settings,
-        configs_files::ConfigsFiles,
+        configs_files::DownloadConfigsFiles,
     },
 };
 
@@ -27,26 +27,28 @@ pub struct Paimon;
 
 impl Paimon {
     
-    async fn options(value: &str) -> Result<(), Box<dyn Error>> {
-        if value == "open-env" {
+    async fn options(options: &str) -> Result<(), Box<dyn Error>> {
+        if options == "open-env" {
             Env::open_env_file()?;
-        } else if value == "open-settings" {
+        } else if options == "open-settings" {
             Settings::open_settings_file()?;
-        } else if value == "download-env" {
-            ConfigsFiles::env_file(true, true).await?;
-        } else if value == "download-settings" {
-            ConfigsFiles::settings_file(true, true).await?;
+        } else if options == "download-env" {
+            DownloadConfigsFiles::env_file(true, true).await?;
+        } else if options == "download-settings" {
+            DownloadConfigsFiles::settings_file(true, true).await?;
         }
         
         Ok(())
     }
 
     pub async fn init() {
-        if let Err(err) = ConfigsFiles::env_file(false, false).await {
+        let (print, force_mode) = (false, false);
+
+        if let Err(err) = DownloadConfigsFiles::env_file(print, force_mode).await {
             ErrorsAlerts::generic(&err.to_string());
         }
 
-        if let Err(err) = ConfigsFiles::settings_file(false, false).await {
+        if let Err(err) = DownloadConfigsFiles::settings_file(print, force_mode).await {
             ErrorsAlerts::generic(&err.to_string());
         }
 

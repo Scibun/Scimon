@@ -3,8 +3,10 @@ extern crate colored;
 use colored::*;
 
 use crate::{
-    system::system::System,
-    cmd::checksum::Checksum,
+    system::{
+        system::System,
+        hashes::Hashes,
+    },
     
     ui::{
         ui_base::UI,
@@ -27,7 +29,7 @@ impl ChecksumAlerts {
     }
 
     pub fn is_equal(line: &str) {
-        if let Ok((hash, filename)) = Checksum::extract_hashes_and_filenames(line) {
+        if let Ok((hash, filename)) = Hashes::extract_hashes_and_filenames(line) {
             let current_datetime = System::date_time();
 
             println!(
@@ -41,7 +43,7 @@ impl ChecksumAlerts {
     }
 
     pub fn is_different(line: &str) {
-        if let Ok((hash, filename)) = Checksum::extract_hashes_and_filenames(line) {
+        if let Ok((hash, filename)) = Hashes::extract_hashes_and_filenames(line) {
             let current_datetime = System::date_time();
 
             println!(

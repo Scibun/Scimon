@@ -18,9 +18,9 @@ use crate::{
     },
 };
 
-pub struct ConfigsFiles;
+pub struct DownloadConfigsFiles;
 
-impl ConfigsFiles {
+impl DownloadConfigsFiles {
     
     pub async fn env_file(print: bool, force_mode: bool) -> Result<(), Box<dyn Error>> {
         let url = Global::ENV_URL;

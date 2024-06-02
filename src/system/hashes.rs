@@ -1,3 +1,5 @@
+use regex::Regex;
+
 use std::{
     fs::File,
     error::Error,
@@ -14,11 +16,24 @@ use sha2::{
     Sha256,
 };
 
-use crate::utils::remote::FileRemote;
+use crate::{
+    utils::remote::FileRemote,
+    regexp::regex_core::CoreRegExp,
+};
 
 pub struct Hashes;
 
 impl Hashes {
+
+    pub fn extract_hashes_and_filenames(line: &str) -> Result<(String, String), Box<dyn Error>> {
+        let re = Regex::new(CoreRegExp::GET_CHECKSUM).unwrap();
+        let captures = re.captures(line).ok_or("No match found")?;
+
+        let hash = captures.get(1).unwrap().as_str().to_string();
+        let filename = captures.get(2).unwrap().as_str().to_string();
+
+        Ok((hash, filename))
+    }
 
     pub fn read_local_file(file: &str) -> Result<(Vec<String>, usize), Box<dyn Error>> {
         let mut lines = Vec::new();

@@ -1,5 +1,3 @@
-use regex::Regex;
-
 use std::{
     fs::File,
     io::Write,
@@ -11,7 +9,6 @@ use crate::{
     utils::file::FileMisc,
     system::hashes::Hashes,
     syntax::vars_block::VarsBlock,
-    regexp::regex_core::CoreRegExp,
 
     ui::{
         ui_base::UI,
@@ -22,30 +19,22 @@ use crate::{
 pub struct Checksum;
 
 impl Checksum {
- 
-    pub fn extract_hashes_and_filenames(line: &str) -> Result<(String, String), Box<dyn Error>> {
-        let re = Regex::new(CoreRegExp::GET_CHECKSUM).unwrap();
-        let captures = re.captures(line).ok_or("No match found")?;
-
-        let hash = captures.get(1).unwrap().as_str().to_string();
-        let filename = captures.get(2).unwrap().as_str().to_string();
-
-        Ok((hash, filename))
-    }
 
     pub async fn generate_hashes(path: &str, file: &str, refs: Vec<String>, flags: &Flags) -> Result<(), Box<dyn Error>> {
         if !flags.no_checksum {
             let path_file = format!(
-                "{}{}", path, FileMisc::replace_extension(file, "sha256")
+                "{}{}", path, FileMisc::replace_extension(
+                    file, "sha256"
+                )
             );
     
             let mut output_file = File::create(&path_file)?;
 
-            for item in refs {
-                let hash = Hashes::calculate_local_sha256(&item)?;
+            for file_path in refs {
+                let hash = Hashes::calculate_local_sha256(&file_path)?;
 
                 writeln!(
-                    output_file, "{}  {}", hash, item.replace(path, "")
+                    output_file, "{}  {}", hash, file_path.replace(path, "")
                 )?;
             }
     
@@ -55,13 +44,13 @@ impl Checksum {
         Ok(())
     }
     
-    pub async fn compare_lines(contents: &str, path: &str, local_file: &str, flags: &Flags) -> Result<(), Box<dyn Error>> {
+    pub async fn compare_lines(contents: &str, path: &str, checksum_file: &str, flags: &Flags) -> Result<(), Box<dyn Error>> {
         if !flags.no_checksum && !flags.no_checksum_validate {
             if let Some(url) = VarsBlock::get_checksum(contents).await {
                 let mut is_error = false;
 
                 let local_hash_file = format!(
-                    "{}{}", path, FileMisc::replace_extension(local_file, "sha256")
+                    "{}{}", path, FileMisc::replace_extension(checksum_file, "sha256")
                 ); 
 
                 let (local_lines, local_total_lines) = Hashes::read_local_file(&local_hash_file)?;

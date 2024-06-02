@@ -50,10 +50,10 @@ impl Download {
             match result {
                 Ok(file) => {
                     let file_path = &format!("{}{}", &path, &file);
-                    let is_encrypted = Pdf::is_pdf_encrypted(&file_path);
+                    let password = Pdf::is_pdf_encrypted(&file_path);
                     let hash = Hashes::calculate_local_sha256(file_path)?;
                     
-                    SuccessAlerts::download(&file, url, is_encrypted, &hash);
+                    SuccessAlerts::download(&file, url, password, &hash);
                     return Ok(file_path.to_string())
                 },
 
