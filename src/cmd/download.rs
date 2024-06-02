@@ -6,6 +6,7 @@ use std::{
 };
 
 use crate::{
+    args_cli::Flags,
     syntax::macros::Macros,
 
     ui::{
@@ -27,18 +28,16 @@ pub struct Download;
 
 impl Download {
 
-    pub async fn file(url: &str, path: &str, no_ignore: bool) -> Result<String, Box<dyn Error>> {
-        let mut line_url: Cow<str> = Cow::Borrowed(
+    pub async fn file(url: &str, path: &str, flags: &Flags) -> Result<String, Box<dyn Error>> {
+        let mut line_url = Cow::Borrowed(
             url.trim()
         );
 
         Reporting::check_download_errors(&line_url).await?;
 
-        if !is_url(&line_url) {
-            return Ok("".to_string())
-        }
+        if !is_url(&line_url) { return Ok("".to_string()) }
     
-        match Macros::handle_ignore_macro_flag(&line_url, no_ignore) {
+        match Macros::handle_ignore_macro_flag(&line_url, flags.no_ignore) {
             Ok(new_line) => line_url = Cow::Owned(new_line),
             Err(_) => return Ok("".to_string()),
         }
@@ -51,10 +50,10 @@ impl Download {
             match result {
                 Ok(file) => {
                     let file_path = &format!("{}{}", &path, &file);
-                    let password = Pdf::is_pdf_encrypted(&file_path);
+                    let is_encrypted = Pdf::is_pdf_encrypted(&file_path);
                     let hash = Hashes::calculate_local_sha256(file_path)?;
                     
-                    SuccessAlerts::download(&file, url, password, &hash);
+                    SuccessAlerts::download(&file, url, is_encrypted, &hash);
                     return Ok(file_path.to_string())
                 },
 

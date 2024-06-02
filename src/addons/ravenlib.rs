@@ -20,6 +20,7 @@ use reqwest::{
 };
 
 use crate::{
+    args_cli::Flags,
     configs::env::Env,
     consts::uris::Uris,
     cmd::download::Download,
@@ -66,8 +67,8 @@ impl Ravenlib {
         false
     }
 
-    pub async fn get(list_id: &str, no_ignore: bool) -> Result<String, Box<dyn Error>> {
-        let list = Self::remove_initial_character(list_id, '@');
+    pub async fn get(run: &str, flags: &Flags) -> Result<String, Box<dyn Error>> {
+        let list = Self::remove_initial_character(run, '@');
         let mut url = Uris::RAVENLIB_API_REQUEST.to_owned();
     
         url.push_str("lists");
@@ -111,7 +112,7 @@ impl Ravenlib {
                     Download::file(
                         &url, 
                         &path,
-                        no_ignore,
+                        flags,
                     ).await?;
                 }
             }

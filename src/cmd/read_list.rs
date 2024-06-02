@@ -25,7 +25,6 @@ impl ReadList {
     pub async fn read_dataset(
         run: &str,
         flags: &Flags,
-        checksum_file_name: &str
     ) -> Result<(), Box<dyn Error>> {
         let reader: BufReader<Box<dyn Read>>;
 
@@ -51,7 +50,7 @@ impl ReadList {
         DownloadsBlock::read_lines(
             reader,
             flags,
-            checksum_file_name,
+            run,
         ).await?;
 
         Ok(())

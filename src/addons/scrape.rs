@@ -5,6 +5,7 @@ use std::error::Error;
 use serde::Deserialize;
 
 use crate::{
+    args_cli::Flags,
     consts::uris::Uris,
     cmd::download::Download,
     ui::errors_alerts::ErrorsAlerts,
@@ -43,8 +44,8 @@ impl Scrape {
         Ok(data)
     }
 
-    pub async fn get(scrape: bool, url: &str, no_ignore: bool) -> Result<(), Box<dyn Error>> {
-        if scrape {
+    pub async fn get(flags: &Flags, url: &str) -> Result<(), Box<dyn Error>> {
+        if flags.scrape {
             match Self::fetch_items(url).await {
                 Ok(response) => {
                     if let Some(success) = response.success {
@@ -65,7 +66,7 @@ impl Scrape {
                                         Download::file(
                                             url,
                                             path,
-                                            no_ignore,
+                                            flags,
                                         ).await?;
                                     }
                                 }

@@ -59,17 +59,14 @@ impl Paimon {
         
         if !run.is_empty() {
             if !Ravenlib::check_is_user(run) {
-                let _ = ReadList::read_dataset(
-                    run, &flags, run
-                ).await;
-                
-                let _ = ReadMeBlock::render_block_and_save_file(run, flags.no_open_link, flags.no_readme);
+                let _ = ReadList::read_dataset(run, &flags).await;
+                let _ = ReadMeBlock::render_block_and_save_file(run, &flags);
             } else {
-                let _ = Ravenlib::get(run, flags.no_ignore).await;
+                let _ = Ravenlib::get(run, &flags).await;
             }
         }
 
-        let _ = Scrape::get(flags.scrape, url, flags.no_ignore).await;
+        let _ = Scrape::get(&flags, url).await;
 
         let _ = Self::options(options).await;
     }

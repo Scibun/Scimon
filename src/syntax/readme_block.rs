@@ -6,6 +6,7 @@ use std::{
 };
 
 use crate::{
+    args_cli::Flags,
     system::markdown::Markdown,
     syntax::vars_block::VarsBlock,
     prime_down::pd_core::PrimeDown,
@@ -64,22 +65,22 @@ impl ReadMeBlock {
         }
     }
 
-    pub fn render_block_and_save_file(file: &str, no_open_link: bool, no_readme: bool) {
-        if !no_readme {
-            if let Some(markdown_html) = Self::render(file) {
-                let path = Markdown::get_filename_rendered(file);
-                let contents = PrimeDown::render_content(&file, markdown_html);
+    pub fn render_block_and_save_file(run: &str, flags: &Flags) {
+        if !flags.no_readme {
+            if let Some(markdown_html) = Self::render(run) {
+                let path = Markdown::get_filename_rendered(run);
+                let contents = PrimeDown::render_content(&run, markdown_html);
 
                 FileMisc::write_file(&path, contents);
-                Markdown::open_file(&path, no_open_link);
+                Markdown::open_file(&path, flags.no_open_link);
                 
                 MacrosAlerts::readme(&path);
             }
         }
     }
 
-    pub async fn render_var_and_save_file(contents: &str, no_open_link: bool, no_readme: bool) -> Result<(), Box<dyn Error>> {
-        if !no_readme {
+    pub async fn render_var_and_save_file(contents: &str, flags: &Flags) -> Result<(), Box<dyn Error>> {
+        if !flags.no_readme {
             if let Some(url) = VarsBlock::get_readme(contents).await {
                 let get_last_part = &UrlMisc::get_last_part(&url);
     
@@ -92,7 +93,7 @@ impl ReadMeBlock {
                 let contents = PrimeDown::render_content(&get_last_part, contents_extras);
             
                 FileMisc::write_file(&path, contents);
-                Markdown::open_file(&path, no_open_link);
+                Markdown::open_file(&path, flags.no_open_link);
                 
                 MacrosAlerts::readme(&path);
             }

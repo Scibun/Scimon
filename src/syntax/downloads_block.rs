@@ -67,8 +67,7 @@ impl DownloadsBlock {
                         let success = Download::file(
                             &url,
                             &path,
-
-                            flags.no_ignore,
+                            flags,
                         ).await?;
 
                         refs.push(success);
@@ -84,9 +83,9 @@ impl DownloadsBlock {
                 VarsBlock::get_open(&contents).await;
             }
 
-            ReadMeBlock::render_var_and_save_file(&contents, flags.no_open_link, flags.no_readme).await?;
+            ReadMeBlock::render_var_and_save_file(&contents, flags).await?;
 
-            Checksum::generate_hashes(&path, checksum_file, refs, flags.no_checksum).await?;
+            Checksum::generate_hashes(&path, checksum_file, refs, flags).await?;
             Checksum::compare_lines(&contents, &path, checksum_file, flags).await?;
         } else {
             eprintln!("'downloads' block not found in file.");
