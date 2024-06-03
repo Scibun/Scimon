@@ -26,11 +26,7 @@ pub struct DownloadsBlock;
 
 impl DownloadsBlock {
 
-    pub async fn read_lines<R>(
-        reader: R, 
-        flags: &Flags,
-        checksum_file: &str
-    ) -> Result<(), Box<dyn Error>> where R: BufRead {
+    pub async fn read_lines<R>(reader: R, flags: &Flags, checksum_file: &str) -> Result<(), Box<dyn Error>> where R: BufRead {
         let mut links = Vec::new();
         
         let contents = reader.lines().collect::<Result<Vec<_>, _>>()?.join("\n");
@@ -58,7 +54,7 @@ impl DownloadsBlock {
                     break;
                 }
 
-                if !flags.no_comments && line.contains("!debug") {
+                if !flags.no_comments && Macros::handle_check_macro_line(line, "debug") {
                     MacrosAlerts::comments(line);
                 }
 
@@ -79,10 +75,7 @@ impl DownloadsBlock {
                 }
             }
 
-            if !flags.no_open_link {
-                VarsBlock::get_open(&contents).await;
-            }
-
+            VarsBlock::get_open(&contents, flags.no_open_link).await;
             ReadMeBlock::render_var_and_save_file(&contents, flags).await?;
 
             Checksum::generate_hashes(&path, checksum_file, refs, flags).await?;

@@ -19,17 +19,15 @@ impl VarsBlock {
         path.to_string()
     }
 
-    pub async fn get_open(contents: &str) -> Option<String> {
-        let open_pattern = Regex::new(BlocksRegExp::GET_OPEN_VAR).unwrap();
-    
-        if let Some(caps) = open_pattern.captures(&contents) {
-            let link = caps.get(1).map(|m| m.as_str().to_string());
-            
-            if let Some(url) = link.clone() {
-                let _ = open::that(&url);
+    pub async fn get_open(contents: &str, no_open: bool) -> Option<String> {
+        if !no_open {
+            let open_pattern = Regex::new(BlocksRegExp::GET_OPEN_VAR).unwrap();
+        
+            if let Some(caps) = open_pattern.captures(&contents) {
+                caps.get(1).map(|m| m.as_str().to_string())
+            } else {
+                None
             }
-            
-            link
         } else {
             None
         }
