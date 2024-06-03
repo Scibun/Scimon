@@ -1,7 +1,6 @@
 extern crate reqwest;
 
 use std::error::Error;
-
 use serde::Deserialize;
 
 use crate::{

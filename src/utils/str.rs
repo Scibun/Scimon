@@ -13,4 +13,12 @@ impl StrUtils {
         format!("{}{}", first_char, rest)
     }
 
+    pub fn remove_initial_character(text: &str, character: char) -> String {
+        if let Some(rest) = text.strip_prefix(character) {
+            return String::from(rest);
+        }
+        
+        return String::from(text);
+    }
+
 }

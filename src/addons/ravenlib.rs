@@ -1,5 +1,8 @@
 extern crate reqwest;
 
+use serde_json::Value;
+use serde::Deserialize;
+
 use std::{
     fs,
     fmt,
@@ -11,9 +14,6 @@ use std::{
     }
 };
 
-use serde_json::Value;
-use serde::Deserialize;
-
 use reqwest::{
     header,
     Client,
@@ -23,6 +23,7 @@ use crate::{
     args_cli::Flags,
     configs::env::Env,
     consts::uris::Uris,
+    utils::str::StrUtils,
     cmd::download::Download,
     ui::errors_alerts::ErrorsAlerts,
 };
@@ -53,22 +54,18 @@ pub struct Ravenlib;
 
 impl Ravenlib {
     
-    fn remove_initial_character(text: &str, character: char) -> String {
-        if let Some(rest) = text.strip_prefix(character) {
-            return String::from(rest);
-        }
-        
-        return String::from(text);
-    }
-    
     pub fn check_is_user(input: &str) -> bool {
         let parts: Vec<&str> = input.split('/').collect();
-        if parts.len() == 2 && input.starts_with('@') && !parts[1].is_empty() { return true }
+
+        if parts.len() == 2 && input.starts_with('@') && !parts[1].is_empty() {
+            return true
+        }
+
         false
     }
 
     pub async fn get(run: &str, flags: &Flags) -> Result<String, Box<dyn Error>> {
-        let list = Self::remove_initial_character(run, '@');
+        let list = StrUtils::remove_initial_character(run, '@');
         let mut url = Uris::RAVENLIB_API_REQUEST.to_owned();
     
         url.push_str("lists");
