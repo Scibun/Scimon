@@ -2,10 +2,10 @@ pub struct Global;
 
 impl Global {
 
-    pub const APP_NAME: &'static str = "Paimon";
-    pub const APP_VERSION: &'static str = "0.0.1";
-    pub const APP_AUTHOR: &'static str = "@Ravenlib";
-    pub const APP_HOMEPAGE: &'static str = "https://github.com/Ravenlib/Paimon";
+    pub const APP_NAME: &'static str = env!("CARGO_PKG_NAME");
+    pub const APP_VERSION: &'static str = env!("CARGO_PKG_VERSION");
+    pub const APP_AUTHOR: &'static str = "@Kremilly";
+    pub const APP_HOMEPAGE: &'static str = "https://github.com/Kremilly/Paimon";
 
     pub const ENV_URL: &'static str = "https://pastebin.com/raw/wZGaNtsL";
     pub const SETTING_URL: &'static str = "https://pastebin.com/raw/jVdvKhWg";

@@ -7,6 +7,7 @@ use indicatif::ProgressStyle;
 
 use crate::{
     ui::emojis::Emojis,
+    utils::str::StrUtils,
     system::system::System,
     configs::settings::Settings,
     
@@ -23,6 +24,7 @@ impl UI {
     pub fn header() {
         if Settings::get("ui.show_header", "BOOLEAN") == true {
             let render_md_mode;
+            let name = StrUtils::capitalize(Global::APP_NAME);
             let standard_font = FIGfont::standard().unwrap();
 
             if Settings::get("render_markdown.mode", "STRING") == "paimon" {
@@ -31,12 +33,12 @@ impl UI {
                 render_md_mode = format!("{}", "Vanilla".cyan());
             }
 
-            if let Some(title) = standard_font.convert(Global::APP_NAME) {
-                println!("{}", title.to_string().bold().cyan());
+            if let Some(title) = standard_font.convert(&name) {
+                println!("{}", &title.to_string().bold().cyan());
                 println!("-------------------------------------------------------------------");
                 println!("{} Version: {}", Emojis::VERSION, Global::APP_VERSION.yellow());
                 println!("{} Homepage: {} • {}", Emojis::HOME, Global::APP_HOMEPAGE.blue(), Global::APP_AUTHOR.green());
-                println!("{} Started in: {}", Emojis::CLOCK, System::date_time().blue());
+                println!("{} Started in: {}", Emojis::CLOCK, System::date_time().magenta());
                 println!("{} Render mode: {}", Emojis::TOOLS, render_md_mode);
                 println!("-------------------------------------------------------------------");
             }
