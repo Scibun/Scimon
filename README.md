@@ -6,6 +6,10 @@
 
 <div align='center'>Increase productivity with a Rust-based batch PDF downloader. Fetch multiple PDFs swiftly, improving accessibility and efficiency. Ideal for managing large document collections.</div>
 
+<p align='center'>
+	<a href='https://github.com/kremilly/Paimon/actions/workflows/rust.yml'><img src='https://github.com/kremilly/Paimon/actions/workflows/rust.yml/badge.svg'/></a>
+</p>
+
 ## Documentation
 
 For more help and document, see our documentation:
