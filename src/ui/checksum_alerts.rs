@@ -28,7 +28,7 @@ impl ChecksumAlerts {
         );
     }
 
-    pub fn is_equal(line: &str) {
+    pub fn is_equal(line: &str) -> bool {
         if let Ok((hash, filename)) = Hashes::extract_hashes_and_filenames(line) {
             let current_datetime = System::date_time();
 
@@ -40,9 +40,11 @@ impl ChecksumAlerts {
                 Emojis::CHECKED
             );
         }
+
+        false
     }
 
-    pub fn is_different(line: &str) {
+    pub fn is_different(line: &str) -> bool {
         if let Ok((hash, filename)) = Hashes::extract_hashes_and_filenames(line) {
             let current_datetime = System::date_time();
 
@@ -54,40 +56,20 @@ impl ChecksumAlerts {
                 Emojis::ERROR
             );
         }
+
+        true
     }
 
-    pub fn check_content(is_error: bool) {
-        let text;
-        let emoji;
+    pub fn lines_total_is_different(local_total_lines: usize, remote_total_lines: usize) {
+        if local_total_lines != remote_total_lines {
+            let current_datetime = System::date_time();
 
-        let current_datetime = System::date_time();
-
-        if is_error {
-            emoji = Emojis::ERROR;
-            text = "is not match".red();
-        } else {
-            emoji = Emojis::CHECKED;
-            text = "is match".green();
+            println!("[{}] -> The number of lines in the files is different (Lines: {} (local) of {} (referencies)). ❌",
+                current_datetime.red(),
+                local_total_lines, 
+                remote_total_lines
+            );
         }
-
-        println!(
-            "[{}] -> The list {} and {} list {}. {}", 
-            current_datetime.green(), 
-            "local".cyan(),
-            "remote".blue(),
-            text, 
-            emoji, 
-        );
-    }
-
-    pub fn lines_total_is_different(local_lines: usize, remote_lines: usize) {
-        let current_datetime = System::date_time();
-
-        println!("[{}] -> The number of lines in the files is different (Lines: {} (local) of {} (referencies)). ❌",
-            current_datetime.red(),
-            local_lines, 
-            remote_lines
-        );
     }
 
 }
