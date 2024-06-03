@@ -1,6 +1,7 @@
 use serde_yaml::Value;
 
 use crate::{
+    utils::str::StrUtils,
     consts::global::Global,
     configs::settings::Settings,
 
@@ -47,7 +48,9 @@ impl PrimeDownInject {
         let render_minify_extra_plugins = Settings::get("render_markdown.minify_extra_plugins", "BOOLEAN");
 
         let title = format!(
-            "{}: {}: README", &Global::APP_NAME, &file
+            "{}: {}: README", StrUtils::capitalize(&Global::APP_NAME), &file.replace(
+                ".md", ""
+            )
         );
         
         contents.replace(
