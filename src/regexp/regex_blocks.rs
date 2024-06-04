@@ -15,4 +15,6 @@ impl BlocksRegExp {
 
     pub const GET_CHECKSUM_VAR: &'static str = r#"(?i)checksum\s*=\s*"([^"]+)""#;
 
+    pub const GET_CHECKSUM_UNMATCH_ACTION: &'static str = r#"(?i)checksum\.unmatch\s*=\s*"([^"]+)""#;
+
 }

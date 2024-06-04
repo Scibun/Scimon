@@ -1,7 +1,11 @@
 use std::{
-    fs::File,
     io::Write,
     error::Error,
+
+    fs::{
+        self,
+        File,
+    },
 };
 
 use crate::{
@@ -19,6 +23,16 @@ use crate::{
 pub struct Checksum;
 
 impl Checksum {
+
+    fn checksum_unmatch_delete_file(contents: &str, path: &str, line: &str) {
+        if let Some(value) = VarsBlock::get_checksum_unmatch(contents) {
+            if value == "delete" {
+                let file = Hashes::extract_filename(line).unwrap();
+                fs::remove_file(format!("{}{}", path, file)).unwrap();
+                ChecksumAlerts::lines_unmatch_file_deleted(&file);
+            }
+        }
+    }
 
     pub async fn generate_hashes(path: &str, file: &str, refs: Vec<String>, flags: &Flags) -> Result<(), Box<dyn Error>> {
         if !flags.no_checksum {
@@ -62,6 +76,7 @@ impl Checksum {
                 for (_, (local, remote)) in local_lines.iter().zip(remote_lines.iter()).enumerate() {
                     if !local.contains(remote) {
                         ChecksumAlerts::is_different(local);
+                        Self::checksum_unmatch_delete_file(contents, path, local);
                     } else {
                         ChecksumAlerts::is_equal(local);
                     }

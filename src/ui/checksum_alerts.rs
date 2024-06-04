@@ -29,7 +29,7 @@ impl ChecksumAlerts {
     }
 
     pub fn is_equal(line: &str) -> bool {
-        if let Ok((hash, filename)) = Hashes::extract_hashes_and_filenames(line) {
+        if let Ok((hash, filename)) = Hashes::extract_hash_and_filename(line) {
             let current_datetime = System::date_time();
 
             println!(
@@ -45,7 +45,7 @@ impl ChecksumAlerts {
     }
 
     pub fn is_different(line: &str) -> bool {
-        if let Ok((hash, filename)) = Hashes::extract_hashes_and_filenames(line) {
+        if let Ok((hash, filename)) = Hashes::extract_hash_and_filename(line) {
             let current_datetime = System::date_time();
 
             println!(
@@ -64,12 +64,23 @@ impl ChecksumAlerts {
         if local_total_lines != remote_total_lines {
             let current_datetime = System::date_time();
 
-            println!("[{}] -> The number of lines in the files is different (Lines: {} (local) of {} (referencies)). ❌",
+            println!("[{}] -> The number of lines in the files is different (Lines: {} (local) of {} (referencies)). {}",
                 current_datetime.red(),
                 local_total_lines, 
-                remote_total_lines
+                remote_total_lines,
+                Emojis::ERROR
             );
         }
+    }
+
+    pub fn lines_unmatch_file_deleted(filename: &str) {
+        let current_datetime = System::date_time();
+
+        println!("[{}] -> The file {} was deleted, because is hashes unmatched. {}",
+            current_datetime.red(),
+            filename.blue(),
+            Emojis::FORBIDDEN
+        );
     }
 
 }

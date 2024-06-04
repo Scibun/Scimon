@@ -25,7 +25,15 @@ pub struct Hashes;
 
 impl Hashes {
 
-    pub fn extract_hashes_and_filenames(line: &str) -> Result<(String, String), Box<dyn Error>> {
+    pub fn extract_filename(line: &str) -> Result<String, Box<dyn Error>> {
+        let re = Regex::new(CoreRegExp::GET_CHECKSUM).unwrap();
+        let captures = re.captures(line).ok_or("No match found")?;
+        let filename = captures.get(2).unwrap().as_str().to_string();
+
+        Ok(filename)
+    }
+
+    pub fn extract_hash_and_filename(line: &str) -> Result<(String, String), Box<dyn Error>> {
         let re = Regex::new(CoreRegExp::GET_CHECKSUM).unwrap();
         let captures = re.captures(line).ok_or("No match found")?;
 
