@@ -11,10 +11,9 @@ use crate::{
     ui::macros_alerts::MacrosAlerts,
     
     cmd::{
+        tasks::Tasks,
         checksum::Checksum,
-        download::Download,
-        compress::PathCompress,
-    }, 
+    },
     
     syntax::{
         macros::Macros, 
@@ -61,7 +60,7 @@ impl DownloadsBlock {
 
                 if !Macros::handle_check_macro_line(&line, "ignore") {
                     if !final_url.is_empty() && is_url(&final_url) && final_url.starts_with("http") {
-                        let success = Download::file(
+                        let success = Tasks::download(
                             &url,
                             &path,
                             flags,
@@ -79,13 +78,13 @@ impl DownloadsBlock {
             VarsBlock::get_open(&contents, flags.no_open_link).await;
             ReadMeBlock::render_var_and_save_file(&contents, flags).await?;
 
-            Checksum::generate_hashes(&path, checksum_file, refs, flags).await?;
+            Checksum::generate_hashes(&path, checksum_file, &refs, flags).await?;
             Checksum::compare_lines(&contents, checksum_file, flags).await?;
+
+            Tasks::compress(&contents, &refs)?;
         } else {
             eprintln!("'downloads' block not found in file.");
         }
-
-        PathCompress::compress(&contents)?;
 
         Ok(())
     }

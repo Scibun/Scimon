@@ -5,8 +5,8 @@ use serde::Deserialize;
 
 use crate::{
     args_cli::Flags,
+    cmd::tasks::Tasks,
     consts::uris::Uris,
-    cmd::download::Download,
     ui::errors_alerts::ErrorsAlerts,
 };
 
@@ -62,7 +62,7 @@ impl Scrape {
                                         let path = "./";
                                         let url = &item.url;
 
-                                        Download::file(
+                                        Tasks::download(
                                             url,
                                             path,
                                             flags,

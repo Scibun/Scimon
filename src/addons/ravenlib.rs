@@ -21,10 +21,10 @@ use reqwest::{
 
 use crate::{
     args_cli::Flags,
+    cmd::tasks::Tasks,
     configs::env::Env,
     consts::uris::Uris,
     utils::str::StrUtils,
-    cmd::download::Download,
     ui::errors_alerts::ErrorsAlerts,
 };
 
@@ -106,7 +106,7 @@ impl Ravenlib {
                     let url = line_result?;
                     let _ = fs::create_dir(&path);
 
-                    Download::file(
+                    Tasks::download(
                         &url, 
                         &path,
                         flags,

@@ -34,7 +34,7 @@ impl Checksum {
         }
     }
 
-    pub async fn generate_hashes(path: &str, file: &str, refs: Vec<String>, flags: &Flags) -> Result<(), Box<dyn Error>> {
+    pub async fn generate_hashes(path: &str, file: &str, refs: &Vec<String>, flags: &Flags) -> Result<(), Box<dyn Error>> {
         if !flags.no_checksum {
             let path_file = format!(
                 "{}{}", path, FileMisc::replace_extension(
