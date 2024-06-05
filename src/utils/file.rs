@@ -38,6 +38,14 @@ impl FileMisc {
         Path::new(&path).exists()
     }
 
+    pub fn create_path(path: &str) {
+        if !Self::check_path_exists(path) {
+            fs::create_dir_all(path).expect(
+                &"Error creating directory".to_string()
+            );
+        }
+    }
+    
     pub fn write_file(path: &str, contents: String) {
         fs::write(path, contents).expect(
             &"Error saving file".to_string()
