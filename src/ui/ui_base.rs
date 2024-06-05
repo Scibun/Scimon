@@ -27,8 +27,10 @@ impl UI {
             let name = StrUtils::capitalize(Global::APP_NAME);
             let standard_font = FIGfont::standard().unwrap();
 
-            if Settings::get("render_markdown.mode", "STRING") == "paimon" {
-                render_md_mode = format!("{} ({})", "Paimon".cyan(), PrimeDownEnv::README_PAIMON_MODE_DOC.blue());
+            println!("{}", Global::APP_NAME);
+
+            if Settings::get("render_markdown.mode", "STRING") == Global::APP_NAME {
+                render_md_mode = format!("{} ({})", name.cyan(), PrimeDownEnv::README_PAIMON_MODE_DOC.blue());
             } else {
                 render_md_mode = format!("{}", "Vanilla".cyan());
             }

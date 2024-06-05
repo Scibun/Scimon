@@ -6,14 +6,14 @@ mod consts;
 mod addons;
 mod system;
 mod syntax;
-mod paimon;
+mod scibun;
 mod configs;
 mod args_cli;
 mod prime_down;
 
-use crate::paimon::Paimon;
+use crate::scibun::Scibun;
 
 #[tokio::main]
 async fn main() {
-    Paimon::init().await;
+    Scibun::init().await;
 }

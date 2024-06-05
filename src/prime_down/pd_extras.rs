@@ -1,6 +1,7 @@
 use regex::Regex;
 
 use crate::{
+    consts::global::Global,
     utils::generate::Generate,
     configs::settings::Settings,
     regexp::regex_core::CoreRegExp,
@@ -11,7 +12,7 @@ pub struct PrimeDownExtras;
 impl PrimeDownExtras {
    
     pub fn gist(markdown: &str) -> String {
-        if Settings::get("render_markdown.mode", "STRING") == "paimon" {
+        if Settings::get("render_markdown.mode", "STRING") == Global::APP_NAME {
             let re = Regex::new(CoreRegExp::RENDER_EXTRA_GIST).unwrap();
         
             let replaced_markdown = re.replace_all(markdown, |captures: &regex::Captures| {
@@ -26,7 +27,7 @@ impl PrimeDownExtras {
     }
    
     pub fn qrcode(markdown: &str) -> String {
-        if Settings::get("render_markdown.mode", "STRING") == "paimon" {
+        if Settings::get("render_markdown.mode", "STRING") == Global::APP_NAME {
             let re = Regex::new(CoreRegExp::RENDER_EXTRA_QRCODE).unwrap();
         
             let replaced_markdown = re.replace_all(markdown, |captures: &regex::Captures| {

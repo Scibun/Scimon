@@ -16,13 +16,13 @@ pub struct PrimeDownInject;
 impl PrimeDownInject {
 
     fn get_js(render_mode: Value, minify: Value) -> String {
-        let cdn = if render_mode == "paimon" {
+        let cdn = if render_mode == Global::APP_NAME {
             PrimeDownInjectJS::load_from_cdn()
         } else {
             "".to_string()
         };
 
-        let local = if render_mode == "paimon" {
+        let local = if render_mode == Global::APP_NAME {
             PrimeDownInjectJS::load_from_files(minify)
         } else {
             "".to_string()
@@ -34,7 +34,7 @@ impl PrimeDownInject {
     }
 
     fn get_css(render_mode: Value, minify: Value) -> String {
-        let local = if render_mode == "paimon" {
+        let local = if render_mode == Global::APP_NAME {
             PrimeDownInjectCSS::load_from_files(minify)
         } else {
             "".to_string()

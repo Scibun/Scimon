@@ -2,7 +2,7 @@ path = "downloads/"
 open = "https://github.com/kremilly"
 
 readme = "https://gist.githubusercontent.com/kremilly/5fd360d994bb0fe108b648d0e4c9e92f/raw/508b038adb977440cc3722b04f9a5fc1ebfcdcb0/readme-examples.md"
-checksum = "https://gist.githubusercontent.com/kremilly/499d6d51d096c1813cea0eade8eb0bc4/raw/d7c5965aeaf005cf0b612e3468ab47c30480083b/paimon.sha256"
+checksum = "https://gist.githubusercontent.com/kremilly/499d6d51d096c1813cea0eade8eb0bc4/raw/d7c5965aeaf005cf0b612e3468ab47c30480083b/scibun.sha256"
 checksum.unmatch = "keep"
 
 compress = "file.zip"

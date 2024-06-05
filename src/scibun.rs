@@ -23,9 +23,9 @@ use crate::{
     },
 };
 
-pub struct Paimon;
+pub struct Scibun;
 
-impl Paimon {
+impl Scibun {
     
     async fn options(options: &str) -> Result<(), Box<dyn Error>> {
         if options == "open-env" {

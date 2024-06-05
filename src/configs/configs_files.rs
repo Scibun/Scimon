@@ -69,7 +69,7 @@ impl DownloadConfigsFiles {
     
         let response = reqwest::get(url).await?;
         if response.status().is_success() {
-            let file_path = output_directory.join("paimon.yml");
+            let file_path = output_directory.join("scibun.yml");
     
             if !force_mode {
                 if !Path::new(&file_path).is_file() {

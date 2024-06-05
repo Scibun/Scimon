@@ -79,7 +79,7 @@ impl Settings {
 
     pub fn open_settings_file() -> Result<(), IoError> {
         let app_folder = &*System::APP_FOLDER;
-        let env_path: PathBuf = app_folder.join("paimon.yml");
+        let env_path: PathBuf = app_folder.join("scibun.yml");
 
         if let SerdeValue(editor) = &Settings::get(
             "general.default_text_editor", "STRING"
