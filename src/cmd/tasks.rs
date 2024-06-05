@@ -50,7 +50,6 @@ impl Tasks {
     pub fn compress(contents: &str, files: &Vec<String>) -> IoResult<()> {
         if let Some(zip_file) = VarsBlock::get_compress(contents) {
             UI::section_header("Compressing files");
-
             let folder_path = VarsBlock::get_path(contents);
 
             let output_path = Path::new(&zip_file);
@@ -61,24 +60,24 @@ impl Tasks {
                 .compression_method(CompressionMethod::Deflated)
                 .unix_permissions(0o755);
 
-                for file in files {
-                    let path = Path::new(file);
-                    let name = path.strip_prefix(Path::new(&folder_path)).unwrap();
-        
-                    zip.start_file(name.to_str().unwrap(), options.clone())?;
+            for file in files {
+                let path = Path::new(file);
+                let name = path.strip_prefix(Path::new(&folder_path)).unwrap();
     
-                    let mut f = File::open(path)?;
-                    let mut buffer = Vec::new();
-    
-                    f.read_to_end(&mut buffer)?;
-                    zip.write_all(&buffer)?;
+                zip.start_file(name.to_str().unwrap(), options.clone())?;
 
-                    CompressAlerts::added(
-                        &file.replace(
-                            &format!("{}/", &folder_path), ""
-                        ), &zip_file
-                    );
-                }
+                let mut f = File::open(path)?;
+                let mut buffer = Vec::new();
+
+                f.read_to_end(&mut buffer)?;
+                zip.write_all(&buffer)?;
+
+                CompressAlerts::added(
+                    &file.replace(
+                        &format!("{}/", &folder_path), ""
+                    ), &zip_file
+                );
+            }
 
             zip.finish()?;
             CompressAlerts::completed(&zip_file);
