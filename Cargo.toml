@@ -1,9 +1,9 @@
 [package]
-name = "paimon"
+name = "scibun"
 version = "0.1.0"
 edition = "2021"
-authors = [ "kremilly" ]
-homepage = "https://github.com/kremilly/Paimon"
+authors = [ "scibun" ]
+homepage = "https://github.com/scibun/Scibun"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
