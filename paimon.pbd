@@ -5,13 +5,15 @@ readme = "https://gist.githubusercontent.com/kremilly/5fd360d994bb0fe108b648d0e4
 checksum = "https://gist.githubusercontent.com/kremilly/499d6d51d096c1813cea0eade8eb0bc4/raw/d7c5965aeaf005cf0b612e3468ab47c30480083b/paimon.sha256"
 checksum.unmatch = "keep"
 
+compress = "file.zip"
+
 downloads {
     https://arxiv.org/pdf/2405.01513 !ignore
     https://www.scielo.br/j/rdbci/a/fwDKj9FMX7YTRDgkJGG4gnR?format=pdf&lang=pt !ignore
     https://en.wikipedia.org/wiki/Rust_(programming_language) !ignore
     https://en.wikipedia.org/wiki/Google !ignore
     https://www.nasa.gov/wp-content/uploads/static/history/alsj/a17/A17_FlightPlan.pdf !ignore
-    https://sci-hub.se/10.1080/0025570x.2002.11953151
+    https://sci-hub.se/10.1080/0025570x.2002.11953151 !ignore
     https://olacesar.com/e-books/protegido.pdf
     https://github.com/huyubing/books-pdf/blob/master/slime.pdf !ignore
     https://raw.githubusercontent.com/facebook/react/main/README.md !ignore

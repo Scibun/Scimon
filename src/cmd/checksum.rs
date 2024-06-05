@@ -60,8 +60,10 @@ impl Checksum {
         Ok(())
     }
     
-    pub async fn compare_lines(contents: &str, path: &str, checksum_file: &str, flags: &Flags) -> Result<(), Box<dyn Error>> {
+    pub async fn compare_lines(contents: &str, checksum_file: &str, flags: &Flags) -> Result<(), Box<dyn Error>> {
         if !flags.no_checksum && !flags.no_checksum_validate {
+            let path = VarsBlock::get_path(contents);
+
             if let Some(url) = VarsBlock::get_checksum(contents).await {
                 let local_hash_file = format!(
                     "{}{}", path, FileMisc::replace_extension(checksum_file, "sha256")
@@ -76,7 +78,7 @@ impl Checksum {
                 for (_, (local, remote)) in local_lines.iter().zip(remote_lines.iter()).enumerate() {
                     if !local.contains(remote) {
                         ChecksumAlerts::is_different(local);
-                        Self::checksum_unmatch_delete_file(contents, path, local);
+                        Self::checksum_unmatch_delete_file(contents, &path, local);
                     } else {
                         ChecksumAlerts::is_equal(local);
                     }

@@ -11,5 +11,7 @@ impl Emojis {
     pub const CHECKED: &'static str = "✅";
     pub const ERROR: &'static str = "❌";
     pub const FORBIDDEN: &'static str = "⛔";
+    pub const ADD: &'static str = "➕";
+    pub const COMPRESS: &'static str = "📦";
 
 }

@@ -31,3 +31,15 @@ credentials.json
 # Ignore .pd files
 *.pd
 *.sha256
+
+# Ignore compress files
+*.tar.gz
+*.tar.xz
+*.tar.bz2
+*.tar
+*.zip
+*.rar
+*.7z
+*.gz
+*.xz
+*.bz2

@@ -13,6 +13,7 @@ use crate::{
     cmd::{
         checksum::Checksum,
         download::Download,
+        compress::PathCompress,
     }, 
     
     syntax::{
@@ -79,10 +80,12 @@ impl DownloadsBlock {
             ReadMeBlock::render_var_and_save_file(&contents, flags).await?;
 
             Checksum::generate_hashes(&path, checksum_file, refs, flags).await?;
-            Checksum::compare_lines(&contents, &path, checksum_file, flags).await?;
+            Checksum::compare_lines(&contents, checksum_file, flags).await?;
         } else {
             eprintln!("'downloads' block not found in file.");
         }
+
+        PathCompress::compress(&contents)?;
 
         Ok(())
     }
