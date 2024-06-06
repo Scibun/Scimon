@@ -3,9 +3,8 @@
 /* Load font */
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-/* Prism.js: https://cdnjs.com/libraries/prism-themes */
-@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism.min.css');
-@import url('https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-vsc-dark-plus.min.css');
+/* Prism.js: https://cdnjs.com/libraries/prism */
+@import url('https://addons.scibun.com/static/prism.css');
 
 /* GitHub Gist: https://github.com/lonekorean/gist-syntax-themes */
 @import url('https://cdn.rawgit.com/lonekorean/gist-syntax-themes/d49b91b3/stylesheets/one-dark.css');
