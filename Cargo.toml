@@ -1,5 +1,5 @@
 [package]
-name = "monset"
+name = "scimon"
 version = "0.1.0"
 edition = "2021"
 authors = [ "scibun" ]
