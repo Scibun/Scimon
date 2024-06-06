@@ -30,6 +30,7 @@ credentials.json
 
 # Ignore .pd files
 *.pd
+*.mon
 *.sha256
 
 # Ignore compress files
