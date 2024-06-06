@@ -6,6 +6,4 @@ impl PrimeDownEnv {
     pub const README_TEMPLATE_CSS_FILES: &'static str = "static/css/";
     pub const README_TEMPLATE_FILE: &'static str = "static/templates/render.html";
 
-    pub const README_PAIMON_MODE_DOC: &'static str = "https://github.com/kremilly/Paimon/wiki/Readme-block";
-
 }

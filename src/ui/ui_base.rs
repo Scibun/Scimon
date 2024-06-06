@@ -8,13 +8,9 @@ use indicatif::ProgressStyle;
 use crate::{
     ui::emojis::Emojis,
     utils::str::StrUtils,
+    consts::global::Global,
     system::system::System,
     configs::settings::Settings,
-    
-    consts::{
-        global::Global,
-        prime_down::PrimeDownEnv,
-    },
 };
 
 pub struct UI;
@@ -27,10 +23,8 @@ impl UI {
             let name = StrUtils::capitalize(Global::APP_NAME);
             let standard_font = FIGfont::standard().unwrap();
 
-            println!("{}", Global::APP_NAME);
-
             if Settings::get("render_markdown.mode", "STRING") == Global::APP_NAME {
-                render_md_mode = format!("{} ({})", name.cyan(), PrimeDownEnv::README_PAIMON_MODE_DOC.blue());
+                render_md_mode = format!("{}", name.cyan());
             } else {
                 render_md_mode = format!("{}", "Vanilla".cyan());
             }
