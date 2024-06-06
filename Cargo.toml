@@ -3,7 +3,8 @@ name = "scibun"
 version = "0.1.0"
 edition = "2021"
 authors = [ "scibun" ]
-homepage = "https://github.com/scibun/Scibun"
+homepage = "https://scibun.com"
+documentation = "https://docs.scibun.com"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
