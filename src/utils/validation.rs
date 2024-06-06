@@ -18,7 +18,7 @@ impl Validate {
             );
         }
     
-        Self::file_type(file, ".pbd")?;
+        Self::file_type(file, ".mon")?;
         Ok(())
     }
     

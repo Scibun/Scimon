@@ -29,8 +29,7 @@ Cargo.lock
 credentials.json
 
 # Ignore .pd files
-*.pd
-*.mon
+*.pbd
 *.sha256
 
 # Ignore compress files
