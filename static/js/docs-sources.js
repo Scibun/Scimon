@@ -23,7 +23,7 @@ const DocsSources = ( e => {
         paragraph.appendChild(textLabel);
         pdfLinksList.appendChild(paragraph);
 
-        document.body.appendChild(pdfLinksList);
+        document.querySelector(`.${Elements.classNames.markdownBody}`).appendChild(pdfLinksList);
     };
 
     let checkDocsUrlExt = url => {

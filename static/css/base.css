@@ -169,11 +169,11 @@ img {
 .markdown-body {
     margin: auto;
     width: 900px;
-    margin-top: 80px;
+    margin-top: 60px;
     box-sizing: border-box;
     padding: var(--spacing-md);
-    background: var(--color-bg);
     box-shadow: var(--box-shadow);
+    background: var(--color-pre-bg );
     border-radius: var(--border-radius);
     border: .1em solid var(--color-border);
 }

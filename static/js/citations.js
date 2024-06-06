@@ -30,7 +30,7 @@ const Citations = ( e => {
             let ul = document.createElement('ul');
             refsList.appendChild(ul);
 
-            document.body.appendChild(refsList);
+            document.querySelector(`.${Elements.classNames.markdownBody}`).appendChild(refsList);
         }
     };
 

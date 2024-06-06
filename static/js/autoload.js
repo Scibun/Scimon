@@ -16,6 +16,15 @@ const Elements = ( e => {
         scrollToDocsBtn: 'scrollToDocsBtn',
         bibTextMaskModal: 'bibTextMaskModal',
 
+        classNames: {
+            modal: 'modal',
+            refsList: 'refs-list',
+            markdownBody: 'markdown-body',
+            contentModal: 'modal-content',
+            pluginSection: 'plugin-section',
+            docsSourceList: 'docs-source-list',
+        },
+
         pageTitle: () => { return pageTitle(); },
     };
 

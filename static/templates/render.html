@@ -8,7 +8,7 @@
     <!-- NOT MODIFIED THIS -->
     {{ inject_css }}
 </head>
-<body class='markdown-body'>
+<body>
     <div class='modal-mask' id='bibTextMaskModal'></div>
     
     <header>
@@ -27,7 +27,11 @@
         </div>
     </div>
 
-    {{ markdown_content }}
+    <div class="markdown-body">
+        {{ markdown_content }}
+
+        
+    </div>
 
     <!-- NOT MODIFIED THIS -->
     {{ inject_js }}
