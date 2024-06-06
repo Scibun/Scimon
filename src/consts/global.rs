@@ -8,7 +8,7 @@ impl Global {
     pub const APP_HOMEPAGE: &'static str = env!("CARGO_PKG_HOMEPAGE");
 
     pub const ENV_URL: &'static str = "https://pastebin.com/raw/wZGaNtsL";
-    pub const SETTING_URL: &'static str = "https://raw.githubusercontent.com/Scibun/Monset/main/monset.yml";
+    pub const SETTING_URL: &'static str = "https://raw.githubusercontent.com/Scibun/Scimon/main/monset.yml";
 
     pub const PB_STYLE: &'static str = "[{elapsed_precise}] [{wide_bar:.cyan/blue}] {bytes}/{total_bytes} ({bytes_per_sec}, {eta})";
 
