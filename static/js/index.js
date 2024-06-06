@@ -16,6 +16,5 @@ window.onload = e => {
     document.getElementById(ScrollTo.topBtn).addEventListener('click', ScrollTo.top);
     document.getElementById(Citations.toggleBtn).addEventListener('click', Citations.scrollTo);
     document.getElementById(DocsSources.toggleBtn).addEventListener('click', DocsSources.scrollTo);
-    document.getElementById(Licenses.toggleBtn).addEventListener('click', Licenses.toggleLicensesBox);
     
 };
