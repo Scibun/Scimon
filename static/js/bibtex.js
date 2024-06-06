@@ -4,11 +4,33 @@ const BibTex = ( e => {
     let elementModal = Elements.bibTexModal;
     let elementMaskModal = Elements.bibTextMaskModal;
 
+    let formatBibText = text => {
+        let textWithoutPTag = text.replace(
+            /<\/?p>/g, ''
+        );
+
+        let braceIndex = textWithoutPTag.indexOf(
+            '{', textWithoutPTag.indexOf('@')
+        );
+
+        let firstPart = textWithoutPTag.slice(
+            0, braceIndex + 1
+        );
+
+        let secondPart = textWithoutPTag.slice(
+            braceIndex + 1
+        ).replace(
+            /,/g, ',\n      '
+        );
+
+        return firstPart + secondPart.slice(0, -1) + '\n' + secondPart.slice(-1);
+    };
+
     let get = el => {
         let getElementModal = document.getElementById(elementModal);
 
         let dataBibtexValue = el.getAttribute('data-bibtex');
-        let getBibTex = Licenses.formatBibText(dataBibtexValue);
+        let getBibTex = formatBibText(dataBibtexValue);
 
         document.getElementById(elementCode).innerHTML = getBibTex;
 

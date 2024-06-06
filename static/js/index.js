@@ -2,7 +2,6 @@ window.onload = e => {
 
     Elements.pageTitle();
 
-    Licenses.init();
     Citations.init();
     MathDiagram.init();
     DocsSources.init();
