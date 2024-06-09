@@ -12,7 +12,7 @@ pub struct Flags {
     pub scrape: bool,
 
     #[arg(short, long)]
-    /// Run a Paimon list or execute a specific list
+    /// Execute a list of tasks or run a specific task
     pub run: Option<String>,
 
     #[arg(long)]
@@ -28,18 +28,18 @@ pub struct Flags {
     pub no_checksum_validate: bool,
 
     #[arg(long)]
-    /// Disable the comments and !debug macro
+    /// Disable the comments and !debug directive
     pub no_comments: bool,
 
     #[arg(long)]
-    /// Disable !open_link macro
+    /// Disable !open_link directive
     pub no_open_link: bool,
 
     #[arg(long)]
-    /// Disable !readme macro
+    /// Disable !readme directive
     pub no_readme: bool,
 
     #[arg(long)]
-    /// Your Paimon settings
+    /// Your settings
     pub options: Option<String>,
 }

@@ -10,6 +10,4 @@ impl Global {
     pub const ENV_URL: &'static str = "https://raw.githubusercontent.com/Scibun/Scimon/main/.env.example";
     pub const SETTING_URL: &'static str = "https://raw.githubusercontent.com/Scibun/Scimon/main/scimon.yml";
 
-    pub const PB_STYLE: &'static str = "[{elapsed_precise}] [{wide_bar:.cyan/blue}] {bytes}/{total_bytes} ({bytes_per_sec}, {eta})";
-
 }

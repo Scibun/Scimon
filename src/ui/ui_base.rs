@@ -47,7 +47,9 @@ impl UI {
     }
 
     pub fn pb_template() -> ProgressStyle {
-        ProgressStyle::with_template(Global::PB_STYLE).unwrap().progress_chars("█░")
+        ProgressStyle::with_template(
+            "[{elapsed_precise}] [{wide_bar:.cyan/blue}] {bytes}/{total_bytes} ({bytes_per_sec}, {eta})"
+        ).unwrap().progress_chars("█░")
     }
 
 }

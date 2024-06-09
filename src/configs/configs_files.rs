@@ -23,14 +23,13 @@ pub struct DownloadConfigsFiles;
 impl DownloadConfigsFiles {
     
     pub async fn env_file(print: bool, force_mode: bool) -> Result<(), Box<dyn Error>> {
-        let url = Global::ENV_URL;
         let output_directory = &*System::APP_FOLDER;
     
         TkFs::create_dir_all(
             output_directory.clone()
         ).await?;
     
-        let response = reqwest::get(url).await?;
+        let response = reqwest::get(Global::ENV_URL).await?;
         if response.status().is_success() {
             let file_path = output_directory.join(".env");
     
