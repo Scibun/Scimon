@@ -70,7 +70,7 @@ impl Providers {
         let paper = Self::extract_doi(url);
 
         let paper_url = format!(
-            "{}{}", Uris::SCIHUB_API_REQUEST, paper
+            "{}{}", Uris::SCIHUB_ADDONS_ENDPOINT, paper
         );
         
         let filename = FileRemote::get_filename(&paper_url).await?;

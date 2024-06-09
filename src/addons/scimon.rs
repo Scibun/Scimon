@@ -66,7 +66,7 @@ impl Scimon {
 
     pub async fn get(run: &str, flags: &Flags) -> Result<String, Box<dyn Error>> {
         let list = StrUtils::remove_initial_character(run, '@');
-        let mut url = Uris::RAVENLIB_API_REQUEST.to_owned();
+        let mut url = Uris::SCIMON_API_REQUEST.to_owned();
     
         url.push_str("lists");
         url.push_str("/");

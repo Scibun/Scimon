@@ -10,11 +10,11 @@ impl Uris {
         "wikisource.org",
     ];
 
-    // Ravenlib
-    pub const RAVENLIB_API_REQUEST: &'static str = "http://localhost/Ravenlib/api/";
-    pub const SCIHUB_API_REQUEST: &'static str = "https://addons.scibun.com/scihub?paper=";
-    pub const PAIMON_SCRAPE_API_REQUEST: &'static str = "https://addons.scibun.com/scrape?url=";
-    
+    // Scimon
+    pub const SCIMON_API_REQUEST: &'static str = "http://localhost/Scimon/api/";
+    pub const SCIHUB_ADDONS_ENDPOINT: &'static str = "https://addons.scibun.com/scihub?paper=";
+    pub const SCIMON_SCRAPE_API_ENPOINT: &'static str = "https://addons.scibun.com/scrape?url=";
+
     pub const README_TEMPLATE_LINK: &'static str = "https://template.scibun.com/";
 
     // Third-parties
