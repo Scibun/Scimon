@@ -24,12 +24,13 @@ impl DownloadConfigsFiles {
     
     pub async fn env_file(print: bool, force_mode: bool) -> Result<(), Box<dyn Error>> {
         let output_directory = &*System::APP_FOLDER;
+        let uri = format!("{}{}", Global::DOWNLOAD_FILES_URI, ".env.example");
     
         TkFs::create_dir_all(
             output_directory.clone()
         ).await?;
     
-        let response = reqwest::get(Global::ENV_URL).await?;
+        let response = reqwest::get(uri).await?;
         if response.status().is_success() {
             let file_path = output_directory.join(".env");
     
@@ -59,14 +60,14 @@ impl DownloadConfigsFiles {
     }
       
     pub async fn settings_file(print: bool, force_mode: bool) -> Result<(), Box<dyn Error>> {
-        let url = Global::SETTING_URL;
         let output_directory = &*System::APP_FOLDER;
+        let uri = format!("{}{}", Global::DOWNLOAD_FILES_URI, "scimon.yml");
     
         TkFs::create_dir_all(
             output_directory.clone()
         ).await?;
     
-        let response = reqwest::get(url).await?;
+        let response = reqwest::get(uri).await?;
         if response.status().is_success() {
             let file_path = output_directory.join(
                 format!("{}.yml", Global::APP_NAME.to_lowercase())
