@@ -30,11 +30,7 @@ impl PrimeDownIO {
             let _ = fs::create_dir(&path);
         }
 
-        format!(
-            "{}\\{}", path, &file.replace(
-                ".txt", ".html"
-            )
-        )
+        format!("{}\\{}", path, &FileMisc::replace_extension(file, "html"))
     }
 
 }

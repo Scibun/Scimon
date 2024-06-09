@@ -3,13 +3,12 @@ use serde_yaml::Value;
 use crate::{
     utils::str::StrUtils,
     configs::settings::Settings,
+    prime_down::inject::pd_inject_js::PrimeDownInjectJS,
 
     consts::{
         uris::Uris,
         global::Global,
     },
-
-    prime_down::inject::pd_inject_js::PrimeDownInjectJS,
 };
 
 pub struct PrimeDownInject;
@@ -47,7 +46,7 @@ impl PrimeDownInject {
         ).replace(
             "{{ markdown_content }}", &markdown_html
         ).replace(
-            "{{ inject_js }}", &Self::get_js(render_mode.clone())
+            "{{ inject_js }}", &Self::get_js(render_mode)
         )
     }
     
