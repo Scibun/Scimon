@@ -65,16 +65,17 @@ impl ReadMeBlock {
         }
     }
 
-    pub fn render_block_and_save_file(run: &str, flags: &Flags) {
+    pub async fn render_block_and_save_file(run: &str, flags: &Flags) {
         if !flags.no_readme {
             if let Some(markdown_html) = Self::render(run) {
                 let path = Markdown::get_filename_rendered(run);
-                let contents = PrimeDown::render_content(&run, markdown_html);
-
-                FileMisc::write_file(&path, contents);
-                Markdown::open_file(&path, flags.no_open_link);
                 
-                MacrosAlerts::readme(&path);
+                if let Ok(contents) = PrimeDown::render_content(&run, markdown_html).await {
+                    FileMisc::write_file(&path, contents);
+                    Markdown::open_file(&path, flags.no_open_link);
+                    
+                    MacrosAlerts::readme(&path);
+                }
             }
         }
     }
@@ -90,12 +91,13 @@ impl ReadMeBlock {
     
                 let markdown_content = FileRemote::content(&url).await?;
                 let contents_extras = Markdown::append_extras_and_render(&markdown_content);
-                let contents = PrimeDown::render_content(&get_last_part, contents_extras);
-            
-                FileMisc::write_file(&path, contents);
-                Markdown::open_file(&path, flags.no_open_link);
-                
-                MacrosAlerts::readme(&path);
+
+                if let Ok(contents) = PrimeDown::render_content(&get_last_part, contents_extras).await {
+                    FileMisc::write_file(&path, contents);
+                    Markdown::open_file(&path, flags.no_open_link);
+                    
+                    MacrosAlerts::readme(&path);
+                }
             }
         }
     

@@ -1,11 +1,6 @@
-use std::fs;
 use serde_yaml::Value;
 
-use crate::{
-    configs::settings::Settings,
-    consts::prime_down::PrimeDownEnv,
-    prime_down::pd_minify::PrimeDownMinify,
-};
+use crate::configs::settings::Settings;
 
 pub struct PrimeDownInjectJS;
 
@@ -45,33 +40,6 @@ impl PrimeDownInjectJS {
         ).unwrap_or_default().replace(
             "|\n", "\n"
         ).trim().to_string()
-    } 
-
-    pub fn load_from_files(minify: Value) -> String {
-        let mut content_js = String::new();
-        let js_path = PrimeDownEnv::README_TEMPLATE_JS_FILES;
-    
-        for entry in fs::read_dir(js_path).unwrap() {
-            let entry = entry.unwrap();
-            let path = entry.path();
-    
-            if path.is_file() && path.extension().map_or(false, |ext| ext == "js") {
-                let js_content = fs::read_to_string(path).unwrap();
-                let format_js_content = &format!("{}\n", &js_content);
-
-                content_js.push_str(&format_js_content);
-            }
-        }
-    
-        content_js = if minify == true {
-            PrimeDownMinify::js(&content_js)
-        } else {
-            content_js
-        };
-        
-        format!(
-            "<script>{}</script>", &content_js
-        )
     }
 
 }
