@@ -50,9 +50,9 @@ impl fmt::Display for ApiError {
 
 impl Error for ApiError {}
 
-pub struct Ravenlib;
+pub struct Scimon;
 
-impl Ravenlib {
+impl Scimon {
     
     pub fn check_is_user(input: &str) -> bool {
         let parts: Vec<&str> = input.split('/').collect();
@@ -78,7 +78,7 @@ impl Ravenlib {
             .get(&url)
             .header(
                 header::AUTHORIZATION, format!(
-                    "Bearer {}", Env::env_var("RAVENLIB_API_KEY")
+                    "Bearer {}", Env::env_var("SCIMON_API_KEY")
                 )
             )
             .send().await?;

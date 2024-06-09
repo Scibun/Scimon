@@ -13,7 +13,7 @@ use crate::{
 
     addons::{
         scrape::Scrape,
-        ravenlib::Ravenlib, 
+        scimon::Scimon, 
     },
 
     configs::{
@@ -60,11 +60,11 @@ impl Scibun {
         UI::header();
         
         if !run.is_empty() {
-            if !Ravenlib::check_is_user(run) {
+            if !Scimon::check_is_user(run) {
                 let _ = ReadList::read_dataset(run, &flags).await;
                 let _ = ReadMeBlock::render_block_and_save_file(run, &flags);
             } else {
-                let _ = Ravenlib::get(run, &flags).await;
+                let _ = Scimon::get(run, &flags).await;
             }
         }
 
