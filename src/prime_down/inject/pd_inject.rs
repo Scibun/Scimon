@@ -5,8 +5,8 @@ use crate::{
     configs::settings::Settings,
 
     consts::{
+        uris::Uris,
         global::Global,
-        prime_down::PrimeDownEnv,
     },
 
     prime_down::inject::pd_inject_js::PrimeDownInjectJS,
@@ -35,8 +35,8 @@ impl PrimeDownInject {
             )
         );
 
-        let bundle_js_link = format!("{}bundle.js", PrimeDownEnv::README_TEMPLATE_BUNDLE_LINK);
-        let bundle_css_link = format!("{}bundle.css", PrimeDownEnv::README_TEMPLATE_BUNDLE_LINK);
+        let bundle_js_link = format!("{}static/dist/bundle.js", Uris::README_TEMPLATE_LINK);
+        let bundle_css_link = format!("{}static/dist/bundle.css", Uris::README_TEMPLATE_LINK);
         
         contents.replace(
             "{{ page_title }}", &title

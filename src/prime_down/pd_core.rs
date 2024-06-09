@@ -9,11 +9,14 @@ use headless_chrome::{
 };
 
 use crate::{
-    utils::base64::Base64,
-    utils::remote::FileRemote,
+    consts::uris::Uris,
     configs::settings::Settings,
-    consts::prime_down::PrimeDownEnv,
     prime_down::inject::pd_inject::PrimeDownInject,
+
+    utils::{
+        base64::Base64,
+        remote::FileRemote,
+    },
 };
 
 pub struct PrimeDown;
@@ -22,7 +25,7 @@ impl PrimeDown {
 
     pub async fn render_content(file: &str, md_content: String) -> Result<String, Box<dyn Error>> {
         let minify_prop = Settings::get("render_markdown.minify_html", "BOOLEAN");
-        let template_content = FileRemote::content(PrimeDownEnv::README_TEMPLATE_LINK).await?;
+        let template_content = FileRemote::content(Uris::README_TEMPLATE_LINK).await?;
         let content = PrimeDownInject::content(&file, template_content, md_content);
 
         let output = if minify_prop == true {
