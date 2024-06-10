@@ -11,7 +11,7 @@ use headless_chrome::{
 use crate::{
     consts::uris::Uris,
     configs::settings::Settings,
-    prime_down::inject::pd_inject::PrimeDownInject,
+    prime_down::pd_inject::PrimeDownInject,
 
     utils::{
         base64::Base64,

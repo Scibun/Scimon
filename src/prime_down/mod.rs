@@ -2,7 +2,7 @@ pub mod pd_io;
 pub mod pd_core;
 
 // Helpers
-pub mod inject;
+pub mod pd_inject;
 
 // Extras
 pub mod pd_extras;

@@ -9,10 +9,3 @@ render_markdown:
   overwrite: true # Boolean (valid values: 'true' or 'false'; default: 'true')
   mode: 'scimon' # String (valid values: 'scimon' and 'pure'; default: 'scimon')
   minify_html: true # Boolean (valid values: 'true' or 'false'; default: 'true')
-  minify_extra_plugins: true # Boolean (valid values: 'true' or 'false'; default: 'true')
-
-  load_js_cdn: # List
-    - 'https://cdn.jsdelivr.net/npm/citation-js'
-    - 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
-    - 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js'
-    - 'https://addons.scibun.com/static/prism.js'
