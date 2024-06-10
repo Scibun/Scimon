@@ -7,5 +7,4 @@ ui:
 render_markdown:
   output_path: '{app_path}' # String (default: '{app_path}')
   overwrite: true # Boolean (valid values: 'true' or 'false'; default: 'true')
-  mode: 'scimon' # String (valid values: 'scimon' and 'pure'; default: 'scimon')
   minify_html: true # Boolean (valid values: 'true' or 'false'; default: 'true')
