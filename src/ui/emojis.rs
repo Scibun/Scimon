@@ -4,7 +4,6 @@ impl Emojis {
 
     pub const HOME: &'static str = "🏠";
     pub const CLOCK: &'static str = "⏰";
-    pub const TOOLS: &'static str = "🛠️";
     pub const VERSION: &'static str = "📜";
 
     pub const LOCKED: &'static str = "🔒";
