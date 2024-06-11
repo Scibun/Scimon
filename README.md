@@ -24,3 +24,27 @@ For more help and document, see our documentation:
 - [Scimon.yml file](https://scibun.github.io/ScimonDocs/scimon.yml-file.html)
 - [.env file](https://scibun.github.io/ScimonDocs/env-file.html)
 - [External Resources Usage](https://scibun.github.io/ScimonDocs/external-resources.html)
+
+## Example of code and execute
+
+```monset
+path = "downloads/"
+open = "https://scibun.com"
+
+readme = "https://example.com/readme-example.md"
+checksum = "https://example.com/scimon.sha256"
+checksum.unmatch = "keep"
+
+downloads {
+    https://example.com/file1.pdf !ignore
+    https://example.com/file2.pdf
+    https://example.com/file3.pdf !ignore
+    https://example.com/file4.pdf
+}
+```
+
+Run the command:
+
+```bash
+scimon -r scimon.mon
+```
