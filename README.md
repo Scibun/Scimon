@@ -10,32 +10,17 @@
 
 For more help and document, see our documentation:
 
-Build:
-
-* [Build](https://github.com/Scibun/Scibun/wiki/Build)
-
-Getting Started:
-
-* [Basic usage](https://github.com/Scibun/Scibun/wiki/Basic-usage)
-* [Flags](https://github.com/Scibun/Scibun/wiki/Flags)
-
-Syntax:
-
-* [Download block](https://github.com/Scibun/Scibun/wiki/Download-block)
-* [Macros &amp; Comments](https://github.com/Scibun/Scibun/wiki/Macros-&-Comments)
-* [Readme block](https://github.com/Scibun/Scibun/wiki/Readme-block)
-
-Addons:
-
-* [Providers](https://github.com/Scibun/Scibun/wiki/Providers)
-* [Scrape](https://github.com/Scibun/Scibun/wiki/Scrape)
-
-Internal:
-
-* [Scibun.yml](https://github.com/Scibun/Scibun/wiki/Scibun.yml)
-* [PrimeDown Engine](https://github.com/Scibun/Scibun/wiki/PrimeDown-Engine)
-* [Setting&#39;s](https://github.com/Scibun/Scibun/wiki/Settings)
-
-Transparency:
-
-* [External Resource Usage](https://github.com/Scibun/Scibun/wiki/External-Resource-Usage)
+- [How to build](https://scibun.github.io/ScimonDocs/build.html)
+- [Basic usage](https://scibun.github.io/ScimonDocs/basic-usage.html)
+- [Flags](https://scibun.github.io/ScimonDocs/flags.html)
+- [Downloads Block](https://scibun.github.io/ScimonDocs/download-block.html)
+- [Readme Block](https://scibun.github.io/ScimonDocs/readme-block.html)
+- [Open links](https://scibun.github.io/ScimonDocs/open-links.html)
+- [Checksum and Checksum Validate](https://scibun.github.io/ScimonDocs/checsum.html)
+- [Directives and Comments](https://scibun.github.io/ScimonDocs/directives.html)
+- [Markdown render](https://scibun.github.io/ScimonDocs/markdown-render.html)
+- [Scrape](https://scibun.github.io/ScimonDocs/scrape.html)
+- [Providers](https://scibun.github.io/ScimonDocs/providers.html)
+- [Scimon.yml file](https://scibun.github.io/ScimonDocs/scimon.yml-file.html)
+- [.env file](https://scibun.github.io/ScimonDocs/env-file.html)
+- [External Resources Usage](https://scibun.github.io/ScimonDocs/external-resources.html)
