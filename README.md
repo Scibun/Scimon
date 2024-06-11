@@ -1,6 +1,8 @@
-<div align='center'>Increase productivity with a Rust-based batch PDF downloader. Fetch multiple PDFs swiftly, improving accessibility and efficiency. Ideal for managing large document collections.</div>
+<div align='center'>
+    <img src="https://i.imgur.com/ZZ9a1DU.png"/>
+</div>
 
-<p></p>
+<p align='center'><b>Unleash your knowledge.</b></p>
 
 <p align='center'>
 	<a href='https://github.com/Scibun/Scibun/actions/workflows/rust.yml'><img src='https://github.com/Scibun/Scibun/actions/workflows/rust.yml/badge.svg'/></a>
