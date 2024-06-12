@@ -27,7 +27,7 @@ use crate::{
 
     monset::{
         macros::Macros,
-        vars_block::VarsBlock,
+        vars::Vars,
     },
 
     ui::{
@@ -51,9 +51,9 @@ pub struct Tasks;
 impl Tasks {
 
     pub fn compress(contents: &str, files: &Vec<String>) -> IoResult<()> {
-        if let Some(zip_file) = VarsBlock::get_compress(contents) {
+        if let Some(zip_file) = Vars::get_compress(contents) {
             UI::section_header("Compressing files");
-            let folder_path = VarsBlock::get_path(contents);
+            let folder_path = Vars::get_path(contents);
 
             let output_path = Path::new(&zip_file);
             let output_file = File::create(output_path)?;

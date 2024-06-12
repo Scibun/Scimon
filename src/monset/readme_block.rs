@@ -8,7 +8,7 @@ use std::{
 use crate::{
     args_cli::Flags,
     system::markdown::Markdown,
-    monset::vars_block::VarsBlock,
+    monset::vars::Vars,
     prime_down::pd_core::PrimeDown,
     ui::macros_alerts::MacrosAlerts,
     regexp::regex_blocks::BlocksRegExp,
@@ -82,7 +82,7 @@ impl ReadMeBlock {
 
     pub async fn render_var_and_save_file(contents: &str, flags: &Flags) -> Result<(), Box<dyn Error>> {
         if !flags.no_readme {
-            if let Some(url) = VarsBlock::get_readme(contents).await {
+            if let Some(url) = Vars::get_readme(contents).await {
                 let get_last_part = &UrlMisc::get_last_part(&url);
     
                 let path = Markdown::get_filename_rendered(

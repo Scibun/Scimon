@@ -4,9 +4,9 @@ use regex::Regex;
 
 use crate::regexp::regex_blocks::BlocksRegExp;
 
-pub struct VarsBlock;
+pub struct Vars;
 
-impl VarsBlock {
+impl Vars {
 
     pub fn get_path(contents: &str) -> String {
         let path_pattern = Regex::new(BlocksRegExp::GET_PATH_VAR).unwrap();

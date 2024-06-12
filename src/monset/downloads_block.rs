@@ -18,7 +18,7 @@ use crate::{
     
     monset::{
         macros::Macros, 
-        vars_block::VarsBlock,
+        vars::Vars,
         readme_block::ReadMeBlock, 
     },
 };
@@ -31,7 +31,7 @@ impl DownloadsBlock {
         let mut links = Vec::new();
         
         let contents = reader.lines().collect::<Result<Vec<_>, _>>()?.join("\n");
-        let path = VarsBlock::get_path(&contents);
+        let path = Vars::get_path(&contents);
 
         let start_index = match (contents.find("downloads {"), contents.find("downloads{")) {
             (Some(idx1), Some(idx2)) => Some(idx1.min(idx2)),
@@ -78,7 +78,7 @@ impl DownloadsBlock {
                 }
             }
 
-            VarsBlock::get_open(&contents, flags.no_open_link).await;
+            Vars::get_open(&contents, flags.no_open_link).await;
             ReadMeBlock::render_var_and_save_file(&contents, flags).await?;
 
             Checksum::generate_hashes(&path, checksum_file, &refs, flags).await?;

@@ -12,7 +12,7 @@ use crate::{
     args_cli::Flags,
     utils::file::FileMisc,
     system::hashes::Hashes,
-    monset::vars_block::VarsBlock,
+    monset::vars::Vars,
 
     ui::{
         ui_base::UI,
@@ -25,7 +25,7 @@ pub struct Checksum;
 impl Checksum {
 
     fn checksum_unmatch_delete_file(contents: &str, path: &str, line: &str) {
-        if let Some(value) = VarsBlock::get_checksum_unmatch(contents) {
+        if let Some(value) = Vars::get_checksum_unmatch(contents) {
             if value == "delete" {
                 let file = Hashes::extract_filename(line).unwrap();
                 fs::remove_file(format!("{}{}", path, file)).unwrap();
@@ -62,9 +62,9 @@ impl Checksum {
     
     pub async fn compare_lines(contents: &str, checksum_file: &str, flags: &Flags) -> Result<(), Box<dyn Error>> {
         if !flags.no_checksum && !flags.no_checksum_validate {
-            let path = VarsBlock::get_path(contents);
+            let path = Vars::get_path(contents);
 
-            if let Some(url) = VarsBlock::get_checksum(contents).await {
+            if let Some(url) = Vars::get_checksum(contents).await {
                 let local_hash_file = format!(
                     "{}{}", path, FileMisc::replace_extension(checksum_file, "sha256")
                 ); 
