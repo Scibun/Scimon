@@ -72,7 +72,7 @@ impl RunnerBlock {
                     } else if line_trimmed.ends_with(".js") {
                         Self::exec_script(&line_trimmed, "node")?;
                     } else {
-                        eprintln!("Script não suportado: {}", line_trimmed);
+                        eprintln!("Unsupported script: {}", line_trimmed);
                     }
                 }
             }
