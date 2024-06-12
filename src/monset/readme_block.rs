@@ -8,7 +8,7 @@ use std::{
 use crate::{
     args_cli::Flags,
     system::markdown::Markdown,
-    syntax::vars_block::VarsBlock,
+    monset::vars_block::VarsBlock,
     prime_down::pd_core::PrimeDown,
     ui::macros_alerts::MacrosAlerts,
     regexp::regex_blocks::BlocksRegExp,

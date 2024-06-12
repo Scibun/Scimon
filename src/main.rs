@@ -5,7 +5,7 @@ mod regexp;
 mod consts;
 mod addons;
 mod system;
-mod syntax;
+mod monset;
 mod scibun;
 mod configs;
 mod args_cli;

@@ -3,8 +3,8 @@ use std::error::Error;
 
 use crate::{
     args_cli::Flags,
-    cmd::read_list::ReadList,
-    syntax::readme_block::ReadMeBlock,
+    cmd::monset::Monset,
+    monset::readme_block::ReadMeBlock,
 
     ui::{
         ui_base::UI,
@@ -61,7 +61,7 @@ impl Scibun {
         
         if !run.is_empty() {
             if !Scimon::check_is_user(run) {
-                let _ = ReadList::read_dataset(run, &flags).await;
+                let _ = Monset::exec(run, &flags).await;
                 let _ = ReadMeBlock::render_block_and_save_file(run, &flags);
             } else {
                 let _ = Scimon::get(run, &flags).await;
@@ -69,7 +69,6 @@ impl Scibun {
         }
 
         let _ = Scrape::get(&flags, url).await;
-
         let _ = Self::options(options).await;
     }
 

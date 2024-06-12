@@ -15,14 +15,14 @@ use crate::{
     args_cli::Flags, 
     utils::validation::Validate,
     ui::errors_alerts::ErrorsAlerts,
-    syntax::downloads_block::DownloadsBlock, 
+    monset::downloads_block::DownloadsBlock, 
 };
 
-pub struct ReadList;
+pub struct Monset;
 
-impl ReadList {    
+impl Monset {    
    
-    pub async fn read_dataset(run: &str, flags: &Flags) -> Result<(), Box<dyn Error>> {
+    pub async fn exec(run: &str, flags: &Flags) -> Result<(), Box<dyn Error>> {
         let reader: BufReader<Box<dyn Read>>;
 
         if run.starts_with("http") {

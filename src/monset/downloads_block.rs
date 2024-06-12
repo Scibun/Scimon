@@ -16,7 +16,7 @@ use crate::{
         checksum::Checksum,
     },
     
-    syntax::{
+    monset::{
         macros::Macros, 
         vars_block::VarsBlock,
         readme_block::ReadMeBlock, 

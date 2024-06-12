@@ -24,8 +24,11 @@ use std::{
 
 use crate::{
     args_cli::Flags,
-    syntax::macros::Macros,
-    syntax::vars_block::VarsBlock,
+
+    monset::{
+        macros::Macros,
+        vars_block::VarsBlock,
+    },
 
     ui::{
         ui_base::UI,
@@ -63,7 +66,6 @@ impl Tasks {
             for file in files {
                 let path = Path::new(file);
                 let name = path.strip_prefix(Path::new(&folder_path)).unwrap();
-    
                 zip.start_file(name.to_str().unwrap(), options.clone())?;
 
                 let mut f = File::open(path)?;

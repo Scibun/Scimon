@@ -5,7 +5,7 @@ use is_url::is_url;
 use std::error::Error;
 
 use crate::{
-    syntax::macros::Macros,
+    monset::macros::Macros,
     utils::remote::FileRemote,
     regexp::regex_core::CoreRegExp,
     ui::errors_alerts::ErrorsAlerts,
