@@ -33,6 +33,12 @@ impl System {
         path.push("readme");
         path
     });
+    
+    pub const SCRIPTS_FOLDER: Lazy<PathBuf> = Lazy::new(|| {
+        let mut path = System::APP_FOLDER.clone();
+        path.push("scripts");
+        path
+    });
 
     pub fn date_time() -> String {
         let local_time = Local::now();

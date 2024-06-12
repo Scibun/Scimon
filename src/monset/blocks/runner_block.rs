@@ -36,7 +36,7 @@ impl RunnerBlock {
                     break;
                 }
 
-                Scripts::read(line_trimmed)?;
+                Scripts::read(line_trimmed).await?;
             }
         }
 

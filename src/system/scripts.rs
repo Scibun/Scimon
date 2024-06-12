@@ -1,8 +1,11 @@
 extern crate chrono;
 
+use reqwest;
 use regex::Regex;
 
 use std::{
+    fs::File,
+    io::Write,
     error::Error,
 
     process::{
@@ -12,13 +15,41 @@ use std::{
 };
 
 use crate::{
+    system::system::System,
     regexp::regex_core::CoreRegExp,
     ui::errors_commands_alerts::ErrorsCommandsAlerts,
+
+    utils::{
+        file::FileMisc,
+        remote::FileRemote,
+    },
 };
 
 pub struct Scripts;
 
 impl Scripts {
+
+    pub async fn download(url: &str, path: &str) -> Result<String, Box<dyn Error>> {
+        let response = reqwest::get(url).await?;
+        
+        if response.status().is_success() {
+            let filename = FileRemote::get_filename(url).await?.replace(
+                ".pdf", ""
+            );
+            
+            let file_path = format!(
+                "{}/{}", path, url.split("/").last().unwrap_or(&filename)
+            );
+
+            let mut file = File::create(&file_path)?;
+            let content = response.bytes().await?;
+    
+            file.write_all(&content)?;
+            return Ok(file_path)
+        }
+
+        Ok("".to_string())
+    }
     
     pub fn exec(line: &str, program: &str) -> Result<(), Box<dyn Error>> {
         let line_cleanned = Regex::new(
@@ -43,14 +74,23 @@ impl Scripts {
         Ok(())
     }
 
-    pub fn read(line_trimmed: &str) -> Result<(), Box<dyn Error>> {
+    pub async fn read(line_trimmed: &str) -> Result<(), Box<dyn Error>> {
         if line_trimmed.len() >= 3 {
-            if line_trimmed.ends_with(".py") {
-                Self::exec(&line_trimmed, "python")?;
-            } else if line_trimmed.ends_with(".js") {
-                Self::exec(&line_trimmed, "node")?;
+            let script = if line_trimmed.starts_with("http") {
+                let path = System::SCRIPTS_FOLDER.to_str().unwrap_or_default().to_string();
+
+                FileMisc::create_path(&path);
+                Self::download(&line_trimmed, &path).await?
             } else {
-                ErrorsCommandsAlerts::unsupported(&line_trimmed);
+                line_trimmed.to_string()
+            };
+
+            if script.ends_with(".py") {
+                Self::exec(&script, "python")?;
+            } else if line_trimmed.ends_with(".js") {
+                Self::exec(&script, "node")?;
+            } else {
+                ErrorsCommandsAlerts::unsupported(&script);
             }
         }
 

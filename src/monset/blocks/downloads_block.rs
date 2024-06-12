@@ -47,6 +47,10 @@ impl DownloadsBlock {
             FileMisc::create_path(&path);
             let downloads_content = &contents[start_index + "downloads ".len()..end_index];
 
+            if downloads_content.trim().starts_with("commands {") {
+                return Ok(());
+            }
+
             for line in downloads_content.lines() {
                 let url = line.trim().split_whitespace().next().unwrap_or("");
                 let final_url = Providers::check_provider_line(&url);

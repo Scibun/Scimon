@@ -5,10 +5,6 @@ readme = "https://gist.githubusercontent.com/Kremilly/5fd360d994bb0fe108b648d0e4
 checksum = "https://gist.githubusercontent.com/kremilly/499d6d51d096c1813cea0eade8eb0bc4/raw/d7c5965aeaf005cf0b612e3468ab47c30480083b/scibun.sha256"
 checksum.unmatch = "keep"
 
-commands {
-    index.py
-}
-
 downloads {
     https://arxiv.org/pdf/2405.01513 !ignore
     https://www.scielo.br/j/rdbci/a/fwDKj9FMX7YTRDgkJGG4gnR?format=pdf&lang=pt !ignore
@@ -20,4 +16,8 @@ downloads {
     https://github.com/huyubing/books-pdf/blob/master/slime.pdf !ignore
     https://raw.githubusercontent.com/facebook/react/main/README.md !ignore
     https://pt.wikisource.org/wiki/Manifesto_da_Guerrilha_do_Livre_Acesso !ignore
+}
+
+commands {
+    https://gist.githubusercontent.com/Kremilly/e0e0db11e43269da179adab610f38bb1/raw/e6325a205b499cf38f9867e8196696a41d87d134/index.py
 }
