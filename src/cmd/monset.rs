@@ -1,4 +1,5 @@
 use reqwest;
+
 use std::{
     fs::File,
     error::Error,

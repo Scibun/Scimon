@@ -1,17 +1,10 @@
-use regex::Regex;
-
 use std::{
     io::BufRead,
     error::Error,
-
-    process::{
-        Stdio,
-        Command,
-    },
 };
 
 use crate::{
-    regexp::regex_core::CoreRegExp,
+    system::system::System,
 
     ui::{
         ui_base::UI,
@@ -22,29 +15,6 @@ use crate::{
 pub struct RunnerBlock;
 
 impl RunnerBlock {
-    
-    pub fn exec_script(line: &str, program: &str) -> Result<(), Box<dyn Error>> {
-        let line_cleanned = Regex::new(
-            CoreRegExp::CLEAN_LINE
-        ).unwrap().replace_all(
-            &line, ""
-        ).to_string();
-
-        let output = Command::new(&program)
-            .arg(line_cleanned)
-            .stdout(Stdio::piped())
-            .output()?;
-        
-        if output.status.success() {
-            let stdout = String::from_utf8_lossy(&output.stdout);
-            println!("{}", stdout);
-        } else {
-            let stderr = String::from_utf8_lossy(&output.stderr);
-            ErrorsCommandsAlerts::executing(&stderr);
-        }
-
-        Ok(())
-    }
 
     pub async fn read_lines<R>(reader: R) -> Result<(), Box<dyn Error>> where R: BufRead {
         UI::section_header("Running");
@@ -72,9 +42,9 @@ impl RunnerBlock {
 
                 if line_trimmed.len() >= 3 {
                     if line_trimmed.ends_with(".py") {
-                        Self::exec_script(&line_trimmed, "python")?;
+                        System::exec_script(&line_trimmed, "python")?;
                     } else if line_trimmed.ends_with(".js") {
-                        Self::exec_script(&line_trimmed, "node")?;
+                        System::exec_script(&line_trimmed, "node")?;
                     } else {
                         ErrorsCommandsAlerts::unsupported(&line_trimmed);
                     }
