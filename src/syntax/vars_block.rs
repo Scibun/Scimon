@@ -24,7 +24,10 @@ impl VarsBlock {
             let open_pattern = Regex::new(BlocksRegExp::GET_OPEN_VAR).unwrap();
         
             if let Some(caps) = open_pattern.captures(&contents) {
-                caps.get(1).map(|m| m.as_str().to_string())
+                let url = caps.get(1).map(|m| m.as_str().to_string())?;
+                open::that(&url).unwrap();
+                
+                None
             } else {
                 None
             }
