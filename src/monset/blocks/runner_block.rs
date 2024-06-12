@@ -4,12 +4,8 @@ use std::{
 };
 
 use crate::{
-    system::system::System,
-
-    ui::{
-        ui_base::UI,
-        errors_commands_alerts::ErrorsCommandsAlerts,
-    },
+    ui::ui_base::UI,
+    system::scripts::Scripts,
 };
 
 pub struct RunnerBlock;
@@ -40,15 +36,7 @@ impl RunnerBlock {
                     break;
                 }
 
-                if line_trimmed.len() >= 3 {
-                    if line_trimmed.ends_with(".py") {
-                        System::exec_script(&line_trimmed, "python")?;
-                    } else if line_trimmed.ends_with(".js") {
-                        System::exec_script(&line_trimmed, "node")?;
-                    } else {
-                        ErrorsCommandsAlerts::unsupported(&line_trimmed);
-                    }
-                }
+                Scripts::read(line_trimmed)?;
             }
         }
 
