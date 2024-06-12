@@ -6,14 +6,14 @@ mod consts;
 mod addons;
 mod system;
 mod monset;
-mod scibun;
+mod scimon;
 mod configs;
 mod args_cli;
 mod prime_down;
 
-use crate::scibun::Scibun;
+use crate::scimon::Scimon;
 
 #[tokio::main]
 async fn main() {
-    Scibun::init().await;
+    Scimon::init().await;
 }

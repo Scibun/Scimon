@@ -5,6 +5,10 @@ readme = "https://gist.githubusercontent.com/Kremilly/5fd360d994bb0fe108b648d0e4
 checksum = "https://gist.githubusercontent.com/kremilly/499d6d51d096c1813cea0eade8eb0bc4/raw/d7c5965aeaf005cf0b612e3468ab47c30480083b/scibun.sha256"
 checksum.unmatch = "keep"
 
+commands {
+    index.py
+}
+
 downloads {
     https://arxiv.org/pdf/2405.01513 !ignore
     https://www.scielo.br/j/rdbci/a/fwDKj9FMX7YTRDgkJGG4gnR?format=pdf&lang=pt !ignore

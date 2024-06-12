@@ -1,13 +1,11 @@
 use reqwest;
-
 use std::{
     fs::File,
     error::Error,
 
     io::{
-        Read,
+        Read, 
         Cursor,
-        BufReader,
     },
 };
 
@@ -15,15 +13,19 @@ use crate::{
     args_cli::Flags, 
     utils::validation::Validate,
     ui::errors_alerts::ErrorsAlerts,
-    monset::downloads_block::DownloadsBlock, 
+
+    monset::{
+        runner_block::RunnerBlock,
+        downloads_block::DownloadsBlock,
+    }, 
 };
 
 pub struct Monset;
 
-impl Monset {    
-   
+impl Monset {  
+
     pub async fn exec(run: &str, flags: &Flags) -> Result<(), Box<dyn Error>> {
-        let reader: BufReader<Box<dyn Read>>;
+        let mut buffer = Vec::new();
 
         if run.starts_with("http") {
             let _ = Validate::file_type(run, ".pbd").map_err(|e| {
@@ -32,23 +34,25 @@ impl Monset {
             
             let response = reqwest::get(run).await?;
             let bytes = response.bytes().await?;
-            let cursor = Cursor::new(bytes);
-
-            reader = BufReader::new(Box::new(cursor) as Box<dyn Read>);
+            buffer.extend_from_slice(&bytes);
         } else {
             let _ = Validate::file(run).map_err(|e| {
                 ErrorsAlerts::generic(&e.to_string());
             });
-            
-            let file = File::open(run)?;
-            reader = BufReader::new(Box::new(file) as Box<dyn Read>);
+
+            let mut file = File::open(run)?;
+            file.read_to_end(&mut buffer)?;
         }
 
-        DownloadsBlock::read_lines(
-            reader,
-            flags,
-            run,
-        ).await?;
+        {
+            let mut reader = Cursor::new(buffer.clone());
+            DownloadsBlock::read_lines(&mut reader, flags, run).await?;
+        }
+
+        {
+            let mut reader = Cursor::new(buffer);
+            RunnerBlock::read_lines(&mut reader).await?;
+        }
 
         Ok(())
     }

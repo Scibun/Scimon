@@ -50,9 +50,9 @@ impl fmt::Display for ApiError {
 
 impl Error for ApiError {}
 
-pub struct Scimon;
+pub struct Scibun;
 
-impl Scimon {
+impl Scibun {
     
     pub fn check_is_user(input: &str) -> bool {
         let parts: Vec<&str> = input.split('/').collect();

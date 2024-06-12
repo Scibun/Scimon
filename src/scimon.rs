@@ -13,7 +13,7 @@ use crate::{
 
     addons::{
         scrape::Scrape,
-        scimon::Scimon, 
+        scibun::Scibun, 
     },
 
     configs::{
@@ -23,9 +23,9 @@ use crate::{
     },
 };
 
-pub struct Scibun;
+pub struct Scimon;
 
-impl Scibun {
+impl Scimon {
     
     async fn options(options: &str) -> Result<(), Box<dyn Error>> {
         if options == "open-env" {
@@ -60,11 +60,11 @@ impl Scibun {
         UI::header();
         
         if !run.is_empty() {
-            if !Scimon::check_is_user(run) {
+            if !Scibun::check_is_user(run) {
                 let _ = Monset::exec(run, &flags).await;
                 let _ = ReadMeBlock::render_block_and_save_file(run, &flags);
             } else {
-                let _ = Scimon::get(run, &flags).await;
+                let _ = Scibun::get(run, &flags).await;
             }
         }
 

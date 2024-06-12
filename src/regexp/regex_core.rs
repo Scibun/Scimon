@@ -10,4 +10,6 @@ impl CoreRegExp {
 
     pub const GET_CHECKSUM: &'static str = r"(?i)\b([a-f0-9]{64})\b\s+(.+)";
 
+    pub const CLEAN_LINE: &'static str = r"\s*\{\s*\}\s*";
+
 }
