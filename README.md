@@ -31,19 +31,33 @@ For more help and document, see our documentation:
 
 ```monset
 path = "downloads/"
-open = "https://scibun.com"
+open = "https://github.com/kremilly"
 
-readme = "https://example.com/readme-example.md"
-checksum = "https://example.com/scimon.sha256"
+readme = "https://gist.githubusercontent.com/Kremilly/5fd360d994bb0fe108b648d0e4c9e92f/raw/ac524eba2112bf0bdbac1ad27e24f78f678589ec/readme-example.md"
+checksum = "https://gist.githubusercontent.com/kremilly/499d6d51d096c1813cea0eade8eb0bc4/raw/d7c5965aeaf005cf0b612e3468ab47c30480083b/scibun.sha256"
 checksum.unmatch = "keep"
 
+commands {
+    index.py
+}
+
 downloads {
-    https://example.com/file1.pdf !ignore
-    https://example.com/file2.pdf
-    https://example.com/file3.pdf !ignore
-    https://example.com/file4.pdf
+    https://arxiv.org/pdf/2405.01513 !ignore
+    https://www.scielo.br/j/rdbci/a/fwDKj9FMX7YTRDgkJGG4gnR?format=pdf&lang=pt !ignore
+    https://en.wikipedia.org/wiki/Rust_(programming_language) !ignore
+    https://en.wikipedia.org/wiki/Google !ignore
+    https://www.nasa.gov/wp-content/uploads/static/history/alsj/a17/A17_FlightPlan.pdf !ignore
+    https://sci-hub.se/10.1080/0025570x.2002.11953151
+    https://olacesar.com/e-books/protegido.pdf
+    https://github.com/huyubing/books-pdf/blob/master/slime.pdf !ignore
+    https://raw.githubusercontent.com/facebook/react/main/README.md !ignore
+    https://pt.wikisource.org/wiki/Manifesto_da_Guerrilha_do_Livre_Acesso !ignore
 }
 ```
+
+> [!note]
+>
+> Save as `scimon.mon`
 
 Run the command:
 
