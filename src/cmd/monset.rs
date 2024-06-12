@@ -16,8 +16,8 @@ use crate::{
     ui::errors_alerts::ErrorsAlerts,
 
     monset::{
-        runner_block::RunnerBlock,
-        downloads_block::DownloadsBlock,
+        blocks::runner_block::RunnerBlock,
+        blocks::downloads_block::DownloadsBlock,
     }, 
 };
 

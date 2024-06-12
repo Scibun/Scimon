@@ -4,7 +4,7 @@ use std::error::Error;
 use crate::{
     args_cli::Flags,
     cmd::monset::Monset,
-    monset::readme_block::ReadMeBlock,
+    monset::blocks::readme_block::ReadMeBlock,
 
     ui::{
         ui_base::UI,
