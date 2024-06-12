@@ -11,8 +11,12 @@ use std::{
 };
 
 use crate::{
-    ui::ui_base::UI,
     regexp::regex_core::CoreRegExp,
+
+    ui::{
+        ui_base::UI,
+        errors_commands_alerts::ErrorsCommandsAlerts,
+    },
 };
 
 pub struct RunnerBlock;
@@ -36,7 +40,7 @@ impl RunnerBlock {
             println!("{}", stdout);
         } else {
             let stderr = String::from_utf8_lossy(&output.stderr);
-            eprintln!("Error executing Python script: {}", stderr);
+            ErrorsCommandsAlerts::executing(&stderr);
         }
 
         Ok(())
@@ -72,7 +76,7 @@ impl RunnerBlock {
                     } else if line_trimmed.ends_with(".js") {
                         Self::exec_script(&line_trimmed, "node")?;
                     } else {
-                        eprintln!("Unsupported script: {}", line_trimmed);
+                        ErrorsCommandsAlerts::unsupported(&line_trimmed);
                     }
                 }
             }
