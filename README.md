@@ -17,6 +17,7 @@ For more help and document, see our documentation:
 - [Flags](https://scibun.github.io/ScimonDocs/flags.html)
 - [Downloads Block](https://scibun.github.io/ScimonDocs/download-block.html)
 - [Readme Block](https://scibun.github.io/ScimonDocs/readme-block.html)
+- [Commands Block](https://scibun.github.io/ScimonDocs/commands-block.html) (Experimental)
 - [Open links](https://scibun.github.io/ScimonDocs/open-links.html)
 - [Checksum and Checksum Validate](https://scibun.github.io/ScimonDocs/checsum.html)
 - [Directives and Comments](https://scibun.github.io/ScimonDocs/directives.html)
