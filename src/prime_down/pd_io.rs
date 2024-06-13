@@ -2,7 +2,7 @@ use std::fs;
 
 use crate::{
     utils::file::FileUtils,
-    configs::folders::Folders,
+    consts::folders::Folders,
     configs::settings::Settings,
 };
 

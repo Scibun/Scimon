@@ -9,8 +9,10 @@ use std::{
 };
 
 use crate::{
-    consts::global::Global,
-    configs::folders::Folders,
+    consts::{
+        global::Global,
+        folders::Folders,
+    },
 
     ui::{
         errors_alerts::ErrorsAlerts,

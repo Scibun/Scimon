@@ -10,7 +10,7 @@ use std::{
 };
 
 use crate::{
-    configs::folders::Folders,
+    consts::folders::Folders,
     configs::settings::Settings,
 };
 

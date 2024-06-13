@@ -15,7 +15,7 @@ use std::{
 };
 
 use crate::{
-    configs::folders::Folders,
+    consts::folders::Folders,
     regexp::regex_core::CoreRegExp,
     ui::errors_commands_alerts::ErrorsCommandsAlerts,
 

@@ -16,7 +16,7 @@ use serde_yaml::{
     from_str,
 };
 
-use crate::configs::folders::Folders;
+use crate::consts::folders::Folders;
 
 pub struct Settings;
 
