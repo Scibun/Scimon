@@ -4,7 +4,7 @@ use colored::*;
 
 use crate::{
     ui::emojis::Emojis,
-    system::system::System,
+    system::general::General,
 };
 
 pub struct CompressAlerts;
@@ -12,7 +12,7 @@ pub struct CompressAlerts;
 impl CompressAlerts {
 
     pub fn added(file: &str, zip_file: &str) {
-        let current_datetime = System::date_time();
+        let current_datetime = General::date_time();
     
         println!(
             "[{}] -> Added {} in: {}. {}", 
@@ -24,7 +24,7 @@ impl CompressAlerts {
     }
   
     pub fn completed(zip_file: &str) {
-        let current_datetime = System::date_time();
+        let current_datetime = General::date_time();
     
         println!(
             "[{}] -> All files in the folder have been compressed into {}. {}", 

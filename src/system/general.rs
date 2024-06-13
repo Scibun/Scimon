@@ -1,12 +1,6 @@
 extern crate chrono;
 
 use chrono::Local;
-use once_cell::sync::Lazy;
-use dirs_next::config_dir;
-
-use std::path::PathBuf;
-
-use crate::consts::global::Global;
 
 pub struct General;
 

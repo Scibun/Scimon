@@ -9,7 +9,7 @@ use crate::{
     ui::emojis::Emojis,
     utils::str::StrUtils,
     consts::global::Global,
-    system::system::System,
+    system::general::General,
     configs::settings::Settings,
 };
 
@@ -27,7 +27,7 @@ impl UI {
                 println!("-------------------------------------------------------------------");
                 println!("{} Version: {}", Emojis::VERSION, Global::APP_VERSION.yellow());
                 println!("{} Homepage: {} • {}", Emojis::HOME, Global::APP_HOMEPAGE.blue(), Global::APP_AUTHOR.green());
-                println!("{} Started in: {}", Emojis::CLOCK, System::date_time().magenta());
+                println!("{} Started in: {}", Emojis::CLOCK, General::date_time().magenta());
                 println!("-------------------------------------------------------------------");
             }
         }

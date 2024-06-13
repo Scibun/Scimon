@@ -4,8 +4,8 @@ use colored::*;
 
 use crate::{
     system::{
-        system::System,
         hashes::Hashes,
+        general::General,
     },
     
     ui::{
@@ -19,7 +19,7 @@ pub struct ChecksumAlerts;
 impl ChecksumAlerts {
 
     pub fn created(file: &str) {
-        let current_datetime = System::date_time();
+        let current_datetime = General::date_time();
 
         UI::section_header("checksum");
 
@@ -30,7 +30,7 @@ impl ChecksumAlerts {
 
     pub fn is_equal(line: &str) -> bool {
         if let Ok((hash, filename)) = Hashes::extract_hash_and_filename(line) {
-            let current_datetime = System::date_time();
+            let current_datetime = General::date_time();
 
             println!(
                 "[{}] -> The hash {} of {} is match. {}", 
@@ -46,7 +46,7 @@ impl ChecksumAlerts {
 
     pub fn is_different(line: &str) -> bool {
         if let Ok((hash, filename)) = Hashes::extract_hash_and_filename(line) {
-            let current_datetime = System::date_time();
+            let current_datetime = General::date_time();
 
             println!(
                 "[{}] -> The hash {} of {} is not match. {}", 
@@ -62,7 +62,7 @@ impl ChecksumAlerts {
 
     pub fn lines_total_is_different(local_total_lines: usize, remote_total_lines: usize) {
         if local_total_lines != remote_total_lines {
-            let current_datetime = System::date_time();
+            let current_datetime = General::date_time();
 
             println!("[{}] -> The number of lines in the files is different (Lines: {} (local) of {} (referencies)). {}",
                 current_datetime.red(),
@@ -74,7 +74,7 @@ impl ChecksumAlerts {
     }
 
     pub fn lines_unmatch_file_deleted(filename: &str) {
-        let current_datetime = System::date_time();
+        let current_datetime = General::date_time();
 
         println!("[{}] -> The file {} was deleted, because is hashes unmatched. {}",
             current_datetime.red(),
