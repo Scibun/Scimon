@@ -5,9 +5,9 @@ use std::error::Error;
 
 use crate::utils::file::FileUtils;
 
-pub struct FileRemote;
+pub struct Remote;
 
-impl FileRemote {
+impl Remote {
 
     pub async fn get_status_code(url: &str) -> u16 {
         reqwest::get(url)

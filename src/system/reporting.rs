@@ -6,7 +6,7 @@ use std::error::Error;
 
 use crate::{
     monset::macros::Macros,
-    utils::remote::FileRemote,
+    utils::remote::Remote,
     regexp::regex_core::CoreRegExp,
     ui::errors_alerts::ErrorsAlerts,
 };
@@ -29,7 +29,7 @@ impl Reporting {
                 url_valid = true;
             }
 
-            if FileRemote::get_status_code(final_url).await != 200 && url_valid == true {
+            if Remote::get_status_code(final_url).await != 200 && url_valid == true {
                 let status_code = Box::from("Failed to retrieve the URL with status code other than 200");
                 ErrorsAlerts::download(status_code, final_url);
             }

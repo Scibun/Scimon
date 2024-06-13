@@ -19,7 +19,7 @@ use crate::{
         url::UrlMisc,
         file::FileUtils,
         generate::Generate,
-        remote::FileRemote,
+        remote::Remote,
     },
 
     system::{
@@ -79,7 +79,7 @@ impl Markdown {
     }
 
     pub async fn render(url: &str) -> Result<String, Box<dyn Error>> {
-        let markdown_content = FileRemote::content(url).await?;
+        let markdown_content = Remote::content(url).await?;
     
         let options = Options::empty();
         let parser = Parser::new_ext(&markdown_content, options);
@@ -91,7 +91,7 @@ impl Markdown {
     }
 
     pub async fn create(url: &str, path: &str) -> Result<(), Box<dyn Error>> {
-        if FileRemote::check_content_type(&url, "text/markdown").await? || url.contains(".md") {
+        if Remote::check_content_type(&url, "text/markdown").await? || url.contains(".md") {
             let html_content = Self::render(url).await?;
             
             let original_name = UrlMisc::get_last_part(url);

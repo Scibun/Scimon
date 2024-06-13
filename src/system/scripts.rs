@@ -21,7 +21,7 @@ use crate::{
 
     utils::{
         file::FileUtils,
-        remote::FileRemote,
+        remote::Remote,
     },
 };
 
@@ -33,7 +33,7 @@ impl Scripts {
         let response = reqwest::get(url).await?;
         
         if response.status().is_success() {
-            let filename = FileRemote::get_filename(url, false).await?;
+            let filename = Remote::get_filename(url, false).await?;
             
             let file_path = format!(
                 "{}/{}", path, url.split("/").last().unwrap_or(&filename)

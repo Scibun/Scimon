@@ -17,7 +17,7 @@ use sha2::{
 };
 
 use crate::{
-    utils::remote::FileRemote,
+    utils::remote::Remote,
     regexp::regex_core::CoreRegExp,
 };
 
@@ -62,7 +62,7 @@ impl Hashes {
     }
     
     pub async fn read_remote_file(url: &str) -> Result<(Vec<String>, usize), Box<dyn Error>> {
-        let body = FileRemote::content(url).await?;
+        let body = Remote::content(url).await?;
 
         let lines: Vec<String> = body
             .lines()
