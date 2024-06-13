@@ -78,7 +78,7 @@ impl DownloadsBlock {
                         links.push(url_no_macros.to_string());
                     }
                 } else {
-                    Macros::handle_ignore_macro_flag(&final_url, flags.no_ignore)?;
+                    MacrosAlerts::ignore(&final_url);
                 }
             }
 
