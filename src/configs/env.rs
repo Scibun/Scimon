@@ -10,7 +10,7 @@ use std::{
 };
 
 use crate::{
-    system::system::System,
+    configs::folders::Folders,
     configs::settings::Settings,
 };
 
@@ -23,7 +23,7 @@ impl Env {
 
         load_env.call_once(|| {
             dotenv::from_path(
-                &System::APP_FOLDER.join(".env")
+                &Folders::APP_FOLDER.join(".env")
             ).ok();
         });
     
@@ -31,7 +31,7 @@ impl Env {
     }
     
     pub fn open_env_file() -> Result<(), IoError> {
-        let app_folder = &*System::APP_FOLDER;
+        let app_folder = &*Folders::APP_FOLDER;
         let env_path: PathBuf = app_folder.join(".env");
 
         if let SerdeValue(editor) = &Settings::get(

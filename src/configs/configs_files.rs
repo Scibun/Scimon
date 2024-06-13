@@ -10,7 +10,7 @@ use std::{
 
 use crate::{
     consts::global::Global,
-    system::system::System,
+    configs::folders::Folders,
 
     ui::{
         errors_alerts::ErrorsAlerts,
@@ -23,7 +23,7 @@ pub struct DownloadConfigsFiles;
 impl DownloadConfigsFiles {
     
     pub async fn env_file(print: bool, force_mode: bool) -> Result<(), Box<dyn Error>> {
-        let output_directory = &*System::APP_FOLDER;
+        let output_directory = &*Folders::APP_FOLDER;
         let uri = format!("{}{}", Global::DOWNLOAD_FILES_URI, ".env.example");
     
         TkFs::create_dir_all(
@@ -60,7 +60,7 @@ impl DownloadConfigsFiles {
     }
       
     pub async fn settings_file(print: bool, force_mode: bool) -> Result<(), Box<dyn Error>> {
-        let output_directory = &*System::APP_FOLDER;
+        let output_directory = &*Folders::APP_FOLDER;
         let uri = format!("{}{}", Global::DOWNLOAD_FILES_URI, "scimon.yml");
     
         TkFs::create_dir_all(

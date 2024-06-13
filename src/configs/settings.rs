@@ -16,7 +16,7 @@ use serde_yaml::{
     from_str,
 };
 
-use crate::system::system::System;
+use crate::configs::folders::Folders;
 
 pub struct Settings;
 
@@ -50,7 +50,7 @@ impl Settings {
     }
 
     fn get_value(prop: &str, data_type: &str) -> Result<Value, Box<dyn Error>> {
-        let mut file = File::open(&*System::SETTINGS_FILE)?;
+        let mut file = File::open(&*Folders::SETTINGS_FILE)?;
         let mut contents = String::new();
         file.read_to_string(&mut contents)?;
 
@@ -78,7 +78,7 @@ impl Settings {
     }
 
     pub fn open_settings_file() -> Result<(), IoError> {
-        let app_folder = &*System::APP_FOLDER;
+        let app_folder = &*Folders::APP_FOLDER;
         let env_path: PathBuf = app_folder.join("scibun.yml");
 
         if let SerdeValue(editor) = &Settings::get(

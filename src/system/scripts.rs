@@ -15,13 +15,13 @@ use std::{
 };
 
 use crate::{
-    system::system::System,
+    configs::folders::Folders,
     regexp::regex_core::CoreRegExp,
     ui::errors_commands_alerts::ErrorsCommandsAlerts,
 
     utils::{
-        file::FileUtils,
         remote::Remote,
+        file::FileUtils,
     },
 };
 
@@ -75,7 +75,7 @@ impl Scripts {
     pub async fn read(line_trimmed: &str) -> Result<(), Box<dyn Error>> {
         if line_trimmed.len() >= 3 {
             let script = if line_trimmed.starts_with("http") {
-                let path = System::SCRIPTS_FOLDER.to_str().unwrap_or_default().to_string();
+                let path = Folders::SCRIPTS_FOLDER.to_str().unwrap_or_default().to_string();
 
                 FileUtils::create_path(&path);
                 Self::download(&line_trimmed, &path).await?

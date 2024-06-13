@@ -2,7 +2,7 @@ use std::fs;
 
 use crate::{
     utils::file::FileUtils,
-    system::system::System,
+    configs::folders::Folders,
     configs::settings::Settings,
 };
 
@@ -19,7 +19,7 @@ impl PrimeDownIO {
         };
 
         value_str.replace(
-            "{app_path}", System::README_FOLDER.to_str().unwrap_or_default()
+            "{app_path}", Folders::README_FOLDER.to_str().unwrap_or_default()
         ).to_string()
     }
 
