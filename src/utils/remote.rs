@@ -3,7 +3,7 @@ extern crate url;
 use reqwest;
 use std::error::Error;
 
-use crate::utils::file::FileMisc;
+use crate::utils::file::FileUtils;
 
 pub struct FileRemote;
 
@@ -34,9 +34,9 @@ impl FileRemote {
         Ok(total_size)
     }
 
-    pub async fn get_filename(url: &str) -> Result<String, Box<dyn Error>> {
-        let filename = FileMisc::detect_name(
-            url, reqwest::get(url).await?.headers().get("content-disposition")
+    pub async fn get_filename(url: &str, pdf: bool) -> Result<String, Box<dyn Error>> {
+        let filename = FileUtils::detect_name(
+            url, reqwest::get(url).await?.headers().get("content-disposition"), pdf
         ).await?;
 
         Ok(filename)

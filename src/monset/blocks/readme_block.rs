@@ -15,7 +15,7 @@ use crate::{
 
     utils::{
         url::UrlMisc,
-        file::FileMisc,
+        file::FileUtils,
         remote::FileRemote,
     }
 };
@@ -71,7 +71,7 @@ impl ReadMeBlock {
                 let path = Markdown::get_filename_rendered(run);
                 
                 if let Ok(contents) = PrimeDown::render_content(&run, markdown_html).await {
-                    FileMisc::write_file(&path, contents);
+                    FileUtils::write_file(&path, contents);
                     Markdown::open_file(&path, flags.no_open_link);
                     
                     MacrosAlerts::readme(&path);
@@ -93,7 +93,7 @@ impl ReadMeBlock {
                 let contents_extras = Markdown::append_extras_and_render(&markdown_content);
 
                 if let Ok(contents) = PrimeDown::render_content(&get_last_part, contents_extras).await {
-                    FileMisc::write_file(&path, contents);
+                    FileUtils::write_file(&path, contents);
                     Markdown::open_file(&path, flags.no_open_link);
                     
                     MacrosAlerts::readme(&path);

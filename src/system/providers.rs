@@ -68,19 +68,15 @@ impl Providers {
 
     pub async fn scihub(url: &str) -> Result<(String, String), Box<dyn Error>> {
         let paper = Self::extract_doi(url);
-
-        let paper_url = format!(
-            "{}{}", Uris::SCIHUB_ADDONS_ENDPOINT, paper
-        );
-        
-        let filename = FileRemote::get_filename(&paper_url).await?;
+        let paper_url = format!("{}{}", Uris::SCIHUB_ADDONS_ENDPOINT, paper);
+        let filename = FileRemote::get_filename(&paper_url, true).await?;
 
         Ok((paper_url, filename))
     }
 
     pub async fn generic(url: &str) -> Result<(String, String), Box<dyn Error>> {
         let request_uri = url.to_string();
-        let filename = FileRemote::get_filename(url).await?;
+        let filename = FileRemote::get_filename(url, true).await?;
 
         Ok((request_uri, filename))
     }

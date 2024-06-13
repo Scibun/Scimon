@@ -7,7 +7,7 @@ use std::{
 
 use crate::{
     args_cli::Flags,
-    utils::file::FileMisc,
+    utils::file::FileUtils,
     system::providers::Providers, 
     ui::macros_alerts::MacrosAlerts,
     
@@ -44,7 +44,7 @@ impl DownloadsBlock {
         if let (Some(start_index), Some(end_index)) = (start_index, end_index) {
             let mut refs = Vec::new();
 
-            FileMisc::create_path(&path);
+            FileUtils::create_path(&path);
             let downloads_content = &contents[start_index + "downloads ".len()..end_index];
 
             if downloads_content.trim().starts_with("commands {") {

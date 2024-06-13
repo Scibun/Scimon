@@ -10,7 +10,7 @@ use std::{
 
 use crate::{
     args_cli::Flags,
-    utils::file::FileMisc,
+    utils::file::FileUtils,
     system::hashes::Hashes,
     monset::vars::Vars,
 
@@ -37,7 +37,7 @@ impl Checksum {
     pub async fn generate_hashes(path: &str, file: &str, refs: &Vec<String>, flags: &Flags) -> Result<(), Box<dyn Error>> {
         if !flags.no_checksum {
             let path_file = format!(
-                "{}{}", path, FileMisc::replace_extension(
+                "{}{}", path, FileUtils::replace_extension(
                     file, "sha256"
                 )
             );
@@ -66,7 +66,7 @@ impl Checksum {
 
             if let Some(url) = Vars::get_checksum(contents).await {
                 let local_hash_file = format!(
-                    "{}{}", path, FileMisc::replace_extension(checksum_file, "sha256")
+                    "{}{}", path, FileUtils::replace_extension(checksum_file, "sha256")
                 ); 
 
                 let (local_lines, local_total_lines) = Hashes::read_local_file(&local_hash_file)?;

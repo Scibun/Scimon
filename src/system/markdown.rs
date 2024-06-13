@@ -17,7 +17,7 @@ use crate::{
     
     utils::{
         url::UrlMisc,
-        file::FileMisc,
+        file::FileUtils,
         generate::Generate,
         remote::FileRemote,
     },
@@ -96,7 +96,7 @@ impl Markdown {
             
             let original_name = UrlMisc::get_last_part(url);
             let new_filename = original_name.replace(".md", ".pdf");
-            let output_path = FileMisc::get_output_path(&path, &new_filename);
+            let output_path = FileUtils::get_output_path(&path, &new_filename);
             let output_path_str = format!("{}{}", &path, &new_filename);
 
             Pdf::create_pdf(&html_content, output_path, &url).await?;

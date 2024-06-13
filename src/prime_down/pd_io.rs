@@ -1,7 +1,7 @@
 use std::fs;
 
 use crate::{
-    utils::file::FileMisc,
+    utils::file::FileUtils,
     system::system::System,
     configs::settings::Settings,
 };
@@ -26,11 +26,11 @@ impl PrimeDownIO {
     pub fn get_file_path(file: &str) -> String {
         let path = Self::get_path();
 
-        if !FileMisc::check_path_exists(&path) {
+        if !FileUtils::check_path_exists(&path) {
             let _ = fs::create_dir(&path);
         }
 
-        format!("{}\\{}", path, &FileMisc::replace_extension(file, "html"))
+        format!("{}\\{}", path, &FileUtils::replace_extension(file, "html"))
     }
 
 }

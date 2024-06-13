@@ -20,7 +20,7 @@ use crate::{
     ui::errors_commands_alerts::ErrorsCommandsAlerts,
 
     utils::{
-        file::FileMisc,
+        file::FileUtils,
         remote::FileRemote,
     },
 };
@@ -33,9 +33,7 @@ impl Scripts {
         let response = reqwest::get(url).await?;
         
         if response.status().is_success() {
-            let filename = FileRemote::get_filename(url).await?.replace(
-                ".pdf", ""
-            );
+            let filename = FileRemote::get_filename(url, false).await?;
             
             let file_path = format!(
                 "{}/{}", path, url.split("/").last().unwrap_or(&filename)
@@ -79,7 +77,7 @@ impl Scripts {
             let script = if line_trimmed.starts_with("http") {
                 let path = System::SCRIPTS_FOLDER.to_str().unwrap_or_default().to_string();
 
-                FileMisc::create_path(&path);
+                FileUtils::create_path(&path);
                 Self::download(&line_trimmed, &path).await?
             } else {
                 line_trimmed.to_string()

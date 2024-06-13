@@ -16,9 +16,9 @@ use reqwest::{
     header::HeaderValue
 };
 
-pub struct FileMisc;
+pub struct FileUtils;
 
-impl FileMisc {
+impl FileUtils {
 
     pub fn clean_path(path: &str) -> PathBuf {
         let trimmed_path = path.trim();
@@ -71,7 +71,7 @@ impl FileMisc {
         Self::clean_path(&file_path)
     }
 
-    pub async fn detect_name(url: &str, disposition: Option<&HeaderValue>) -> Result<String, Box<dyn Error>> {
+    pub async fn detect_name(url: &str, disposition: Option<&HeaderValue>, pdf: bool) -> Result<String, Box<dyn Error>> {
         let filename_option = if let Some(value) = disposition {
             let cd_string = value.to_str()?;
             let parts: Vec<&str> = cd_string.split("filename=").collect();
@@ -90,7 +90,12 @@ impl FileMisc {
                 .map(|name| name.to_string())
         };
     
-        let final_filename = Self::set_final_filename(filename_option);
+        let final_filename = if pdf == true {
+            Self::set_final_filename(filename_option)
+        } else {
+            filename_option.unwrap()
+        };
+        
         Ok(final_filename)
     }
 
