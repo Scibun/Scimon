@@ -1,13 +1,15 @@
 use std::error::Error;
 
+use scihub_scraper::SciHubScraper;
+
 use crate::{
     consts::uris::Uris,
     addons::wikipedia::Wikipedia,
     
     utils::{
         url::UrlMisc,
-        domains::Domains,
         remote::Remote,
+        domains::Domains,
     },
 };
 
@@ -67,8 +69,12 @@ impl Providers {
     }
 
     pub async fn scihub(url: &str) -> Result<(String, String), Box<dyn Error>> {
+        let mut scraper = SciHubScraper::new();
+
         let paper = Self::extract_doi(url);
-        let paper_url = format!("{}{}", Uris::SCIHUB_ADDONS_ENDPOINT, paper);
+        let paper = scraper.fetch_paper_pdf_url_by_doi(&paper).await?;
+        
+        let paper_url = paper.to_string();
         let filename = Remote::get_filename(&paper_url, true).await?;
 
         Ok((paper_url, filename))
