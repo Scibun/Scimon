@@ -8,14 +8,14 @@ checksum.unmatch = "keep"
 downloads {
     https://arxiv.org/pdf/2405.01513 !ignore
     https://www.scielo.br/j/rdbci/a/fwDKj9FMX7YTRDgkJGG4gnR?format=pdf&lang=pt !ignore
-    https://en.wikipedia.org/wiki/Rust_(programming_language) !ignore
+    https://en.wikipedia.org/wiki/Rust_(programming_language)
     https://en.wikipedia.org/wiki/Google !ignore
     https://www.nasa.gov/wp-content/uploads/static/history/alsj/a17/A17_FlightPlan.pdf !ignore
-    https://sci-hub.se/10.1080/0025570x.2002.11953151
-    https://olacesar.com/e-books/protegido.pdf
+    https://sci-hub.se/10.1080/0025570x.2002.11953151 !ignore
+    https://olacesar.com/e-books/protegido.pdf !ignore
     https://github.com/huyubing/books-pdf/blob/master/slime.pdf !ignore
     https://raw.githubusercontent.com/facebook/react/main/README.md !ignore
-    https://pt.wikisource.org/wiki/Manifesto_da_Guerrilha_do_Livre_Acesso !ignore
+    https://pt.wikisource.org/wiki/Manifesto_da_Guerrilha_do_Livre_Acesso
 }
 
 commands {
