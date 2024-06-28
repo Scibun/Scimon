@@ -15,8 +15,8 @@ impl CompressAlerts {
         let current_datetime = General::date_time();
     
         println!(
-            "[{}] -> Added {} in: {}. {}", 
-            current_datetime.green(), 
+            "{} -> Added {} in: {}. {}", 
+            current_datetime.green().bold(), 
             file.blue(), 
             zip_file.cyan(),
             Emojis::ADD
@@ -27,8 +27,8 @@ impl CompressAlerts {
         let current_datetime = General::date_time();
     
         println!(
-            "[{}] -> All files in the folder have been compressed into {}. {}", 
-            current_datetime.green(), 
+            "{} -> All files in the folder have been compressed into {}. {}", 
+            current_datetime.green().bold(), 
             zip_file.blue(),
             Emojis::COMPRESS
         );

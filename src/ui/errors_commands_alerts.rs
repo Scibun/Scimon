@@ -12,7 +12,9 @@ impl ErrorsCommandsAlerts {
         let current_datetime = General::date_time();
 
         eprintln!(
-            "[{}] -> Error executing script: {}", current_datetime.blue(), stderr.cyan()
+            "{} -> Error executing script: {}", 
+            current_datetime.blue().bold(), 
+            stderr.cyan()
         );
     }
 
@@ -20,7 +22,9 @@ impl ErrorsCommandsAlerts {
         let current_datetime = General::date_time();
 
         eprintln!(
-            "[{}] -> Unsupported script: {}", current_datetime.blue(), script.cyan()
+            "{} -> Unsupported script: {}", 
+            current_datetime.blue().bold(), 
+            script.cyan()
         );
     }
 

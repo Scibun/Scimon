@@ -11,14 +11,21 @@ impl ErrorsAlerts {
 
     pub fn env(e: &str) {
         let current_datetime = General::date_time();
-        eprintln!("[{}] -> Failed to download the file: {}", current_datetime.blue(), e.red());
+
+        eprintln!(
+            "{} -> Failed to download the file: {}", 
+            current_datetime.blue().bold(), 
+            e.red()
+        );
     }
 
     pub fn generic(e: &str) {
         let current_datetime = General::date_time();
 
         eprintln!(
-            "[{}] -> Error: {}", current_datetime.blue(), e.red()
+            "{} -> Error: {}", 
+            current_datetime.blue().bold(), 
+            e.red()
         );
     }
 
@@ -27,7 +34,9 @@ impl ErrorsAlerts {
         let current_datetime = General::date_time();
 
         eprintln!(
-            "[{}] -> Error: {} (from {})", current_datetime.blue(), e.red(), url.cyan()
+            "{} -> Error: {} (from {})", 
+            current_datetime.blue().bold(), 
+            e.red(), url.cyan()
         );
     }
 

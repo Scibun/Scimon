@@ -16,7 +16,9 @@ impl MacrosAlerts {
         let url = line.replace(" !ignore", "");
 
         println!(
-            "[{}] -> The url {} was ignored", current_datetime.green(), url.blue()
+            "{} -> The url {} was ignored", 
+            current_datetime.green().bold(), 
+            url.blue()
         );
     }
 
@@ -26,7 +28,9 @@ impl MacrosAlerts {
         UI::section_header("readme");
 
         println!(
-            "[{}] README file rendered with successfully ({})", current_datetime.blue(), file.cyan()
+            "{} README file rendered with successfully ({})", 
+            current_datetime.blue().bold(), 
+            file.cyan()
         );
 
         println!("-----------------------------");
@@ -39,7 +43,9 @@ impl MacrosAlerts {
         UI::section_header("comment");
 
         println!(
-            "[{}] {}", current_datetime.blue(), line_without_macros.yellow()
+            "{} {}", 
+            current_datetime.blue().bold(), 
+            line_without_macros.yellow()
         );
 
         println!("-----------------------------");
