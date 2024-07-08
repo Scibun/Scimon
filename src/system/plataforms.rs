@@ -1,5 +1,3 @@
-extern crate chrono;
-
 use std::env::consts::OS as OS;
 
 pub struct Plataforms;
