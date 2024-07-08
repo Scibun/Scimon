@@ -24,18 +24,20 @@ impl UI {
             
             if let Some(title) = standard_font.convert(&name) {
                 println!("{}", &title.to_string().bold().cyan());
-                println!("-------------------------------------------------------------------");
+                println!("");
                 println!("{} Version: {}", Emojis::VERSION, Global::APP_VERSION.yellow());
                 println!("{} Homepage: {} • {}", Emojis::HOME, Global::APP_HOMEPAGE.blue(), Global::APP_AUTHOR.green());
                 println!("{} Started in: {}", Emojis::CLOCK, General::date_time().magenta());
-                println!("-------------------------------------------------------------------");
+                println!("");
             }
         }
     }
     
     pub fn section_header(text: &str) {
         let text = text.to_uppercase();
-        println!("---------- {} -----------", text.yellow());
+
+        println!("");
+        println!("{}", text.bold().yellow());
     }
 
     pub fn pb_template() -> ProgressStyle {

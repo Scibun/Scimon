@@ -32,8 +32,6 @@ impl MacrosAlerts {
             current_datetime.blue().bold(), 
             file.cyan()
         );
-
-        println!("-----------------------------");
     }
 
     pub fn comments(line: &str) {
@@ -47,8 +45,6 @@ impl MacrosAlerts {
             current_datetime.blue().bold(), 
             line_without_macros.yellow()
         );
-
-        println!("-----------------------------");
     }
 
 }
