@@ -15,8 +15,4 @@ impl General {
         format!("{} {}", date_formated, hour_formated)
     }
 
-    pub fn detect_os() -> String {
-        std::env::consts::OS.to_string()
-    }
-
 }
