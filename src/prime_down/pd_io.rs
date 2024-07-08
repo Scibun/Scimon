@@ -31,7 +31,7 @@ impl PrimeDownIO {
         }
 
         format!(
-            "{}/{}", path, &FileUtils::replace_extension(file, "html")
+            "{}/{}", path.replace("\\", "/"), &FileUtils::replace_extension(file, "html")
         )
     }
 
