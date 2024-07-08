@@ -9,7 +9,11 @@ use crate::{
     args_cli::Flags,
     utils::file::FileUtils,
     system::providers::Providers, 
-    ui::macros_alerts::MacrosAlerts,
+
+    ui::{
+        ui_base::UI,
+        macros_alerts::MacrosAlerts,
+    },
     
     cmd::{
         tasks::Tasks,
@@ -17,8 +21,8 @@ use crate::{
     },
     
     monset::{
-        macros::Macros, 
         vars::Vars,
+        macros::Macros, 
         blocks::readme_block::ReadMeBlock, 
     },
 };
@@ -50,6 +54,8 @@ impl DownloadsBlock {
             if downloads_content.trim().starts_with("commands {") {
                 return Ok(());
             }
+
+            UI::section_header("downloads");
 
             for line in downloads_content.lines() {
                 let url = line.trim().split_whitespace().next().unwrap_or("");

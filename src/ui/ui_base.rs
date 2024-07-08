@@ -28,7 +28,6 @@ impl UI {
                 println!("{} Version: {}", Emojis::VERSION, Global::APP_VERSION.yellow());
                 println!("{} Homepage: {} • {}", Emojis::HOME, Global::APP_HOMEPAGE.blue(), Global::APP_AUTHOR.green());
                 println!("{} Started in: {}", Emojis::CLOCK, General::date_time().magenta());
-                println!("");
             }
         }
     }
