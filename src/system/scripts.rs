@@ -16,6 +16,7 @@ use std::{
 
 use crate::{
     consts::folders::Folders,
+    system::general::General,
     regexp::regex_core::CoreRegExp,
     ui::errors_commands_alerts::ErrorsCommandsAlerts,
 
@@ -28,6 +29,20 @@ use crate::{
 pub struct Scripts;
 
 impl Scripts {
+
+    fn get_bin_name(name: &str) -> String {
+        let os = General::detect_os();
+
+        if name == "python" {
+            if os == "windows" {
+                "python".to_string()
+            } else {
+                "python3".to_string()
+            }
+        } else {
+            name.to_string()
+        }
+    }
 
     pub async fn download(url: &str, path: &str) -> Result<String, Box<dyn Error>> {
         let response = reqwest::get(url).await?;
@@ -50,13 +65,15 @@ impl Scripts {
     }
     
     pub fn exec(line: &str, program: &str) -> Result<(), Box<dyn Error>> {
+        let language = Self::get_bin_name(program);
+
         let line_cleanned = Regex::new(
             CoreRegExp::CLEAN_LINE
         ).unwrap().replace_all(
             &line, ""
         ).to_string();
 
-        let output = Command::new(&program)
+        let output = Command::new(&language)
             .arg(line_cleanned)
             .stdout(Stdio::piped())
             .output()?;
