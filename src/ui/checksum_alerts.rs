@@ -24,7 +24,7 @@ impl ChecksumAlerts {
         UI::section_header("checksum");
 
         println!(
-            "{} -> Hashes file created with successfully ({})", 
+            "{} Hashes file created with successfully ({})", 
             current_datetime.blue().bold(), 
             file.cyan()
         );
@@ -35,7 +35,7 @@ impl ChecksumAlerts {
             let current_datetime = General::date_time();
 
             println!(
-                "{} -> The hash {} of {} is match. {}", 
+                "{} The hash {} of {} is match. {}", 
                 current_datetime.green().bold(), 
                 hash.yellow(), 
                 filename.blue(), 
@@ -51,7 +51,7 @@ impl ChecksumAlerts {
             let current_datetime = General::date_time();
 
             println!(
-                "{} -> The hash {} of {} is not match. {}", 
+                "{} The hash {} of {} is not match. {}", 
                 current_datetime.red().bold(), 
                 hash.yellow(), 
                 filename.blue(), 
@@ -66,7 +66,7 @@ impl ChecksumAlerts {
         if local_total_lines != remote_total_lines {
             let current_datetime = General::date_time();
 
-            println!("{} -> The number of lines in the files is different (Lines: {} (local) of {} (referencies)). {}",
+            println!("{} The number of lines in the files is different (Lines: {} (local) of {} (referencies)). {}",
                 current_datetime.red().bold(),
                 local_total_lines, 
                 remote_total_lines,
@@ -78,7 +78,7 @@ impl ChecksumAlerts {
     pub fn lines_unmatch_file_deleted(filename: &str) {
         let current_datetime = General::date_time();
 
-        println!("{} -> The file {} was deleted, because is hashes unmatched. {}",
+        println!("{} The file {} was deleted, because is hashes unmatched. {}",
             current_datetime.red().bold(),
             filename.blue(),
             Emojis::FORBIDDEN

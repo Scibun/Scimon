@@ -14,7 +14,7 @@ impl SuccessAlerts {
 
     pub fn env() {
         let current_datetime = General::date_time();
-        println!("{} -> Downloaded env file", current_datetime.blue().bold());
+        println!("{} Downloaded env file", current_datetime.blue().bold());
     }
 
     pub fn download(file: &str, url: &str, password: bool, hash: &str) {
@@ -28,7 +28,7 @@ impl SuccessAlerts {
         }
     
         println!(
-            "{} -> Downloaded: {} ({} • {}) {}", 
+            "{} Downloaded: {} ({} • {}) {}", 
             current_datetime.green().bold(), 
             file.blue(), 
             domain.cyan(), 
@@ -42,7 +42,7 @@ impl SuccessAlerts {
         let current_datetime = General::date_time();
     
         println!(
-            "{} -> Downloaded and generated pdf: {} ({} • {})", 
+            "{} Downloaded and generated pdf: {} ({} • {})", 
             current_datetime.green().bold(), 
             file.blue(), 
             domain.cyan(),

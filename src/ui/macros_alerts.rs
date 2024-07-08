@@ -16,7 +16,7 @@ impl MacrosAlerts {
         let url = line.replace(" !ignore", "");
 
         println!(
-            "{} -> The url {} was ignored", 
+            "{} The url {} was ignored", 
             current_datetime.green().bold(), 
             url.blue()
         );
