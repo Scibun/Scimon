@@ -9,6 +9,10 @@
 	<img src='https://img.shields.io/github/license/Scibun/Scimon?style=flat-square'/>
 </p>
 
+<p align='center'>
+    <img src='https://i.imgur.com/lW13GgS.png' />
+</p>
+
 ## Documentation
 
 For more help and document, see our documentation:
