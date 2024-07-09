@@ -13,7 +13,7 @@ impl ErrorsAlerts {
         let current_datetime = General::date_time();
 
         eprintln!(
-            "{} -> Failed to download the file: {}", 
+            "{} Failed to download the file: {}", 
             current_datetime.blue().bold(), 
             e.red()
         );
@@ -23,9 +23,9 @@ impl ErrorsAlerts {
         let current_datetime = General::date_time();
 
         eprintln!(
-            "{} -> Error: {}", 
-            current_datetime.blue().bold(), 
-            e.red()
+            "{} {}", 
+            current_datetime.red().bold(), 
+            e
         );
     }
 
@@ -34,9 +34,9 @@ impl ErrorsAlerts {
         let current_datetime = General::date_time();
 
         eprintln!(
-            "{} -> Error: {} (from {})", 
-            current_datetime.blue().bold(), 
-            e.red(), url.cyan()
+            "{} {} (from {})", 
+            current_datetime.red().bold(), 
+            e, url.cyan()
         );
     }
 
