@@ -26,8 +26,8 @@ use crate::{
     args_cli::Flags,
 
     monset::{
-        macros::Macros,
         vars::Vars,
+        macros::Macros,
     },
 
     ui::{

@@ -52,3 +52,6 @@ credentials.json
 *.tsx
 *.mjs
 *.cjs
+
+# Delete Monset files
+*.mon

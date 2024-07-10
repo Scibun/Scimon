@@ -10,9 +10,9 @@ use std::{
 
 use crate::{
     args_cli::Flags,
+    monset::vars::Vars,
     utils::file::FileUtils,
     system::hashes::Hashes,
-    monset::vars::Vars,
 
     ui::{
         ui_base::UI,

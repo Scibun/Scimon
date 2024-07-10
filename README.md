@@ -44,7 +44,7 @@ checksum = "https://gist.githubusercontent.com/kremilly/499d6d51d096c1813cea0ead
 checksum.unmatch = "keep"
 
 commands {
-    index.py
+    https://gist.githubusercontent.com/Kremilly/e0e0db11e43269da179adab610f38bb1/raw/6820be26a936a54bac713d03deb49edf804d0b6b/index.py
 }
 
 downloads {
