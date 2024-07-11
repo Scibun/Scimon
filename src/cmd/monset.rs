@@ -1,5 +1,3 @@
-use reqwest;
-
 use std::{
     fs::File,
     error::Error,
@@ -12,6 +10,7 @@ use std::{
 
 use crate::{
     args_cli::Flags, 
+    cmd::tasks::Tasks,
     utils::validation::Validate,
     ui::errors_alerts::ErrorsAlerts,
 
@@ -23,37 +22,33 @@ use crate::{
 
 pub struct Monset;
 
-impl Monset {  
+impl Monset {
 
-    pub async fn exec(run: &str, flags: &Flags) -> Result<(), Box<dyn Error>> {
+    async fn read_file(run: &str) -> Result<Cursor<Vec<u8>>, Box<dyn Error>> {
         let mut buffer = Vec::new();
 
-        if run.starts_with("http") {
-            let _ = Validate::file_type(run, ".pbd").map_err(|e| {
-                ErrorsAlerts::generic(&e.to_string());
-            });
-            
-            let response = reqwest::get(run).await?;
-            let bytes = response.bytes().await?;
-            buffer.extend_from_slice(&bytes);
-        } else {
-            let _ = Validate::file(run).map_err(|e| {
-                ErrorsAlerts::generic(&e.to_string());
-            });
+        let _ = Validate::file(run).map_err(|e| {
+            ErrorsAlerts::generic(&e.to_string());
+        });
 
-            let mut file = File::open(run)?;
-            file.read_to_end(&mut buffer)?;
-        }
+        let mut file = File::open(run)?;
+        file.read_to_end(&mut buffer)?;
 
-        {
-            let mut reader = Cursor::new(buffer.clone());
-            DownloadsBlock::read_lines(&mut reader, flags, run).await?;
-        }
+        Ok(Cursor::new(buffer.clone()))
+    }
 
-        {
-            let mut reader = Cursor::new(buffer);
-            RunnerBlock::read_lines(&mut reader).await?;
-        }
+    pub async fn downloads(run: &str, flags: &Flags) -> Result<Vec<String>, Box<dyn Error>> {
+        let mut reader = Self::read_file(run).await?;
+        let refs = DownloadsBlock::read_lines(&mut reader, flags, run).await?;
+
+        Tasks::compress(run, &refs)?;
+
+        Ok(refs)
+    }
+
+    pub async fn run_code(run: &str) -> Result<(), Box<dyn Error>> {
+        let mut reader = Self::read_file(run).await?;
+        RunnerBlock::read_lines(&mut reader).await?;
 
         Ok(())
     }

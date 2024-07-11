@@ -43,21 +43,17 @@ readme = "https://gist.githubusercontent.com/Kremilly/5fd360d994bb0fe108b648d0e4
 checksum = "https://gist.githubusercontent.com/kremilly/499d6d51d096c1813cea0eade8eb0bc4/raw/d7c5965aeaf005cf0b612e3468ab47c30480083b/scibun.sha256"
 checksum.unmatch = "keep"
 
-commands {
-    https://gist.githubusercontent.com/Kremilly/e0e0db11e43269da179adab610f38bb1/raw/6820be26a936a54bac713d03deb49edf804d0b6b/index.py
-}
+compress = "downloads.zip"
 
 downloads {
-    https://arxiv.org/pdf/2405.01513 !ignore
-    https://www.scielo.br/j/rdbci/a/fwDKj9FMX7YTRDgkJGG4gnR?format=pdf&lang=pt !ignore
-    https://en.wikipedia.org/wiki/Rust_(programming_language) !ignore
-    https://en.wikipedia.org/wiki/Google !ignore
-    https://www.nasa.gov/wp-content/uploads/static/history/alsj/a17/A17_FlightPlan.pdf !ignore
-    https://sci-hub.se/10.1080/0025570x.2002.11953151
+    https://arxiv.org/pdf/2405.01513
     https://olacesar.com/e-books/protegido.pdf
-    https://github.com/huyubing/books-pdf/blob/master/slime.pdf !ignore
     https://raw.githubusercontent.com/facebook/react/main/README.md !ignore
     https://pt.wikisource.org/wiki/Manifesto_da_Guerrilha_do_Livre_Acesso !ignore
+}
+
+commands {
+    https://gist.githubusercontent.com/Kremilly/e0e0db11e43269da179adab610f38bb1/raw/6820be26a936a54bac713d03deb49edf804d0b6b/index.py
 }
 ```
 

@@ -31,7 +31,7 @@ pub struct DownloadsBlock;
 
 impl DownloadsBlock {
 
-    pub async fn read_lines<R>(reader: R, flags: &Flags, checksum_file: &str) -> Result<(), Box<dyn Error>> where R: BufRead {
+    pub async fn read_lines<R>(reader: R, flags: &Flags, checksum_file: &str) -> Result<Vec<String>, Box<dyn Error>> where R: BufRead {
         let mut links = Vec::new();
         
         let contents = reader.lines().collect::<Result<Vec<_>, _>>()?.join("\n");
@@ -52,7 +52,7 @@ impl DownloadsBlock {
             let downloads_content = &contents[start_index + "downloads ".len()..end_index];
 
             if downloads_content.trim().starts_with("commands {") {
-                return Ok(());
+                return Ok(links);
             }
 
             UI::section_header("downloads");
@@ -99,7 +99,7 @@ impl DownloadsBlock {
             eprintln!("'downloads' block not found in file.");
         }
 
-        Ok(())
+        Ok(links)
     }
 
 }
