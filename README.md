@@ -23,6 +23,7 @@ For more help and document, see our documentation:
 - [Downloads Block](https://scibun.github.io/ScimonDocs/download-block.html)
 - [Readme Block](https://scibun.github.io/ScimonDocs/readme-block.html)
 - [Commands Block](https://scibun.github.io/ScimonDocs/commands-block.html) (Experimental)
+- [Compress files](https://scibun.github.io/ScimonDocs/compress.html)
 - [Open links](https://scibun.github.io/ScimonDocs/open-links.html)
 - [Checksum and Checksum Validate](https://scibun.github.io/ScimonDocs/checsum.html)
 - [Directives and Comments](https://scibun.github.io/ScimonDocs/directives.html)
