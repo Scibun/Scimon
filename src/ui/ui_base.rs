@@ -6,7 +6,6 @@ use figlet_rs::FIGfont;
 use indicatif::ProgressStyle;
 
 use crate::{
-    ui::emojis::Emojis,
     utils::str::StrUtils,
     consts::global::Global,
     system::general::General,
@@ -25,9 +24,9 @@ impl UI {
             if let Some(title) = standard_font.convert(&name) {
                 println!("{}", &title.to_string().bold().cyan());
                 println!("");
-                println!("{} Version: {}", Emojis::VERSION, Global::APP_VERSION.yellow());
-                println!("{} Homepage: {} • {}", Emojis::HOME, Global::APP_HOMEPAGE.blue(), Global::APP_AUTHOR.green());
-                println!("{} Started in: {}", Emojis::CLOCK, General::date_time().magenta());
+                println!("Version: {}", Global::APP_VERSION.yellow());
+                println!("Homepage: {} • {}", Global::APP_HOMEPAGE.blue(), Global::APP_AUTHOR.green());
+                println!("Started in: {}", General::date_time().magenta());
             }
         }
     }

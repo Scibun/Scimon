@@ -1,40 +1,17 @@
 use is_url::is_url;
 
-use zip::{
-    CompressionMethod,
-
-    write::{
-        FileOptions,
-        ExtendedFileOptions
-    },
-};
-
 use std::{
-    fs::File,
-    path::Path,
     borrow::Cow,
     error::Error,
-
-    io::{
-        Read, 
-        Write, 
-        Result as IoResult
-    },
 };
 
 use crate::{
     args_cli::Flags,
-
-    monset::{
-        vars::Vars,
-        macros::Macros,
-    },
+    monset::macros::Macros,
 
     ui::{
-        ui_base::UI,
         errors_alerts::ErrorsAlerts,
         success_alerts::SuccessAlerts,
-        compress_alerts::CompressAlerts,
     },
 
     system::{
@@ -49,44 +26,6 @@ use crate::{
 pub struct Tasks;
 
 impl Tasks {
-
-    pub fn compress(contents: &str, files: &Vec<String>) -> IoResult<()> {
-        if let Some(zip_file) = Vars::get_compress(contents) {
-            UI::section_header("Compressing files");
-            let folder_path = Vars::get_path(contents);
-
-            let output_path = Path::new(&zip_file);
-            let output_file = File::create(output_path)?;
-
-            let mut zip = zip::ZipWriter::new(output_file);
-            let options: FileOptions<ExtendedFileOptions> = FileOptions::default()
-                .compression_method(CompressionMethod::Deflated)
-                .unix_permissions(0o755);
-
-            for file in files {
-                let path = Path::new(file);
-                let name = path.strip_prefix(Path::new(&folder_path)).unwrap();
-                zip.start_file(name.to_str().unwrap(), options.clone())?;
-
-                let mut f = File::open(path)?;
-                let mut buffer = Vec::new();
-
-                f.read_to_end(&mut buffer)?;
-                zip.write_all(&buffer)?;
-
-                CompressAlerts::added(
-                    &file.replace(
-                        &format!("{}/", &folder_path), ""
-                    ), &zip_file
-                );
-            }
-
-            zip.finish()?;
-            CompressAlerts::completed(&zip_file);
-        }
-
-        Ok(())
-    }
 
     pub async fn download(url: &str, path: &str, flags: &Flags) -> Result<String, Box<dyn Error>> {
         let mut line_url = Cow::Borrowed(

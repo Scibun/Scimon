@@ -10,7 +10,6 @@ use std::{
 
 use crate::{
     args_cli::Flags, 
-    cmd::tasks::Tasks,
     utils::validation::Validate,
     ui::errors_alerts::ErrorsAlerts,
 
@@ -37,13 +36,11 @@ impl Monset {
         Ok(Cursor::new(buffer.clone()))
     }
 
-    pub async fn downloads(run: &str, flags: &Flags) -> Result<Vec<String>, Box<dyn Error>> {
+    pub async fn downloads(run: &str, flags: &Flags) -> Result<(), Box<dyn Error>> {
         let mut reader = Self::read_file(run).await?;
-        let refs = DownloadsBlock::read_lines(&mut reader, flags, run).await?;
+        let _ = DownloadsBlock::read_lines(&mut reader, flags).await?;
 
-        Tasks::compress(run, &refs)?;
-
-        Ok(refs)
+        Ok(())
     }
 
     pub async fn run_code(run: &str) -> Result<(), Box<dyn Error>> {

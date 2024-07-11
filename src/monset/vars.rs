@@ -45,35 +45,5 @@ impl Vars {
             None
         }
     }
-
-    pub fn get_compress(contents: &str) -> Option<String> {
-        let readme_pattern = Regex::new(BlocksRegExp::GET_COMPRESS_VAR).unwrap();
     
-        if let Some(caps) = readme_pattern.captures(&contents) {
-            caps.get(1).map(|m| m.as_str().to_string())
-        } else {
-            None
-        }
-    }
-
-    pub async fn get_checksum(contents: &str) -> Option<String> {
-        let readme_pattern = Regex::new(BlocksRegExp::GET_CHECKSUM_VAR).unwrap();
-    
-        if let Some(caps) = readme_pattern.captures(&contents) {
-            caps.get(1).map(|m| m.as_str().to_string())
-        } else {
-            None
-        }
-    }
-
-    pub fn get_checksum_unmatch(contents: &str) -> Option<String> {
-        let readme_pattern = Regex::new(BlocksRegExp::GET_CHECKSUM_UNMATCH_ACTION).unwrap();
-    
-        if let Some(caps) = readme_pattern.captures(&contents) {
-            caps.get(1).map(|m| m.as_str().to_string())
-        } else {
-            None
-        }
-    }
-
 }

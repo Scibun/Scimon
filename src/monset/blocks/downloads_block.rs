@@ -7,17 +7,13 @@ use std::{
 
 use crate::{
     args_cli::Flags,
+    cmd::tasks::Tasks,
     utils::file::FileUtils,
     system::providers::Providers, 
 
     ui::{
         ui_base::UI,
         macros_alerts::MacrosAlerts,
-    },
-    
-    cmd::{
-        tasks::Tasks,
-        checksum::Checksum,
     },
     
     monset::{
@@ -31,9 +27,7 @@ pub struct DownloadsBlock;
 
 impl DownloadsBlock {
 
-    pub async fn read_lines<R>(reader: R, flags: &Flags, checksum_file: &str) -> Result<Vec<String>, Box<dyn Error>> where R: BufRead {
-        let mut links = Vec::new();
-        
+    pub async fn read_lines<R>(reader: R, flags: &Flags) -> Result<(), Box<dyn Error>> where R: BufRead {
         let contents = reader.lines().collect::<Result<Vec<_>, _>>()?.join("\n");
         let path = Vars::get_path(&contents);
 
@@ -46,13 +40,11 @@ impl DownloadsBlock {
         let end_index = contents.rfind("}");
 
         if let (Some(start_index), Some(end_index)) = (start_index, end_index) {
-            let mut refs = Vec::new();
-
             FileUtils::create_path(&path);
             let downloads_content = &contents[start_index + "downloads ".len()..end_index];
 
             if downloads_content.trim().starts_with("commands {") {
-                return Ok(links);
+                return Ok(());
             }
 
             UI::section_header("downloads");
@@ -73,15 +65,11 @@ impl DownloadsBlock {
 
                 if !Macros::handle_check_macro_line(&line, "ignore") {
                     if !final_url.is_empty() && is_url(&final_url) && final_url.starts_with("http") {
-                        let success = Tasks::download(
+                        Tasks::download(
                             &url,
                             &path,
                             flags,
                         ).await?;
-
-                        refs.push(success);
-                        let url_no_macros = Macros::remove_macros(&final_url);
-                        links.push(url_no_macros.to_string());
                     }
                 } else {
                     MacrosAlerts::ignore(&final_url);
@@ -90,16 +78,11 @@ impl DownloadsBlock {
 
             Vars::get_open(&contents, flags.no_open_link).await;
             ReadMeBlock::render_var_and_save_file(&contents, flags).await?;
-
-            Checksum::generate_hashes(&path, checksum_file, &refs, flags).await?;
-            Checksum::compare_lines(&contents, checksum_file, flags).await?;
-
-            Tasks::compress(&contents, &refs)?;
         } else {
             eprintln!("'downloads' block not found in file.");
         }
 
-        Ok(links)
+        Ok(())
     }
 
 }

@@ -23,9 +23,7 @@ For more help and document, see our documentation:
 - [Downloads Block](https://scibun.github.io/ScimonDocs/download-block.html)
 - [Readme Block](https://scibun.github.io/ScimonDocs/readme-block.html)
 - [Commands Block](https://scibun.github.io/ScimonDocs/commands-block.html) (Experimental)
-- [Compress files](https://scibun.github.io/ScimonDocs/compress.html)
 - [Open links](https://scibun.github.io/ScimonDocs/open-links.html)
-- [Checksum and Checksum Validate](https://scibun.github.io/ScimonDocs/checsum.html)
 - [Directives and Comments](https://scibun.github.io/ScimonDocs/directives.html)
 - [Markdown render](https://scibun.github.io/ScimonDocs/markdown-render.html)
 - [Scrape](https://scibun.github.io/ScimonDocs/scrape.html)
@@ -39,12 +37,6 @@ For more help and document, see our documentation:
 ```monset
 path = "downloads/"
 open = "https://github.com/kremilly"
-
-readme = "https://gist.githubusercontent.com/Kremilly/5fd360d994bb0fe108b648d0e4c9e92f/raw/ac524eba2112bf0bdbac1ad27e24f78f678589ec/readme-example.md"
-checksum = "https://gist.githubusercontent.com/kremilly/499d6d51d096c1813cea0eade8eb0bc4/raw/d7c5965aeaf005cf0b612e3468ab47c30480083b/scibun.sha256"
-checksum.unmatch = "keep"
-
-compress = "downloads.zip"
 
 downloads {
     https://arxiv.org/pdf/2405.01513

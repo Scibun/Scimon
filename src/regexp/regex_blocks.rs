@@ -13,10 +13,4 @@ impl BlocksRegExp {
 
     pub const GET_README_VAR: &'static str = r#"(?i)readme\s*=\s*"([^"]+)""#;
 
-    pub const GET_COMPRESS_VAR: &'static str = r#"(?i)compress\s*=\s*"([^"]+)""#;
-
-    pub const GET_CHECKSUM_VAR: &'static str = r#"(?i)checksum\s*=\s*"([^"]+)""#;
-
-    pub const GET_CHECKSUM_UNMATCH_ACTION: &'static str = r#"(?i)checksum\.unmatch\s*=\s*"([^"]+)""#;
-
 }
