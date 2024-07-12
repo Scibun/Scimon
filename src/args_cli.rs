@@ -20,10 +20,6 @@ pub struct Flags {
     pub no_ignore: bool,
 
     #[arg(long)]
-    /// Disable the comments and !debug directive
-    pub no_comments: bool,
-
-    #[arg(long)]
     /// Disable !open_link directive
     pub no_open_link: bool,
 
