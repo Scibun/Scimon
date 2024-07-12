@@ -31,11 +31,19 @@ impl UI {
         }
     }
     
-    pub fn section_header(text: &str) {
+    pub fn section_header(text: &str, level: &str) {
         let text = text.to_uppercase();
 
+        let message = match level {
+            "normal" => text.bold(),
+            "info" => text.bold().blue(),
+            "warning" => text.bold().yellow(),
+            "error" => text.bold().red(),
+            _ => text.bold(),
+        };
+
         println!("");
-        println!("{}", text.bold().yellow());
+        println!("{}", message);
     }
 
     pub fn pb_template() -> ProgressStyle {

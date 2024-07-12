@@ -63,7 +63,7 @@ impl Vars {
         let readme_pattern = Regex::new(BlocksRegExp::GET_PRINT_VAR).unwrap();
     
         if let Some(caps) = readme_pattern.captures(&contents) {
-            UI::section_header("print");
+            UI::section_header("print", "normal");
 
             let print = caps.get(1).map(|m| m.as_str().to_string())?;
             println!("{}", print);

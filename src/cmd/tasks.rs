@@ -65,7 +65,7 @@ impl Tasks {
 
     pub fn compress(contents: &str) -> IoResult<()> {
         if let Some(zip_file) = Vars::get_compress(contents) {
-            UI::section_header("Compressing files");
+            UI::section_header("Compressing files", "normal");
             let folder_path = Vars::get_path(contents);
             
             let output_path = Path::new(&zip_file);

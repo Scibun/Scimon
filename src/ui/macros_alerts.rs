@@ -25,7 +25,7 @@ impl MacrosAlerts {
     pub fn readme(file: &str) {
         let current_datetime = General::date_time();
 
-        UI::section_header("readme");
+        UI::section_header("readme", "info");
 
         println!(
             "{} README file rendered with successfully ({})", 

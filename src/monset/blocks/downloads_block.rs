@@ -47,7 +47,7 @@ impl DownloadsBlock {
                 return Ok(());
             }
 
-            UI::section_header("downloads");
+            UI::section_header("downloads", "normal");
 
             for line in downloads_content.lines() {
                 let url = line.trim().split_whitespace().next().unwrap_or("");
