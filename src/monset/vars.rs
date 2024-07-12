@@ -2,7 +2,10 @@ extern crate open;
 
 use regex::Regex;
 
-use crate::regexp::regex_blocks::BlocksRegExp;
+use crate::{
+    ui::ui_base::UI,
+    regexp::regex_blocks::BlocksRegExp,
+};
 
 pub struct Vars;
 
@@ -51,6 +54,21 @@ impl Vars {
     
         if let Some(caps) = readme_pattern.captures(&contents) {
             caps.get(1).map(|m| m.as_str().to_string())
+        } else {
+            None
+        }
+    }
+
+    pub fn get_print(contents: &str) -> Option<String> {
+        let readme_pattern = Regex::new(BlocksRegExp::GET_PRINT_VAR).unwrap();
+    
+        if let Some(caps) = readme_pattern.captures(&contents) {
+            UI::section_header("print");
+
+            let print = caps.get(1).map(|m| m.as_str().to_string())?;
+            println!("{}", print);
+
+            None
         } else {
             None
         }

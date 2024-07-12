@@ -10,6 +10,7 @@ use std::{
     io::{
         Read,
         Write,
+        BufRead,
         Result as IoResult,
     },
 };
@@ -51,6 +52,16 @@ use crate::{
 pub struct Tasks;
 
 impl Tasks {
+
+    pub async fn prints<R>(reader: R) -> Result<(), Box<dyn Error>> where R: BufRead, {
+        let contents = reader.lines().collect::<Result<Vec<_>, _>>()?.join("\n");
+
+        for line in contents.lines() {
+            Vars::get_print(&line);
+        }
+
+        Ok(())
+    }
 
     pub fn compress(contents: &str) -> IoResult<()> {
         if let Some(zip_file) = Vars::get_compress(contents) {

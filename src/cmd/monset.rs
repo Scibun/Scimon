@@ -10,6 +10,7 @@ use std::{
 
 use crate::{
     args_cli::Flags, 
+    cmd::tasks::Tasks,
     utils::validation::Validate,
     ui::errors_alerts::ErrorsAlerts,
 
@@ -36,9 +37,17 @@ impl Monset {
         Ok(Cursor::new(buffer.clone()))
     }
 
+    pub async fn prints(run: &str) -> Result<(), Box<dyn Error>> {
+        let reader = Self::read_file(run).await?;
+        let _ = Tasks::prints(reader).await?;
+
+        Ok(())
+    }
+
     pub async fn downloads(run: &str, flags: &Flags) -> Result<(), Box<dyn Error>> {
         let mut reader = Self::read_file(run).await?;
         let _ = DownloadsBlock::read_lines(&mut reader, flags).await?;
+        let _ = Tasks::prints(reader).await?;
 
         Ok(())
     }

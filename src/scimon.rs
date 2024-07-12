@@ -61,7 +61,10 @@ impl Scimon {
         
         if !run.is_empty() {
             if !Scibun::check_is_user(run) {
+                let _ = Monset::prints(run).await;
+                
                 let _ = Monset::downloads(run, &flags).await;
+
                 let _ = Monset::run_code(run).await;
                 let _ = ReadMeBlock::render_block_and_save_file(run, &flags);
             } else {
