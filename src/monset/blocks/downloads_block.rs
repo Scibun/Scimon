@@ -59,10 +59,6 @@ impl DownloadsBlock {
                     break;
                 }
 
-                if !flags.no_comments && Macros::handle_check_macro_line(line, "debug") {
-                    MacrosAlerts::comments(line);
-                }
-
                 if !Macros::handle_check_macro_line(&line, "ignore") {
                     if !final_url.is_empty() && is_url(&final_url) && final_url.starts_with("http") {
                         Tasks::download(

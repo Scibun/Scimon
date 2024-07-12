@@ -34,17 +34,4 @@ impl MacrosAlerts {
         );
     }
 
-    pub fn comments(line: &str) {
-        let current_datetime = General::date_time();
-        let line_without_macros = line.replace("!debug", "");
-
-        UI::section_header("comment");
-
-        println!(
-            "{} {}", 
-            current_datetime.blue().bold(), 
-            line_without_macros.yellow()
-        );
-    }
-
 }
