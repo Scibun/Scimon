@@ -12,5 +12,7 @@ impl BlocksRegExp {
     pub const GET_OPEN_VAR: &'static str = r#"(?i)open\s*=\s*"([^"]+)""#;
 
     pub const GET_README_VAR: &'static str = r#"(?i)readme\s*=\s*"([^"]+)""#;
+    
+    pub const GET_COMPRESS_VAR: &'static str = r#"(?i)compress\s*=\s*"([^"]+)""#;
 
 }

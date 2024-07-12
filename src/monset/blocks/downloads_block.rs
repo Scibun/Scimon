@@ -72,6 +72,7 @@ impl DownloadsBlock {
                 }
             }
 
+            Tasks::compress(&contents)?;
             Vars::get_open(&contents, flags.no_open_link).await;
             ReadMeBlock::render_var_and_save_file(&contents, flags).await?;
         } else {
