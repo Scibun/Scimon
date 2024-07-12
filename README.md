@@ -24,7 +24,6 @@ For more help and document, see our documentation:
 - [Readme Block](https://scibun.github.io/ScimonDocs/readme-block.html)
 - [Commands Block](https://scibun.github.io/ScimonDocs/commands-block.html) (Experimental)
 - [Open links](https://scibun.github.io/ScimonDocs/open-links.html)
-- [Directives and Comments](https://scibun.github.io/ScimonDocs/directives.html)
 - [Markdown render](https://scibun.github.io/ScimonDocs/markdown-render.html)
 - [Scrape](https://scibun.github.io/ScimonDocs/scrape.html)
 - [Providers](https://scibun.github.io/ScimonDocs/providers.html)
