@@ -13,8 +13,6 @@ pub struct RunnerBlock;
 impl RunnerBlock {
 
     pub async fn read_lines<R>(reader: R) -> Result<(), Box<dyn Error>> where R: BufRead {
-        UI::section_header("Running");
-
         let contents = reader.lines().collect::<Result<Vec<_>, _>>()?.join("\n");
         let start_index = match (contents.find("commands {"), contents.find("commands{")) {
             (Some(idx1), Some(idx2)) => Some(idx1.min(idx2)),
@@ -25,6 +23,8 @@ impl RunnerBlock {
         let end_index = contents.rfind("}");
 
         if let (Some(start_index), Some(end_index)) = (start_index, end_index) {
+            UI::section_header("Running");
+    
             let commands_content = &contents[start_index + "commands ".len()..end_index];
 
             for line in commands_content.lines() {
