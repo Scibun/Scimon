@@ -1,8 +1,15 @@
 use is_url::is_url;
 
 use std::{
+    fs::File,
+    io::Read,
     borrow::Cow,
     error::Error,
+};
+
+use sha2::{
+    Digest,
+    Sha256,
 };
 
 use crate::{
@@ -16,7 +23,6 @@ use crate::{
 
     system::{
         pdf::Pdf,
-        hashes::Hashes,
         markdown::Markdown,
         reporting::Reporting,
         providers::Providers,
@@ -26,6 +32,24 @@ use crate::{
 pub struct Tasks;
 
 impl Tasks {
+
+    pub fn hash_sha256(file_path: &str) -> Result<String, Box<dyn Error>> {
+        let mut file = File::open(file_path)?;
+        let mut hasher = Sha256::new();
+
+        let mut buffer = [0; 1024];
+        
+        loop {
+            let bytes_read = file.read(&mut buffer)?;
+
+            if bytes_read == 0 { break; }
+
+            hasher.update(&buffer[..bytes_read]);
+        }
+    
+        let hash = hasher.finalize();
+        Ok(format!("{:x}", hash))
+    }
 
     pub async fn download(url: &str, path: &str, flags: &Flags) -> Result<String, Box<dyn Error>> {
         let mut line_url = Cow::Borrowed(
@@ -50,7 +74,7 @@ impl Tasks {
                 Ok(file) => {
                     let file_path = &format!("{}{}", &path, &file);
                     let password = Pdf::is_pdf_encrypted(&file_path);
-                    let hash = Hashes::calculate_local_sha256(file_path)?;
+                    let hash = Self::hash_sha256(file_path)?;
                     
                     SuccessAlerts::download(&file, url, password, &hash);
                     return Ok(file_path.to_string())

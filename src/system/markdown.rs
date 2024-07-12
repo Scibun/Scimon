@@ -2,7 +2,7 @@ extern crate open;
 
 use std::{
     env,
-    error::Error
+    error::Error,
 };
 
 use pulldown_cmark::{
@@ -12,19 +12,16 @@ use pulldown_cmark::{
 };
 
 use crate::{
+    system::pdf::Pdf,
+    cmd::tasks::Tasks,
     configs::settings::Settings,
     ui::success_alerts::SuccessAlerts,
     
     utils::{
         url::UrlMisc,
+        remote::Remote,
         file::FileUtils,
         generate::Generate,
-        remote::Remote,
-    },
-
-    system::{
-        pdf::Pdf,
-        hashes::Hashes,
     },
 
     prime_down::{
@@ -95,13 +92,13 @@ impl Markdown {
             let html_content = Self::render(url).await?;
             
             let original_name = UrlMisc::get_last_part(url);
-            let new_filename = original_name.replace(".md", ".pdf");
+            let new_filename = FileUtils::replace_extension(&original_name, "pdf");
             let output_path = FileUtils::get_output_path(&path, &new_filename);
             let output_path_str = format!("{}{}", &path, &new_filename);
 
             Pdf::create_pdf(&html_content, output_path, &url).await?;
 
-            let hash = Hashes::calculate_local_sha256(&output_path_str)?;
+            let hash = Tasks::hash_sha256(&output_path_str)?;
             SuccessAlerts::download_and_generated_pdf(&new_filename, url, &hash);
         }
 
