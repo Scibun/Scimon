@@ -3,8 +3,12 @@ extern crate open;
 use regex::Regex;
 
 use crate::{
-    ui::ui_base::UI,
     regexp::regex_blocks::BlocksRegExp,
+
+    ui::{
+        ui_base::UI,
+        panic_alerts::PanicAlerts,
+    },
 };
 
 pub struct Vars;
@@ -17,7 +21,10 @@ impl Vars {
         let path = path_pattern.captures(&contents)
             .and_then(|caps| caps.get(1))
             .map(|m| m.as_str())
-            .unwrap_or_else(|| panic!("'path' variable not found in the file."));
+            .unwrap_or_else(|| {
+                PanicAlerts::path_var();
+                ""
+            });
 
         path.to_string()
     }

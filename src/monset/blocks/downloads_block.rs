@@ -13,6 +13,7 @@ use crate::{
 
     ui::{
         ui_base::UI,
+        panic_alerts::PanicAlerts,
         macros_alerts::MacrosAlerts,
     },
     
@@ -76,7 +77,7 @@ impl DownloadsBlock {
             Vars::get_open(&contents, flags.no_open_link).await;
             ReadMeBlock::render_var_and_save_file(&contents, flags).await?;
         } else {
-            eprintln!("'downloads' block not found in file.");
+            PanicAlerts::downloads_block();
         }
 
         Ok(())
