@@ -12,21 +12,23 @@ use pulldown_cmark::{
 };
 
 use crate::{
-    system::pdf::Pdf,
-    cmd::tasks::Tasks,
-    configs::settings::Settings,
-    ui::success_alerts::SuccessAlerts,
+    system::pdf::Pdf, 
+    cmd::tasks::Tasks, 
+    consts::global::Global,
+    configs::settings::Settings, 
+    ui::success_alerts::SuccessAlerts, 
+    
+    prime_down::{
+        pd_io::PrimeDownIO,
+        pd_inject::PrimeDownInject,
+        pd_extras::PrimeDownExtras, 
+    }, 
     
     utils::{
         url::UrlMisc,
-        remote::Remote,
-        file::FileUtils,
-        generate::Generate,
-    },
-
-    prime_down::{
-        pd_io::PrimeDownIO,
-        pd_extras::PrimeDownExtras,
+        remote::Remote, 
+        file::FileUtils, 
+        generate::Generate, 
     }
 };
 
@@ -90,13 +92,15 @@ impl Markdown {
     pub async fn create(url: &str, path: &str) -> Result<(), Box<dyn Error>> {
         if Remote::check_content_type(&url, "text/markdown").await? || url.contains(".md") {
             let html_content = Self::render(url).await?;
+            let css_content = Remote::content(Global::DEFAULT_CSS_STYLE).await?;
+            let final_html = PrimeDownInject::html_content(css_content, html_content);
             
             let original_name = UrlMisc::get_last_part(url);
             let new_filename = FileUtils::replace_extension(&original_name, "pdf");
             let output_path = FileUtils::get_output_path(&path, &new_filename);
             let output_path_str = format!("{}{}", &path, &new_filename);
 
-            Pdf::create_pdf(&html_content, output_path, &url).await?;
+            Pdf::create_pdf(&final_html, output_path, &url).await?;
 
             let hash = Tasks::hash_sha256(&output_path_str)?;
             SuccessAlerts::download_and_generated_pdf(&new_filename, url, &hash);

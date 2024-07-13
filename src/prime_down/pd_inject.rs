@@ -31,5 +31,22 @@ impl PrimeDownInject {
             "{{ markdown_content }}", &markdown_html
         )
     }
+
+    pub fn html_content(css_content: String, html_content: String) -> String {
+        format!(
+            "<!DOCTYPE html>
+            <html lang=\"en\">
+            <head>
+                <meta charset=\"UTF-8\">
+                <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+                <style>{}</style>
+            </head>
+            <body>
+                <article class=\"markdown-body\">{}</article>
+            </body>
+            </html>",
+            css_content, html_content
+        )
+    }
     
 }
