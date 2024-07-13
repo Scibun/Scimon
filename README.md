@@ -38,10 +38,16 @@ For more help and document, see our documentation:
 path = "downloads/"
 open = "https://github.com/kremilly"
 
+compress = "folder.zip"
+
+print = "Hello, World!"
+
+readme = "https://gist.githubusercontent.com/Kremilly/5fd360d994bb0fe108b648d0e4c9e92f/raw/ac524eba2112bf0bdbac1ad27e24f78f678589ec/readme-example.md"
+
 downloads {
-    https://arxiv.org/pdf/2405.01513
-    https://olacesar.com/e-books/protegido.pdf
-    https://raw.githubusercontent.com/facebook/react/main/README.md !ignore
+    https://arxiv.org/pdf/2405.01513 !ignore
+    https://olacesar.com/e-books/protegido.pdf !ignore
+    https://raw.githubusercontent.com/facebook/react/main/README.md
     https://pt.wikisource.org/wiki/Manifesto_da_Guerrilha_do_Livre_Acesso !ignore
 }
 
