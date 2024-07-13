@@ -7,7 +7,7 @@ use std::{
     path::Path,
     error::Error,
 };
-
+use std::path::PathBuf;
 use crate::{
     consts::{
         global::Global,
@@ -23,7 +23,25 @@ use crate::{
 pub struct DownloadConfigsFiles;
 
 impl DownloadConfigsFiles {
+
+    async fn force_mode(file_path: PathBuf, force_mode: bool, response: reqwest::Response) -> Result<(), Box<dyn Error>> {
+        if !force_mode {
+            if !Path::new(&file_path).is_file() {
+                let mut file = File::create(&file_path)?;
+                let content = response.bytes().await?;
     
+                file.write_all(&content)?;
+            }
+        } else {
+            let mut file = File::create(&file_path)?;
+            let content = response.bytes().await?;
+    
+            file.write_all(&content)?;
+        }
+
+        Ok(())
+    }
+
     pub async fn env_file(print: bool, force_mode: bool) -> Result<(), Box<dyn Error>> {
         let output_directory = &*Folders::APP_FOLDER;
         let uri = format!("{}{}", Global::DOWNLOAD_FILES_URI, ".env.example");
@@ -35,20 +53,7 @@ impl DownloadConfigsFiles {
         let response = reqwest::get(uri).await?;
         if response.status().is_success() {
             let file_path = output_directory.join(".env");
-    
-            if !force_mode {
-                if !Path::new(&file_path).is_file() {
-                    let mut file = File::create(&file_path)?;
-                    let content = response.bytes().await?;
-        
-                    file.write_all(&content)?;
-                }
-            } else {
-                let mut file = File::create(&file_path)?;
-                let content = response.bytes().await?;
-    
-                file.write_all(&content)?;
-            }
+            Self::force_mode(file_path, force_mode, response).await?;
     
             if print == true {
                 SuccessAlerts::env();
@@ -72,22 +77,12 @@ impl DownloadConfigsFiles {
         let response = reqwest::get(uri).await?;
         if response.status().is_success() {
             let file_path = output_directory.join(
-                format!("{}.yml", Global::APP_NAME.to_lowercase())
+                format!(
+                    "{}.yml", Global::APP_NAME.to_lowercase()
+                )
             );
-    
-            if !force_mode {
-                if !Path::new(&file_path).is_file() {
-                    let mut file = File::create(&file_path)?;
-                    let content = response.bytes().await?;
-        
-                    file.write_all(&content)?;
-                }
-            } else {
-                let mut file = File::create(&file_path)?;
-                let content = response.bytes().await?;
-    
-                file.write_all(&content)?;
-            }
+
+            Self::force_mode(file_path, force_mode, response).await?;
     
             if print == true {
                 SuccessAlerts::env();
