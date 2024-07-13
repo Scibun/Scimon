@@ -4,10 +4,14 @@ use tokio::fs as TkFs;
 use std::{
     fs::File,
     io::Write,
-    path::Path,
     error::Error,
+
+    path::{
+        Path,
+        PathBuf,
+    },
 };
-use std::path::PathBuf;
+
 use crate::{
     consts::{
         global::Global,
