@@ -52,7 +52,7 @@ impl DownloadsBlock {
 
             for line in downloads_content.lines() {
                 let url = line.trim().split_whitespace().next().unwrap_or("");
-                let final_url = Providers::check_provider_line(&url);
+                let final_url = Providers::arxiv(&url);
 
                 if line.trim().starts_with("downloads {") {
                     continue;

@@ -123,7 +123,7 @@ impl Pdf {
             match result {
                 Ok(file) => {
                     let file_path = &format!("{}{}", &path, &file);
-                    let password = Pdf::is_pdf_encrypted(&file_path);
+                    let password = Self::is_pdf_encrypted(&file_path);
                     let hash = Tasks::hash_sha256(file_path)?;
                     
                     SuccessAlerts::download(&file, url, password, &hash);

@@ -25,10 +25,6 @@ impl Providers {
         }
     }
 
-    pub fn check_provider_line(url: &str) -> String {
-        Self::arxiv(url)
-    }
-
     pub fn check_provider_domain(url: &str) -> bool {
         let mut valid_domain = false;
 
