@@ -20,9 +20,15 @@ use std::{
 };
 
 use crate::{
-    ui::ui_base::UI,
+    cmd::tasks::Tasks,
     system::providers::Providers,
     prime_down::pd_core::PrimeDown,
+
+    ui::{
+        ui_base::UI,
+        errors_alerts::ErrorsAlerts,
+        success_alerts::SuccessAlerts,
+    },
 
     utils::{
         url::UrlMisc,
@@ -108,6 +114,27 @@ impl Pdf {
         }
         
         false
+    }
+
+    pub async fn download_line(line_url: &str, url: &str, path: &str) -> Result<String, Box<dyn Error>> {
+        if Self::is_pdf_file(&line_url).await? || Providers::check_provider_domain(url) && !line_url.contains(".md") {
+            let result = Self::download(&line_url, path).await;
+            
+            match result {
+                Ok(file) => {
+                    let file_path = &format!("{}{}", &path, &file);
+                    let password = Pdf::is_pdf_encrypted(&file_path);
+                    let hash = Tasks::hash_sha256(file_path)?;
+                    
+                    SuccessAlerts::download(&file, url, password, &hash);
+                    return Ok(file_path.to_string())
+                },
+
+                Err(e) => ErrorsAlerts::download(e, url),
+            }
+        }
+
+        Ok("".to_string())
     }
 
 }

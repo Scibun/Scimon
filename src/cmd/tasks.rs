@@ -36,8 +36,6 @@ use crate::{
 
     ui::{
         ui_base::UI,
-        errors_alerts::ErrorsAlerts,
-        success_alerts::SuccessAlerts,
         compress_alerts::CompressAlerts,
     },
 
@@ -45,7 +43,6 @@ use crate::{
         pdf::Pdf,
         markdown::Markdown,
         reporting::Reporting,
-        providers::Providers,
     },
 };
 
@@ -133,23 +130,7 @@ impl Tasks {
         }
 
         Markdown::create(&line_url, &path).await?;
-
-        if Pdf::is_pdf_file(&line_url).await? || Providers::check_provider_domain(url) && !line_url.contains(".md") {
-            let result = Pdf::download(&line_url, path).await;
-            
-            match result {
-                Ok(file) => {
-                    let file_path = &format!("{}{}", &path, &file);
-                    let password = Pdf::is_pdf_encrypted(&file_path);
-                    let hash = Self::hash_sha256(file_path)?;
-                    
-                    SuccessAlerts::download(&file, url, password, &hash);
-                    return Ok(file_path.to_string())
-                },
-
-                Err(e) => ErrorsAlerts::download(e, url),
-            }
-        }
+        Pdf::download_line(&line_url, url, path).await?;
 
         Ok("".to_string())
     }
