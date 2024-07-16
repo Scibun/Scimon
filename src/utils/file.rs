@@ -1,5 +1,3 @@
-use uuid::Uuid;
-
 use std::{
     fs,
     error::Error,
@@ -15,6 +13,8 @@ use reqwest::{
     self,
     header::HeaderValue
 };
+
+use crate::utils::uuid::Uuid;
 
 pub struct FileUtils;
 
@@ -61,7 +61,7 @@ impl FileUtils {
             }
         } else {
             format!(
-                "{}.pdf", Uuid::new_v4().to_string()
+                "{}.pdf", Uuid::v4()
             )
         }
     }
