@@ -16,6 +16,7 @@ use crate::{
     cmd::tasks::Tasks, 
     consts::global::Global,
     configs::settings::Settings, 
+    generator::generate::Generate,
     ui::success_alerts::SuccessAlerts, 
     
     prime_down::{
@@ -27,8 +28,7 @@ use crate::{
     utils::{
         url::UrlMisc,
         remote::Remote, 
-        file::FileUtils, 
-        generate::Generate, 
+        file::FileUtils,
     }
 };
 

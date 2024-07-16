@@ -1,7 +1,7 @@
 use regex::Regex;
 
 use crate::{
-    utils::generate::Generate,
+    generator::generate::Generate,
     regexp::regex_core::CoreRegExp,
 };
 

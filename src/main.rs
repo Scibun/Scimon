@@ -9,6 +9,7 @@ mod monset;
 mod scimon;
 mod configs;
 mod args_cli;
+mod generator;
 mod prime_down;
 
 use crate::scimon::Scimon;

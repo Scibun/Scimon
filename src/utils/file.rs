@@ -14,7 +14,7 @@ use reqwest::{
     header::HeaderValue
 };
 
-use crate::utils::uuid::Uuid;
+use crate::generator::uuid::Uuid;
 
 pub struct FileUtils;
 
