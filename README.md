@@ -42,6 +42,8 @@ compress = "folder.zip"
 
 print = "Hello, World!"
 
+style = "https://raw.githubusercontent.com/sindresorhus/github-markdown-css/main/github-markdown.css"
+
 readme = "https://gist.githubusercontent.com/Kremilly/5fd360d994bb0fe108b648d0e4c9e92f/raw/ac524eba2112bf0bdbac1ad27e24f78f678589ec/readme-example.md"
 
 downloads {
