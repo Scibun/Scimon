@@ -63,6 +63,7 @@ impl Scrape {
                                         let url = &item.url;
 
                                         Tasks::download(
+                                            None,
                                             url,
                                             path,
                                             flags,

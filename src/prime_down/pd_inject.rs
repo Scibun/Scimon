@@ -1,5 +1,12 @@
+use std::error::Error;
+
 use crate::{
-    utils::str::StrUtils,
+    monset::vars::Vars,
+
+    utils::{
+        str::StrUtils,
+        remote::Remote,
+    },
 
     consts::{
         uris::Uris,
@@ -32,8 +39,16 @@ impl PrimeDownInject {
         )
     }
 
-    pub fn html_content(css_content: String, html_content: String) -> String {
-        format!(
+    pub async fn html_content(contents: &str, html_content: String) -> Result<String, Box<dyn Error>> {
+        let css_cdn = if let Some(url) = Vars::get_style(contents) {
+            url
+        } else {
+            Global::DEFAULT_CSS_STYLE.to_string()
+        };
+
+        let css_style = Remote::content(&css_cdn).await?;
+
+        let html = format!(
             "<!DOCTYPE html>
             <html lang=\"en\">
             <head>
@@ -45,8 +60,10 @@ impl PrimeDownInject {
                 <article class=\"markdown-body\">{}</article>
             </body>
             </html>",
-            css_content, html_content
-        )
+            css_style, html_content
+        );
+
+        Ok(html)
     }
     
 }

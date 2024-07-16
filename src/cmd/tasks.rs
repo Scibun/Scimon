@@ -115,7 +115,7 @@ impl Tasks {
         Ok(format!("{:x}", hash))
     }
 
-    pub async fn download(url: &str, path: &str, flags: &Flags) -> Result<String, Box<dyn Error>> {
+    pub async fn download(contents: Option<&str>, url: &str, path: &str, flags: &Flags) -> Result<String, Box<dyn Error>> {
         let mut line_url = Cow::Borrowed(
             url.trim()
         );
@@ -129,7 +129,10 @@ impl Tasks {
             Err(_) => return Ok("".to_string()),
         }
 
-        Markdown::create(&line_url, &path).await?;
+        if let Some(contents) = contents {
+            Markdown::create(&contents, &line_url, &path).await?;
+        }
+
         Pdf::download_line(&line_url, url, path).await?;
 
         Ok("".to_string())

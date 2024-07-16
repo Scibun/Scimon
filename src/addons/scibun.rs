@@ -107,6 +107,7 @@ impl Scibun {
                     let _ = fs::create_dir(&path);
 
                     Tasks::download(
+                        None,
                         &url, 
                         &path,
                         flags,

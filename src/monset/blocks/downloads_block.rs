@@ -28,7 +28,7 @@ pub struct DownloadsBlock;
 
 impl DownloadsBlock {
     
-    async fn loop_lines(downloads_content: &str, path: &str, flags: &Flags) -> Result<(), Box<dyn Error>> {
+    async fn block(contents: &str, downloads_content: &str, path: &str, flags: &Flags) -> Result<(), Box<dyn Error>> {
         for line in downloads_content.lines() {
             let url = line.trim().split_whitespace().next().unwrap_or("");
             let final_url = Providers::arxiv(&url);
@@ -42,6 +42,7 @@ impl DownloadsBlock {
             if !Macros::handle_check_macro_line(&line, "ignore") {
                 if !final_url.is_empty() && is_url(&final_url) && final_url.starts_with("http") {
                     Tasks::download(
+                        Some(contents),
                         &url,
                         &path,
                         flags,
@@ -76,7 +77,7 @@ impl DownloadsBlock {
             }
 
             UI::section_header("downloads", "normal");
-            Self::loop_lines(downloads_content, &path, flags).await?;
+            Self::block(&contents, downloads_content, &path, flags).await?;
 
             Tasks::compress(&contents)?;
             Vars::get_open(&contents, flags.no_open_link).await;

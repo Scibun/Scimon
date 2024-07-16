@@ -67,15 +67,25 @@ impl Vars {
     }
 
     pub fn get_print(contents: &str) -> Option<String> {
-        let readme_pattern = Regex::new(BlocksRegExp::GET_PRINT_VAR).unwrap();
+        let print_pattern = Regex::new(BlocksRegExp::GET_PRINT_VAR).unwrap();
     
-        if let Some(caps) = readme_pattern.captures(&contents) {
+        if let Some(caps) = print_pattern.captures(&contents) {
             UI::section_header("print", "normal");
 
             let print = caps.get(1).map(|m| m.as_str().to_string())?;
             println!("{}", print);
 
             None
+        } else {
+            None
+        }
+    }
+    
+    pub fn get_style(contents: &str) -> Option<String> {
+        let style_pattern = Regex::new(BlocksRegExp::GET_STYLE_VAR).unwrap();
+    
+        if let Some(caps) = style_pattern.captures(&contents) {
+            caps.get(1).map(|m| m.as_str().to_string())
         } else {
             None
         }
