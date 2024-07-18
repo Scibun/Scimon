@@ -27,6 +27,7 @@ For more help and document, see our documentation:
 - [Open links](https://scibun.github.io/ScimonDocs/open-links.html)
 - [Markdown render](https://scibun.github.io/ScimonDocs/markdown-render.html)
 - [Scrape](https://scibun.github.io/ScimonDocs/scrape.html)
+- [Print](https://scibun.github.io/ScimonDocs/print.html)
 - [Providers](https://scibun.github.io/ScimonDocs/providers.html)
 - [Scimon.yml file](https://scibun.github.io/ScimonDocs/scimon.yml-file.html)
 - [Style](https://scibun.github.io/ScimonDocs/style.html)
