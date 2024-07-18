@@ -29,6 +29,7 @@ For more help and document, see our documentation:
 - [Scrape](https://scibun.github.io/ScimonDocs/scrape.html)
 - [Providers](https://scibun.github.io/ScimonDocs/providers.html)
 - [Scimon.yml file](https://scibun.github.io/ScimonDocs/scimon.yml-file.html)
+- [Style](https://scibun.github.io/ScimonDocs/style.html)
 - [.env file](https://scibun.github.io/ScimonDocs/env-file.html)
 - [External Resources Usage](https://scibun.github.io/ScimonDocs/external-resources.html)
 
