@@ -10,6 +10,7 @@ impl Uris {
     // Scimon
     pub const SCIMON_API_REQUEST: &'static str = "http://localhost/Scimon/api/";
     pub const SCIMON_SCRAPE_API_ENPOINT: &'static str = "https://addons.scibun.com/scrape?url=";
+    pub const SCIMON_URLFILTER_API_ENPOINT: &'static str = "https://addons.scibun.com/urlfilter?url=";
 
     pub const README_TEMPLATE_LINK: &'static str = "https://template.scibun.com/";
 
