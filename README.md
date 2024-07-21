@@ -13,6 +13,10 @@
     <img src='https://i.imgur.com/RRPMQ2j.png' />
 </p>
 
+## What is Scimon?
+
+Scimon is a tool designed for batch downloading PDF files using its own dedicated language, Monset (.mon). Monset features a very simple and quick-to-write syntax, making it easy to use. The Scimon interpreter is both fast and secure, as it is written in Rust, leveraging the language's best practices.
+
 ## Documentation
 
 For more help and document, see our documentation:
