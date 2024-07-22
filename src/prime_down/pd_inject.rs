@@ -9,8 +9,8 @@ use crate::{
     },
 
     consts::{
-        uris::Uris,
         global::Global,
+        addons::Addons,
     },
 };
 
@@ -25,8 +25,8 @@ impl PrimeDownInject {
             )
         );
 
-        let bundle_js_link = format!("{}static/dist/bundle.js", Uris::README_TEMPLATE_LINK);
-        let bundle_css_link = format!("{}static/dist/bundle.css", Uris::README_TEMPLATE_LINK);
+        let bundle_js_link = format!("{}static/dist/bundle.js", Addons::README_TEMPLATE_LINK);
+        let bundle_css_link = format!("{}static/dist/bundle.css", Addons::README_TEMPLATE_LINK);
         
         contents.replace(
             "{{ page_title }}", &title
@@ -43,7 +43,7 @@ impl PrimeDownInject {
         let css_cdn = if let Some(url) = Vars::get_style(contents) {
             url
         } else {
-            Global::DEFAULT_CSS_STYLE.to_string()
+            Addons::DEFAULT_CSS_STYLE.to_string()
         };
 
         let css_style = Remote::content(&css_cdn).await?;

@@ -14,6 +14,7 @@ use std::{
 
 use crate::{
     consts::{
+        addons::Addons,
         global::Global,
         folders::Folders,
     },
@@ -48,7 +49,7 @@ impl DownloadConfigsFiles {
 
     pub async fn env_file(print: bool, force_mode: bool) -> Result<(), Box<dyn Error>> {
         let output_directory = &*Folders::APP_FOLDER;
-        let uri = format!("{}{}", Global::DOWNLOAD_FILES_URI, ".env.example");
+        let uri = format!("{}{}", Addons::DOWNLOAD_FILES_URI, ".env.example");
     
         TkFs::create_dir_all(
             output_directory.clone()
@@ -72,7 +73,7 @@ impl DownloadConfigsFiles {
       
     pub async fn settings_file(print: bool, force_mode: bool) -> Result<(), Box<dyn Error>> {
         let output_directory = &*Folders::APP_FOLDER;
-        let uri = format!("{}{}", Global::DOWNLOAD_FILES_URI, "scimon.yml");
+        let uri = format!("{}{}", Addons::DOWNLOAD_FILES_URI, "scimon.yml");
     
         TkFs::create_dir_all(
             output_directory.clone()

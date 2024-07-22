@@ -9,7 +9,7 @@ use crate::{
     ui::errors_alerts::ErrorsAlerts,
     
     consts::{
-        uris::Uris,
+        addons::Addons,
         folders::Folders,
     },
 };
@@ -39,7 +39,7 @@ pub struct Scrape;
 impl Scrape {
 
     async fn fetch_items(url: &str) -> Result<Response, Box<dyn std::error::Error>> {
-        let url_with_param = Uris::SCIMON_SCRAPE_API_ENPOINT.to_string() + url;
+        let url_with_param = Addons::SCIMON_SCRAPE_API_ENDPOINT.to_string() + url;
         let response = reqwest::get(&url_with_param).await?;
         let body = response.bytes().await?;
         

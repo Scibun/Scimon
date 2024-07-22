@@ -3,7 +3,7 @@ extern crate open;
 use regex::Regex;
 
 use crate::{
-    consts::uris::Uris,
+    consts::addons::Addons,
     configs::settings::Settings,
     regexp::regex_blocks::BlocksRegExp,
 
@@ -39,7 +39,7 @@ impl Vars {
                 let url = caps.get(1).map(|m| m.as_str().to_string())?;
 
                 let open_url = if Settings::get("general.urlfilter_open", "BOOLEAN") == true {
-                    format!("{}{}", Uris::SCIMON_URLFILTER_API_ENPOINT, url)
+                    format!("{}{}", Addons::SCIMON_URLFILTER_API_ENDPOINT, url)
                 } else {
                     url
                 };
