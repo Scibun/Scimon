@@ -102,15 +102,12 @@ impl Scibun {
                 let lines_iter = io::Cursor::new(&data).lines();
     
                 for line_result in lines_iter {
-                    let path = "scrape/";
+                    let path = "packages/";
                     let url = line_result?;
                     let _ = fs::create_dir(&path);
 
                     Tasks::download(
-                        None,
-                        &url, 
-                        &path,
-                        flags,
+                        None, &url, &path, flags,
                     ).await?;
                 }
             }

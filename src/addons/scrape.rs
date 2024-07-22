@@ -59,14 +59,11 @@ impl Scrape {
                             if !response.list.is_empty() {
                                 for item in &response.list {
                                     if !item.encrypted {
-                                        let path = "./";
+                                        let path = "scrape/";
                                         let url = &item.url;
 
                                         Tasks::download(
-                                            None,
-                                            url,
-                                            path,
-                                            flags,
+                                            None, url, path, flags,
                                         ).await?;
                                     }
                                 }
