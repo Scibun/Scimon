@@ -1,9 +1,12 @@
 extern crate chrono;
 
-use once_cell::sync::Lazy;
-use dirs_next::config_dir;
-
 use std::path::PathBuf;
+use once_cell::sync::Lazy;
+
+use dirs_next::{
+    config_dir,
+    download_dir,
+};
 
 use crate::consts::global::Global;
 
@@ -13,6 +16,12 @@ impl Folders {
 
     pub const APP_FOLDER: Lazy<PathBuf> = Lazy::new(|| {
         let mut path = config_dir().expect("No config directory");
+        path.push(Global::APP_NAME);
+        path
+    });
+
+    pub const DOWNLOAD_FOLDER: Lazy<PathBuf> = Lazy::new(|| {
+        let mut path = download_dir().expect("No config directory");
         path.push(Global::APP_NAME);
         path
     });
@@ -28,14 +37,20 @@ impl Folders {
     });
     
     pub const README_FOLDER: Lazy<PathBuf> = Lazy::new(|| {
-        let mut path = Folders::APP_FOLDER.clone();
+        let mut path = Self::APP_FOLDER.clone();
         path.push("readme");
         path
     });
     
     pub const SCRIPTS_FOLDER: Lazy<PathBuf> = Lazy::new(|| {
-        let mut path = Folders::APP_FOLDER.clone();
+        let mut path = Self::APP_FOLDER.clone();
         path.push("scripts");
+        path
+    });
+    
+    pub const SCRAPE_FOLDER: Lazy<PathBuf> = Lazy::new(|| {
+        let mut path = Self::DOWNLOAD_FOLDER.clone();
+        path.push("scrape");
         path
     });
     

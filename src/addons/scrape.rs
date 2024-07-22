@@ -6,8 +6,12 @@ use serde::Deserialize;
 use crate::{
     args_cli::Flags,
     cmd::tasks::Tasks,
-    consts::uris::Uris,
     ui::errors_alerts::ErrorsAlerts,
+    
+    consts::{
+        uris::Uris,
+        folders::Folders,
+    },
 };
 
 #[derive(Debug, Deserialize)]
@@ -59,11 +63,11 @@ impl Scrape {
                             if !response.list.is_empty() {
                                 for item in &response.list {
                                     if !item.encrypted {
-                                        let path = "scrape/";
+                                        let path = Folders::SCRAPE_FOLDER.to_str().unwrap().to_string();
                                         let url = &item.url;
 
                                         Tasks::download(
-                                            None, url, path, flags,
+                                            None, url, &path, flags,
                                         ).await?;
                                     }
                                 }
