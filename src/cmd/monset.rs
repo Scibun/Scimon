@@ -14,7 +14,7 @@ use crate::{
     utils::validation::Validate,
     ui::errors_alerts::ErrorsAlerts,
 
-    monset::blocks::{
+    syntax::blocks::{
         runner_block::RunnerBlock,
         downloads_block::DownloadsBlock,
     }, 

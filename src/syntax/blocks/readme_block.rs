@@ -7,7 +7,7 @@ use std::{
 
 use crate::{
     args_cli::Flags,
-    monset::vars::Vars,
+    syntax::vars::Vars,
     render::render::Render,
     system::markdown::Markdown,
     ui::macros_alerts::MacrosAlerts,

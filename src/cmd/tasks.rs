@@ -31,8 +31,8 @@ use sha2::{
 
 use crate::{
     args_cli::Flags,
-    monset::vars::Vars,
-    monset::macros::Macros,
+    syntax::vars::Vars,
+    syntax::macros::Macros,
 
     ui::{
         ui_base::UI,

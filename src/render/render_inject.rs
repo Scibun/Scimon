@@ -1,7 +1,7 @@
 use std::error::Error;
 
 use crate::{
-    monset::vars::Vars,
+    syntax::vars::Vars,
 
     utils::{
         str::StrUtils,
