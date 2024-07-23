@@ -30,18 +30,20 @@ For more help and document, see our documentation:
 - [How to build](https://scibun.github.io/ScimonDocs/build.html)
 - [Basic usage](https://scibun.github.io/ScimonDocs/basic-usage.html)
 - [Flags](https://scibun.github.io/ScimonDocs/flags.html)
-- [Downloads Block](https://scibun.github.io/ScimonDocs/download-block.html)
-- [Readme Block](https://scibun.github.io/ScimonDocs/readme-block.html)
-- [Commands Block](https://scibun.github.io/ScimonDocs/commands-block.html) (Experimental)
-- [Compress folder](https://scibun.github.io/ScimonDocs/compress.html)
-- [Open links](https://scibun.github.io/ScimonDocs/open-links.html)
-- [Markdown render](https://scibun.github.io/ScimonDocs/markdown-render.html)
 - [Scrape](https://scibun.github.io/ScimonDocs/scrape.html)
-- [Print](https://scibun.github.io/ScimonDocs/prints.html)
 - [Providers](https://scibun.github.io/ScimonDocs/providers.html)
-- [Scimon.yml file](https://scibun.github.io/ScimonDocs/scimon.yml-file.html)
-- [Style](https://scibun.github.io/ScimonDocs/style.html)
-- [.env file](https://scibun.github.io/ScimonDocs/env-file.html)
+- [Monset](https://scibun.github.io/ScimonDocs/monset/what-is.html)
+  - [Downloads Block](https://scibun.github.io/ScimonDocs/monset/download-block.html)
+  - [Readme Block](https://scibun.github.io/ScimonDocs/monset/readme-block.html)
+  - [Commands Block](https://scibun.github.io/ScimonDocs/monset/commands-block.html)
+  - [Compress folder](https://scibun.github.io/ScimonDocs/monset/compress.html)
+  - [Open links](https://scibun.github.io/ScimonDocs/monset/open-links.html)
+  - [Markdown render](https://scibun.github.io/ScimonDocs/monset/markdown-render.html)
+  - [Style](https://scibun.github.io/ScimonDocs/monset/style.html)
+  - [Print](https://scibun.github.io/ScimonDocs/monset/prints.html)
+- [Configs](https://scibun.github.io/ScimonDocs/configs/index.html)
+  - [Scimon.yml file](https://scibun.github.io/ScimonDocs/configs/scimon.yml-file.html)
+  - [.env file](https://scibun.github.io/ScimonDocs/configs/env-file.html)
 - [External Resources Usage](https://scibun.github.io/ScimonDocs/external-resources.html)
 
 ## Example of code and execute
@@ -56,12 +58,12 @@ print = "Hello, World!"
 
 style = "https://raw.githubusercontent.com/sindresorhus/github-markdown-css/main/github-markdown.css"
 
-readme = "https://gist.githubusercontent.com/Kremilly/5fd360d994bb0fe108b648d0e4c9e92f/raw/ac524eba2112bf0bdbac1ad27e24f78f678589ec/readme-example.md"
+readme = "https://gist.githubusercontent.com/Kremilly/5fd360d994bb0fe108b648d0e4c9e92f/raw/ac524eba2112bf0bdbac1ad27e24f78f678589ec/readme-example.html"
 
 downloads {
     https://arxiv.org/pdf/2405.01513 !ignore
     https://olacesar.com/e-books/protegido.pdf !ignore
-    https://raw.githubusercontent.com/facebook/react/main/README.md
+    https://raw.githubusercontent.com/facebook/react/main/README.html
     https://pt.wikisource.org/wiki/Manifesto_da_Guerrilha_do_Livre_Acesso !ignore
 }
 
