@@ -21,8 +21,8 @@ use std::{
 
 use crate::{
     cmd::tasks::Tasks,
+    render::render::Render,
     system::providers::Providers,
-    prime_down::pd_core::PrimeDown,
 
     ui::{
         ui_base::UI,
@@ -63,7 +63,7 @@ impl Pdf {
 
     pub async fn create_pdf(content: &str, path: PathBuf, url: &str) -> Result<(), Box<dyn Error>> {
         let len = Remote::get_file_size(url).await?;
-        let pdf_contents = PrimeDown::connect_to_browser(content).await?;
+        let pdf_contents = Render::connect_to_browser(content).await?;
     
         let pb = ProgressBar::new(len);
 

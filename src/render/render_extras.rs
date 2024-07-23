@@ -5,9 +5,9 @@ use crate::{
     regexp::regex_core::CoreRegExp,
 };
 
-pub struct PrimeDownExtras;
+pub struct RenderExtras;
 
-impl PrimeDownExtras {
+impl RenderExtras {
    
     pub fn gist(markdown: &str) -> String {
         let re = Regex::new(CoreRegExp::RENDER_EXTRA_GIST).unwrap();

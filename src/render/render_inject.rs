@@ -14,9 +14,9 @@ use crate::{
     },
 };
 
-pub struct PrimeDownInject;
+pub struct RenderInject;
 
-impl PrimeDownInject {
+impl RenderInject {
 
     pub fn content(file: &str, contents: String, markdown_html: String) -> String {
         let title = format!(

@@ -18,10 +18,10 @@ use crate::{
     generator::generate::Generate,
     ui::success_alerts::SuccessAlerts, 
     
-    prime_down::{
-        pd_io::PrimeDownIO,
-        pd_inject::PrimeDownInject,
-        pd_extras::PrimeDownExtras, 
+    render::{
+        render_io::RenderIO,
+        render_inject::RenderInject,
+        render_extras::RenderExtras, 
     }, 
     
     utils::{
@@ -60,14 +60,14 @@ impl Markdown {
             )
         };
 
-        PrimeDownIO::get_file_path(file).replace(
+        RenderIO::get_file_path(file).replace(
             ".html", &filename
         )
     }
 
     pub fn append_extras_and_render(markdown: &str) -> String {
-        let markdown_block_extras_qrcode = PrimeDownExtras::qrcode(&markdown);
-        let markdown_block_extras_gist = PrimeDownExtras::gist(&markdown_block_extras_qrcode);
+        let markdown_block_extras_qrcode = RenderExtras::qrcode(&markdown);
+        let markdown_block_extras_gist = RenderExtras::gist(&markdown_block_extras_qrcode);
 
         let parser = Parser::new_ext(&markdown_block_extras_gist, Options::all());
         let mut html_output = String::new();
@@ -91,7 +91,7 @@ impl Markdown {
     pub async fn create(contents: &str, url: &str, path: &str) -> Result<(), Box<dyn Error>> {
         if Remote::check_content_type(&url, "text/markdown").await? || url.contains(".md") {
             let html_content = Self::render(url).await?;
-            let content = PrimeDownInject::html_content(contents, html_content).await?;
+            let content = RenderInject::html_content(contents, html_content).await?;
             
             let original_name = UrlMisc::get_last_part(url);
             let new_filename = FileUtils::replace_extension(&original_name, "pdf");

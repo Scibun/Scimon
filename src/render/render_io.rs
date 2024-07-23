@@ -6,9 +6,9 @@ use crate::{
     configs::settings::Settings,
 };
 
-pub struct PrimeDownIO;
+pub struct RenderIO;
 
-impl PrimeDownIO {
+impl RenderIO {
 
     fn get_path() -> String {
         let value = Settings::get("render_markdown.output_path", "STRING");
