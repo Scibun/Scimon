@@ -28,15 +28,13 @@ pub struct Scimon;
 impl Scimon {
     
     async fn options(options: &str) -> Result<(), Box<dyn Error>> {
-        if options == "open-env" {
-            Env::open_env_file()?;
-        } else if options == "open-settings" {
-            Settings::open_settings_file()?;
-        } else if options == "download-env" {
-            DownloadConfigsFiles::env_file(true, true).await?;
-        } else if options == "download-settings" {
-            DownloadConfigsFiles::settings_file(true, true).await?;
-        }
+        match options {
+            "open-env" => Env::open_env_file()?,
+            "open-settings" => Settings::open_settings_file()?,
+            "download-env" => DownloadConfigsFiles::env_file(true, true).await?,
+            "download-settings" => DownloadConfigsFiles::settings_file(true, true).await?,
+            _ => (),
+        };
         
         Ok(())
     }
