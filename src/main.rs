@@ -7,10 +7,10 @@ mod addons;
 mod system;
 mod syntax;
 mod scimon;
+mod render;
 mod configs;
 mod args_cli;
 mod generator;
-mod render;
 
 use crate::scimon::Scimon;
 
