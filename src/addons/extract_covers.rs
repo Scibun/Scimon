@@ -58,6 +58,8 @@ impl ExtractCovers {
 
     pub async fn extract(contents: &str) -> IoResult<()> {
         if let Some(covers_path) = Vars::get_covers(contents) {
+            FileUtils::create_path(&covers_path);
+
             UI::section_header("Extracting covers", "normal");
             let pdf_path = &Vars::get_path(contents);
 
