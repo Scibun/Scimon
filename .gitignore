@@ -53,5 +53,11 @@ credentials.json
 *.mjs
 *.cjs
 
-# Delete Monset files
+# ignore Monset files
 *.mon
+
+# Ignore images
+*.png
+*.jpg
+*.gif
+*.jpeg

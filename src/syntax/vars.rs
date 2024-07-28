@@ -75,6 +75,16 @@ impl Vars {
         }
     }
 
+    pub fn get_covers(contents: &str) -> Option<String> {
+        let readme_pattern = Regex::new(BlocksRegExp::GET_COVERS_VAR).unwrap();
+    
+        if let Some(caps) = readme_pattern.captures(&contents) {
+            caps.get(1).map(|m| m.as_str().to_string())
+        } else {
+            None
+        }
+    }
+
     pub fn get_print(contents: &str) -> Option<String> {
         let print_pattern = Regex::new(BlocksRegExp::GET_PRINT_VAR).unwrap();
     

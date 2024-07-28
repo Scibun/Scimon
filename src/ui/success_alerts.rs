@@ -48,5 +48,15 @@ impl SuccessAlerts {
             hash.yellow()
         );
     }
+  
+    pub fn cover_generated(file: &str) {
+        let current_datetime = General::date_time();
+    
+        println!(
+            "{} Cover saved in {}", 
+            current_datetime.green().bold(), 
+            file.blue(),
+        );
+    }
 
 }
