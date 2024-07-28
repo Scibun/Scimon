@@ -31,12 +31,15 @@ use sha2::{
 
 use crate::{
     args_cli::Flags,
-    syntax::vars::Vars,
-    syntax::macros::Macros,
 
     ui::{
         ui_base::UI,
         compress_alerts::CompressAlerts,
+    },
+    
+    syntax::{
+        vars::Vars,
+        macros::Macros,
     },
 
     system::{
