@@ -48,12 +48,6 @@ impl Folders {
         path
     });
     
-    pub const PLUGINS_FOLDER: Lazy<PathBuf> = Lazy::new(|| {
-        let mut path = Self::APP_FOLDER.clone();
-        path.push("plugins");
-        path
-    });
-    
     pub const SCRAPE_FOLDER: Lazy<PathBuf> = Lazy::new(|| {
         let mut path = Self::DOWNLOAD_FOLDER.clone();
         path.push("scrape");

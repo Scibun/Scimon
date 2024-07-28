@@ -3,7 +3,6 @@ use walkdir::WalkDir;
 use std::{
     path::Path,
     error::Error,
-    io::Result as IoResult,
 };
 
 use pyo3::{
@@ -13,11 +12,7 @@ use pyo3::{
 
 use crate::{
     syntax::vars::Vars,
-
-    consts::{
-        addons::Addons,
-        folders::Folders,
-    },
+    consts::addons::Addons,
 
     ui::{
         ui_base::UI,
@@ -34,17 +29,9 @@ pub struct ExtractCovers;
 
 impl ExtractCovers {
 
-    async fn exec(input_file: &str, output_path: &str) -> Result<(), Box<dyn Error>> {
-        let script_path = &format!("{}", Folders::PLUGINS_FOLDER.to_str().unwrap_or_default());
-        FileUtils::create_path(&script_path);
-
-        Remote::download(Addons::EXTRACT_COVERS_PLUGIN, script_path).await?;
-        
-        let plugin_path = &format!("{}/extract_covers.py", script_path);
-    
+    async fn exec(code: &str, input_file: &str, output_path: &str) -> Result<(), Box<dyn Error>> {
         Python::with_gil(|py| {
-            let code = std::fs::read_to_string(plugin_path)?;
-            let main_ctx = PyModule::from_code_bound(py, &code, script_path, script_path)?;
+            let main_ctx = PyModule::from_code_bound(py, &code, "", "")?;
     
             let file: String = main_ctx
                 .getattr("extract_first_page_to_png")?
@@ -56,9 +43,10 @@ impl ExtractCovers {
         })
     }
 
-    pub async fn extract(contents: &str) -> IoResult<()> {
+    pub async fn extract(contents: &str) -> Result<(), Box<dyn Error>> {
         if let Some(covers_path) = Vars::get_covers(contents) {
             FileUtils::create_path(&covers_path);
+            let code = &Remote::content(Addons::EXTRACT_COVERS_PLUGIN).await?;
 
             UI::section_header("Extracting covers", "normal");
             let pdf_path = &Vars::get_path(contents);
@@ -72,7 +60,7 @@ impl ExtractCovers {
                 let input_file = &format!("{}{}", pdf_path, file_name.to_str().unwrap_or_default());
                 let output_path = &format!("{}{}", covers_path, new_name);
 
-                let _ = Self::exec(input_file, output_path).await;
+                let _ = Self::exec(code, input_file, output_path).await;
             }
         }
 
