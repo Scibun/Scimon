@@ -10,7 +10,7 @@ use crate::{
     cmd::tasks::Tasks,
     utils::file::FileUtils,
     system::providers::Providers, 
-    addons::extract_covers::ExtractCovers,
+    ext::extract_covers::ExtractCovers,
 
     ui::{
         ui_base::UI,
