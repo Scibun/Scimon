@@ -40,7 +40,7 @@ impl ExtractCovers {
 
         Remote::download(Addons::EXTRACT_COVERS_PLUGIN, script_path).await?;
         
-        let plugin_path = &format!("{}/extract_cover.py", script_path);
+        let plugin_path = &format!("{}/extract_covers.py", script_path);
     
         Python::with_gil(|py| {
             let code = std::fs::read_to_string(plugin_path)?;
