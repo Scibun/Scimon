@@ -1,11 +1,8 @@
 extern crate chrono;
 
-use reqwest;
 use regex::Regex;
 
 use std::{
-    fs::File,
-    io::Write,
     error::Error,
 
     process::{
@@ -29,26 +26,6 @@ use crate::{
 pub struct Scripts;
 
 impl Scripts {
-
-    pub async fn download(url: &str, path: &str) -> Result<String, Box<dyn Error>> {
-        let response = reqwest::get(url).await?;
-        
-        if response.status().is_success() {
-            let filename = Remote::get_filename(url, false).await?;
-            
-            let file_path = format!(
-                "{}/{}", path, url.split("/").last().unwrap_or(&filename)
-            );
-
-            let mut file = File::create(&file_path)?;
-            let content = response.bytes().await?;
-    
-            file.write_all(&content)?;
-            return Ok(file_path)
-        }
-
-        Ok("".to_string())
-    }
     
     pub fn exec(line: &str, program: &str) -> Result<(), Box<dyn Error>> {
         let language = Plataforms::get_bin_name(program);
@@ -81,7 +58,7 @@ impl Scripts {
                 let path = Folders::SCRIPTS_FOLDER.to_str().unwrap_or_default().to_string();
 
                 FileUtils::create_path(&path);
-                Self::download(&line_trimmed, &path).await?
+                Remote::download(&line_trimmed, &path).await?
             } else {
                 line_trimmed.to_string()
             };

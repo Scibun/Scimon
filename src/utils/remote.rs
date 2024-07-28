@@ -1,7 +1,12 @@
 extern crate url;
 
 use reqwest;
-use std::error::Error;
+
+use std::{
+    fs::File,
+    io::Write,
+    error::Error,
+};
 
 use crate::utils::file::FileUtils;
 
@@ -59,6 +64,26 @@ impl Remote {
         }
     
         Ok(false)
+    }
+
+    pub async fn download(url: &str, path: &str) -> Result<String, Box<dyn Error>> {
+        let response = reqwest::get(url).await?;
+        
+        if response.status().is_success() {
+            let filename = Remote::get_filename(url, false).await?;
+            
+            let file_path = format!(
+                "{}/{}", path, url.split("/").last().unwrap_or(&filename)
+            );
+
+            let mut file = File::create(&file_path)?;
+            let content = response.bytes().await?;
+    
+            file.write_all(&content)?;
+            return Ok(file_path)
+        }
+
+        Ok("".to_string())
     }
 
 }
