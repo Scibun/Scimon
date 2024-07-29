@@ -50,14 +50,14 @@ impl RenderInject {
 
         let html = format!(
             "<!DOCTYPE html>
-            <html lang=\"en\">
+            <html lang='en'>
             <head>
-                <meta charset=\"UTF-8\">
-                <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+                <meta charset='UTF-8'>
+                <meta name='viewport' content='width=device-width, initial-scale=1.0'>
                 <style>{}</style>
             </head>
             <body>
-                <article class=\"markdown-body\">{}</article>
+                <article class='markdown-body'>{}</article>
             </body>
             </html>",
             css_style, html_content
