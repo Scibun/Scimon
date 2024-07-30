@@ -81,7 +81,7 @@ impl Tasks {
                 let path = entry.path();
                 let name = path.strip_prefix(Path::new(&folder_path)).unwrap();
 
-                if path.is_file() && !path.ends_with(".sha256") {
+                if path.extension().map_or(false, |ext| ext == "pdf") {
                     zip.start_file(name.to_str().unwrap(), options.clone())?;
                     let mut f = File::open(path)?;
                     let mut buffer = Vec::new();
