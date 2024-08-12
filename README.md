@@ -41,6 +41,7 @@ For more help and document, see our documentation:
   - [Markdown render](https://scibun.github.io/ScimonDocs/monset/markdown-render.html)
   - [Style](https://scibun.github.io/ScimonDocs/monset/style.html)
   - [Print](https://scibun.github.io/ScimonDocs/monset/prints.html)
+  - [Covers](https://scibun.github.io/ScimonDocs/monset/covers.html)
 - [Configs](https://scibun.github.io/ScimonDocs/configs/index.html)
   - [Scimon.yml file](https://scibun.github.io/ScimonDocs/configs/scimon.yml-file.html)
   - [.env file](https://scibun.github.io/ScimonDocs/configs/env-file.html)
