@@ -46,10 +46,12 @@ impl ExtractCovers {
     pub async fn extract(contents: &str) -> Result<(), Box<dyn Error>> {
         if let Some(covers_path) = Vars::get_covers(contents) {
             FileUtils::create_path(&covers_path);
-            let code = &Remote::content(Addons::EXTRACT_COVERS_PLUGIN).await?;
 
             UI::section_header("Extracting covers", "normal");
+            UI::section_label("To use this feature, install `pymupdf` with `pip install pymupdf`", "warning");
+
             let pdf_path = &Vars::get_path(contents);
+            let code = &Remote::content(Addons::EXTRACT_COVERS_PLUGIN).await?;
 
             for entry in WalkDir::new(&pdf_path) {
                 let entry = entry?;
