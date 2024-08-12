@@ -58,7 +58,6 @@ impl UI {
         println!("└─> {}", message);
     }
 
-
     pub fn pb_template() -> ProgressStyle {
         ProgressStyle::with_template(
             "[{elapsed_precise}] [{wide_bar:.cyan/blue}] {bytes}/{total_bytes} ({bytes_per_sec}, {eta})"
