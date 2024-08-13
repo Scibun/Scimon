@@ -48,7 +48,7 @@ impl ExtractCovers {
             FileUtils::create_path(&covers_path);
 
             UI::section_header("Extracting covers", "normal");
-            UI::section_label("To use this feature, install `pymupdf` with `pip install pymupdf`", "warning");
+            UI::section_label("To use this feature, install dependencies with `scimon --options install-requirements`", "warning");
 
             let pdf_path = &Vars::get_path(contents);
             let code = &Remote::content(Addons::EXTRACT_COVERS_PLUGIN).await?;
