@@ -7,6 +7,7 @@ impl Addons {
     
     // Plugins
     pub const EXTRACT_COVERS_PLUGIN: &'static str = "https://raw.githubusercontent.com/Scibun/MonPlugins/main/extract_covers.py";
+    pub const INSTALL_REQUIREMENTS_PLUGINS: &'static str = "https://raw.githubusercontent.com/Scibun/MonPlugins/main/requirements.txt";
 
     // Scimon
     pub const SCIMON_API_REQUEST: &'static str = "http://localhost/Scimon/api/";

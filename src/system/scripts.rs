@@ -27,7 +27,7 @@ pub struct Scripts;
 
 impl Scripts {
     
-    pub fn exec(line: &str, program: &str) -> Result<(), Box<dyn Error>> {
+    fn exec(line: &str, program: &str) -> Result<(), Box<dyn Error>> {
         let language = Plataforms::get_bin_name(program);
 
         let line_cleanned = Regex::new(

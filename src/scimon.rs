@@ -13,11 +13,12 @@ use crate::{
 
     addons::{
         scrape::Scrape,
-        scibun::Scibun, 
+        scibun::Scibun,
     },
 
     configs::{
         env::Env,
+        pip::Pip,
         settings::Settings,
         configs_files::DownloadConfigsFiles,
     },
@@ -30,6 +31,7 @@ impl Scimon {
     async fn options(options: &str) -> Result<(), Box<dyn Error>> {
         match options {
             "open-env" => Env::open_env_file()?,
+            "install-requirements" => Pip::install().await?,
             "open-settings" => Settings::open_settings_file()?,
             "download-env" => DownloadConfigsFiles::env_file(true, true).await?,
             "download-settings" => DownloadConfigsFiles::settings_file(true, true).await?,
@@ -54,10 +56,10 @@ impl Scimon {
         let url = flags.url.as_deref().unwrap_or_default();
         let run = flags.run.as_deref().unwrap_or_default();
         let options = flags.options.as_deref().unwrap_or_default();
-
-        UI::header();
         
         if !run.is_empty() {
+            UI::header();
+
             if !Scibun::check_is_user(run) {
                 let _ = Monset::prints(run).await;
                 

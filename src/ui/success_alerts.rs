@@ -13,7 +13,12 @@ impl SuccessAlerts {
 
     pub fn env() {
         let current_datetime = General::date_time();
-        println!("{} Downloaded env file", current_datetime.blue().bold());
+        println!("{} Downloaded env file", current_datetime.green().bold());
+    }
+
+    pub fn pip() {
+        let current_datetime = General::date_time();
+        println!("{} Dependencies was installed successfully", current_datetime.green().bold());
     }
 
     pub fn download(file: &str, url: &str, password: bool, hash: &str) {
