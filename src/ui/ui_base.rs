@@ -52,6 +52,7 @@ impl UI {
             "info" => text.bold().blue(),
             "warning" => text.bold().yellow(),
             "error" => text.bold().red(),
+            "success" => text.bold().green(),
             _ => text.bold(),
         };
 

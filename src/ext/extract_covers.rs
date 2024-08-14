@@ -11,6 +11,7 @@ use pyo3::{
 };
 
 use crate::{
+    configs::pip::Pip,
     syntax::vars::Vars,
     consts::addons::Addons,
 
@@ -37,7 +38,7 @@ impl ExtractCovers {
                 .getattr("extract_first_page_to_png")?
                 .call1((input_file, output_path))?
                 .extract()?;
-    
+
             SuccessAlerts::cover_generated(file.as_str());
             Ok(())
         })
@@ -52,6 +53,8 @@ impl ExtractCovers {
 
             let pdf_path = &Vars::get_path(contents);
             let code = &Remote::content(Addons::EXTRACT_COVERS_PLUGIN).await?;
+
+            Pip::check_pip_packages().await?;
 
             for entry in WalkDir::new(&pdf_path) {
                 let entry = entry?;

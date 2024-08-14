@@ -31,8 +31,8 @@ impl Scimon {
     async fn options(options: &str) -> Result<(), Box<dyn Error>> {
         match options {
             "open-env" => Env::open_env_file()?,
-            "install-requirements" => Pip::install().await?,
             "open-settings" => Settings::open_settings_file()?,
+            "install-requirements" => Pip::install(false).await?,
             "download-env" => DownloadConfigsFiles::env_file(true, true).await?,
             "download-settings" => DownloadConfigsFiles::settings_file(true, true).await?,
             _ => (),
