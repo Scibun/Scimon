@@ -39,24 +39,12 @@ impl UI {
             "info" => text.bold().blue(),
             "warning" => text.bold().yellow(),
             "error" => text.bold().red(),
+            "success" => text.bold().green(),
             _ => text.bold(),
         };
 
         println!("");
         println!("{}", message);
-    }
-    
-    pub fn section_label(text: &str, level: &str) {
-        let message = match level {
-            "normal" => text.bold(),
-            "info" => text.bold().blue(),
-            "warning" => text.bold().yellow(),
-            "error" => text.bold().red(),
-            "success" => text.bold().green(),
-            _ => text.bold(),
-        };
-
-        println!("└─> {}", message);
     }
 
     pub fn pb_template() -> ProgressStyle {
