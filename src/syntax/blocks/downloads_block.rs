@@ -7,10 +7,14 @@ use std::{
 
 use crate::{
     args_cli::Flags,
-    cmd::tasks::Tasks,
     utils::file::FileUtils,
     system::providers::Providers, 
     ext::extract_covers::ExtractCovers,
+
+    cmd::{
+        tasks::Tasks,
+        compress::Compress,
+    },
 
     ui::{
         ui_base::UI,
@@ -80,7 +84,7 @@ impl DownloadsBlock {
             UI::section_header("downloads", "normal");
             Self::block(&contents, downloads_content, &path, flags).await?;
 
-            Tasks::compress(&contents)?;
+            Compress::files(&contents)?;
             ExtractCovers::extract(&contents).await?;
             Vars::get_open(&contents, flags.no_open_link).await;
             ReadMeBlock::render_var_and_save_file(&contents, flags).await?;

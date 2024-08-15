@@ -29,4 +29,9 @@ impl PanicAlerts {
         Self::message("'path' variable not found in file.");
     }
 
+    pub fn compress_level() {
+        UI::section_header("compress level invalid", "error");
+        Self::message("The compresss level set is invalid.");
+    }
+
 }
