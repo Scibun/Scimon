@@ -51,17 +51,17 @@ For more help and document, see our documentation:
 
 ```monset
 path = "downloads/"
-open = "https://github.com/kremilly"
+open "https://github.com/kremilly"
 
-compress = "folder.zip"
+compress "folder.zip"
 
-covers = "covers/"
+covers "covers/"
 
-print = "Hello, World!"
+print "Hello, World!"
 
-style = "https://raw.githubusercontent.com/sindresorhus/github-markdown-css/main/github-markdown.css"
+style "https://raw.githubusercontent.com/sindresorhus/github-markdown-css/main/github-markdown.css"
 
-readme = "https://gist.githubusercontent.com/Kremilly/5fd360d994bb0fe108b648d0e4c9e92f/raw/ac524eba2112bf0bdbac1ad27e24f78f678589ec/readme-example.md"
+readme "https://gist.githubusercontent.com/Kremilly/5fd360d994bb0fe108b648d0e4c9e92f/raw/ac524eba2112bf0bdbac1ad27e24f78f678589ec/readme-example.md"
 
 downloads {
     https://arxiv.org/pdf/2405.01513 !ignore
