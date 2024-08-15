@@ -16,11 +16,6 @@ impl SuccessAlerts {
         println!("{} Downloaded env file", current_datetime.green().bold());
     }
 
-    pub fn pip() {
-        let current_datetime = General::date_time();
-        println!("{} Dependencies was installed successfully", current_datetime.green().bold());
-    }
-
     pub fn download(file: &str, url: &str, password: bool, hash: &str) {
         let mut encrypted_emoji = "";
 

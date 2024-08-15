@@ -14,7 +14,7 @@ impl ErrorsAlerts {
 
         eprintln!(
             "{} Failed to download the file: {}", 
-            current_datetime.blue().bold(), 
+            current_datetime.red().bold(), 
             e.red()
         );
     }

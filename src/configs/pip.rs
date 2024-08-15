@@ -11,7 +11,7 @@ use std::{
 use crate::{
     ui::{
         ui_base::UI,
-        success_alerts::SuccessAlerts,
+        pip_alerts::PipAlerts,
     },
 
     consts::{
@@ -51,10 +51,10 @@ impl Pip {
         
         if !silent_mode {
             if output.status.success() {
-                SuccessAlerts::pip();
+                PipAlerts::success();
             } else {
                 let stderr = String::from_utf8_lossy(&output.stderr);
-                println!("{}", stderr);
+                PipAlerts::error_install(&stderr);
             }
         }
 
@@ -72,7 +72,7 @@ impl Pip {
             match Self::check_pip_package(package) {
                 Ok(true) => need_install = false,
                 Ok(false) => need_install = true,
-                Err(e) => println!("Failed to check for package '{}': {}", package, e),
+                Err(_) => PipAlerts::error_check(package),
             }
         }
 
