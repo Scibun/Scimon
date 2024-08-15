@@ -50,7 +50,7 @@ For more help and document, see our documentation:
 ## Example of code and execute
 
 ```monset
-path = "downloads/"
+path "downloads/"
 open "https://github.com/kremilly"
 
 compress "folder.zip"
