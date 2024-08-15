@@ -7,7 +7,7 @@ impl BlocksRegExp {
         r"\}",
     ];
 
-    pub const GET_PATH_VAR: &'static str = r#"(?i)path\s*=\s*"([^"]+)""#;
+    pub const GET_PATH_VAR: &'static str = r#"(?i)path\s*"([^"]+)""#;
 
     pub const GET_OPEN_VAR: &'static str = r#"(?i)open\s*"([^"]+)""#;
     
