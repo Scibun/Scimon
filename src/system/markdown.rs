@@ -60,9 +60,7 @@ impl Markdown {
             )
         };
 
-        RenderIO::get_file_path(file).replace(
-            ".html", &filename
-        )
+        RenderIO::get_file_path(file).replace(".html", &filename)
     }
 
     pub fn append_extras_and_render(markdown: &str) -> String {
@@ -73,7 +71,7 @@ impl Markdown {
         let mut html_output = String::new();
         html::push_html(&mut html_output, parser);
 
-        format!("<div class=\"markdown-content\">{}</div>", html_output)
+        format!("<div class='markdown-content'>{}</div>", html_output)
     }
 
     pub async fn render(url: &str) -> Result<String, Box<dyn Error>> {
