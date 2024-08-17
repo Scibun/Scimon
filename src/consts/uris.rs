@@ -2,12 +2,13 @@ pub struct Uris;
 
 impl Uris {
 
-    pub const PROVIDERS_DOMAINS: [&'static str; 5] = [
+    pub const PROVIDERS_DOMAINS: [&'static str; 6] = [
         "wikipedia.org",
         "wikisource.org",
         "raw.githubusercontent.com",
         "gitlab.com",
-        "bitbucket.org"
+        "bitbucket.org",
+        "codeberg.org"
     ];
 
     pub const WIKIPEDIA_API_REQUEST_PDF: &'static str = "https://en.wikipedia.org/api/rest_v1/page/pdf/";
