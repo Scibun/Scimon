@@ -17,45 +17,19 @@ impl RenderName {
         }
     }
 
-    fn github_repo_name(&self) -> String {
+    fn last_part(&self, slice: usize) -> String {
         let segments = &self.url_slices;
-        let repo_name = &segments[segments.len() - 3];
-        repo_name.to_string()
+        let url_slice = &segments[segments.len() - slice];
+        url_slice.to_string()
     }
 
-    fn gitlab_repo_name(&self) -> String {
-        let segments = &self.url_slices;
-        let repo_name = &segments[segments.len() - 5];
-        repo_name.to_string()
-    }
-
-    fn bitbucket_repo_name(&self) -> String {
-        let segments = &self.url_slices;
-        let repo_name = &segments[segments.len() - 4];
-        repo_name.to_string()
-    }
-
-    fn codeberg_repo_name(&self) -> String {
-        let segments = &self.url_slices;
-        let repo_name = &segments[segments.len() - 5];
-        repo_name.to_string()
-    }
-
-    fn generic(&self) -> String {
-        if let Some(last_part) = self.url_slices.last() {
-            last_part.to_string()
-        } else {
-            String::new()
-        }
-    }
-
-    pub fn get_final_name(&self) -> String {
+    pub fn get_filename(&self) -> String {
         match &self.domain {
-            domain if domain == Uris::PROVIDERS_DOMAINS[2] => self.github_repo_name(),
-            domain if domain == Uris::PROVIDERS_DOMAINS[3] => self.gitlab_repo_name(),
-            domain if domain == Uris::PROVIDERS_DOMAINS[4] => self.bitbucket_repo_name(),
-            domain if domain == Uris::PROVIDERS_DOMAINS[5] => self.codeberg_repo_name(),
-            _ => self.generic(),
+            domain if domain == Uris::PROVIDERS_DOMAINS[2] => self.last_part(3), // github,
+            domain if domain == Uris::PROVIDERS_DOMAINS[3] => self.last_part(5), // gitlab,
+            domain if domain == Uris::PROVIDERS_DOMAINS[4] => self.last_part(4), // bitbucket,
+            domain if domain == Uris::PROVIDERS_DOMAINS[5] => self.last_part(5), // codeberg,
+            _ => self.url_slices.last().unwrap().to_string(),
         }
     }
 
