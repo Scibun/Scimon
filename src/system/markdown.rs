@@ -20,7 +20,7 @@ use crate::{
     
     render::{
         render_io::RenderIO,
-        render_name::RenderName,
+        render_name::RenderFileName,
         render_inject::RenderInject,
         render_extras::RenderExtras, 
     }, 
@@ -91,7 +91,7 @@ impl Markdown {
             let html_content = Self::render(url).await?;
             let content = RenderInject::html_content(contents, html_content).await?;
             
-            let original_name = RenderName::new(url).get_filename();
+            let original_name = RenderFileName::new(url).get_filename();
             let new_filename = FileUtils::replace_extension(&original_name, "pdf");
             let output_path = FileUtils::get_output_path(&path, &new_filename);
             let output_path_str = format!("{}{}", &path, &new_filename);
