@@ -57,6 +57,8 @@ compress "folder.zip"
 
 covers "covers/"
 
+qrcode "qrcodes/"
+
 print "Hello, World!"
 
 style "https://raw.githubusercontent.com/sindresorhus/github-markdown-css/main/github-markdown.css"
