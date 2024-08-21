@@ -22,8 +22,8 @@ use crate::{
     ui::success_alerts::SuccessAlerts,
 
     utils::{
-        url::UrlMisc,
         file::FileUtils,
+        file_name_remote::FileNameRemote,
     },
     
     syntax::{
@@ -56,7 +56,7 @@ impl Tasks {
         if let Some(qrcode_path) = Vars::get_qrcode(contents) {
             FileUtils::create_path(&qrcode_path);
 
-            let name = UrlMisc::get_last_part(url.as_str());
+            let name = FileNameRemote::new(url.as_str()).get();
             let name_pdf = FileUtils::replace_extension(&name, "png");
             let file_path = format!("{}{}", qrcode_path, name_pdf);
             

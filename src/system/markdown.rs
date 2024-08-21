@@ -14,13 +14,12 @@ use pulldown_cmark::{
 use crate::{
     system::pdf::Pdf,
     cmd::tasks::Tasks,
-    generator::file_name::FileName,
     configs::settings::Settings, 
+    generator::file_name::FileName,
     ui::success_alerts::SuccessAlerts,
     
     render::{
         render_io::RenderIO,
-        render_name::RenderFileName,
         render_inject::RenderInject,
         render_extras::RenderExtras, 
     }, 
@@ -28,6 +27,7 @@ use crate::{
     utils::{
         remote::Remote, 
         file::FileUtils,
+        file_name_remote::FileNameRemote,
     },
 };
 
@@ -89,7 +89,7 @@ impl Markdown {
             let html_content = Self::render(url).await?;
             let content = RenderInject::html_content(contents, html_content).await?;
             
-            let original_name = RenderFileName::new(url).get();
+            let original_name = FileNameRemote::new(url).get();
             let new_filename = FileUtils::replace_extension(&original_name, "pdf");
             let output_path = FileUtils::get_output_path(&path, &new_filename);
             let output_path_str = format!("{}{}", &path, &new_filename);

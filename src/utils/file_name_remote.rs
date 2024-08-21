@@ -3,12 +3,12 @@ use crate::{
     utils::domains::Domains,
 };
 
-pub struct RenderFileName {
+pub struct FileNameRemote {
     domain: String,
     url_slices: Vec<String>,
 }
 
-impl RenderFileName {
+impl FileNameRemote {
 
     pub fn new(url: &str) -> Self {
         Self {
