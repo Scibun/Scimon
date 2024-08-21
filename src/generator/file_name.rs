@@ -1,15 +1,17 @@
 use rand::Rng;
 
 pub struct FileName {
+    ext: String,
     length: usize,
     pattern: String,
 }
 
 impl FileName {
 
-    pub fn new(length: usize) -> Self {
+    pub fn new(length: usize, ext: &str) -> Self {
         Self {
             length,
+            ext: ext.to_string(),
             pattern: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".to_string(),
         }
     }
@@ -26,7 +28,7 @@ impl FileName {
             .collect();
     
         format!(
-            "{}.html", random_string
+            "{}.{}", random_string, self.ext
         )
     }
 

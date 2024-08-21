@@ -52,6 +52,8 @@ impl DownloadsBlock {
                         &path,
                         flags,
                     ).await?;
+
+                    Tasks::qr_code(contents, final_url.clone())?;
                 }
             } else {
                 MacrosAlerts::ignore(&final_url);

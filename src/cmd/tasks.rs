@@ -18,6 +18,13 @@ use sha2::{
 
 use crate::{
     args_cli::Flags,
+    generator::qr_code::GenQrCode,
+    ui::success_alerts::SuccessAlerts,
+
+    utils::{
+        url::UrlMisc,
+        file::FileUtils,
+    },
     
     syntax::{
         vars::Vars,
@@ -42,6 +49,21 @@ impl Tasks {
             Vars::get_print(&line);
         }
 
+        Ok(())
+    }
+
+    pub fn qr_code(contents: &str, url: String) -> Result<(), Box<dyn Error>> {
+        if let Some(qrcode_path) = Vars::get_qrcode(contents) {
+            FileUtils::create_path(&qrcode_path);
+
+            let name = UrlMisc::get_last_part(url.as_str());
+            let name_pdf = FileUtils::replace_extension(&name, "png");
+            let file_path = format!("{}{}", qrcode_path, name_pdf);
+            
+            GenQrCode::new(&url, 256).png(&file_path).unwrap();
+            SuccessAlerts::qrcode(file_path.as_str());
+        }
+        
         Ok(())
     }
 

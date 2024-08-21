@@ -35,6 +35,16 @@ impl SuccessAlerts {
             encrypted_emoji
         );
     }
+
+    pub fn qrcode(file: &str) {
+        let current_datetime = General::date_time();
+    
+        println!(
+            "{} QR Code generated to {}", 
+            current_datetime.green().bold(), 
+            file.blue(), 
+        );
+    }
   
     pub fn download_and_generated_pdf(file: &str, url: &str, hash: &str) {
         let domain = Domains::get(url);

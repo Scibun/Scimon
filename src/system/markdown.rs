@@ -55,7 +55,7 @@ impl Markdown {
         let filename = if Settings::get("render_markdown.overwrite", "BOOLEAN") == true {
             ".html".to_string()
         } else {
-            FileName::new(16).gen()
+            FileName::new(16, "html").gen()
         };
 
         RenderIO::get_file_path(file).replace(".html", &filename)
