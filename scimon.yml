@@ -2,6 +2,7 @@ general:
   default_text_editor: 'notepad' # String (default: 'notepad')
   urlfilter_open: false # Boolean (valid values: 'true' or 'false'; default: 'false')
   level_compress: 9 # Integer (valid values: 0...9; default: 9)
+  qrcode_size: 256 # Integer (default: 256)
 
 ui:
   show_header: true # Boolean (valid values: 'true' or 'false'; default: 'true')

@@ -25,7 +25,7 @@ impl RenderExtras {
     
         let replaced_markdown = re.replace_all(markdown, |captures: &regex::Captures| {
             let link = captures.get(1).unwrap().as_str();
-            let size: u32 = captures.get(2).unwrap().as_str().parse().unwrap();
+            let size = captures.get(2).unwrap().as_str().parse().unwrap();
     
             GenQrCode::new(link, size).html()
         });

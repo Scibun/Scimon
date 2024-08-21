@@ -18,6 +18,7 @@ use sha2::{
 
 use crate::{
     args_cli::Flags,
+    configs::settings::Settings,
     generator::qr_code::GenQrCode,
     ui::success_alerts::SuccessAlerts,
 
@@ -56,11 +57,14 @@ impl Tasks {
         if let Some(qrcode_path) = Vars::get_qrcode(contents) {
             FileUtils::create_path(&qrcode_path);
 
+            let value = Settings::get("general.qrcode_size", "INT");
+            let qrcode_size = value.as_i64().expect("Invalid qrcode_size value. Must be an integer.") as usize;
+
             let name = FileNameRemote::new(url.as_str()).get();
             let name_pdf = FileUtils::replace_extension(&name, "png");
             let file_path = format!("{}{}", qrcode_path, name_pdf);
             
-            GenQrCode::new(&url, 256).png(&file_path).unwrap();
+            GenQrCode::new(&url, qrcode_size).png(&file_path).unwrap();
             SuccessAlerts::qrcode(file_path.as_str());
         }
         

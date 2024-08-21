@@ -21,10 +21,10 @@ pub struct GenQrCode {
 
 impl GenQrCode {
 
-    pub fn new(link: &str, size: u32) -> Self {
+    pub fn new(link: &str, size: usize) -> Self {
         Self {
             link: link.to_string(),
-            size,
+            size: size as u32,
         }
     }
 
