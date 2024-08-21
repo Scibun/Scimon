@@ -79,7 +79,7 @@ impl Pdf {
     pub async fn download(url: &str, path: &str) -> Result<String, Box<dyn Error>> {
         UrlMisc::check_url_status(url).await?;
 
-        let (request_uri, filename) = Providers::get_from_provider(url).await?;
+        let (request_uri, filename) = Providers::new(url).get_from_provider().await?;
         let response = reqwest::get(&request_uri).await?;
         let total_size = Remote::get_file_size(&request_uri).await?;
     
@@ -117,7 +117,7 @@ impl Pdf {
     }
 
     pub async fn download_line(line_url: &str, url: &str, path: &str) -> Result<String, Box<dyn Error>> {
-        if Self::is_pdf_file(&line_url).await? || Providers::check_provider_domain(url) && !line_url.contains(".md") {
+        if Self::is_pdf_file(&line_url).await? || Providers::new(url).check_provider_domain() && !line_url.contains(".md") {
             let result = Self::download(&line_url, path).await;
             
             match result {

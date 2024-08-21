@@ -11,13 +11,21 @@ use crate::{
     },
 };
 
-pub struct Providers;
+pub struct Providers {
+    url: String,
+}
 
 impl Providers {
 
-    pub fn arxiv(url: &str) -> String {
-        let escape_quotes = UrlMisc::escape_quotes(url);
-        let domain = Domain::new(url);
+    pub fn new(url: &str) -> Self {
+        Self {
+            url: url.to_owned(),
+        }
+    }
+
+    pub fn arxiv(&self) -> String {
+        let escape_quotes = UrlMisc::escape_quotes(&self.url);
+        let domain = Domain::new(&self.url);
 
         if !domain.check(Uris::PROVIDERS_DOMAINS[1]) {
             escape_quotes.to_owned()
@@ -26,9 +34,9 @@ impl Providers {
         }
     }
 
-    pub fn check_provider_domain(url: &str) -> bool {
+    pub fn check_provider_domain(&self) -> bool {
         let mut valid_domain = false;
-        let domain = Domain::new(url);
+        let domain = Domain::new(&self.url);
 
         for url_domain in &Uris::PROVIDERS_DOMAINS {
             if domain.check(url_domain) {
@@ -39,24 +47,25 @@ impl Providers {
         valid_domain
     }
 
-    pub async fn generic(url: &str) -> Result<(String, String), Box<dyn Error>> {
-        let request_uri = url.to_string();
-        let filename = Remote::get_filename(url, true).await?;
+    pub async fn generic(&self) -> Result<(String, String), Box<dyn Error>> {
+        let request_uri = self.url.to_string();
+        let filename = Remote::get_filename(&self.url, true).await?;
 
         Ok((request_uri, filename))
     }
 
-    pub async fn get_from_provider(url: &str) -> Result<(String, String), Box<dyn Error>> {
+    pub async fn get_from_provider(&self) -> Result<(String, String), Box<dyn Error>> {
         let filename;
         let request_uri;
-        let domain = Domain::new(url);
+
+        let domain = Domain::new(&self.url);
 
         if domain.check(Uris::PROVIDERS_DOMAINS[0]) {
-            (request_uri, filename) = Wikipedia::wikipedia(url);
+            (request_uri, filename) = Wikipedia::wikipedia(&self.url);
         } else if domain.check(Uris::PROVIDERS_DOMAINS[1]) {
-            (request_uri, filename) = Wikipedia::wikisource(url);
+            (request_uri, filename) = Wikipedia::wikisource(&self.url);
         } else {
-            (request_uri, filename) = Self::generic(url).await?;
+            (request_uri, filename) = self.generic().await?;
         }
 
         Ok((request_uri, filename))

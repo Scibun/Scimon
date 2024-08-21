@@ -36,7 +36,7 @@ impl DownloadsBlock {
     async fn block(contents: &str, downloads_content: &str, path: &str, flags: &Flags) -> Result<(), Box<dyn Error>> {
         for line in downloads_content.lines() {
             let url = line.trim().split_whitespace().next().unwrap_or("");
-            let final_url = Providers::arxiv(&url);
+            let final_url = Providers::new(url).arxiv();
 
             if line.trim().starts_with("downloads {") {
                 continue;
