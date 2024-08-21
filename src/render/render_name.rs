@@ -23,7 +23,7 @@ impl RenderFileName {
         url_slice.to_string()
     }
 
-    pub fn get_filename(&self) -> String {
+    pub fn get(&self) -> String {
         match &self.domain {
             domain if domain == Uris::PROVIDERS_DOMAINS[2] => self.slice(3), // github
             domain if domain == Uris::PROVIDERS_DOMAINS[3] => self.slice(5), // gitlab

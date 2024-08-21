@@ -14,8 +14,8 @@ use pulldown_cmark::{
 use crate::{
     system::pdf::Pdf,
     cmd::tasks::Tasks,
+    generator::file_name::FileName,
     configs::settings::Settings, 
-    generator::generate::Generate,
     ui::success_alerts::SuccessAlerts,
     
     render::{
@@ -55,9 +55,7 @@ impl Markdown {
         let filename = if Settings::get("render_markdown.overwrite", "BOOLEAN") == true {
             ".html".to_string()
         } else {
-            format!(
-                "_{}.html", Generate::random_string(16)
-            )
+            FileName::new(16).gen()
         };
 
         RenderIO::get_file_path(file).replace(".html", &filename)
@@ -91,7 +89,7 @@ impl Markdown {
             let html_content = Self::render(url).await?;
             let content = RenderInject::html_content(contents, html_content).await?;
             
-            let original_name = RenderFileName::new(url).get_filename();
+            let original_name = RenderFileName::new(url).get();
             let new_filename = FileUtils::replace_extension(&original_name, "pdf");
             let output_path = FileUtils::get_output_path(&path, &new_filename);
             let output_path_str = format!("{}{}", &path, &new_filename);
