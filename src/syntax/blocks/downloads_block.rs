@@ -52,8 +52,6 @@ impl DownloadsBlock {
                         &path,
                         flags,
                     ).await?;
-
-                    Tasks::qr_code(contents, final_url.clone())?;
                 }
             } else {
                 MacrosAlerts::ignore(&final_url);
@@ -88,6 +86,7 @@ impl DownloadsBlock {
 
             Compress::files(&contents)?;
             ExtractCovers::extract(&contents).await?;
+            Tasks::qr_codes(&contents).await?;
             Vars::get_open(&contents, flags.no_open_link).await;
             ReadMeBlock::render_var_and_save_file(&contents, flags).await?;
         } else {

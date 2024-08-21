@@ -20,7 +20,11 @@ use crate::{
     args_cli::Flags,
     configs::settings::Settings,
     generator::qr_code::GenQrCode,
-    ui::success_alerts::SuccessAlerts,
+    
+    ui::{
+        ui_base::UI,
+        success_alerts::SuccessAlerts,
+    },
 
     utils::{
         file::FileUtils,
@@ -53,21 +57,37 @@ impl Tasks {
         Ok(())
     }
 
-    pub fn qr_code(contents: &str, url: String) -> Result<(), Box<dyn Error>> {
-        if let Some(qrcode_path) = Vars::get_qrcode(contents) {
-            FileUtils::create_path(&qrcode_path);
+    pub async fn qr_codes(content: &str) -> Result<(), Box<dyn Error>> {
+        UI::section_header("QR Codes", "normal");
 
-            let value = Settings::get("general.qrcode_size", "INT");
-            let qrcode_size = value.as_i64().expect("Invalid qrcode_size value. Must be an integer.") as usize;
+        for line in content.lines() {
+            let url = line.trim().split_whitespace().next().unwrap_or("");
 
-            let name = FileNameRemote::new(url.as_str()).get();
-            let name_pdf = FileUtils::replace_extension(&name, "png");
-            let file_path = format!("{}{}", qrcode_path, name_pdf);
+            if line.trim().starts_with("downloads {") {
+                continue;
+            } else if line.trim().starts_with("}") {
+                break;
+            }
+
+            if !Macros::handle_check_macro_line(&line, "ignore") {
+                if !url.is_empty() && is_url(&url) && url.starts_with("http") {
+                    if let Some(qrcode_path) = Vars::get_qrcode(content) {
+                        FileUtils::create_path(&qrcode_path);
             
-            GenQrCode::new(&url, qrcode_size).png(&file_path).unwrap();
-            SuccessAlerts::qrcode(file_path.as_str());
+                        let value = Settings::get("general.qrcode_size", "INT");
+                        let qrcode_size = value.as_i64().expect("Invalid qrcode_size value. Must be an integer.") as usize;
+            
+                        let name = FileNameRemote::new(url).get();
+                        let name_pdf = FileUtils::replace_extension(&name, "png");
+                        let file_path = format!("{}{}", qrcode_path, name_pdf);
+                        
+                        GenQrCode::new(&url, qrcode_size).png(&file_path).unwrap();
+                        SuccessAlerts::qrcode(file_path.as_str());
+                    }
+                }
+            }
         }
-        
+
         Ok(())
     }
 

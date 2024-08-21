@@ -40,7 +40,7 @@ impl SuccessAlerts {
         let current_datetime = General::date_time();
     
         println!(
-            "{} QR Code generated to {}", 
+            "{} QR Code generated and saved in {}", 
             current_datetime.green().bold(), 
             file.blue(), 
         );
