@@ -1,6 +1,6 @@
 use crate::{
     consts::uris::Uris,
-    utils::domains::Domains,
+    utils::domain::Domain,
 };
 
 pub struct FileNameRemote {
@@ -12,7 +12,7 @@ impl FileNameRemote {
 
     pub fn new(url: &str) -> Self {
         Self {
-            domain: Domains::get(url),
+            domain: Domain::new(url).get(),
             url_slices: url.split("/").map(|s| s.to_string()).collect(),
         }
     }

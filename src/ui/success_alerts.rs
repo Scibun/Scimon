@@ -3,7 +3,7 @@ extern crate colored;
 use colored::*;
 
 use crate::{
-    utils::domains::Domains,
+    utils::domain::Domain,
     system::general::General,
 };
 
@@ -19,7 +19,7 @@ impl SuccessAlerts {
     pub fn download(file: &str, url: &str, password: bool, hash: &str) {
         let mut encrypted_emoji = "";
 
-        let domain = Domains::get(url);
+        let domain = Domain::new(url).get();
         let current_datetime = General::date_time();
     
         if password {
@@ -47,7 +47,7 @@ impl SuccessAlerts {
     }
   
     pub fn download_and_generated_pdf(file: &str, url: &str, hash: &str) {
-        let domain = Domains::get(url);
+        let domain = Domain::new(url).get();
         let current_datetime = General::date_time();
     
         println!(
