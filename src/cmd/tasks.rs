@@ -99,9 +99,7 @@ impl Tasks {
         
         loop {
             let bytes_read = file.read(&mut buffer)?;
-
             if bytes_read == 0 { break; }
-
             hasher.update(&buffer[..bytes_read]);
         }
     
@@ -109,18 +107,17 @@ impl Tasks {
         Ok(format!("{:x}", hash))
     }
 
-    pub async fn download(contents: Option<&str>, url: &str, path: &str, flags: &Flags) -> Result<String, Box<dyn Error>> {
+    pub async fn download(contents: Option<&str>, url: &str, path: &str, flags: &Flags) -> Result<(), Box<dyn Error>> {
         let mut line_url = Cow::Borrowed(
             url.trim()
         );
 
         Reporting::check_download_errors(&line_url).await?;
-
-        if !is_url(&line_url) { return Ok("".to_string()) }
+        if !is_url(&line_url) { return Ok(()) }
     
         match Macros::handle_ignore_macro_flag(&line_url, flags.no_ignore) {
             Ok(new_line) => line_url = Cow::Owned(new_line),
-            Err(_) => return Ok("".to_string()),
+            Err(_) => return Ok(()),
         }
 
         if let Some(contents) = contents {
@@ -128,8 +125,7 @@ impl Tasks {
         }
 
         Pdf::download_line(&line_url, url, path).await?;
-
-        Ok("".to_string())
+        Ok(())
     }
 
 }
