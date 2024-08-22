@@ -58,20 +58,20 @@ impl Tasks {
     }
 
     pub async fn qr_codes(content: &str) -> Result<(), Box<dyn Error>> {
-        UI::section_header("QR Codes", "normal");
+        if let Some(qrcode_path) = Vars::get_qrcode(content) {
+            UI::section_header("QR Codes", "normal");
 
-        for line in content.lines() {
-            let url = line.trim().split_whitespace().next().unwrap_or("");
+            for line in content.lines() {
+                let url = line.trim().split_whitespace().next().unwrap_or("");
 
-            if line.trim().starts_with("downloads {") {
-                continue;
-            } else if line.trim().starts_with("}") {
-                break;
-            }
+                if line.trim().starts_with("downloads {") {
+                    continue;
+                } else if line.trim().starts_with("}") {
+                    break;
+                }
 
-            if !Macros::handle_check_macro_line(&line, "ignore") {
-                if !url.is_empty() && is_url(&url) && url.starts_with("http") {
-                    if let Some(qrcode_path) = Vars::get_qrcode(content) {
+                if !Macros::handle_check_macro_line(&line, "ignore") {
+                    if !url.is_empty() && is_url(&url) && url.starts_with("http") {
                         FileUtils::create_path(&qrcode_path);
             
                         let value = Settings::get("general.qrcode_size", "INT");
