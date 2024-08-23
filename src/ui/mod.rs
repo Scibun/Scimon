@@ -1,5 +1,4 @@
 pub mod ui_base;
-pub mod pip_alerts;
 pub mod panic_alerts;
 pub mod macros_alerts;
 pub mod errors_alerts;

@@ -18,7 +18,6 @@ use crate::{
 
     configs::{
         env::Env,
-        pip::Pip,
         settings::Settings,
         configs_files::DownloadConfigsFiles,
     },
@@ -32,7 +31,6 @@ impl Scimon {
         match options {
             "open-env" => Env::open_env_file()?,
             "open-settings" => Settings::open_settings_file()?,
-            "install-requirements" => Pip::install(false).await?,
             "download-env" => DownloadConfigsFiles::env_file(true, true).await?,
             "download-settings" => DownloadConfigsFiles::settings_file(true, true).await?,
             _ => (),

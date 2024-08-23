@@ -1,28 +1,23 @@
 use walkdir::WalkDir;
+use image::ImageFormat;
+use pdfium_render::prelude::*;
 
 use std::{
-    path::Path,
     error::Error,
-};
 
-use pyo3::{
-    prelude::*,
-    types::PyModule,
+    path::{
+        Path,
+        PathBuf
+    },
 };
 
 use crate::{
-    configs::pip::Pip,
     syntax::vars::Vars,
-    consts::addons::Addons,
+    utils::file::FileUtils,
 
     ui::{
         ui_base::UI,
         success_alerts::SuccessAlerts,
-    },
-    
-    utils::{
-        remote::Remote,
-        file::FileUtils,
     },
 };
 
@@ -30,41 +25,52 @@ pub struct ExtractCovers;
 
 impl ExtractCovers {
 
-    async fn exec(code: &str, input_file: &str, output_path: &str) -> Result<(), Box<dyn Error>> {
-        Python::with_gil(|py| {
-            let main_ctx = PyModule::from_code_bound(py, &code, "", "")?;
+    async fn render(input: &Path, output: &Path, file: &str) -> Result<(), Box<dyn Error>> {
+        let bindings = Pdfium::bind_to_library(
+            Pdfium::pdfium_platform_library_name_at_path("./"),
+        )
+        .or_else(|_| Pdfium::bind_to_system_library())?;
     
-            let file: String = main_ctx
-                .getattr("extract_first_page_to_png")?
-                .call1((input_file, output_path))?
-                .extract()?;
+        let pdfium = Pdfium::new(bindings);
+    
+        let render_config = PdfRenderConfig::new()
+            .set_target_width(2000)
+            .set_maximum_height(2000)
+            .rotate_if_landscape(PdfPageRenderRotation::Degrees90, true);
+    
+        let document = pdfium.load_pdf_from_file(input, None)?;
+    
+        let page = document.pages().get(0).expect("Página 0 não encontrada");
+    
+        let _ = page
+            .render_with_config(&render_config)?
+            .as_image()
+            .into_rgb8() 
+            .save_with_format(output, ImageFormat::Jpeg)?;
 
-            SuccessAlerts::cover_generated(file.as_str());
-            Ok(())
-        })
+        SuccessAlerts::cover_generated(file);
+        Ok(())
     }
 
     pub async fn extract(contents: &str) -> Result<(), Box<dyn Error>> {
         if let Some(covers_path) = Vars::get_covers(contents) {
-            FileUtils::create_path(&covers_path);
-
-            UI::section_header("Extracting covers", "normal");
-
             let pdf_path = &Vars::get_path(contents);
-            let code = &Remote::content(Addons::EXTRACT_COVERS_PLUGIN).await?;
-
-            Pip::check_pip_packages().await?;
+            
+            FileUtils::create_path(&covers_path);
+            UI::section_header("Extracting covers", "normal");
 
             for entry in WalkDir::new(&pdf_path) {
                 let entry = entry?;
                 let path = entry.path();
-                let file_name = path.strip_prefix(Path::new(&pdf_path)).unwrap();
 
-                let new_name = FileUtils::replace_extension(file_name.to_str().unwrap_or_default(), "png");
-                let input_file = &format!("{}{}", pdf_path, file_name.to_str().unwrap_or_default());
-                let output_path = &format!("{}{}", covers_path, new_name);
+                if path.extension().and_then(|s| s.to_str()) == Some("pdf") {
+                    let file_name = path.strip_prefix(Path::new(&pdf_path)).unwrap();
+                    let new_name = FileUtils::replace_extension(file_name.to_str().unwrap_or_default(), "jpg");
+                    let output_path = PathBuf::from(format!("{}{}", covers_path, new_name));
 
-                let _ = Self::exec(code, input_file, output_path).await;
+                    let output_file = format!("{}{}", pdf_path, new_name);
+                    let _ = Self::render(path, &output_path, &output_file).await;
+                }
             }
         }
 
