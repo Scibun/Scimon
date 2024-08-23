@@ -22,7 +22,7 @@ impl Env {
         let load_env: Once = Once::new();
 
         load_env.call_once(|| {
-            dotenv::from_path(
+            dotenvy::from_path(
                 &Folders::APP_FOLDER.join(".env")
             ).ok();
         });
