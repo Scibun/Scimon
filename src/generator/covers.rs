@@ -21,9 +21,9 @@ use crate::{
     },
 };
 
-pub struct ExtractCovers;
+pub struct Covers;
 
-impl ExtractCovers {
+impl Covers {
 
     async fn render(input: &Path, output: &Path, file: &str) -> Result<(), Box<dyn Error>> {
         let bindings = Pdfium::bind_to_library(
@@ -40,7 +40,7 @@ impl ExtractCovers {
     
         let document = pdfium.load_pdf_from_file(input, None)?;
     
-        let page = document.pages().get(0).expect("Página 0 não encontrada");
+        let page = document.pages().get(0).expect("Page 0 not found.");
     
         let _ = page
             .render_with_config(&render_config)?

@@ -1,6 +1,5 @@
 mod ui;
 mod cmd;
-mod ext;
 mod utils;
 mod regexp;
 mod consts;
