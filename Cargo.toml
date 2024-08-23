@@ -44,5 +44,4 @@ sha2 = "0.10.8"
 zip = "2.2.0"
 walkdir = "2.5.0"
 scraper = "0.20.0"
-pyo3 = { version = "0.22.2", features = ["extension-module", "auto-initialize", "abi3-py37"] }
 pdfium-render = "0.8.24"

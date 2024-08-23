@@ -39,7 +39,6 @@ impl Covers {
             .rotate_if_landscape(PdfPageRenderRotation::Degrees90, true);
     
         let document = pdfium.load_pdf_from_file(input, None)?;
-    
         let page = document.pages().get(0).expect("Page 0 not found.");
     
         let _ = page
