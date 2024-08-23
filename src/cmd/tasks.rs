@@ -57,11 +57,11 @@ impl Tasks {
         Ok(())
     }
 
-    pub async fn qr_codes(content: &str) -> Result<(), Box<dyn Error>> {
-        if let Some(qrcode_path) = Vars::get_qrcode(content) {
+    pub async fn qr_codes(contents: &str) -> Result<(), Box<dyn Error>> {
+        if let Some(qrcode_path) = Vars::get_qrcode(contents) {
             UI::section_header("QR Codes", "normal");
 
-            for line in content.lines() {
+            for line in contents.lines() {
                 let url = line.trim().split_whitespace().next().unwrap_or("");
 
                 if line.trim().starts_with("downloads {") {
