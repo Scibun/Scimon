@@ -20,8 +20,8 @@ use std::{
 };
 
 use crate::{
-    cmd::tasks::Tasks,
     render::render::Render,
+    cmd::checksum::Checksum,
     system::providers::Providers,
 
     ui::{
@@ -124,7 +124,7 @@ impl Pdf {
                 Ok(file) => {
                     let file_path = &format!("{}{}", &path, &file);
                     let password = Self::is_pdf_encrypted(&file_path);
-                    let hash = Tasks::hash_sha256(file_path)?;
+                    let hash = Checksum::hash_sha256(file_path)?;
                     
                     SuccessAlerts::download(&file, url, password, &hash);
                     return Ok(file_path.to_string())

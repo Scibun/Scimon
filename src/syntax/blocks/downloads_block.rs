@@ -6,27 +6,13 @@ use std::{
 };
 
 use crate::{
-    args_cli::Flags,
-    utils::file::FileUtils,
-    generator::covers::Covers,
-    system::providers::Providers, 
-
-    cmd::{
-        tasks::Tasks,
-        compress::Compress,
-    },
-
-    ui::{
-        ui_base::UI,
-        panic_alerts::PanicAlerts,
-        macros_alerts::MacrosAlerts,
-    },
-    
-    syntax::{
-        vars::Vars,
-        macros::Macros, 
-        blocks::readme_block::ReadMeBlock, 
-    },
+    args_cli::Flags, cmd::{
+        checksum::Checksum, compress::Compress, tasks::Tasks
+    }, generator::covers::Covers, syntax::{
+        blocks::readme_block::ReadMeBlock, macros::Macros, vars::Vars 
+    }, system::providers::Providers, ui::{
+        macros_alerts::MacrosAlerts, panic_alerts::PanicAlerts, ui_base::UI
+    }, utils::file::FileUtils
 };
 
 pub struct DownloadsBlock;
@@ -89,6 +75,7 @@ impl DownloadsBlock {
             Tasks::qr_codes(&contents).await?;
             Vars::get_open(&contents, flags.no_open_link).await;
             ReadMeBlock::render_var_and_save_file(&contents, flags).await?;
+            Checksum::files(&contents)?;
         } else {
             PanicAlerts::downloads_block();
         }

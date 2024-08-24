@@ -1,19 +1,9 @@
 use is_url::is_url;
 
 use std::{
-    fs::File,
     borrow::Cow,
+    io::BufRead,
     error::Error,
-
-    io::{
-        Read,
-        BufRead,
-    },
-};
-
-use sha2::{
-    Digest,
-    Sha256,
 };
 
 use crate::{
@@ -89,22 +79,6 @@ impl Tasks {
         }
 
         Ok(())
-    }
-
-    pub fn hash_sha256(file_path: &str) -> Result<String, Box<dyn Error>> {
-        let mut file = File::open(file_path)?;
-        let mut hasher = Sha256::new();
-
-        let mut buffer = [0; 1024];
-        
-        loop {
-            let bytes_read = file.read(&mut buffer)?;
-            if bytes_read == 0 { break; }
-            hasher.update(&buffer[..bytes_read]);
-        }
-    
-        let hash = hasher.finalize();
-        Ok(format!("{:x}", hash))
     }
 
     pub async fn download(contents: Option<&str>, url: &str, path: &str, flags: &Flags) -> Result<(), Box<dyn Error>> {
