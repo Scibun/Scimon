@@ -17,7 +17,12 @@ use sha2::{
 };
 
 use crate::{
-    syntax::vars::Vars, ui::{success_alerts::SuccessAlerts, ui_base::UI}
+    syntax::vars::Vars, 
+    
+    ui::{
+        ui_base::UI,
+        success_alerts::SuccessAlerts, 
+    }
 };
 
 pub struct Checksum;
@@ -53,7 +58,7 @@ impl Checksum {
                 let file = name.to_str().unwrap();
                 let path = path.to_str().unwrap();
                 let hash = Checksum::hash_sha256(path).unwrap();
-                
+
                 SuccessAlerts::hash(&file, &hash);
             }
         }
