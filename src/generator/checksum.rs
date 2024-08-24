@@ -7,6 +7,7 @@ use std::{
 
     io::{
         Read,
+        Write,
         Result as IoResult,
     },
 };
@@ -17,11 +18,12 @@ use sha2::{
 };
 
 use crate::{
-    syntax::vars::Vars, 
+    syntax::vars::Vars,
+    utils::file::FileUtils,
     
     ui::{
-        ui_base::UI,
-        success_alerts::SuccessAlerts, 
+        ui_base::UI, 
+        checksum_alerts::ChecksumAlerts,
     }
 };
 
@@ -37,7 +39,7 @@ impl Checksum {
         }
     }
 
-    pub fn hash_sha256(file_path: &str) -> Result<String, Box<dyn Error>> {
+    pub fn hash(file_path: &str) -> Result<String, Box<dyn Error>> {
         let mut file = File::open(file_path)?;
         let mut hasher = Sha256::new();
 
@@ -55,8 +57,17 @@ impl Checksum {
     
     pub fn files(&self) -> IoResult<()> {
         UI::section_header("Hashes files", "normal");
+
         let contents = self.contents.as_ref().map(|s| s.as_str()).unwrap_or("");
         let folder_path = Vars::get_path(contents);
+
+        let checksum_filename = format!(
+            "{}{}", folder_path, FileUtils::replace_extension(
+                &folder_path.replace("/", ""), "sha256"
+            )
+        );
+
+        let mut checksum_file = File::create(&checksum_filename)?;
 
         for entry in WalkDir::new(&folder_path) {
             let entry = entry?;
@@ -66,12 +77,14 @@ impl Checksum {
             if path.extension().map_or(false, |ext| ext == "pdf") {
                 let file = name.to_str().unwrap();
                 let path = path.to_str().unwrap();
-                let hash = Checksum::hash_sha256(path).unwrap();
+                let hash = Checksum::hash(path).unwrap();
 
-                SuccessAlerts::hash(&file, &hash);
+                writeln!(checksum_file, "{}  {}", hash, file)?;
+                ChecksumAlerts::hash(&file, &hash);
             }
         }
 
+        ChecksumAlerts::checksum_file(&checksum_filename);
         Ok(())
     }
 

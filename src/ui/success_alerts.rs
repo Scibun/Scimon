@@ -45,14 +45,6 @@ impl SuccessAlerts {
             file.blue(), 
         );
     }
-
-    pub fn hash(file: &str, hash: &str) {
-        println!(
-            "{}: {}", 
-            file.blue(), 
-            hash.green(), 
-        );
-    }
   
     pub fn download_and_generated_pdf(file: &str, url: &str, hash: &str) {
         let domain = Domain::new(url).get();

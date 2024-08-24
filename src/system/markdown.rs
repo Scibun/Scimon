@@ -99,7 +99,7 @@ impl Markdown {
 
             Pdf::create_pdf(&content, output_path, &url).await?;
 
-            let hash = Checksum::hash_sha256(&output_path_str)?;
+            let hash = Checksum::hash(&output_path_str)?;
             SuccessAlerts::download_and_generated_pdf(&new_filename, url, &hash);
         }
 
