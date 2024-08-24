@@ -16,7 +16,7 @@ impl SuccessAlerts {
         println!("{} Downloaded env file", current_datetime.green().bold());
     }
 
-    pub fn download(file: &str, url: &str, password: bool, hash: &str) {
+    pub fn download(file: &str, url: &str, password: bool) {
         let mut encrypted_emoji = "";
 
         let domain = Domain::new(url).get();
@@ -27,12 +27,23 @@ impl SuccessAlerts {
         }
     
         println!(
-            "{} Downloaded {} ({} • {}) {}", 
+            "{} Downloaded {} ({}) {}", 
             current_datetime.green().bold(), 
             file.blue(), 
             domain.cyan(), 
-            hash.yellow(),
             encrypted_emoji
+        );
+    }
+  
+    pub fn download_and_generated_pdf(file: &str, url: &str) {
+        let domain = Domain::new(url).get();
+        let current_datetime = General::date_time();
+    
+        println!(
+            "{} Downloaded and generated pdf {} ({})", 
+            current_datetime.green().bold(), 
+            file.blue(), 
+            domain.cyan(),
         );
     }
 
@@ -43,19 +54,6 @@ impl SuccessAlerts {
             "{} QR Code saved in {}", 
             current_datetime.green().bold(), 
             file.blue(), 
-        );
-    }
-  
-    pub fn download_and_generated_pdf(file: &str, url: &str, hash: &str) {
-        let domain = Domain::new(url).get();
-        let current_datetime = General::date_time();
-    
-        println!(
-            "{} Downloaded and generated pdf {} ({} • {})", 
-            current_datetime.green().bold(), 
-            file.blue(), 
-            domain.cyan(),
-            hash.yellow()
         );
     }
   

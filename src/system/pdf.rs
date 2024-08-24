@@ -22,7 +22,6 @@ use std::{
 use crate::{
     render::render::Render,
     system::providers::Providers,
-    generator::checksum::Checksum,
 
     ui::{
         ui_base::UI,
@@ -124,9 +123,8 @@ impl Pdf {
                 Ok(file) => {
                     let file_path = &format!("{}{}", &path, &file);
                     let password = Self::is_pdf_encrypted(&file_path);
-                    let hash = Checksum::hash(file_path)?;
                     
-                    SuccessAlerts::download(&file, url, password, &hash);
+                    SuccessAlerts::download(&file, url, password);
                     return Ok(file_path.to_string())
                 },
 

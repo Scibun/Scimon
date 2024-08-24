@@ -14,12 +14,8 @@ use pulldown_cmark::{
 use crate::{
     system::pdf::Pdf,
     configs::settings::Settings, 
+    generator::file_name::FileName,
     ui::success_alerts::SuccessAlerts,
-
-    generator::{
-        checksum::Checksum,
-        file_name::FileName,
-    },
     
     render::{
         render_io::RenderIO,
@@ -95,12 +91,9 @@ impl Markdown {
             let original_name = FileNameRemote::new(url).get();
             let new_filename = FileUtils::replace_extension(&original_name, "pdf");
             let output_path = FileUtils::get_output_path(&path, &new_filename);
-            let output_path_str = format!("{}{}", &path, &new_filename);
 
             Pdf::create_pdf(&content, output_path, &url).await?;
-
-            let hash = Checksum::hash(&output_path_str)?;
-            SuccessAlerts::download_and_generated_pdf(&new_filename, url, &hash);
+            SuccessAlerts::download_and_generated_pdf(&new_filename, url);
         }
 
         Ok(())
