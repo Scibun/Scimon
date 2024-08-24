@@ -87,12 +87,14 @@ impl DownloadsBlock {
             UI::section_header("downloads", "normal");
             Self::block(&contents, downloads_content, &path, flags).await?;
 
-            Compress::files(&contents)?;
-            Covers::extract(&contents).await?;
+            Compress::new(&contents).get()?;
+            Covers::new(&contents).get().await?;
             Tasks::qr_codes(&contents).await?;
+            
             Vars::get_open(&contents, flags.no_open_link).await;
             ReadMeBlock::render_var_and_save_file(&contents, flags).await?;
-            Checksum::files(&contents)?;
+
+            Checksum::new(Some(contents)).files()?;
         } else {
             PanicAlerts::downloads_block();
         }

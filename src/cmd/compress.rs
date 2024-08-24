@@ -31,9 +31,17 @@ use crate::{
     },
 };
 
-pub struct Compress;
+pub struct Compress {
+    contents: String,
+}
 
 impl Compress {
+
+    pub fn new(contents: &str) -> Self {
+        Self {
+            contents: contents.to_string(),
+        }
+    }
 
     fn compress_level() -> u8 {
         let value = Settings::get("general.level_compress", "INT");
@@ -47,11 +55,11 @@ impl Compress {
         level
     }
     
-    pub fn files(contents: &str) -> IoResult<()> {
-        if let Some(zip_file) = Vars::get_compress(contents) {
+    pub fn get(&self) -> IoResult<()> {
+        if let Some(zip_file) = Vars::get_compress(&self.contents) {
             UI::section_header("Compressing files", "normal");
 
-            let folder_path = Vars::get_path(contents);
+            let folder_path = Vars::get_path(&self.contents);
             let compress_level = Self::compress_level();
             
             let output_path = Path::new(&zip_file);

@@ -25,9 +25,17 @@ use crate::{
     }
 };
 
-pub struct Checksum;
+pub struct Checksum {
+    contents: Option<String>,
+}
 
 impl Checksum {
+
+    pub fn new(contents: Option<String>) -> Self {
+        Self {
+            contents,
+        }
+    }
 
     pub fn hash_sha256(file_path: &str) -> Result<String, Box<dyn Error>> {
         let mut file = File::open(file_path)?;
@@ -45,8 +53,9 @@ impl Checksum {
         Ok(format!("{:x}", hash))
     }
     
-    pub fn files(contents: &str) -> IoResult<()> {
+    pub fn files(&self) -> IoResult<()> {
         UI::section_header("Hashes files", "normal");
+        let contents = self.contents.as_ref().map(|s| s.as_str()).unwrap_or("");
         let folder_path = Vars::get_path(contents);
 
         for entry in WalkDir::new(&folder_path) {

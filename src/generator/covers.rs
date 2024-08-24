@@ -21,9 +21,17 @@ use crate::{
     },
 };
 
-pub struct Covers;
+pub struct Covers {
+    contents: String,
+}
 
 impl Covers {
+
+    pub fn new(contents: &str) -> Self {
+        Self {
+            contents: contents.to_string(),
+        }
+    }
 
     async fn render(input: &Path, output: &Path, file: &str) -> Result<(), Box<dyn Error>> {
         let bindings = Pdfium::bind_to_library(
@@ -51,9 +59,9 @@ impl Covers {
         Ok(())
     }
 
-    pub async fn extract(contents: &str) -> Result<(), Box<dyn Error>> {
-        if let Some(covers_path) = Vars::get_covers(contents) {
-            let pdf_path = &Vars::get_path(contents);
+    pub async fn get(&self) -> Result<(), Box<dyn Error>> {
+        if let Some(covers_path) = Vars::get_covers(&self.contents) {
+            let pdf_path = &Vars::get_path(&self.contents);
             
             FileUtils::create_path(&covers_path);
             UI::section_header("Extracting covers", "normal");
