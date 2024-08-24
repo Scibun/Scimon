@@ -21,8 +21,8 @@ use std::{
 
 use crate::{
     render::render::Render,
-    cmd::checksum::Checksum,
     system::providers::Providers,
+    generator::checksum::Checksum,
 
     ui::{
         ui_base::UI,

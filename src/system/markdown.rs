@@ -13,10 +13,13 @@ use pulldown_cmark::{
 
 use crate::{
     system::pdf::Pdf,
-    cmd::checksum::Checksum,
     configs::settings::Settings, 
-    generator::file_name::FileName,
     ui::success_alerts::SuccessAlerts,
+
+    generator::{
+        checksum::Checksum,
+        file_name::FileName,
+    },
     
     render::{
         render_io::RenderIO,

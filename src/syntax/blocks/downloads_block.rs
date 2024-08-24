@@ -6,13 +6,30 @@ use std::{
 };
 
 use crate::{
-    args_cli::Flags, cmd::{
-        checksum::Checksum, compress::Compress, tasks::Tasks
-    }, generator::covers::Covers, syntax::{
-        blocks::readme_block::ReadMeBlock, macros::Macros, vars::Vars 
-    }, system::providers::Providers, ui::{
-        macros_alerts::MacrosAlerts, panic_alerts::PanicAlerts, ui_base::UI
-    }, utils::file::FileUtils
+    args_cli::Flags, 
+    utils::file::FileUtils,
+    system::providers::Providers, 
+    
+    generator::{
+        covers::Covers,
+        checksum::Checksum,
+    },
+
+    cmd::{
+        tasks::Tasks,
+        compress::Compress, 
+    },
+
+    syntax::{
+        macros::Macros, vars::Vars,
+        blocks::readme_block::ReadMeBlock, 
+    }, 
+
+    ui::{
+        ui_base::UI,
+        panic_alerts::PanicAlerts, 
+        macros_alerts::MacrosAlerts, 
+    }, 
 };
 
 pub struct DownloadsBlock;
