@@ -20,7 +20,7 @@ impl ChecksumAlerts {
         let current_datetime = General::date_time();
 
         println!(
-            "{} Checksum file created with successfully ({})", 
+            "{} Checksum file created with successfully in {}", 
             current_datetime.blue().bold(), 
             file.cyan()
         );
