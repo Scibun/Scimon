@@ -12,7 +12,7 @@ impl ChecksumAlerts {
         println!(
             "{}: {}", 
             file.blue(), 
-            hash.green(), 
+            hash, 
         );
     }
 
