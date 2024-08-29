@@ -31,8 +31,8 @@ impl WriteEnv {
         print!("Enter the variable name: ");
         io::stdout().flush().expect("Failed to flush buffer");
         io::stdin().read_line(&mut key).expect("Failed to read variable name");
-        let key = key.trim().to_string().to_uppercase();
 
+        let key = key.trim().to_string().to_uppercase();
         let value = prompt_password("Enter the variable value: ").unwrap();
 
         Self { key, value }
