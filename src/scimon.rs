@@ -19,6 +19,7 @@ use crate::{
     configs::{
         env::Env,
         settings::Settings,
+        write_env::WriteEnv,
         configs_files::DownloadConfigsFiles,
     },
 };
@@ -30,6 +31,7 @@ impl Scimon {
     async fn options(options: &str) -> Result<(), Box<dyn Error>> {
         match options {
             "open-env" => Env::open_env_file()?,
+            "write-env" => WriteEnv::new().add_env_var()?,
             "open-settings" => Settings::open_settings_file()?,
             "download-env" => DownloadConfigsFiles::env_file(true, true).await?,
             "download-settings" => DownloadConfigsFiles::settings_file(true, true).await?,

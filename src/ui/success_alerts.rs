@@ -16,6 +16,15 @@ impl SuccessAlerts {
         println!("{} Downloaded env file", current_datetime.green().bold());
     }
 
+    pub fn write_env(var_name: &str) {
+        let current_datetime = General::date_time();
+
+        println!("{} Added env '{}' variable", 
+            current_datetime.green().bold(),
+            var_name.blue(),
+        );
+    }
+
     pub fn download(file: &str, url: &str, password: bool) {
         let mut encrypted_emoji = "";
 
