@@ -13,7 +13,7 @@ use crate::{
 
     addons::{
         scrape::Scrape,
-        scibun::Scibun,
+        monlib::Monlib,
     },
 
     configs::{
@@ -60,7 +60,7 @@ impl Scimon {
         if !run.is_empty() {
             UI::header();
 
-            if !Scibun::check_is_user(run) {
+            if !Monlib::check_is_user(run) {
                 let _ = Monset::prints(run).await;
                 
                 let _ = Monset::downloads(run, &flags).await;
@@ -68,7 +68,7 @@ impl Scimon {
                 let _ = Monset::run_code(run).await;
                 let _ = ReadMeBlock::render_block_and_save_file(run, &flags);
             } else {
-                let _ = Scibun::get(run, &flags).await;
+                let _ = Monlib::get(run, &flags).await;
             }
         }
 

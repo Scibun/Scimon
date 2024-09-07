@@ -1,3 +1,3 @@
 pub mod scrape;
-pub mod scibun;
+pub mod monlib;
 pub mod wikipedia;
