@@ -63,7 +63,7 @@ print "Hello, World!"
 
 style "https://raw.githubusercontent.com/sindresorhus/github-markdown-css/main/github-markdown.css"
 
-readme "https://gist.githubusercontent.com/Kremilly/5fd360d994bb0fe108b648d0e4c9e92f/raw/ac524eba2112bf0bdbac1ad27e24f78f678589ec/readme-example.md"
+readme "https://gist.githubusercontent.com/Kremilly/5fd360d994bb0fe108b648d0e4c9e92f/raw/5f180716411e11fc352188c805c0707ac96d70a0/readme-example.md"
 
 downloads {
     https://arxiv.org/pdf/2405.01513 !ignore
