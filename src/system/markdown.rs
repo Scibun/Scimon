@@ -20,7 +20,6 @@ use crate::{
     render::{
         render_io::RenderIO,
         render_inject::RenderInject,
-        render_extras::RenderExtras, 
     }, 
     
     utils::{
@@ -61,10 +60,7 @@ impl Markdown {
     }
 
     pub fn append_extras_and_render(markdown: &str) -> String {
-        let markdown_block_extras_qrcode = RenderExtras::qrcode(&markdown);
-        let markdown_block_extras_gist = RenderExtras::gist(&markdown_block_extras_qrcode);
-
-        let parser = Parser::new_ext(&markdown_block_extras_gist, Options::all());
+        let parser = Parser::new_ext(&markdown, Options::all());
         let mut html_output = String::new();
         html::push_html(&mut html_output, parser);
 
