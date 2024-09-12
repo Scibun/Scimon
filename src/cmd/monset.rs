@@ -34,7 +34,9 @@ impl Monset {
             let response = reqwest::get(run).await?;
 
             if !response.status().is_success() {
-                return Err(format!("Erro ao obter o arquivo remoto: {}", response.status()).into());
+                ErrorsAlerts::generic(
+                    &format!("Error while retrieving remote file: {}", response.status())
+                );
             }
 
             let bytes = response.bytes().await?;
