@@ -1,9 +1,10 @@
 use reqwest;
+use is_url::is_url;
 
 use std::{
     fs::File,
     error::Error,
-    
+
     io::{
         Read, 
         Cursor
@@ -29,7 +30,7 @@ impl Monset {
     async fn read_file(run: &str) -> Result<Cursor<Vec<u8>>, Box<dyn Error>> {
         let mut buffer = Vec::new();
 
-        if run.starts_with("http://") || run.starts_with("https://") {
+        if is_url(run) {
             let response = reqwest::get(run).await?;
 
             if !response.status().is_success() {
