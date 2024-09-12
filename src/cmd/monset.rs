@@ -1,23 +1,21 @@
+use reqwest;
+
 use std::{
     fs::File,
     error::Error,
-
-    io::{
-        Read, 
-        Cursor,
-    },
+    io::{Read, Cursor},
 };
 
 use crate::{
-    args_cli::Flags, 
+    args_cli::Flags,
     cmd::tasks::Tasks,
     utils::validation::Validate,
     ui::errors_alerts::ErrorsAlerts,
 
     syntax::blocks::{
-        runner_block::RunnerBlock,
-        downloads_block::DownloadsBlock,
-    }, 
+        runner_block::RunnerBlock, 
+        downloads_block::DownloadsBlock
+    },
 };
 
 pub struct Monset;
@@ -27,14 +25,25 @@ impl Monset {
     async fn read_file(run: &str) -> Result<Cursor<Vec<u8>>, Box<dyn Error>> {
         let mut buffer = Vec::new();
 
-        let _ = Validate::file(run).map_err(|e| {
-            ErrorsAlerts::generic(&e.to_string());
-        });
+        if run.starts_with("http://") || run.starts_with("https://") {
+            let response = reqwest::get(run).await?;
 
-        let mut file = File::open(run)?;
-        file.read_to_end(&mut buffer)?;
+            if !response.status().is_success() {
+                return Err(format!("Erro ao obter o arquivo remoto: {}", response.status()).into());
+            }
 
-        Ok(Cursor::new(buffer.clone()))
+            let bytes = response.bytes().await?;
+            buffer.extend_from_slice(&bytes);
+        } else {
+            let _ = Validate::file(run).map_err(|e| {
+                ErrorsAlerts::generic(&e.to_string());
+            });
+
+            let mut file = File::open(run)?;
+            file.read_to_end(&mut buffer)?;
+        }
+
+        Ok(Cursor::new(buffer))
     }
 
     pub async fn prints(run: &str) -> Result<(), Box<dyn Error>> {
@@ -58,5 +67,4 @@ impl Monset {
 
         Ok(())
     }
-
 }
