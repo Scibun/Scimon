@@ -6,7 +6,7 @@ impl Addons {
     pub const DEFAULT_CSS_STYLE: &'static str = "https://addons.scibun.com/static/md-default.css";
 
     // Scimon
-    pub const SCIMON_API_REQUEST: &'static str = "http://localhost/Scimon/api/";
+    pub const MONLIB_API_REQUEST: &'static str = "http://localhost/";
     pub const SCIMON_SCRAPE_API_ENDPOINT: &'static str = "https://addons.scibun.com/scrape?url=";
     pub const SCIMON_URLFILTER_API_ENDPOINT: &'static str = "https://addons.scibun.com/urlfilter?url=";
 
