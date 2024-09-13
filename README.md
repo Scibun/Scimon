@@ -33,7 +33,6 @@ For more help and document, see our documentation:
 - [Scrape](https://scibun.github.io/ScimonDocs/scrape.html)
 - [Providers](https://scibun.github.io/ScimonDocs/providers.html)
 - [Monset](https://scibun.github.io/ScimonDocs/monset/what-is.html)
-
   - [Downloads Block](https://scibun.github.io/ScimonDocs/monset/download-block.html)
   - [Readme Block](https://scibun.github.io/ScimonDocs/monset/readme-block.html)
   - [Commands Block](https://scibun.github.io/ScimonDocs/monset/commands-block.html)
@@ -45,7 +44,6 @@ For more help and document, see our documentation:
   - [Covers](https://scibun.github.io/ScimonDocs/monset/covers.html)
   - [QRCode](https://scibun.github.io/ScimonDocs/monset/qrcode.html)
 - [Configs](https://scibun.github.io/ScimonDocs/configs/index.html)
-
   - [Scimon.yml file](https://scibun.github.io/ScimonDocs/configs/scimon.yml-file.html)
   - [.env file](https://scibun.github.io/ScimonDocs/configs/env-file.html)
 - [External Resources Usage](https://scibun.github.io/ScimonDocs/external-resources.html)
