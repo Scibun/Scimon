@@ -10,7 +10,7 @@ documentation = "https://docs.scibun.com"
 
 [dependencies]
 reqwest = { version = "0.12.7", features = ["multipart", "json", "blocking"] }
-tokio = { version = "1.39.3", features = ["full"] }
+tokio = { version = "1.40.0", features = ["full"] }
 futures = "0.3"
 url = "2.4.1"
 is-url = "1.0.4"
@@ -19,28 +19,28 @@ dotenvy = "0.15.7"
 figlet-rs = "0.1.3"
 colored = "2.0"
 dirs-next = "2.0"
-clap = { version = "4.5.16", features = ["cargo", "derive"] }
+clap = { version = "4.5.18", features = ["cargo", "derive"] }
 indicatif = "0.17.8"
 regex = "1.10.6"
 once_cell = "1"
 chrono = "0.4"
-serde_json = "1.0.127"
-serde = { version = "1.0.209", features = ["derive"] }
-webbrowser = "1.0.1"
-pulldown-cmark = "0.12.0"
+serde_json = "1.0.128"
+serde = { version = "1.0.210", features = ["derive"] }
+webbrowser = "1.0.2"
+pulldown-cmark = "0.12.1"
 qrcode = "0.14.0"
 base64 = "0.22.1"
 serde_yaml = "0.9"
 minify = "1.3.0"
 image = "0.25.2"
 select = "0.6.0"
-headless_chrome = "1.0.13"
+headless_chrome = "1.0.15"
 rand = "0.8.5"
 open = "5.1.4"
-lopdf = "0.33.0"
+lopdf = "0.34.0"
 sha2 = "0.10.8"
 zip = "2.2.0"
 walkdir = "2.5.0"
 scraper = "0.20.0"
-pdfium-render = "0.8.24"
+pdfium-render = "0.8.25"
 rpassword = "7.3.1"
