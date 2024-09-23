@@ -78,7 +78,7 @@ impl Monlib {
             .get(&url)
             .header(
                 header::AUTHORIZATION, format!(
-                    "Bearer {}", Env::env_var("SCIMON_API_KEY")
+                    "Bearer {}", Env::env_var("MONLIB_API_KEY")
                 )
             )
             .send().await?;
