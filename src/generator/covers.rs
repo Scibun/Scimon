@@ -75,7 +75,7 @@ impl Covers {
                     let new_name = FileUtils::replace_extension(file_name.to_str().unwrap_or_default(), "jpg");
                     let output_path = PathBuf::from(format!("{}{}", covers_path, new_name));
 
-                    let output_file = format!("{}{}", pdf_path, new_name);
+                    let output_file = format!("{}{}", covers_path, new_name);
                     let _ = Self::render(path, &output_path, &output_file).await;
                 }
             }
