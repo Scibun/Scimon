@@ -3,6 +3,7 @@ use is_url::is_url;
 use std::{
     io::BufRead,
     error::Error,
+    collections::HashSet,
 };
 
 use crate::{
@@ -37,6 +38,8 @@ pub struct DownloadsBlock;
 impl DownloadsBlock {
     
     async fn block(contents: &str, downloads_content: &str, path: &str, flags: &Flags) -> Result<(), Box<dyn Error>> {
+        let mut seen_urls = HashSet::new();
+
         for line in downloads_content.lines() {
             let url = line.trim().split_whitespace().next().unwrap_or("");
             let final_url = Providers::new(url).arxiv();
@@ -47,11 +50,17 @@ impl DownloadsBlock {
                 break;
             }
 
+            if seen_urls.contains(&final_url) {
+                continue;
+            }
+        
+            seen_urls.insert(final_url.to_string());
+
             if !Macros::handle_check_macro_line(&line, "ignore") {
                 if !final_url.is_empty() && is_url(&final_url) && final_url.starts_with("http") {
                     Tasks::download(
                         Some(contents),
-                        &url,
+                        &final_url,
                         &path,
                         flags,
                     ).await?;
