@@ -99,6 +99,22 @@ impl Vars {
             None
         }
     }
+
+    pub fn get_all_math(contents: &str) -> Vec<(String, String)> {
+        let math_pattern = Regex::new(BlocksRegExp::GET_MATH_VAR).unwrap();
+        let mut results = Vec::new();
+
+        // Percorrendo todas as linhas do conteúdo
+        for line in contents.lines() {
+            if let Some(caps) = math_pattern.captures(line) {
+                let math_expression = caps.get(1).map(|m| m.as_str().to_string()).unwrap();
+                let file_name = caps.get(2).map(|m| m.as_str().to_string()).unwrap();
+                results.push((math_expression, file_name));
+            }
+        }
+
+        results
+    }
     
     pub fn get_style(contents: &str) -> Option<String> {
         let style_pattern = Regex::new(BlocksRegExp::GET_STYLE_VAR).unwrap();

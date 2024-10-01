@@ -22,5 +22,7 @@ impl BlocksRegExp {
     pub const GET_QRCODE_VAR: &'static str = r#"(?i)qrcode\s*"([^"]+)""#;
 
     pub const GET_COMPRESS_VAR: &'static str = r#"(?i)compress\s*"([^"]+)""#;
+
+    pub const GET_MATH_VAR: &'static str = r#"math\s+['"]([^'"]+)['"]\s*>\s*(\S+)"#;
       
 }

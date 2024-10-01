@@ -9,9 +9,10 @@ use std::{
 use crate::{
     args_cli::Flags, 
     utils::file::FileUtils,
-    system::providers::Providers, 
+    system::providers::Providers,
     
     generator::{
+        math::Math,
         covers::Covers,
         checksum::Checksum,
     },
@@ -100,6 +101,7 @@ impl DownloadsBlock {
             Covers::new(&contents).get().await?;
             Tasks::qr_codes(&contents).await?;
             
+            let _ = Math::new(&contents).render();
             Vars::get_open(&contents, flags.no_open_link).await;
             ReadMeBlock::render_var_and_save_file(&contents, flags).await?;
 

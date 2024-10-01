@@ -65,6 +65,16 @@ impl SuccessAlerts {
             file.blue(), 
         );
     }
+
+    pub fn math(file: &str) {
+        let current_datetime = General::date_time();
+    
+        println!(
+            "{} Math equation rendered and saved in {}", 
+            current_datetime.green().bold(), 
+            file.blue(), 
+        );
+    }
   
     pub fn cover_generated(file: &str) {
         let current_datetime = General::date_time();
