@@ -43,6 +43,7 @@ For more help and document, see our documentation:
   - [Print](https://scibun.github.io/ScimonDocs/monset/prints.html)
   - [Covers](https://scibun.github.io/ScimonDocs/monset/covers.html)
   - [QR Code](https://scibun.github.io/ScimonDocs/monset/qrcode.html)
+  - [Math](https://scibun.github.io/ScimonDocs/monset/math.html)
 - [Configs](https://scibun.github.io/ScimonDocs/configs/index.html)
   - [Scimon.yml file](https://scibun.github.io/ScimonDocs/configs/scimon.yml-file.html)
   - [.env file](https://scibun.github.io/ScimonDocs/configs/env-file.html)
@@ -61,6 +62,8 @@ covers "covers/"
 qrcode "qrcodes/"
 
 print "Hello, World!"
+
+math "2 + 2 = 4" > path/to/output.png
 
 style "https://raw.githubusercontent.com/sindresorhus/github-markdown-css/main/github-markdown.css"
 
