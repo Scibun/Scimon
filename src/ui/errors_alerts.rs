@@ -40,4 +40,14 @@ impl ErrorsAlerts {
         );
     }
 
+    pub fn math(file: &str) {
+        let current_datetime = General::date_time();
+
+        eprintln!(
+            "{} Failed to render the math expression. Format invalid. ({})", 
+            current_datetime.red().bold(),
+            file.cyan()
+        );
+    }
+
 }
