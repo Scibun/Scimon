@@ -1,0 +1,77 @@
+site_name: Scimon
+repo_url: https://github.com/Scibun/Scimon
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.sections
+    - navigation.footer
+    - content.tabs.link
+    - content.footnote.tooltips
+  
+  palette:
+    - media: "(prefers-color-scheme: light"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    - media: "(prefers-color-scheme: dark"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+nav:
+  - Overview: index.md
+  - How to build: build.md
+  - Basic usage: basic-usage.md
+  - Scrape: scrape.md
+  - Providers: providers.md
+  - Monset:
+    - Downloads Block: monset/download-block.md
+    - Readme Block: monset/readme-block.md
+    - Commands Block: monset/commands-block.md
+    - Compress folder: monset/compress.md
+    - Open links: monset/open-links.md
+    - Markdown reder: monset/markdown-render.md
+    - Style: monset/style.md
+    - Print: monset/prints.md
+    - Covers: monset/covers.md
+    - QR Code: monset/qrcode.md
+  - Configs:
+    - Scimon.yml file: configs/scimon.yml-file.md
+    - .env file: configs/env-file.md
+
+markdown_extensions:
+  - tables
+  - attr_list
+  - md_in_html
+  - pymdownx.superfences
+  - footnotes
+  - pymdownx.superfences
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+
+extra:
+    social:
+      - icon: fontawesome/solid/blog
+        link: https://kremilly.com
+        name: Blog
+        
+      - icon: fontawesome/brands/x-twitter
+        link: https://x.com/import_kremilly
+        name: Twitter
+    
+    generator: false
+
+copyright: Copyright &copy; 2024 Kremillly
